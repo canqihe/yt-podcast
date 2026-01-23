@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARK Invest Big Ideas 2026：大加速时代</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: rgba(20, 20, 30, 0.6);
+            --text-primary: #f0f0f5;
+            --text-secondary: #a0a0b0;
+            --accent-orange: #ff6b35;
+            --accent-cyan: #00d9ff;
+            --accent-purple: #b14eff;
+            --accent-green: #00ff9d;
+            --gradient-1: linear-gradient(135deg, #ff6b35 0%, #ff8c5a 100%);
+            --gradient-2: linear-gradient(135deg, #00d9ff 0%, #00a3cc 100%);
+            --gradient-3: linear-gradient(135deg, #b14eff 0%, #7b3fcc 100%);
+            --border-glow: 1px solid rgba(255, 107, 53, 0.3);
+            --shadow-glow: 0 0 40px rgba(255, 107, 53, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
+            top: -250px;
+            right: -250px;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.1) 0%, transparent 70%);
+            bottom: -300px;
+            left: -300px;
+            animation: float 25s infinite ease-in-out reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        /* Grid overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image:
+                linear-gradient(rgba(255, 107, 53, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 107, 53, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridPulse 4s infinite ease-in-out;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 107, 53, 0.1);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 30px;
+            background: rgba(255, 107, 53, 0.05);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+        }
+
+        .back-link:hover {
+            color: var(--accent-orange);
+            background: rgba(255, 107, 53, 0.1);
+            border-color: rgba(255, 107, 53, 0.4);
+            transform: translateX(-5px);
+        }
+
+        .back-link span {
+            transition: transform 0.3s ease;
+        }
+
+        .back-link:hover span {
+            transform: translateX(-3px);
+        }
+
+        .nav-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-orange);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 100px 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--gradient-1);
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ff6b35 0%, #00d9ff 50%, #b14eff 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 5s ease infinite, fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 700px;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 40px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--accent-cyan);
+            animation: fadeInUp 0.8s ease-out 0.6s backwards;
+        }
+
+        .hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-meta::before {
+            content: '//';
+            margin-right: 10px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section styling */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+        }
+
+        .section-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 100px;
+            font-weight: 900;
+            color: rgba(255, 107, 53, 0.1);
+            position: absolute;
+            top: -50px;
+            left: 0;
+            line-height: 1;
+            z-index: 0;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Core conclusions cards */
+        .conclusions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 60px;
+        }
+
+        .conclusion-card {
+            background: var(--bg-card);
+            border: var(--border-glow);
+            border-radius: 16px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .conclusion-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-1);
+            transition: width 0.4s ease;
+        }
+
+        .conclusion-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-glow);
+            border-color: rgba(255, 107, 53, 0.5);
+        }
+
+        .conclusion-card:hover::before {
+            width: 100%;
+            opacity: 0.05;
+        }
+
+        .conclusion-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .conclusion-card h3::before {
+            content: '▸';
+            font-size: 1.5rem;
+        }
+
+        .conclusion-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Platform table */
+        .platform-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 50px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: var(--border-glow);
+        }
+
+        .platform-table thead {
+            background: rgba(255, 107, 53, 0.1);
+        }
+
+        .platform-table th {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            padding: 20px;
+            text-align: left;
+            color: var(--accent-orange);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid rgba(255, 107, 53, 0.3);
+        }
+
+        .platform-table td {
+            padding: 25px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.3s ease;
+        }
+
+        .platform-table tr:hover td {
+            background: rgba(255, 107, 53, 0.05);
+        }
+
+        .platform-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .platform-name {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            font-size: 1.1rem;
+        }
+
+        /* Fusion examples */
+        .fusion-list {
+            list-style: none;
+            margin-top: 50px;
+        }
+
+        .fusion-item {
+            background: var(--bg-card);
+            border: var(--border-glow);
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .fusion-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.15);
+            border-color: rgba(0, 217, 255, 0.4);
+        }
+
+        .fusion-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .fusion-content h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 8px;
+        }
+
+        .fusion-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Stats grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: var(--border-glow);
+            border-radius: 16px;
+            padding: 35px;
+            text-align: center;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            margin-top: 60px;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-orange), var(--accent-cyan), var(--accent-purple));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 40px;
+            padding-left: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -45px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: var(--bg-primary);
+            border: 3px solid var(--accent-orange);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+        }
+
+        .timeline-era {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timeline-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .timeline-desc {
+            color: var(--text-secondary);
+        }
+
+        /* Highlight box */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(0, 217, 255, 0.05) 100%);
+            border: var(--border-glow);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 50px;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .highlight-box::before {
+            content: '"';
+            font-family: 'Orbitron', sans-serif;
+            font-size: 8rem;
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            color: rgba(255, 107, 53, 0.1);
+            line-height: 1;
+        }
+
+        .highlight-box p {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            line-height: 1.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            padding: 60px 0 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-note {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 107, 53, 0.05);
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        /* Scroll animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .hero {
+                padding: 60px 0;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .section-number {
+                font-size: 60px;
+                top: -30px;
+            }
+
+            .platform-table {
+                font-size: 0.85rem;
+            }
+
+            .platform-table th,
+            .platform-table td {
+                padding: 15px 12px;
+            }
+
+            .stat-value {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="index.html" class="back-link">
+                <span>←</span>
+                返回知识库
+            </a>
+            <div class="nav-title">ARK Invest Big Ideas 2026</div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-badge">第十个年度报告</span>
+                <h1>Big Ideas 2026<br>大加速时代</h1>
+                <p class="hero-subtitle">全球正处于由人工智能驱动的变革时代。AI 正在加速五大创新平台的融合，重塑技术、经济与社会的未来。</p>
+                <div class="hero-meta">
+                    <span>ARK INVEST RESEARCH</span>
+                    <span>2026</span>
+                    <span>技术融合报告</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Conclusions -->
+    <section class="reveal">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <h2 class="section-title">核心结论</h2>
+                <p class="section-subtitle">技术融合正以前所未有的速度加速，全球经济即将迎来结构性变革</p>
+            </div>
+            <div class="conclusions-grid">
+                <div class="conclusion-card">
+                    <h3>技术融合加速</h3>
+                    <p>2025年"融合网络强度"（衡量颠覆性技术相互催化程度的指标）增长了35%。</p>
+                </div>
+                <div class="conclusion-card">
+                    <h3>基础设施激增</h3>
+                    <p>数据中心系统投资已从5%的年增长率跃升至29%，预计到2030年年度投资将达到1.4万亿美元。</p>
+                </div>
+                <div class="conclusion-card">
+                    <h3>宏观经济拐点</h3>
+                    <p>颠覆性技术有望带动全球实际GDP实现阶梯式增长。ARK预测到2030年全球实际GDP增长率可能达到7.3%，远高于IMF预测的3.1%。</p>
+                </div>
+                <div class="conclusion-card">
+                    <h3>消费者体验变革</h3>
+                    <p>AI Agent正取代传统应用程序，成为新的消费者操作系统。到2030年，AI搜索预计将占据全球搜索流量的65%。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Five Innovation Platforms -->
+    <section class="reveal">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2 class="section-title">五大创新平台</h2>
+                <p class="section-subtitle">颠覆性技术不再孤立存在，而是通过相互依赖性能倍增</p>
+            </div>
+            <table class="platform-table">
+                <thead>
+                    <tr>
+                        <th>平台名称</th>
+                        <th>核心驱动力</th>
+                        <th>影响与展望</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="platform-name">人工智能</span></td>
+                        <td>神经网络、智能设备、下一代云</td>
+                        <td>变革每个行业，催化所有其他创新平台</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-name">机器人</span></td>
+                        <td>人形机器人、专业机器人、可回收火箭</td>
+                        <td>降低物理工作、制造复杂性和长途运输的成本</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-name">能源存储</span></td>
+                        <td>先进电池技术、分布式能源</td>
+                        <td>解决AI数据中心激增的电力需求，实现交通电气化</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-name">公共区块链</span></td>
+                        <td>加密货币、智能合约、数字钱包</td>
+                        <td>实现资产货币化，验证数字稀缺性，降低合同执行成本</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-name">多组学</span></td>
+                        <td>可编程生物学、精准疗法</td>
+                        <td>通过AI驱动的自动化实验室崩溃药物研发成本</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Key Fusion Cases -->
+    <section class="reveal">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <h2 class="section-title">关键融合案例</h2>
+                <p class="section-subtitle">技术协同创造前所未有的机会与价值</p>
+            </div>
+            <ul class="fusion-list">
+                <li class="fusion-item">
+                    <div class="fusion-icon">🚀</div>
+                    <div class="fusion-content">
+                        <h4>可回收火箭与AI</h4>
+                        <p>太空计算基础设施可提供不受陆地电力和冷却限制的AI算力，预计对可回收火箭的需求将因此增加60倍。</p>
+                    </div>
+                </li>
+                <li class="fusion-item">
+                    <div class="fusion-icon">⚡</div>
+                    <div class="fusion-content">
+                        <h4>智能合约与AI</h4>
+                        <p>智能合约和稳定币可支持全球数字货币生态系统，允许AI Agent协调和指挥现实世界的资源。</p>
+                    </div>
+                </li>
+                <li class="fusion-item">
+                    <div class="fusion-icon">🧬</div>
+                    <div class="fusion-content">
+                        <h4>数字钱包与多组学</h4>
+                        <p>权限化后的组学数据可通过数字钱包驱动神经网络，开发罕见病精准疗法。</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- AI Infrastructure -->
+    <section class="reveal">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <h2 class="section-title">AI 基础设施投资</h2>
+                <p class="section-subtitle">定义下一代云 - AI需求的爆发式增长正驱动前所未有的技术投资周期</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">99%+</div>
+                    <div class="stat-label">推理成本下降</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">$1.4T</div>
+                    <div class="stat-label">2030年数据中心投资</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">2.5x</div>
+                    <div class="stat-label">2025年投资增长倍数</div>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <p>过去一年，特定性能下的推理成本下降了99%以上。2025年年度投资约为5000亿美元，是2012-2023年均值的2.5倍。预计到2030年将增至1.4万亿美元。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agentic Era -->
+    <section class="reveal">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <h2 class="section-title">智能体时代</h2>
+                <p class="section-subtitle">消费者正在经历从"搜索与点击"到"提示与目标"的结构性转变</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-era">1980-1994</div>
+                    <div class="timeline-title">命令行时代</div>
+                    <div class="timeline-desc">文本界面，键盘输入</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-era">1995-2006</div>
+                    <div class="timeline-title">Web 时代</div>
+                    <div class="timeline-desc">图形界面，浏览器与搜索</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-era">2007-2022</div>
+                    <div class="timeline-title">移动时代</div>
+                    <div class="timeline-desc">触控界面，封闭的应用生态</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-era">2022+</div>
+                    <div class="timeline-title">智能体时代</div>
+                    <div class="timeline-desc">自然语言界面，由AI Agent驱动</div>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">90s</div>
+                    <div class="stat-label">Agentic时代交易时间</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">$8T</div>
+                    <div class="stat-label">2030年AI在线消费</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">65%</div>
+                    <div class="stat-label">2030年AI搜索流量占比</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Productivity -->
+    <section class="reveal">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">06</span>
+                <h2 class="section-title">AI 生产力与全球竞速</h2>
+                <p class="section-subtitle">AI Agent的能力正呈指数级增长</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">5x</div>
+                    <div class="stat-label">2025年任务处理能力增长</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">31min</div>
+                    <div class="stat-label">AI可靠处理任务时长</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">0.5天</div>
+                    <div class="stat-label">赚回ChatGPT Plus成本</div>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <p>对于美国中等薪资的知识工作者，ChatGPT Plus 20美元的月费仅需半天的工作量即可赚回。美国目前处于领先地位，中国的前沿模型性能滞后约6个月。然而，中国在开源模型领域占据主导地位，在前10个表现最好的开源模型中占据8席。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Robotics -->
+    <section class="reveal">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">07</span>
+                <h2 class="section-title">机器人技术的颠覆性潜力</h2>
+                <p class="section-subtitle">人形机器人和可回收火箭正在重塑物理世界的经济逻辑</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">$6T</div>
+                    <div class="stat-label">人形机器人带来的GDP增长</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">20%</div>
+                    <div class="stat-label">美国GDP增幅</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">5-6%</div>
+                    <div class="stat-label">加速后的年增长率</div>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <p>如果人形机器人进入美国9000万个自有住房，可增加近6万亿美元的GDP（增幅20%）。SpaceX的可回收火箭正在降低发射成本，随着发射成本下降，太空AI计算的单位Token成本有望低于陆地。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Macroeconomic Outcomes -->
+    <section class="reveal">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">08</span>
+                <h2 class="section-title">宏观经济结果与风险</h2>
+                <p class="section-subtitle">颠覆性技术投资面临的机遇与挑战</p>
+            </div>
+            <div class="highlight-box">
+                <p>技术范式的转变通常导致GDP结构性增长。资本投资本身即可在本十年为年化GDP增长贡献1.9个百分点。颠覆性技术公司在全球股市中的市值占比正迅速增加，预计到2030年创新类公司将占据市场主导地位。</p>
+            </div>
+            <ul class="fusion-list">
+                <li class="fusion-item">
+                    <div class="fusion-icon">⚠️</div>
+                    <div class="fusion-content">
+                        <h4>快速变化与未知</h4>
+                        <p>技术更迭速度极快，市场动态难以预测</p>
+                    </div>
+                </li>
+                <li class="fusion-item">
+                    <div class="fusion-icon">⚖️</div>
+                    <div class="fusion-content">
+                        <h4>监管障碍</h4>
+                        <p>政治和法律压力可能阻碍技术部署</p>
+                    </div>
+                </li>
+                <li class="fusion-item">
+                    <div class="fusion-icon">🔄</div>
+                    <div class="fusion-content">
+                        <h4>竞争格局</h4>
+                        <p>既有企业可能被取代，但新市场未必能如预期般成熟</p>
+                    </div>
+                </li>
+                <li class="fusion-item">
+                    <div class="fusion-icon">⏳</div>
+                    <div class="fusion-content">
+                        <h4>量子计算</h4>
+                        <p>在未来20-40年内不太可能产生颠覆性影响，成本下降曲线相对缓慢</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>ARK Invest Big Ideas 2026</p>
+                <p>技术融合 · 未来已来</p>
+                <div class="footer-note">
+                    注：本简报基于 ARK Investment Management LLC 2026年研究报告编写。<br>
+                    所有预测数据均来自报告内部模型及分析，过去表现不代表未来结果。
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll reveal animation
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', reveal);
+        window.addEventListener('load', reveal);
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Parallax effect on hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-content');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+                hero.style.opacity = 1 - scrolled / 700;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tom Lee 市场洞察与投资策略简报 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a1628;
+            --secondary: #1a2738;
+            --accent: #c9a962;
+            --accent-light: #e4d4a8;
+            --text: #e8eaed;
+            --text-muted: #8b95a5;
+            --border: rgba(201, 169, 98, 0.15);
+            --gradient: linear-gradient(135deg, #0a1628 0%, #152238 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Noise overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            z-index: 1000;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            background: var(--gradient);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(201, 169, 98, 0.08) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-5%, 10%) rotate(5deg); }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 24px;
+            background: rgba(201, 169, 98, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--accent);
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .hero h1 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -0.02em;
+            animation: fadeInUp 0.8s ease-out 0.1s both;
+        }
+
+        .hero h1 .highlight {
+            color: var(--accent);
+            position: relative;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .meta-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+        }
+
+        .meta-value {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            color: var(--text-muted);
+            max-width: 800px;
+            line-height: 1.6;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-muted);
+            font-size: 13px;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            animation: scrollDown 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollDown {
+            0% { transform: scaleY(0); transform-origin: top; }
+            50% { transform: scaleY(1); transform-origin: top; }
+            51% { transform: scaleY(1); transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 20px 0;
+            background: rgba(10, 22, 40, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .nav.scrolled {
+            padding: 15px 0;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Crimson Pro', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .section-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 72px;
+            font-weight: 400;
+            color: rgba(201, 169, 98, 0.2);
+            line-height: 1;
+        }
+
+        .section-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        /* Executive Summary */
+        .summary-box {
+            background: rgba(26, 39, 56, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-box::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-family: 'Crimson Pro', serif;
+            font-size: 200px;
+            color: rgba(201, 169, 98, 0.05);
+            line-height: 1;
+        }
+
+        .summary-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .summary-content p {
+            font-size: 20px;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        /* Key Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 80px 0;
+        }
+
+        .stat-card {
+            background: rgba(26, 39, 56, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(201, 169, 98, 0.3);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .stat-value {
+            font-family: 'Crimson Pro', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .stat-description {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Content Blocks */
+        .content-block {
+            margin-bottom: 80px;
+        }
+
+        .content-block h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .content-block p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .content-block ul {
+            list-style: none;
+            margin: 30px 0;
+        }
+
+        .content-block li {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--text-muted);
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .content-block li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin: 60px 0;
+        }
+
+        .column h4 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        .column p {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 40px 0;
+            background: rgba(26, 39, 56, 0.5);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 20px 30px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-table th {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            background: rgba(201, 169, 98, 0.08);
+            font-weight: 500;
+        }
+
+        .data-table td {
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:hover td {
+            background: rgba(201, 169, 98, 0.05);
+        }
+
+        /* Pull Quote */
+        .pull-quote {
+            background: linear-gradient(135deg, rgba(201, 169, 98, 0.1) 0%, rgba(201, 169, 98, 0.05) 100%);
+            border-left: 4px solid var(--accent);
+            padding: 50px;
+            margin: 80px 0;
+            position: relative;
+        }
+
+        .pull-quote p {
+            font-family: 'Crimson Pro', serif;
+            font-size: 28px;
+            font-style: italic;
+            line-height: 1.5;
+            color: var(--text);
+            margin: 0;
+        }
+
+        .pull-quote cite {
+            display: block;
+            margin-top: 25px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--accent);
+            font-style: normal;
+        }
+
+        /* Asset Cards */
+        .asset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .asset-card {
+            background: rgba(26, 39, 56, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 50px;
+            position: relative;
+        }
+
+        .asset-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .asset-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .asset-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .asset-target {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 36px;
+            font-weight: 600;
+            color: var(--accent);
+            margin: 20px 0;
+        }
+
+        .asset-target-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .asset-card ul {
+            list-style: none;
+            margin-top: 30px;
+        }
+
+        .asset-card li {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 16px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .asset-card li:last-child {
+            border-bottom: none;
+        }
+
+        .asset-card strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* Philosophy Section */
+        .philosophy-list {
+            margin: 60px 0;
+        }
+
+        .philosophy-item {
+            display: flex;
+            gap: 40px;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border);
+            align-items: flex-start;
+        }
+
+        .philosophy-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 48px;
+            font-weight: 600;
+            color: var(--accent);
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .philosophy-content h4 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 15px;
+        }
+
+        .philosophy-content p {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--border);
+            margin-top: 120px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        .footer-brand p {
+            font-size: 16px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            max-width: 500px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .footer-links a {
+            font-size: 15px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .video-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px;
+            background: rgba(201, 169, 98, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+        }
+
+        .video-link:hover {
+            background: rgba(201, 169, 98, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .asset-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .philosophy-item {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-box {
+                padding: 40px 30px;
+            }
+
+            .pull-quote {
+                padding: 30px;
+            }
+
+            .pull-quote p {
+                font-size: 22px;
+            }
+        }
+
+        /* Animation on scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container nav-content">
+            <a href="index.html" class="nav-logo">← 返回首页</a>
+            <ul class="nav-links">
+                <li><a href="#summary">摘要</a></li>
+                <li><a href="#outlook">展望</a></li>
+                <li><a href="#strategy">策略</a></li>
+                <li><a href="#assets">资产</a></li>
+                <li><a href="#philosophy">哲学</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                2026 市场展望报告
+            </div>
+            <h1>Tom Lee<br><span class="highlight">市场洞察</span>与投资策略</h1>
+            <div class="hero-meta">
+                <div class="meta-item">
+                    <span class="meta-label">来源</span>
+                    <span class="meta-value">Fundstrat Global Advisors</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">发布时间</span>
+                    <span class="meta-value">2026 Q1</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">主题</span>
+                    <span class="meta-value">牛市延续 · 周期性机遇</span>
+                </div>
+            </div>
+            <p class="hero-subtitle">
+                颠簸中的牛市延续：2026年将是始于2022年牛市的延续，市场将经历显著回调，但这应被视为绝佳的买入机会。
+            </p>
+        </div>
+        <div class="scroll-indicator">
+            <span>向下滚动</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Executive Summary -->
+    <section id="summary">
+        <div class="container">
+            <div class="section-label">
+                <span class="section-number">01</span>
+                <h2 class="section-title">执行摘要</h2>
+            </div>
+            <div class="summary-box reveal">
+                <div class="summary-content">
+                    <p>本简报综合了 Fundstrat Global Advisors 联合创始人 Tom Lee 的核心市场观点和投资策略。Lee 预测，2026年将是始于2022年的牛市的延续，但市场将经历一次显著的回调（可能达到10-20%），这应被视为一个"绝佳的买入机会"，而非卖出的理由。</p>
+                    <p>他对市场的长期前景保持乐观，认为美国正处于一个由有利的人口结构、代际财富转移以及在人工智能（AI）和区块链领域的创新领导地位驱动的十年牛市开端。</p>
+                    <a href="https://www.youtube.com/watch?v=9ZDPRcyBNJQ" target="_blank" class="video-link">
+                        <span>▶</span>
+                        观看完整视频
+                    </a>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card reveal">
+                    <div class="stat-label">预期市场回调</div>
+                    <div class="stat-value">10-20%</div>
+                    <div class="stat-description">峰谷回撤，视为买入良机</div>
+                </div>
+                <div class="stat-card reveal">
+                    <div class="stat-label">比特币目标价</div>
+                    <div class="stat-value">$250K</div>
+                    <div class="stat-description">2026年价格目标</div>
+                </div>
+                <div class="stat-card reveal">
+                    <div class="stat-label">首选板块</div>
+                    <div class="stat-value">能源</div>
+                    <div class="stat-description">均值回归，定价未来</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Outlook -->
+    <section id="outlook">
+        <div class="container">
+            <div class="section-label">
+                <span class="section-number">02</span>
+                <h2 class="section-title">2026年市场展望：颠簸中的牛市延续</h2>
+            </div>
+
+            <div class="content-block reveal">
+                <p>Tom Lee 认为，2026年整体上将延续牛市格局，但过程将充满波动。投资者需要为一次可能感觉像熊市的重大回调做好准备。</p>
+            </div>
+
+            <div class="pull-quote reveal">
+                <p>"试图择时会让你成为自己未来表现的敌人……真正赚钱的只有那些进行长期投资的人。"</p>
+                <cite>— Tom Lee</cite>
+            </div>
+
+            <div class="content-block reveal">
+                <h3>潜在回调的三大驱动因素</h3>
+                <p>Lee 指出，2026年市场需要应对三个重大的过渡，这些因素共同可能引发市场回调：</p>
+                <ul>
+                    <li><strong>美联储新主席考验：</strong>市场总是会考验新上任的美联储主席。从提名、确认到市场测试的全过程可能会引发市场修正。</li>
+                    <li><strong>白宫政策不确定性：</strong>白宫在2026年将更有意地挑选行业和国家的"赢家"和"输家"，这会给更多行业带来不确定性，黄金的上涨已反映了这一点。</li>
+                    <li><strong>AI 叙事过渡：</strong>市场仍在努力消化人工智能的定价。在市场确信存在其他更强劲的叙事（如ISM指数回升、房地产复苏）之前，这种过渡期会造成不确定性。</li>
+                </ul>
+            </div>
+
+            <div class="content-block reveal">
+                <h3>长期牛市的四大支柱</h3>
+                <p>Lee 重申了他对未来十年牛市的信心，这一观点基于四个长期且清晰可见的宏观因素，这些因素都对美国有利。</p>
+            </div>
+
+            <table class="data-table reveal">
+                <thead>
+                    <tr>
+                        <th>支柱</th>
+                        <th>详细说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>有利的人口结构</td>
+                        <td>与其他国家相比，美国的壮年劳动力呈现顺风，人口结构有利。</td>
+                    </tr>
+                    <tr>
+                        <td>代际财富转移</td>
+                        <td>Z世代、千禧一代和Alpha世代将在其一生中继承巨额财富，这将对经济和市场产生深远影响。</td>
+                    </tr>
+                    <tr>
+                        <td>人工智能创新</td>
+                        <td>美国在AI领域的领导地位正在加速，迈向"超级智能"和机器人集成的证据越来越多。</td>
+                    </tr>
+                    <tr>
+                        <td>区块链技术采纳</td>
+                        <td>区块链技术正获得更广泛的认可，银行业正开始拥抱区块链的效率。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Investment Strategy -->
+    <section id="strategy">
+        <div class="container">
+            <div class="section-label">
+                <span class="section-number">03</span>
+                <h2 class="section-title">2026年投资组合配置策略</h2>
+            </div>
+
+            <div class="content-block reveal">
+                <p>Lee 提出了2026年具体的板块和股票配置建议，强调在青睐科技巨头的同时，周期性板块可能带来更大的机会。</p>
+            </div>
+
+            <div class="two-column reveal">
+                <div class="column">
+                    <h4>能源 (Energy) — 首选板块</h4>
+                    <p>这是2026年的首选板块。在过去五年严重跑输后，能源板块的表现已达到历史转折点。尽管短期油价可能疲软，但能源股定价的是未来油价。数据中心和能源转型等因素将推动未来油价上涨。</p>
+                </div>
+                <div class="column">
+                    <h4>基础材料 (Basic Materials)</h4>
+                    <p>该板块的表现依赖于黄金、白银和铜价。Lee 相信白银和铜在今年将有良好表现。铜作为一种工业金属，其价格上涨与ISM指数的回升密切相关，将带动基础材料股走高。</p>
+                </div>
+            </div>
+
+            <div class="content-block reveal">
+                <h3>周期性板块的机遇</h3>
+                <p>随着美联储降息和ISM指数突破50，Lee 看好以下周期性板块：</p>
+                <ul>
+                    <li><strong>工业 (Industrials)</strong></li>
+                    <li><strong>金融 (Financials)</strong></li>
+                    <li><strong>小型股 (Small Caps)</strong></li>
+                </ul>
+                <p>他特别指出，小型和中型股已经跑输了很长时间，即使市场出现回调，也不会中断其可能长达五到六年的跑赢周期。</p>
+            </div>
+
+            <div class="content-block reveal">
+                <h3>科技巨头与人工智能（AI）</h3>
+                <p><strong>Magnificent 7：</strong>由于其盈利增长的确定性，Lee 仍然看好这些大型科技股，认为它们应能跑赢大盘。</p>
+                <p><strong>AI 投资的"二八定律"：</strong>Lee 预测，未来十年只有10%的AI股票会成为好的投资，但这10%的赢家所带来的回报将远远弥补其他90%的损失，类似于互联网泡沫时期的规律。</p>
+                <p><strong>科技股的重新评级：</strong>他认为市场对某些科技巨头（如英伟达）的估值过于保守，将其视为周期性硬件公司。他类比苹果公司（Apple）的经历，认为英伟达等公司未来盈利的能见度很高，其估值有巨大的提升空间，应当被重新评级。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Asset Classes -->
+    <section id="assets">
+        <div class="container">
+            <div class="section-label">
+                <span class="section-number">04</span>
+                <h2 class="section-title">关键资产类别分析</h2>
+            </div>
+
+            <div class="asset-grid">
+                <div class="asset-card reveal">
+                    <div class="asset-header">
+                        <div class="asset-icon">🥇</div>
+                        <div class="asset-title">黄金</div>
+                    </div>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">被低估的美元替代品</p>
+                    <div class="asset-target">
+                        <span class="asset-target-label">投资定位</span>
+                        美元替代品
+                    </div>
+                    <ul>
+                        <li><strong>上涨的可见原因：</strong>政治和地缘政治不确定性加剧；全球央行普遍进入宽松周期</li>
+                        <li><strong>Tether 的购买：</strong>稳定币发行商 Tether 已成为黄金最大的私人买家之一</li>
+                        <li><strong>代际偏好：</strong>千禧一代正在重新对黄金产生兴趣</li>
+                        <li><strong>定位：</strong>黄金应该被视为美元的替代品，而不是一种商品</li>
+                    </ul>
+                </div>
+
+                <div class="asset-card reveal">
+                    <div class="asset-header">
+                        <div class="asset-icon">₿</div>
+                        <div class="asset-title">比特币</div>
+                    </div>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">颠簸的采纳之路</p>
+                    <div class="asset-target">
+                        <span class="asset-target-label">2026年目标价</span>
+                        $250,000
+                    </div>
+                    <ul>
+                        <li><strong>驱动因素：</strong>加密货币的实用性不断增加，银行开始采纳区块链技术</li>
+                        <li><strong>Tether 效应：</strong>加密原生银行证明了其高效的商业模式</li>
+                        <li><strong>近期表现：</strong>2025年10月10日经历历史上最大规模去杠杆事件</li>
+                        <li><strong>关键信号：</strong>如果比特币能在2026年创下历史新高，将证明市场已走出该事件的影响</li>
+                    </ul>
+                </div>
+
+                <div class="asset-card reveal">
+                    <div class="asset-header">
+                        <div class="asset-icon">Ξ</div>
+                        <div class="asset-title">以太坊</div>
+                    </div>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">华尔街的选择</p>
+                    <div class="asset-target">
+                        <span class="asset-target-label">潜在价格</span>
+                        ~$12,000
+                    </div>
+                    <ul>
+                        <li><strong>长期牛市案例：</strong>Lee 长期更看好以太坊，因其是华尔街选择用于构建代币化金融产品的区块链</li>
+                        <li><strong>机构支持：</strong>摩根大通、贝莱德等使用以太坊构建货币市场基金、信贷基金</li>
+                        <li><strong>价格潜力：</strong>如果比特币达到25万美元，且以太坊对标比特币的价格比率恢复到2021年的高点</li>
+                        <li><strong>当前价格：</strong>约3,000美元</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-block reveal" style="margin-top: 60px;">
+                <h3>给加密货币投资者的建议</h3>
+                <ul>
+                    <li><strong>坚持"林迪效应"：</strong>只购买那些已经存在了很长时间的加密货币，即比特币和以太坊</li>
+                    <li><strong>关注基础设施：</strong>关注作为结算层的加密货币以及像Bitmine这样的金融服务公司</li>
+                </ul>
+            </div>
+
+            <div class="pull-quote reveal">
+                <p>"加密货币正被年轻一代所采纳，就像90年代的互联网一样。"</p>
+                <cite>— Tom Lee</cite>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investment Philosophy -->
+    <section id="philosophy">
+        <div class="container">
+            <div class="section-label">
+                <span class="section-number">05</span>
+                <h2 class="section-title">核心投资哲学</h2>
+            </div>
+
+            <div class="content-block reveal">
+                <p>Tom Lee 在访谈中反复强调了他的核心投资理念，旨在帮助投资者在波动的市场中保持定力并实现长期成功。</p>
+            </div>
+
+            <div class="philosophy-list">
+                <div class="philosophy-item reveal">
+                    <div class="philosophy-number">01</div>
+                    <div class="philosophy-content">
+                        <h4>避免择时，拥抱长期主义</h4>
+                        <p>"试图择时会让你成为自己未来表现的敌人。"他指出，无论是股票还是加密货币，真正赚钱的都是长期投资者。</p>
+                    </div>
+                </div>
+
+                <div class="philosophy-item reveal">
+                    <div class="philosophy-number">02</div>
+                    <div class="philosophy-content">
+                        <h4>波动性是朋友，而非敌人</h4>
+                        <p>对于2026年预期的市场动荡，他的建议是将其视为买入机会。太多投资者因为情绪化抛售而错过了后续的复利增长。</p>
+                    </div>
+                </div>
+
+                <div class="philosophy-item reveal">
+                    <div class="philosophy-number">03</div>
+                    <div class="philosophy-content">
+                        <h4>投资于公司，而非指数</h4>
+                        <p>投资于你了解并有信念的公司，能帮助你在市场波动时保持定力，并最终穿越周期。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h2>Tom Lee Market Brief</h2>
+                    <p>本简报基于 Fundstrat Global Advisors 联合创始人 Tom Lee 的市场分析，仅供信息参考，不构成投资建议。</p>
+                    <a href="https://www.youtube.com/watch?v=9ZDPRcyBNJQ" target="_blank" style="display: inline-flex; align-items: center; gap: 12px; padding: 15px 30px; background: rgba(201, 169, 98, 0.1); border: 1px solid var(--border); border-radius: 100px; color: var(--accent); text-decoration: none; font-size: 15px; margin-top: 30px;">
+                        <span>▶</span>
+                        观看原始视频
+                    </a>
+                </div>
+                <div class="footer-links">
+                    <a href="#summary">执行摘要</a>
+                    <a href="#outlook">市场展望</a>
+                    <a href="#strategy">投资策略</a>
+                    <a href="#assets">资产分析</a>
+                    <a href="#philosophy">投资哲学</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Fundstrat Global Advisors. All rights reserved.</p>
+                <p>市场有风险，投资需谨慎</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll effect
+        const nav = document.querySelector('.nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Reveal on scroll
+        const reveals = document.querySelectorAll('.reveal');
+
+        function revealOnScroll() {
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const revealPoint = 150;
+
+                if (elementTop < windowHeight - revealPoint) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
