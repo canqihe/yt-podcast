@@ -49,16 +49,96 @@
             pointer-events: none;
             z-index: 0;
             opacity: 0.4;
-            background:
-                radial-gradient(ellipse at 20% 20%, rgba(74, 158, 255, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(168, 85, 247, 0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(245, 158, 11, 0.04) 0%, transparent 60%);
-            animation: meshFloat 30s ease-in-out infinite;
+            background: linear-gradient(to bottom, #0a0a1a 0%, #1a1a2e 50%, #0d0d0d 100%);
         }
 
-        @keyframes meshFloat {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.1) rotate(5deg); }
+        /* 流星雨容器 */
+        .meteor-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            transition: opacity 0.3s ease-out;
+        }
+
+        /* 星星背景 */
+        .stars-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+
+        /* 流星 */
+        .meteor {
+            position: absolute;
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg,
+                rgba(255, 255, 255, 1) 0%,
+                rgba(74, 158, 255, 0.6) 30%,
+                transparent 100%);
+            border-radius: 50%;
+            transform: rotate(-45deg);
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        .meteor::before {
+            content: '';
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .meteor.animate {
+            animation: meteorFall var(--duration) linear forwards;
+        }
+
+        @keyframes meteorFall {
+            0% {
+                transform: translateX(var(--start-x)) translateY(var(--start-y)) rotate(-45deg);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(var(--end-x)) translateY(var(--end-y)) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+
+        /* 大流星 */
+        .big-meteor {
+            width: 400px;
+            height: 3px;
+            background: linear-gradient(90deg,
+                rgba(255, 255, 255, 1) 0%,
+                rgba(255, 200, 100, 0.6) 20%,
+                transparent 100%);
+        }
+
+        .big-meteor::before {
+            width: 4px;
+            height: 4px;
         }
 
         .container {
@@ -217,7 +297,7 @@
 
         .articles-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 35px;
         }
 
@@ -473,13 +553,13 @@
         }
 
         /* Responsive */
-        @media (max-width: 1024px) {
+        @media (max-width: 1200px) {
             .container {
                 padding: 0 40px;
             }
 
             .articles-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -490,6 +570,18 @@
 
             .hero {
                 padding: 150px 0 80px;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .article-card {
+                padding: 35px;
+            }
+
+            .card-title {
+                font-size: 24px;
             }
 
             .footer-content {
@@ -505,19 +597,17 @@
             .social-links {
                 justify-content: center;
             }
-
-            .article-card {
-                padding: 35px;
-            }
-
-            .card-title {
-                font-size: 24px;
-            }
         }
     </style>
 </head>
 <body>
     <div class="bg-mesh"></div>
+
+    <!-- 流星雨效果 -->
+    <div class="meteor-container">
+        <div class="stars-bg" id="starsBg"></div>
+        <div class="meteor-shower" id="meteorShower"></div>
+    </div>
 
     <!-- Navigation -->
     <nav class="nav">
@@ -655,7 +745,6 @@
                         <span class="card-tag">#DeepMind</span>
                         <span class="card-tag">#AGI</span>
                         <span class="card-tag">#科学方法</span>
-                        <span class="card-tag" style="background: rgba(217, 119, 87, 0.1); color: var(--accent-orange);">🎨 Anthropic 风格版</span>
                     </div>
                     <div class="card-footer">
                         <span class="read-link">
@@ -813,11 +902,6 @@
                             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                         </svg>
                     </a>
-                    <a href="https://www.instagram.com/mr.canqi/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-                        <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
-                    </a>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -827,6 +911,132 @@
     </footer>
 
     <script>
+        // ===== 流星雨效果 =====
+        // 创建静态星星（不闪烁）
+        const starsBg = document.getElementById('starsBg');
+        const starCount = 150;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 70 + '%';
+            star.style.width = (1 + Math.random() * 2) + 'px';
+            star.style.height = star.style.width;
+            star.style.opacity = Math.random() * 0.7 + 0.3; // 随机透明度，但静态
+            starsBg.appendChild(star);
+        }
+
+        // 流星雨系统
+        const meteorShower = document.getElementById('meteorShower');
+        const meteorContainer = document.querySelector('.meteor-container');
+
+        // 追踪当前是否有活跃流星
+        let hasActiveMeteor = false;
+
+        // 根据滚动淡出流星背景
+        function handleMeteorOpacity() {
+            const scrollTop = window.scrollY;
+            const heroSection = document.querySelector('.hero');
+            const heroHeight = heroSection.offsetHeight;
+            const articlesSection = document.querySelector('.articles-section');
+            const articlesTop = articlesSection.offsetTop;
+
+            // 计算滚动进度（从hero底部到文章顶部）
+            const fadeStart = heroHeight * 0.5; // 从hero一半开始淡出
+            const fadeEnd = articlesTop - window.innerHeight * 0.3; // 到文章可见时完全淡出
+
+            let opacity = 1;
+
+            if (scrollTop > fadeStart) {
+                const progress = (scrollTop - fadeStart) / (fadeEnd - fadeStart);
+                opacity = 1 - Math.min(progress, 1);
+            }
+
+            meteorContainer.style.opacity = opacity;
+
+            // 完全淡出后暂停流星生成，节省性能
+            if (opacity < 0.1) {
+                meteorContainer.style.display = 'none';
+            } else {
+                meteorContainer.style.display = 'block';
+            }
+        }
+
+        // 滚动监听
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    handleMeteorOpacity();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        function createMeteor(isBig = false) {
+            // 如果已有流星在飞，不创建新的
+            if (hasActiveMeteor) {
+                return;
+            }
+
+            hasActiveMeteor = true;
+
+            const meteor = document.createElement('div');
+            meteor.className = isBig ? 'meteor big-meteor' : 'meteor';
+
+            // 随机起始位置（主要在上方和右侧）
+            const startX = Math.random() * window.innerWidth;
+            const startY = Math.random() * (window.innerHeight * 0.3);
+
+            // 计算结束位置（向左下角划过）
+            const endX = startX - 500 - Math.random() * 500;
+            const endY = startY + 500 + Math.random() * 500;
+
+            const duration = isBig ? 4.5 : (3 + Math.random() * 2);
+
+            meteor.style.setProperty('--start-x', startX + 'px');
+            meteor.style.setProperty('--start-y', startY + 'px');
+            meteor.style.setProperty('--end-x', endX + 'px');
+            meteor.style.setProperty('--end-y', endY + 'px');
+            meteor.style.setProperty('--duration', duration + 's');
+
+            meteorShower.appendChild(meteor);
+
+            // 添加动画类
+            requestAnimationFrame(() => {
+                meteor.classList.add('animate');
+            });
+
+            // 动画结束后移除并重置标记
+            setTimeout(() => {
+                meteor.remove();
+                hasActiveMeteor = false;
+            }, duration * 1000);
+        }
+
+        // 启动流星雨 - 确保同时只有1颗
+        function startMeteorShower() {
+            // 初始1颗
+            setTimeout(() => createMeteor(false), 1000);
+
+            // 尝试创建流星，但会被createMeteor函数内部检查拦截
+            setInterval(() => {
+                createMeteor(false);
+            }, 4000); // 每4秒尝试一次，但实际是否能创建取决于是否有活跃流星
+
+            // 偶尔尝试生成大流星
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    createMeteor(true);
+                }
+            }, 8000);
+        }
+
+        startMeteorShower();
+
+        // ===== 滚动显示动画 =====
         // Scroll reveal animation
         const reveals = document.querySelectorAll('.reveal');
 
