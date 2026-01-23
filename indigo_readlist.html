@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阅读订阅清单 - Reading List</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lora:wght@400;500;600&display=swap');
+
+        :root {
+            --dark: #141413;
+            --light: #faf9f5;
+            --mid-gray: #b0aea5;
+            --light-gray: #e8e6dc;
+            --orange: #d97757;
+            --blue: #6a9bcc;
+            --green: #788c5d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', Georgia, serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--dark) 0%, #2a2a28 100%);
+            color: var(--light);
+            padding: 60px 0 50px;
+            margin-bottom: 0;
+        }
+
+        header h1 {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        header .subtitle {
+            font-size: 18px;
+            color: var(--mid-gray);
+            max-width: 800px;
+            line-height: 1.7;
+        }
+
+        .intro-quote {
+            background-color: var(--light-gray);
+            border-left: 4px solid var(--orange);
+            padding: 30px;
+            margin: 40px 0;
+            font-style: italic;
+            font-size: 18px;
+            color: var(--dark);
+            border-radius: 8px;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            background: var(--light);
+            padding: 20px 0;
+            border-bottom: 2px solid var(--light-gray);
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        nav a {
+            font-family: 'Poppins', Arial, sans-serif;
+            padding: 10px 20px;
+            background: var(--light-gray);
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: var(--orange);
+            color: var(--light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(217, 119, 87, 0.3);
+        }
+
+        section {
+            margin-bottom: 60px;
+            scroll-margin-top: 100px;
+        }
+
+        section:first-of-type {
+            margin-top: 0;
+        }
+
+        section h2 {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--orange);
+            border-radius: 2px;
+        }
+
+        section h3 {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 24px;
+            font-weight: 600;
+            margin: 30px 0 20px;
+            color: var(--dark);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid var(--light-gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--orange);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .card:nth-child(3n)::before {
+            background: var(--blue);
+        }
+
+        .card:nth-child(3n+1)::before {
+            background: var(--green);
+        }
+
+        .card h4 {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .card p {
+            color: #666;
+            font-size: 15px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .card a {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--light-gray);
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .card a:hover {
+            background: var(--orange);
+            color: var(--light);
+        }
+
+        .simple-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .simple-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .simple-card .info {
+            flex: 1;
+        }
+
+        .simple-card h4 {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .simple-card p {
+            color: #666;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .simple-card a {
+            padding: 8px 16px;
+            background: var(--light-gray);
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            margin-left: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .simple-card a:hover {
+            background: var(--orange);
+            color: var(--light);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: var(--light-gray);
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 8px;
+            font-family: 'Poppins', Arial, sans-serif;
+        }
+
+        .badge.orange { background: var(--orange); color: var(--light); }
+        .badge.blue { background: var(--blue); color: var(--light); }
+        .badge.green { background: var(--green); color: var(--light); }
+
+        footer {
+            background: var(--dark);
+            color: var(--light);
+            padding: 60px 0;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--mid-gray);
+            font-size: 14px;
+        }
+
+        .search-box {
+            margin-bottom: 30px;
+        }
+
+        .search-box input {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px 25px;
+            font-family: 'Lora', Georgia, serif;
+            font-size: 16px;
+            border: 2px solid var(--light-gray);
+            border-radius: 30px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--orange);
+            box-shadow: 0 0 0 3px rgba(217, 119, 87, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 32px;
+            }
+
+            header .subtitle {
+                font-size: 16px;
+            }
+
+            section h2 {
+                font-size: 28px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav a {
+                font-size: 12px;
+                padding: 8px 15px;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📚 Indigo阅读清单</h1>
+            <p class="subtitle">一份非主流媒体和专栏博主大集合！因为个人工作和兴趣的原因，这些订阅以科技与投资为主，经济、国际政治还有自然科学也不能错过。不同行业与学科的跨界思考最有趣！</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#tech">科技新闻</a></li>
+                <li><a href="#magazines">杂志</a></li>
+                <li><a href="#newsletter">Newsletter</a></li>
+                <li><a href="#ventures">风投机构</a></li>
+                <li><a href="#podcasts">播客视频</a></li>
+                <li><a href="#columns">个人专栏</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section id="tech">
+            <h2>Tech News 科技新闻</h2>
+            <p style="color: var(--mid-gray); margin-bottom: 20px;">快速浏览最新科技资讯</p>
+            <div class="grid">
+                <div class="card" data-name="the verge">
+                    <h4>The Verge</h4>
+                    <p>科技新闻与评论</p>
+                    <a href="https://www.theverge.com/" target="_blank">访问网站 →</a>
+                </div>
+                <div class="card" data-name="the information">
+                    <h4>The Information</h4>
+                    <p>最喜欢的深度科技媒体</p>
+                    <a href="https://www.theinformation.com/newsletters" target="_blank">访问网站 →</a>
+                </div>
+                <div class="card" data-name="hacker news">
+                    <h4>Hacker News</h4>
+                    <p>极客必读新闻站</p>
+                    <a href="https://news.ycombinator.com/news" target="_blank">访问网站 →</a>
+                </div>
+                <div class="card" data-name="zeli">
+                    <h4>Zeli</h4>
+                    <p>用中文阅读Hacker News和AI论文摘要</p>
+                    <a href="https://zeli.app/zh" target="_blank">访问网站 →</a>
+                </div>
+                <div class="card" data-name="buzzing">
+                    <h4>Buzzing</h4>
+                    <p>新闻聚合大全</p>
+                    <a href="https://www.buzzing.cc/" target="_blank">访问网站 →</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="magazines">
+            <h2>Magazines 杂志</h2>
+            <p style="color: var(--mid-gray); margin-bottom: 20px;">值得深度阅读的文章</p>
+            <div class="grid">
+                <div class="card" data-name="wired">
+                    <h4>WIRED</h4>
+                    <p>着重报道科技对文化、经济和政治的影响，多年情怀订阅</p>
+                    <a href="https://www.wired.com/" target="_blank">访问网站 →</a>
+                </div>
+                <div class="card" data-name="noema">
+                    <h4>NOEMA</h4>
+                    <p>屡获殊荣的杂志，探讨席卷全球的变革，在哲学、治理、地缘政治、经济、技术和文化等方向的交叉领域发表文章</p>
+                    <a href="https://www.noemamag.com/" target="_blank">访问网站 →</a>
+                </div>
+                <div class="card" data-name="politico">
+                    <h4>POLITICO</h4>
+                    <p>关注全球政治与策政，从政策制定者的角度来追踪变革</p>
+                    <a href="https://www.politico.com/" target="_blank">访问网站 →</a>
+                </div>
+                <div class="card" data-name="lesswrong">
+                    <h4>LessWrong</h4>
+                    <p>致力于完善理性艺术的社区博客</p>
+                    <a href="https://www.lesswrong.com/" target="_blank">访问网站 →</a>
+                </div>
+                <div class="card" data-name="quanta magazine">
+                    <h4>Quanta Magazine</h4>
+                    <p>关注数学、理论物理、计算机科学（人工智能）和基础生命科学的发展，是主流媒体对科学报道的深度和最有观点的补充</p>
+                    <a href="https://www.quantamagazine.org/" target="_blank">访问网站 →</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="newsletter">
+            <h2>Newsletter</h2>
+            <div class="grid">
+                <div class="card" data-name="every">
+                    <h4>Every</h4>
+                    <p>A daily newsletter on what comes next in tech. 75K+ readers.</p>
+                    <a href="https://every.to/" target="_blank">访问网站 →</a>
+                </div>
+                <div class="card" data-name="stephen wolfram">
+                    <h4>Stephen Wolfram Writings</h4>
+                    <p>Stephen Wolfram 的个人专栏，科学思考为主！</p>
+                    <a href="https://writings.stephenwolfram.com/" target="_blank">访问网站 →</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="ventures">
+            <h2>Ventures 风险投资机构</h2>
+            <p style="color: var(--mid-gray); margin-bottom: 20px;">Newsletter & Podcasts</p>
+            <div class="grid">
+                <div class="card" data-name="ark invest">
+                    <h4>ARK Invest</h4>
+                    <a href="https://www.ark-invest.com/articles" target="_blank">访问 →</a>
+                </div>
+                <div class="card" data-name="a16z">
+                    <h4>a16z Future</h4>
+                    <a href="https://future.a16z.com/" target="_blank">访问 →</a>
+                </div>
+                <div class="card" data-name="nfx">
+                    <h4>NFX</h4>
+                    <a href="https://www.nfx.com/" target="_blank">访问 →</a>
+                </div>
+                <div class="card" data-name="20vc">
+                    <h4>20VC</h4>
+                    <a href="https://20vc.substack.com/" target="_blank">访问 →</a>
+                </div>
+                <div class="card" data-name="bessemer">
+                    <h4>Bessemer Venture Partners</h4>
+                    <a href="https://www.bvp.com/atlas/" target="_blank">访问 →</a>
+                </div>
+                <div class="card" data-name="coatue">
+                    <h4>Coatue</h4>
+                    <a href="https://www.coatue.com/insights" target="_blank">访问 →</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="podcasts">
+            <h2>Podcasts & Video Channels</h2>
+            <p style="color: var(--mid-gray); margin-bottom: 20px;">经常在我的点赞视频中出现的 Podcast 采访和视频频道</p>
+
+            <h3>YouTube</h3>
+            <div class="cards-container">
+                <div class="simple-card" data-name="lex fridman">
+                    <div class="info">
+                        <h4>Lex Fridman</h4>
+                        <p>深度对话，AI与科技</p>
+                    </div>
+                    <a href="https://www.youtube.com/@lexfridman" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="joe rogan">
+                    <div class="info">
+                        <h4>Joe Rogan (PowerfulJRE)</h4>
+                    </div>
+                    <a href="https://www.youtube.com/@joerogan" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="tim ferriss">
+                    <div class="info">
+                        <h4>Tim Ferriss</h4>
+                        <p>生产力与生活方式</p>
+                    </div>
+                    <a href="https://www.youtube.com/@timferriss" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="tom bilyeu">
+                    <div class="info">
+                        <h4>Tom Bilyeu</h4>
+                        <p>创业与心态</p>
+                    </div>
+                    <a href="https://www.youtube.com/@TomBilyeu" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="david perell">
+                    <div class="info">
+                        <h4>David Perell</h4>
+                        <p>写作与教育</p>
+                    </div>
+                    <a href="https://www.youtube.com/@DavidPerellChannel" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="dwarkesh patel">
+                    <div class="info">
+                        <h4>Dwarkesh Patel</h4>
+                    </div>
+                    <a href="https://www.youtube.com/@DwarkeshPatel" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="mkbhd">
+                    <div class="info">
+                        <h4>Marques Brownlee (MKBHD)</h4>
+                        <p>科技产品评测</p>
+                    </div>
+                    <a href="https://www.youtube.com/@mkbhd" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="diary of a ceo">
+                    <div class="info">
+                        <h4>The Diary Of A CEO</h4>
+                        <p>商业领袖访谈</p>
+                    </div>
+                    <a href="https://www.youtube.com/@TheDiaryOfACEO" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="chris williamson">
+                    <div class="info">
+                        <h4>Chris Williamson</h4>
+                    </div>
+                    <a href="https://www.youtube.com/@ChrisWillx" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="lennys podcast">
+                    <div class="info">
+                        <h4>Lenny's Podcast</h4>
+                        <p>产品管理</p>
+                    </div>
+                    <a href="https://www.youtube.com/@LennysPodcast" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="mad podcast">
+                    <div class="info">
+                        <h4>The MAD Podcast with Matt Turck</h4>
+                    </div>
+                    <a href="https://www.youtube.com/@DataDrivenNYC" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="matthew berman">
+                    <div class="info">
+                        <h4>Matthew Berman</h4>
+                        <p>AI前沿</p>
+                    </div>
+                    <a href="https://www.youtube.com/@matthew_berman" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="no priors">
+                    <div class="info">
+                        <h4>No Priors</h4>
+                        <p>AI, Machine Learning, Tech, & Startups</p>
+                    </div>
+                    <a href="https://www.youtube.com/@NoPriorsPodcast" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="20vc youtube">
+                    <div class="info">
+                        <h4>20VC with Harry Stebbings</h4>
+                        <p>风投访谈</p>
+                    </div>
+                    <a href="https://www.youtube.com/@20VC" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="cleo abram">
+                    <div class="info">
+                        <h4>Cleo Abram</h4>
+                        <p>科技科普</p>
+                    </div>
+                    <a href="https://www.youtube.com/@CleoAbram" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="alex kantrowitz">
+                    <div class="info">
+                        <h4>Alex Kantrowitz</h4>
+                    </div>
+                    <a href="https://www.youtube.com/@Alex.kantrowitz" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="acquired">
+                    <div class="info">
+                        <h4>Acquired</h4>
+                        <p>商业案例分析</p>
+                    </div>
+                    <a href="https://www.youtube.com/@AcquiredFM" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="80000 hours">
+                    <div class="info">
+                        <h4>80,000 Hours</h4>
+                        <p>职业规划与影响力</p>
+                    </div>
+                    <a href="https://www.youtube.com/@eightythousandhours" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="all-in">
+                    <div class="info">
+                        <h4>All-In Podcast</h4>
+                        <p>科技投资</p>
+                    </div>
+                    <a href="https://www.youtube.com/@allin" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="ark youtube">
+                    <div class="info">
+                        <h4>ARK Invest</h4>
+                    </div>
+                    <a href="https://www.youtube.com/@ARKInvest2015" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="sequoia">
+                    <div class="info">
+                        <h4>Sequoia Capital</h4>
+                        <p>红杉资本</p>
+                    </div>
+                    <a href="https://www.youtube.com/@sequoiacapital" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="y combinator">
+                    <div class="info">
+                        <h4>Y Combinator</h4>
+                        <p>创业加速器</p>
+                    </div>
+                    <a href="https://www.youtube.com/@ycombinator" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="ai engineer">
+                    <div class="info">
+                        <h4>AI Engineer</h4>
+                    </div>
+                    <a href="https://www.youtube.com/@aiDotEngineer" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="amii">
+                    <div class="info">
+                        <h4>Amii</h4>
+                        <p>机器智能</p>
+                    </div>
+                    <a href="https://www.youtube.com/@amiithinks" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="3blue1brown">
+                    <div class="info">
+                        <h4>3Blue1Brown</h4>
+                        <p>数学可视化</p>
+                    </div>
+                    <a href="https://www.youtube.com/@3blue1brown" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="andrej karpathy">
+                    <div class="info">
+                        <h4>Andrej Karpathy</h4>
+                        <p>AI专家</p>
+                    </div>
+                    <a href="https://www.youtube.com/@AndrejKarpathy" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="openai">
+                    <div class="info">
+                        <h4>OpenAI</h4>
+                    </div>
+                    <a href="https://www.youtube.com/@OpenAI" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="anthropic">
+                    <div class="info">
+                        <h4>Anthropic</h4>
+                    </div>
+                    <a href="https://www.youtube.com/@anthropic-ai" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="deepmind">
+                    <div class="info">
+                        <h4>Google DeepMind</h4>
+                    </div>
+                    <a href="https://www.youtube.com/@googledeepmind" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="finematics">
+                    <div class="info">
+                        <h4>Finematics</h4>
+                        <p>DeFi教育</p>
+                    </div>
+                    <a href="https://www.youtube.com/@Finematics/videos" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="closer to truth">
+                    <div class="info">
+                        <h4>Closer To Truth</h4>
+                        <p>哲学与科学</p>
+                    </div>
+                    <a href="https://www.youtube.com/@CloserToTruthTV" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="big think">
+                    <div class="info">
+                        <h4>Big Think</h4>
+                        <p>思想领袖</p>
+                    </div>
+                    <a href="https://www.youtube.com/@bigthink" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="quanta youtube">
+                    <div class="info">
+                        <h4>Quanta Magazine</h4>
+                        <p>科学频道</p>
+                    </div>
+                    <a href="https://www.youtube.com/@QuantaScienceChannel" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="royal institution">
+                    <div class="info">
+                        <h4>The Royal Institution</h4>
+                        <p>英国科学协会</p>
+                    </div>
+                    <a href="https://www.youtube.com/TheRoyalInstitution" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="科学漫聊">
+                    <div class="info">
+                        <h4>科學漫聊</h4>
+                        <p>中文科普</p>
+                    </div>
+                    <a href="https://www.youtube.com/@%E7%A7%91%E5%AD%B8%E6%BC%AB%E8%81%8A" target="_blank">观看 →</a>
+                </div>
+
+                <div class="simple-card" data-name="best partners">
+                    <div class="info">
+                        <h4>Best Partners TV</h4>
+                    </div>
+                    <a href="https://www.youtube.com/@bestpartners" target="_blank">观看 →</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="columns">
+            <h2>Newsletter 个人专栏</h2>
+            <div class="intro-quote">
+                下面是我精选的个人专栏，优秀的文字内容创作者基本上都被 Substack 垄断了。<br><br>
+                这些专栏主要包括了工程技术、人工智能、加密货币、创作者经济、国际政经以及广泛的科技话题。
+            </div>
+
+            <h3>Industries Research</h3>
+            <div class="cards-container">
+                <div class="simple-card" data-name="semianalysis">
+                    <div class="info">
+                        <h4>SemiAnalysis</h4>
+                        <p>连接世界上最重要的行业（半导体）与商业</p>
+                    </div>
+                    <a href="https://semianalysis.com/" target="_blank">访问 →</a>
+                </div>
+
+                <div class="simple-card" data-name="stratechery">
+                    <div class="info">
+                        <h4>Stratechery by Ben Thompson</h4>
+                        <p>关于技术的商业、策略和影响</p>
+                    </div>
+                    <a href="https://stratechery.com/" target="_blank">访问 →</a>
+                </div>
+
+                <div class="simple-card" data-name="turing post">
+                    <div class="info">
+                        <h4>Turing Post</h4>
+                    </div>
+                    <a href="https://www.turingpost.com/" target="_blank">访问 →</a>
+                </div>
+
+                <div class="simple-card" data-name="lowpass">
+                    <div class="info">
+                        <h4>Lowpass</h4>
+                        <p>过滤未来：AR, VR, streaming 等</p>
+                    </div>
+                    <a href="https://www.lowpass.cc/" target="_blank">访问 →</a>
+                </div>
+
+                <div class="simple-card" data-name="the generalist">
+                    <div class="info">
+                        <h4>The Generalist by Mario Gabriele</h4>
+                    </div>
+                    <a href="https://thegeneralist.substack.com/" target="_blank">访问 →</a>
+                </div>
+
+                <div class="simple-card" data-name="algorithmic bridge">
+                    <div class="info">
+                        <h4>The Algorithmic Bridge by Alberto Romero</h4>
+                    </div>
+                    <a href="https://thealgorithmicbridge.substack.com/" target="_blank">访问 →</a>
+                </div>
+
+                <div class="simple-card" data-name="forward future">
+                    <div class="info">
+                        <h4>Forward Future by Matthew Berman</h4>
+                        <p>将 AI 的好处带给全人类</p>
+                    </div>
+                    <a href="https://www.forwardfuture.ai/" target="_blank">访问 →</a>
+                </div>
+
+                <div class="simple-card" data-name="big technology">
+                    <div class="info">
+                        <h4>Big Technology by Alex Kantrowitz</h4>
+                    </div>
+                    <a href="https://www.bigtechnology.com/" target="_blank">访问 →</a>
+                </div>
+
+                <div class="simple-card" data-name="where tech meets bio">
+                    <div class="info">
+                        <h4>Where Tech Meets Bio</h4>
+                    </div>
+                    <a href="https://www.techlifesci.com/" target="_blank">访问 →</a>
+                </div>
+            </div>
+
+            <h3>Tech Economy & Politico</h3>
+            <div class="cards-container">
+                <div class="simple-card" data-name="not boring">
+                    <div class="info">
+                        <h4>Not Boring by Packy McCormick</h4>
+                    </div>
+                    <a href="https://www.notboring.co/" target="_blank">访问 →</a>
+                </div>
+
+                <div class="simple-card" data-name="one useful thing">
+                    <div class="info">
+                        <h4>One Useful Thing by Ethan Mollick</h4>
+                    </div>
+                    <a href="https://www.oneusefulthing.org/" target="_blank">访问 →</a>
+                </div>
+
+                <div class="simple-card" data-name="elad blog">
+                    <div class="info">
+                        <h4>Elad Blog</h4>
+                    </div>
+                    <a href="https://blog.eladgil.com/" target="_blank">访问 →</a>
+                </div>
+
+                <div class="simple-card" data-name="no set gauge">
+                    <div class="info">
+                        <h4>No Set Gauge by Rudolf Laine</h4>
+                    </div>
+                    <a href="https://www.nosetgauge.com/" target="_blank">访问 →</a>
+                </div>
+
+                <div class="simple-card" data-name="noahpinion">
+                    <div class="info">
+                        <h4>Noahpinion by Noah Smith</h4>
+                    </div>
+                    <a href="https://www.noahpinion.blog/" target="_blank">访问 →</a>
+                </div>
+            </div>
+
+            <h3>Crypto</h3>
+            <div class="cards-container">
+                <div class="simple-card" data-name="bankless">
+                    <div class="info">
+                        <h4>Bankless</h4>
+                    </div>
+                    <a href="https://newsletter.banklesshq.com/" target="_blank">访问 →</a>
+                </div>
+
+                <div class="simple-card" data-name="ecoinometrics">
+                    <div class="info">
+                        <h4>Ecoinometrics</h4>
+                        <p>理解比特币在未来金融中的地位</p>
+                    </div>
+                    <a href="https://ecoinometrics.substack.com/" target="_blank">访问 →</a>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>*来源：Indigo 的 Notion 订阅清单*</p>
+            <p style="margin-top: 20px;">💡 不同行业与学科的跨界思考最有趣！</p>
+        </div>
+    </footer>
+
+    <script>
+        function filterContent() {
+            const input = event.target;
+            const filter = input.value.toLowerCase();
+            const cards = document.querySelectorAll('.card, .simple-card');
+
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name');
+                if (name && name.toLowerCase().includes(filter)) {
+                    card.classList.remove('hidden');
+                } else if (name) {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
