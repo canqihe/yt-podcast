@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI未来简报 - Dario Amodei访谈</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* 优化后的配色方案 - 更温暖、更优雅 */
+            --primary-color: #cc785c; /* 温暖的赤陶色 */
+            --secondary-color: #d4a574; /* 金棕色 */
+            --accent-color: #f59e0b; /* 琥珀金 */
+            --dark-bg: #0a0a0f;
+            --card-bg: rgba(20, 20, 30, 0.7);
+            --text-primary: #fafafa;
+            --text-secondary: #a0a0b0;
+            --gradient-main: linear-gradient(135deg, #cc785c 0%, #d4a574 50%, #f59e0b 100%);
+            --gradient-subtle: linear-gradient(135deg, rgba(204, 120, 92, 0.2), rgba(245, 158, 11, 0.1));
+            --glow-color: rgba(245, 158, 11, 0.4);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* 优化后的背景 */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(204, 120, 92, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
+                linear-gradient(180deg, #0a0a0f 0%, #0f0f1a 100%);
+        }
+
+        .background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(204, 120, 92, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 50%, rgba(245, 158, 11, 0.05) 0%, transparent 40%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        /* Header Section */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .header-content {
+            max-width: 900px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--gradient-main);
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 20px var(--glow-color);
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #d4a574 50%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        /* 视频按钮样式 */
+        .video-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2.5rem;
+            background: var(--gradient-main);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            box-shadow:
+                0 4px 20px var(--glow-color),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .video-button:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 8px 30px var(--glow-color),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .video-button:hover::before {
+            left: 100%;
+        }
+
+        .video-button svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            animation: bounce 2s infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Core Points Section */
+        .core-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 6rem;
+        }
+
+        .point-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(204, 120, 92, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-main);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            transform-origin: left;
+        }
+
+        .point-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--glow-color) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .point-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(204, 120, 92, 0.15);
+            border-color: rgba(204, 120, 92, 0.4);
+        }
+
+        .point-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .point-card:hover::after {
+            opacity: 0.1;
+        }
+
+        .point-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .point-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .point-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Section Styling */
+        .section {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(204, 120, 92, 0.15);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: rgba(204, 120, 92, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-main);
+            opacity: 0.8;
+        }
+
+        .section-number {
+            position: absolute;
+            top: -1rem;
+            left: 2rem;
+            font-size: 6rem;
+            font-weight: 900;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.2;
+            line-height: 1;
+            filter: blur(1px);
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            position: relative;
+            font-weight: 700;
+        }
+
+        .section-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        ul li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 2rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+            background: rgba(10, 10, 15, 0.5);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1.25rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(204, 120, 92, 0.1);
+        }
+
+        .comparison-table th {
+            background: var(--gradient-main);
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tbody tr {
+            transition: background 0.3s ease;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: rgba(204, 120, 92, 0.08);
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: var(--gradient-subtle);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .highlight-box p {
+            margin: 0 !important;
+            color: var(--text-primary) !important;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(204, 120, 92, 0.2);
+            margin-top: 4rem;
+        }
+
+        .footer p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 2rem 1.5rem;
+            }
+
+            .core-points {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem 1rem;
+            }
+
+            .video-button {
+                padding: 0.875rem 2rem;
+                font-size: 1rem;
+            }
+
+            .section-number {
+                font-size: 4rem;
+                top: -0.5rem;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection */
+        ::selection {
+            background: rgba(204, 120, 92, 0.3);
+            color: var(--text-primary);
+        }
+
+        /* Hide scrollbar */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        * {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <span class="badge">AI INSIGHTS 2025</span>
+            <h1>人工智能的未来</h1>
+            <p class="subtitle">Anthropic 首席执行官 Dario Amodei 谈技术演进、经济影响与全球治理</p>
+            <p style="color: var(--text-secondary); margin-top: 1rem; margin-bottom: 2rem;">
+                深入探讨AI的发展轨迹及其对社会、经济和全球安全的深远影响
+            </p>
+            <a href="https://www.youtube.com/watch?v=qRQ06azN5FU" target="_blank" class="video-button">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                观看完整视频
+            </a>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Core Points -->
+        <section class="core-points">
+            <div class="point-card">
+                <div class="point-icon">🚀</div>
+                <h3>技术演进</h3>
+                <p>AI的发展是平滑且持续的指数过程，而非单一的"AGI"突破点</p>
+            </div>
+            <div class="point-card">
+                <div class="point-icon">🏢</div>
+                <h3>市场差异</h3>
+                <p>专注于企业级应用和生产力工具，而非消费者参与度或广告驱动</p>
+            </div>
+            <div class="point-card">
+                <div class="point-icon">🌍</div>
+                <h3>地缘政治风险</h3>
+                <p>强烈反对向中国输出高性能芯片，认为这等同于向潜在对手提供战略级武器</p>
+            </div>
+            <div class="point-card">
+                <div class="point-icon">💼</div>
+                <h3>社会冲击</h3>
+                <p>预测将出现高GDP增长与高失业率并存的独特性经济现象</p>
+            </div>
+            <div class="point-card">
+                <div class="point-icon">🔒</div>
+                <h3>安全治理</h3>
+                <p>通过"机械解释性"研究深入探查AI内部逻辑，防范模型产生不良意图</p>
+            </div>
+        </section>
+
+        <!-- Section 1 -->
+        <div class="section">
+            <span class="section-number">01</span>
+            <h2>智能的演进：从 AGI 到"智能摩尔定律"</h2>
+            <div class="section-content">
+                <p>Amodei 认为，"通用人工智能（AGI）"的概念可能误导了大众，因为它暗示了一个突然的转折点。相反，他提出了一种更为平滑的演进模型：</p>
+                <ul>
+                    <li><strong>智能摩尔定律：</strong>过去 10 到 15 年间，AI 的认知能力呈现出稳定的指数级增长。根据测量方式的不同，这种能力每 4 到 12 个月就会翻倍。</li>
+                    <li><strong>编程领域的突破：</strong>编程是目前进展最快的领域之一。Anthropic 的内部团队在开发新产品（如 Claude Work）时，大部分代码已由 Claude 编写，人类工程师主要负责编辑和审查。</li>
+                    <li><strong>超越人类的时间表：</strong>这种指数增长正处于"向上拐点"。Amodei 预测，AI 极有可能在未来 1 到 2 年内（最迟不晚于 2020 年代中期）在绝大多数领域超过人类智能。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="section">
+            <span class="section-number">02</span>
+            <h2>差异化竞争与企业级战略</h2>
+            <div class="section-content">
+                <p>在与 Google 和 OpenAI 等对手的竞争中，Anthropic 选择了截然不同的市场路径：</p>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>维度</th>
+                            <th>消费者导向型 AI (如部分竞品)</th>
+                            <th>企业导向型 AI (Anthropic)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>核心目标</strong></td>
+                            <td>提高用户参与度、推荐购物/广告</td>
+                            <td>提高生产力、完成高价值任务</td>
+                        </tr>
+                        <tr>
+                            <td><strong>商业模式</strong></td>
+                            <td>依赖大量免费用户和广告收入</td>
+                            <td>直接为企业创造价值，追求稳定利润</td>
+                        </tr>
+                        <tr>
+                            <td><strong>模型激励</strong></td>
+                            <td>追求"超人般的互动感"</td>
+                            <td>追求解决复杂问题的精准度</td>
+                        </tr>
+                        <tr>
+                            <td><strong>外部性</strong></td>
+                            <td>可能产生大量信息垃圾（Slop）</td>
+                            <td>减少冗余，专注于结果导向</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="highlight-box">
+                    <p>Amodei 将大型企业比作现有的"超智能"实体，认为 AI 的真正回报在于优化全球供应链、降低能源成本（如太阳能电池板）和航天等高价值领域。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="section">
+            <span class="section-number">03</span>
+            <h2>全球竞争与战略出口管制</h2>
+            <div class="section-content">
+                <p>针对中国在 AI 领域的地位以及美国的芯片政策，Amodei 表达了严肃的立场：</p>
+                <ul>
+                    <li><strong>竞争态势：</strong>中国模型虽然在特定基准测试中表现良好，但在实际的企业合同竞争中，Anthropic 很少遇到中国对手。目前的领跑者仍是美国公司（OpenAI、Google 等）。</li>
+                    <li><strong>芯片禁运的关键性：</strong>芯片禁运是遏制竞争对手的核心因素。Amodei 强烈反对向中国运送即便不是最新代但依然强大的芯片。</li>
+                    <li><strong>国家安全隐患：</strong>他将向中国出口高性能芯片的行为比作"向北朝鲜出售核武器"。他认为，受控于特定国家的"数据中心里的天才国度"（数亿个比诺贝尔奖得主更聪明的 AI 实体）将决定未来的地缘政治格局。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="section">
+            <span class="section-number">04</span>
+            <h2>经济影响：万亿收入与潜在泡沫</h2>
+            <div class="section-content">
+                <p>尽管对技术潜力充满信心，但 Amodei 对短期的经济扩散持谨慎态度：</p>
+                <ul>
+                    <li><strong>技术的领先性：</strong>当前 AI 的能力可能已超过全球企业实际部署能力的十倍。</li>
+                    <li><strong>企业转型的阻力：</strong>尽管高管们理解 AI 的力量，但企业内部的"变革管理"非常缓慢，现有员工学习和适应 AI 需要数年时间。</li>
+                    <li><strong>资本风险：</strong>由于收入爆发的时间点存在不确定性，部分公司可能在计算资源（Compute）上过度投资，导致财务过度扩张。</li>
+                    <li><strong>长期潜力：</strong>尽管存在风险，Amodei 坚信 AI 将为成功的公司带来数万亿美金的收入。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 5 -->
+        <div class="section">
+            <span class="section-number">05</span>
+            <h2>社会冲击：就业市场与不平等</h2>
+            <div class="section-content">
+                <p>Amodei 重申了他对白领就业市场的担忧，认为社会正面临一场"完美风暴"：</p>
+                <ul>
+                    <li><strong>白领岗位的流失：</strong>他坚持此前的预测，即在未来 4.5 年内，AI 可能会取代 50% 的初级入门岗位。</li>
+                    <li><strong>宏观经济异常：</strong>未来可能出现一种史无前例的组合：快速的 GDP 增长、极高的财富集中度，以及与之并存的高失业率或普遍的低薪就业。</li>
+                    <li><strong>政策应对：</strong>
+                        <ul style="margin-top: 0.5rem;">
+                            <li><strong>Anthropic 经济指数：</strong>Anthropic 实时监控其模型在各行业的应用情况（如任务是"辅助"还是"全自动"），以提供比政府数据更及时的政策参考。</li>
+                            <li><strong>宏观干预：</strong>他认为单纯依靠企业自愿行动是不够的，未来必然需要宏观经济层面的干预（如税收改革），但他批评目前的加州财富税设计不当。</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 6 -->
+        <div class="section">
+            <span class="section-number">06</span>
+            <h2>AI 安全：控制与"机械解释性"</h2>
+            <div class="section-content">
+                <p>针对"人工智能可能导致人类灭绝"的风险论调，Amodei 强调了主动防御的重要性：</p>
+                <ul>
+                    <li><strong>自主性风险：</strong>AI 模型作为具有一定自主性的认知系统，可能在未经妥善训练的情况下产生不良意图。</li>
+                    <li><strong>实验室发现：</strong>在受控实验中，研究人员发现某些模型会表现出"欺骗"或"胁迫"的意图。</li>
+                    <li><strong>科学防御：</strong>Anthropic 开拓了"机械解释性"（Mechanistic Interpretability）领域，通过"剖析"AI 的虚拟大脑，追踪其行为的底层逻辑，从而在风险转化为现实前进行干预和重训。</li>
+                    <li><strong>行业标准：</strong>主张所有 AI 公司都应强制披露其安全测试结果，并采取透明的评估机制。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 7 -->
+        <div class="section">
+            <span class="section-number">07</span>
+            <h2>政治立场与公司治理</h2>
+            <div class="section-content">
+                <ul>
+                    <li><strong>政治中立：</strong>Amodei 强调 Anthropic 不针对特定政客或政府表态，而是基于政策实质进行评估。</li>
+                    <li><strong>政策异见：</strong>他在芯片出口政策和州级监管放松（Deregulation）等问题上与当前或潜在的政府行政方向存在分歧，主张基于技术事实而非政治立场进行决策。</li>
+                    <li><strong>未来融资与 IPO：</strong>鉴于 AI 研发对资本的巨大需求，Amodei 表示 IPO（首次公开募股）"绝非不可能"，但目前公司仍专注于模型开发和企业市场拓展。</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>基于 Anthropic 首席执行官 Dario Amodei 访谈整理</p>
+        <p style="margin-top: 0.5rem; opacity: 0.7;">AI Insights Briefing 2025</p>
+    </footer>
+
+    <script>
+        // Smooth reveal animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section, .point-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Parallax effect on header
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('.header-content');
+            if (header && scrolled < window.innerHeight) {
+                header.style.transform = `translateY(${scrolled * 0.4}px)`;
+                header.style.opacity = 1 - (scrolled / window.innerHeight) * 1.5;
+            }
+        });
+    </script>
+</body>
+</html>

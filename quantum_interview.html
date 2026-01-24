@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>量子计算现状与未来潜力 - D-Wave CEO访谈</title>
+    <style>
+        :root {
+            --primary: #38bdf8;
+            --secondary: #818cf8;
+            --accent: #f472b6;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #e2e8f0;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(56, 189, 248, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(129, 140, 248, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(244, 114, 182, 0.06) 0%, transparent 50%);
+            animation: bgShift 20s ease-in-out infinite;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            color: rgba(226, 232, 240, 0.8);
+            margin-bottom: 32px;
+        }
+
+        .hero .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .hero .tag {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(56, 189, 248, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(56, 189, 248, 0.4);
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator::after {
+            content: '';
+            width: 24px;
+            height: 40px;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            display: block;
+        }
+
+        .scroll-indicator::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: scrollDot 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        @keyframes scrollDot {
+            0%, 100% { opacity: 1; top: 8px; }
+            50% { opacity: 0.3; top: 20px; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Main Content */
+        .content {
+            padding: 80px 0;
+        }
+
+        /* Introduction Card */
+        .intro-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 60px;
+            backdrop-filter: blur(20px);
+        }
+
+        .intro-card p {
+            font-size: 1.2rem;
+            line-height: 1.9;
+            color: rgba(226, 232, 240, 0.9);
+        }
+
+        /* Section styling */
+        .section {
+            margin-bottom: 80px;
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+        .section:nth-child(5) { animation-delay: 0.5s; }
+        .section:nth-child(6) { animation-delay: 0.6s; }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .section-number {
+            font-size: 1rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 8px 16px;
+            border-radius: 50px;
+            -webkit-text-fill-color: var(--primary);
+        }
+
+        /* Bento Grid for features */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 30px 0;
+        }
+
+        .bento-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+        }
+
+        .bento-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(56, 189, 248, 0.3);
+            box-shadow: 0 20px 60px rgba(56, 189, 248, 0.2);
+        }
+
+        .bento-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .bento-card p {
+            color: rgba(226, 232, 240, 0.8);
+            line-height: 1.8;
+        }
+
+        .bento-card ul {
+            list-style: none;
+            margin-top: 16px;
+        }
+
+        .bento-card li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+            color: rgba(226, 232, 240, 0.8);
+        }
+
+        .bento-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Table styling */
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 30px 0;
+            background: var(--glass);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .comparison-table th {
+            background: rgba(56, 189, 248, 0.1);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(56, 189, 248, 0.05);
+        }
+
+        /* Case study cards */
+        .case-study {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(129, 140, 248, 0.06));
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .case-study::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .case-study h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .case-study p {
+            color: rgba(226, 232, 240, 0.9);
+        }
+
+        /* Quote styling */
+        .quote {
+            background: var(--glass);
+            border-left: 4px solid var(--accent);
+            padding: 24px 32px;
+            margin: 30px 0;
+            border-radius: 0 16px 16px 0;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: rgba(226, 232, 240, 0.9);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .timeline-item {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -45px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--darker);
+        }
+
+        .timeline-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .timeline-item p {
+            color: rgba(226, 232, 240, 0.8);
+        }
+
+        /* Future section */
+        .future-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 30px 0;
+        }
+
+        .future-card {
+            background: linear-gradient(135deg, rgba(244, 114, 182, 0.08), rgba(129, 140, 248, 0.06));
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .future-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(244, 114, 182, 0.3);
+            box-shadow: 0 20px 60px rgba(244, 114, 182, 0.2);
+        }
+
+        .future-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(244, 114, 182, 0.1) 0%, transparent 70%);
+        }
+
+        .future-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+            color: var(--accent);
+            position: relative;
+            z-index: 1;
+        }
+
+        .future-card p {
+            color: rgba(226, 232, 240, 0.8);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Event banner */
+        .event-banner {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .event-banner h3 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .event-banner p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 80px;
+        }
+
+        footer p {
+            color: rgba(226, 232, 240, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 12px;
+            }
+
+            .intro-card {
+                padding: 24px;
+            }
+
+            .bento-card,
+            .case-study,
+            .future-card {
+                padding: 24px;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection */
+        ::selection {
+            background: rgba(56, 189, 248, 0.3);
+            color: var(--light);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>量子计算现状与未来潜力</h1>
+            <p class="subtitle">D-Wave 首席执行官 Alan Baratz 博士访谈</p>
+            <div class="meta">
+                <span class="tag">量子计算</span>
+                <span class="tag">人工智能</span>
+                <span class="tag">商业化应用</span>
+                <span class="tag">未来科技</span>
+            </div>
+            <a href="https://www.youtube.com/watch?v=EOfuh_Wdshw" target="_blank" class="cta-button">观看完整视频</a>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="content">
+        <div class="container">
+            <!-- Introduction -->
+            <div class="intro-card">
+                <p>本简报基于对 D-Wave 首席执行官 Alan Baratz 博士的深度访谈，旨在阐明量子计算的当前技术状态、实际商业应用以及未来十年的发展蓝图。</p>
+            </div>
+
+            <!-- Section 1: Core Definition -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">01</span>
+                    量子计算的核心定义与机械原理
+                </h2>
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <h3>叠加态 Superposition</h3>
+                        <p>经典计算机使用比特（Bit），状态非 0 即 1。量子计算机使用量子比特（Qubit），可以同时处于 0、1 或两者结合的状态。</p>
+                    </div>
+                    <div class="bento-card">
+                        <h3>量子纠缠 Entanglement</h3>
+                        <p>对一个量子比特的操作会影响另一个即便距离遥远的量子比特。这一特性被用于量子系统的运作过程。</p>
+                    </div>
+                    <div class="bento-card">
+                        <h3>量子隧穿 Tunneling</h3>
+                        <p>辅助量子系统在复杂计算地形中寻找最优解。</p>
+                    </div>
+                </div>
+                <div class="quote">
+                    量子计算被定义为一种利用量子力学原理解决极高难度计算问题的高效能、低能耗技术。
+                </div>
+                <p>量子计算机在执行特定计算任务时，速度比经典计算机快多个数量级，且消耗的电力极少。这种能效优势在应对当前算力需求激增的环境中具有重要意义。</p>
+            </div>
+
+            <!-- Section 2: Architecture -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">02</span>
+                    架构分析：量子退火与门模型
+                </h2>
+                <p>Baratz 博士强调了两种不同的量子计算架构，并指出它们在应用领域上存在显著分歧。</p>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>特性</th>
+                            <th>量子退火 (Annealing)</th>
+                            <th>门模型 (Gate Model)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>技术成熟度</strong></td>
+                            <td>已经商业化，处于生产阶段</td>
+                            <td>处于研发/原型阶段</td>
+                        </tr>
+                        <tr>
+                            <td><strong>纠错需求</strong></td>
+                            <td>对误差不敏感，无需纠错即可工作</td>
+                            <td>对误差极度敏感，必须解决纠错问题</td>
+                        </tr>
+                        <tr>
+                            <td><strong>主要应用</strong></td>
+                            <td>商业优化（排班、物流、制造）</td>
+                            <td>量子化学、药物研发、流体力学</td>
+                        </tr>
+                        <tr>
+                            <td><strong>硬件代表</strong></td>
+                            <td>D-Wave Advantage 2 (4,500 量子比特)</td>
+                            <td>研究级原型机</td>
+                        </tr>
+                        <tr>
+                            <td><strong>优势领域</strong></td>
+                            <td>在大规模优化问题上优于经典系统</td>
+                            <td>适合分子结构模拟</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="quote">
+                    D-Wave 是目前全球唯一一家同时开发量子退火和门模型系统的公司，旨在覆盖量子计算的全部潜在市场。
+                </div>
+            </div>
+
+            <!-- Section 3: Commercial Applications -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">03</span>
+                    商业化实证：量子优越性与现实应用
+                </h2>
+                <div class="quote">
+                    D-Wave 在《科学》(Science) 杂志上发表的研究证明了其在材料模拟领域的优越性：量子计算机在几分钟内完成的计算，在最快的经典超级计算机上需要耗时近 100 万年。这是首个且目前唯一一个针对实际应用问题的量子优越性证明。
+                </div>
+                <p>目前已有包括国际航空公司、化学巨头、移动通信运营商和支付公司在内的客户将 D-Wave 系统用于业务运营。</p>
+                <div class="case-study">
+                    <h3>BASF（巴斯夫）</h3>
+                    <p>将工厂车间的生产调度时间从 10 小时缩短至几秒钟，显著降低了电力消耗并提升了运营效率。</p>
+                </div>
+                <div class="case-study">
+                    <h3>NTT DoCoMo（日本）</h3>
+                    <p>利用量子计算优化手机与基站间的控制信号流，使每座信号塔支持的手机容量提升了 10%，大幅降低了基础设施成本。</p>
+                </div>
+            </div>
+
+            <!-- Section 4: AI Synergy -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">04</span>
+                    量子计算与人工智能 (AI) 的协同作用
+                </h2>
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <h3>功能互补</h3>
+                        <p>AI 负责预测需求，而量子计算负责根据预测结果优化供应链。两者各司其职，共同解决复杂的端到端业务问题。</p>
+                    </div>
+                    <div class="bento-card">
+                        <h3>能耗突破</h3>
+                        <p>量子计算可以降低 AI 训练和推理中巨大的电力需求，这是目前 AI 行业面临的最大痛点。</p>
+                    </div>
+                    <div class="bento-card">
+                        <h3>提升 AI 效率</h3>
+                        <p>药企 盐野义 (Shionogi) 引入 D-Wave 量子系统来训练用于生成分子结构的大语言模型。结果显示，量子辅助训练不仅速度更快，而且生成的分子结构更符合人类药物要求，模型质量显著提高。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Gate Model Breakthrough -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">05</span>
+                    门模型技术的突破路径
+                </h2>
+                <p>门模型量子计算实现商业化的两大核心挑战是纠错与扩展性。D-Wave 通过近期收购 Quantum Circuits 公司及其自有技术积累，试图确立领导地位。</p>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>纠错与速度的平衡</h4>
+                        <p><strong>离子阱/中性原子：</strong>忠实度（Fidelity）高，但计算速度慢。</p>
+                        <p><strong>超导：</strong>速度快（比离子阱快 1000 倍），但纠错极其困难。</p>
+                        <p><strong>技术突破：</strong>D-Wave 获得的超导量子比特具有内在错误检测能力。这意味着它既保留了超导技术的高速度，又拥有了与离子阱技术相当的高忠实度，解决了"鱼与熊掌不可兼得"的难题。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>扩展性瓶颈</h4>
+                        <p><strong>IO 线路控制：</strong>行业标准通常是每 1 个量子比特需要 3 到 5 条控制线，这意味着大规模系统将面临数万条线路的物理压力。</p>
+                        <p><strong>D-Wave 的解法：</strong>利用<strong>低温控制（On-chip Control）</strong>技术，D-Wave 仅用约 200 条 IO 线路即可控制 4,500 个量子比特。这种极高的控制效率是实现系统规模扩展的关键。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6: Future Vision -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">06</span>
+                    未来愿景与时间表
+                </h2>
+                <div class="quote">
+                    Baratz 博士预测，门模型量子计算实现完全规模化、商业化（用于药物发现等任务）的时间表大约在 7 到 10 年。
+                </div>
+                <div class="future-grid">
+                    <div class="future-card">
+                        <h3>个性化医疗</h3>
+                        <p>数字模拟分子结构，快速发现针对个人的定制药物。</p>
+                    </div>
+                    <div class="future-card">
+                        <h3>能源科学</h3>
+                        <p>研发"长效电池"，彻底消除手机等设备的续航焦虑。</p>
+                    </div>
+                    <div class="future-card">
+                        <h3>新材料</h3>
+                        <p>创造性能卓越的轻型材料，造福社会。</p>
+                    </div>
+                </div>
+                <div class="event-banner">
+                    <h3>Cubits 年度客户会议</h3>
+                    <p>1 月 27 日至 28 日 | 佛罗里达州博卡拉顿</p>
+                    <p style="margin-top: 12px; font-size: 1rem;">届时将进一步展示量子退火的商业应用案例，并深入探讨门模型量子计算的研发路线图。</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>基于 D-Wave CEO Alan Baratz 博士访谈整理 | 量子计算前沿技术</p>
+    </footer>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(section);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Parallax effect for background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const bgAnimation = document.querySelector('.bg-animation');
+            bgAnimation.style.transform = `translateY(${scrolled * 0.3}px)`;
+        });
+    </script>
+</body>
+</html>

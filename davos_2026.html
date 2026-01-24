@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAVOS 2026 | 技术巅峰对话</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #0a0a0a;
+            --green: #39ff14;
+            --orange: #ff6b35;
+            --white: #f5f5f5;
+            --gray: #888;
+            --border: 2px solid var(--green);
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Grid Background */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(57, 255, 20, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(57, 255, 20, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--black);
+            border-bottom: var(--border);
+            padding: 20px 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--green);
+            letter-spacing: -1px;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--green);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--green);
+            transform: scaleX(0);
+            transition: transform 0.2s;
+        }
+
+        nav a:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            position: relative;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            padding: 8px 16px;
+            border: var(--border);
+            color: var(--green);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(4rem, 12vw, 10rem);
+            font-weight: 800;
+            line-height: 0.9;
+            letter-spacing: -4px;
+            margin-bottom: 40px;
+            color: var(--white);
+        }
+
+        .hero h1 span {
+            color: var(--green);
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 600px;
+            margin-bottom: 60px;
+            line-height: 1.8;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 60px;
+            border-top: var(--border);
+            padding-top: 30px;
+        }
+
+        .meta-item label {
+            display: block;
+            font-size: 11px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .meta-item span {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40%;
+            height: 70%;
+            border: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.05), transparent);
+        }
+
+        .hero-visual::before {
+            content: '2026';
+            font-family: 'Syne', sans-serif;
+            font-size: 15rem;
+            font-weight: 800;
+            color: var(--green);
+            opacity: 0.1;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--green);
+            color: var(--black);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid var(--green);
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 40px;
+        }
+
+        .cta-button:hover {
+            background: var(--orange);
+            border-color: var(--orange);
+            color: var(--white);
+        }
+
+        .cta-button::after {
+            content: '▶';
+            font-size: 12px;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 120px 0;
+            border-bottom: 1px solid rgba(57, 255, 20, 0.2);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 80px;
+            gap: 40px;
+        }
+
+        .section-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 12rem;
+            font-weight: 800;
+            color: var(--green);
+            opacity: 0.15;
+            line-height: 1;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            color: var(--white);
+            flex: 1;
+        }
+
+        /* Bento Grid */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .bento-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: var(--border);
+            padding: 40px;
+            transition: background 0.3s;
+            position: relative;
+        }
+
+        .bento-card::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .bento-card:hover {
+            background: rgba(57, 255, 20, 0.05);
+        }
+
+        .bento-card:hover::before {
+            opacity: 1;
+        }
+
+        .bento-card.large {
+            grid-column: span 2;
+        }
+
+        .bento-card .icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .bento-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--green);
+        }
+
+        .bento-card p {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* Content Block */
+        .content-block {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+
+        .content-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gray);
+            padding-top: 10px;
+        }
+
+        .content-body h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--white);
+        }
+
+        .content-body h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 40px 0 20px;
+            color: var(--orange);
+        }
+
+        .content-body p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .content-body ul {
+            margin-left: 20px;
+            margin-bottom: 30px;
+        }
+
+        .content-body li {
+            color: var(--gray);
+            margin-bottom: 12px;
+            padding-left: 10px;
+        }
+
+        /* Quote */
+        .quote {
+            border-left: 4px solid var(--orange);
+            padding: 30px 40px;
+            margin: 40px 0;
+            background: rgba(255, 107, 53, 0.05);
+            font-size: 18px;
+            font-style: italic;
+            color: var(--white);
+            line-height: 1.8;
+        }
+
+        .quote-author {
+            display: block;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--gray);
+            font-style: normal;
+            font-weight: 700;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 60px 0;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: var(--border);
+            padding: 50px 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-item:hover {
+            background: rgba(57, 255, 20, 0.05);
+            border-color: var(--orange);
+        }
+
+        .stat-item:hover .stat-number {
+            color: var(--orange);
+        }
+
+        .stat-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--green);
+            line-height: 1;
+            margin-bottom: 15px;
+            transition: color 0.3s;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Takeaways Grid */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 60px 0;
+        }
+
+        .takeaway-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: var(--border);
+            padding: 40px;
+            transition: all 0.3s;
+        }
+
+        .takeaway-item:hover {
+            background: rgba(255, 107, 53, 0.05);
+            border-color: var(--orange);
+        }
+
+        .takeaway-item h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--orange);
+            margin-bottom: 20px;
+        }
+
+        .takeaway-item p {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        footer {
+            padding: 80px 0;
+            border-top: var(--border);
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--gray);
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        footer a {
+            color: var(--green);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Scroll Progress */
+        .progress-bar {
+            position: fixed;
+            top: 73px;
+            left: 0;
+            height: 3px;
+            background: var(--green);
+            z-index: 999;
+            transition: width 0.1s;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-visual {
+                display: none;
+            }
+
+            .content-block {
+                grid-template-columns: 1fr;
+            }
+
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bento-card.large {
+                grid-column: span 1;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .takeaways-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .section-number {
+                font-size: 6rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            nav ul {
+                gap: 20px;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+
+        .glitch:hover {
+            animation: glitch 0.3s infinite;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--black);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--green);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--orange);
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">DAVOS.REPORT</div>
+            <ul>
+                <li><a href="#intro">开篇</a></li>
+                <li><a href="#crypto">加密</a></li>
+                <li><a href="#ai">算力</a></li>
+                <li><a href="#robot">机器人</a></li>
+                <li><a href="#insights">思考</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-tag fade-in-up">World Economic Forum 2026</span>
+                <h1 class="fade-in-up delay-1">技术<br><span>巅峰对话</span></h1>
+                <p class="hero-subtitle fade-in-up delay-2">加密货币的法律终局 · 算力霸权时代 · 原子世界的崛起<br>三位CEO的达沃斯现场访谈深度重构</p>
+
+                <div class="hero-meta fade-in-up delay-3">
+                    <div class="meta-item">
+                        <label>视频来源</label>
+                        <span>All-In Podcast</span>
+                    </div>
+                    <div class="meta-item">
+                        <label>时长</label>
+                        <span>01:35:15</span>
+                    </div>
+                    <div class="meta-item">
+                        <label>主持人</label>
+                        <span>Jason Calacanis</span>
+                    </div>
+                </div>
+
+                <a href="https://www.youtube.com/watch?v=-yrLEKjMyrM" target="_blank" class="cta-button fade-in-up delay-4">
+                    观看完整视频
+                </a>
+            </div>
+        </div>
+        <div class="hero-visual"></div>
+    </section>
+
+    <!-- Introduction -->
+    <section id="intro">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <h2 class="section-title">开篇引入</h2>
+            </div>
+
+            <div class="content-block">
+                <div class="content-label">背景</div>
+                <div class="content-body">
+                    <p>2026 年的瑞士达沃斯，世界经济论坛（WEF）的气氛发生了微妙而深刻的转变。如果说前几年的达沃斯充斥着对地缘政治的焦虑和对 ESG 的务虚讨论，那么 2026 年的会场则回归了"建设者（Builders）"的底色。</p>
+                    <p>这一年，美国第 47 任政府已经执政一年，加密货币在经历了十年的"流浪"后，终于通过《Genius Act》正式踏入美国法律的殿堂；人工智能不再仅仅是对话框里的幽默感，而是消耗着 750 兆瓦电力的工业巨兽；而机器人也正从实验室走向那些生锈的炼油厂和驱逐舰。</p>
+                    <p>Jason Calacanis 在达沃斯现场捕捉到的这三场对话，实际上是三个平行世界的交汇：<strong>数字资产的合规化、计算能力的基建化、以及 AI 向物理世界的全面渗透。</strong> 这不仅仅是一次视频采访，它是 2026 年技术文明的横截面。</p>
+                </div>
+            </div>
+
+            <div class="bento-grid">
+                <div class="bento-card">
+                    <div class="icon">💰</div>
+                    <h3>数字资产合规化</h3>
+                    <p>加密货币告别"狂野西部"，通过《Genius Act》正式踏入法律殿堂，成为全球金融基建的核心。</p>
+                </div>
+                <div class="bento-card">
+                    <div class="icon">🤖</div>
+                    <h3>计算能力基建化</h3>
+                    <p>AI 从"模型训练"转向"深度推理"，消耗 750 兆瓦电力，成为新时代的工业命脉。</p>
+                </div>
+                <div class="bento-card large">
+                    <div class="icon">🦾</div>
+                    <h3>AI 渗透物理世界</h3>
+                    <p>机器人走出实验室，进入炼油厂、电站和军舰，为人类最昂贵的资产建立数字神经系统。Gecko Robotics 通过"机器人原生"数据，让 AI 真正接管原子世界。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crypto Section -->
+    <section id="crypto">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2 class="section-title">加密货币<br>法律终局</h2>
+            </div>
+
+            <div class="content-block">
+                <div class="content-label">核心观点</div>
+                <div class="content-body">
+                    <h3>与"万物上链"的 2026</h3>
+                    <p><strong>加密货币已彻底告别"狂野西部"时代。</strong> 随着美国监管政策的 180 度大转弯，加密技术正作为底层的金融基建，被全球顶级银行吸纳。2026 年的核心趋势将集中在：资产全量代币化（RWA）、作为"真相机器"的预测市场，以及稳定币对跨境支付的彻底重构。</p>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <div class="content-label">政治气候</div>
+                <div class="content-body">
+                    <h4>1. 政治气候的剧变与《Genius Act》</h4>
+                    <p>Brian Armstrong 在开场便直言不讳地对比了两届政府对加密行业的态度。他提到，在 2024 年之前，行业一直处于"执法式监管"的阴影下。而到了 2026 年，随着《Genius Act》等关键法案的通过，美国已经确立了其"全球加密之都"的地位。</p>
+                    <ul>
+                        <li><strong>背景解析</strong>：这意味着 Coinbase 不再需要花费数亿美金在法庭上与 SEC 辩论"什么才算证券"。法律的明确性释放了数万亿规模的机构资金。</li>
+                        <li><strong>银行的态度转弯</strong>：Brian 披露，目前全球前 20 大银行中，已有 5 家深度整合了 Coinbase 的基础设施。这不再是"加密币取代银行"，而是"银行演化为加密节点"。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <div class="content-label">三大趋势</div>
+                <div class="content-body">
+                    <h4>2. 2026 年三大核心趋势</h4>
+                    <p>Brian 详细论证了支撑未来五年的三个增长支柱：</p>
+
+                    <h4>趋势一：全能交易所（The Everything Exchange/RWA）</h4>
+                    <ul>
+                        <li><strong>深度逻辑</strong>：当法律障碍消除后，所有具备价值的资产（房地产、私募基金、碳信用额、甚至好莱坞电影的版权）都开始通过智能合约进行代币化。</li>
+                        <li><strong>意义</strong>：这实现了 24/7 的全球流动性。如果你拥有一座油井的 1%，你可以在凌晨 3 点将其卖给东京的投资者，并在几秒钟内完成结算。</li>
+                    </ul>
+
+                    <h4>趋势二：预测市场（Prediction Markets）的爆发</h4>
+                    <ul>
+                        <li><strong>核心逻辑</strong>：Brian 认为以 Poly Market 为首的平台不仅是博彩，更是<strong>"真相的最后一道防线"</strong>。在 AI 伪造内容泛滥的 2026 年，当人们想知道一个传闻是否属实时，不再看 CNN 或 X 的评论区，而是看预测市场的赔率。</li>
+                        <li><strong>引用</strong>："Money talks, bullshit walks." 当人们愿意用真金白银为观点投票时，群体智慧的准确率远超传统媒体。</li>
+                    </ul>
+
+                    <h4>趋势三：稳定币支付与跨境结算</h4>
+                    <ul>
+                        <li><strong>现状</strong>：基于美元的稳定币（如 USDC）已经成为了全球支付的实际标准。</li>
+                        <li><strong>商业应用</strong>：Brian 特别提到了 B2B 场景。一家在阿根廷的供应商支付给美国的合作伙伴，通过传统 SWIFT 系统可能需要 3-5 天且扣除 7% 的费用；而通过稳定币，成本接近于零，且瞬间到账。</li>
+                    </ul>
+
+                    <div class="quote">
+                        "Crypto is existential for banks... It's like when the internet came around, you could think of it as an opportunity or a threat."
+                        <span class="quote-author">— Brian Armstrong, Coinbase CEO [00:04:57]</span>
+                    </div>
+
+                    <div class="quote">
+                        "We are moving from the era of 'scams and speculation' to the era of 'utility and infrastructure'."
+                        <span class="quote-author">— Brian Armstrong [00:15:20]</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Computing Section -->
+    <section id="ai">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <h2 class="section-title">算力革命</h2>
+            </div>
+
+            <div class="content-block">
+                <div class="content-label">核心观点</div>
+                <div class="content-body">
+                    <h3>当推理速度超越人类感知</h3>
+                    <p><strong>AI 的重心已从"模型训练"转向"深度推理（Inference）"。</strong> Cerebras 通过其史无前例的"晶圆级引擎（WSE）"解决了计算延迟问题。算力的限制不再是算法，而是电力。2026 年的算力竞赛是一场关于 750 兆瓦电力和冷却液流量的战争。</p>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">750MW</div>
+                    <div class="stat-label">AI集群电力消耗</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50万</div>
+                    <div class="stat-label">可驱动城市人口</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4万亿</div>
+                    <div class="stat-label">WSE-3晶体管数量</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">20-50x</div>
+                    <div class="stat-label">推理速度提升</div>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <div class="content-label">技术突破</div>
+                <div class="content-body">
+                    <h4>1. 晶圆级引擎（Wafer Scale Engine）的物理学优势</h4>
+                    <p>Andrew Feldman 在现场展示了他的芯片，那是一块完整硅片的尺寸。</p>
+                    <ul>
+                        <li><strong>通俗比喻</strong>：传统芯片（如英伟达 B200）是将硅片切割成几百个小方块，再用细线连起来；而 Cerebras 是将整个硅片做成一个巨大的处理器。</li>
+                        <li><strong>性能提升</strong>：这避免了数据在芯片之间传输时的拥堵。Andrew 指出，对于像 OpenAI 的 o1 这种需要复杂思考（推理时计算）的模型，Cerebras 的速度比传统架构快 20 到 50 倍。</li>
+                    </ul>
+
+                    <h4>2. 推理时代的"快"意味着什么？</h4>
+                    <p>Andrew 提出了一个深刻的见解：<strong>"慢的代价是失去客户。"</strong></p>
+                    <ul>
+                        <li><strong>应用场景</strong>：如果你在进行实时翻译、智能客服或协助医生手术，你需要 AI 在 0.1 秒内给出反馈。如果 AI 需要思考 5 秒钟，它就失去了交互价值。</li>
+                        <li><strong>深度推理</strong>：2026 年的模型开始学习"思考（CoT）"。当 AI 能够瞬间阅读 100 万页文档并进行逻辑推理时，这种"快"不仅是效率，更是能力边界的突破。</li>
+                    </ul>
+
+                    <h4>3. 算力基建的"能源化"：750 兆瓦的震撼</h4>
+                    <p>视频中透露了 Cerebras 与 OpenAI 达成的史诗级协议。</p>
+                    <ul>
+                        <li><strong>关键数据</strong>：双方正在建造一个消耗 750 兆瓦（MW）电力的 AI 集群。</li>
+                        <li><strong>背景参考</strong>：这足以驱动一个拥有 50 万人口的城市。</li>
+                        <li><strong>能源来源的寻找</strong>：Andrew 探讨了极其硬核的解决方案，包括利用石油开采中被浪费的"放空火炬气（Flared Gas）"直接在井口发电。</li>
+                        <li><strong>太空港构想</strong>：他甚至提到，虽然目前还处于理论阶段，但未来 10 年将算力中心部署在太空（利用太阳能和真空散热）将是解决地球电力枯竭的终极手段。</li>
+                    </ul>
+
+                    <h4>4. 中美算力冷战</h4>
+                    <p>Andrew 作为行业老兵，对竞争格局有着清醒的认识。</p>
+                    <ul>
+                        <li><strong>美国的护城河</strong>：圣克拉拉（Santa Clara）周围几平方英里聚集了全球最顶尖的模拟信号、热力学和高性能计算专家。这种人才密度是无法复制的。</li>
+                        <li><strong>中国的潜力</strong>：虽然在先进制程上受限，但中国在开源模型和"集中力量办大事"的电网改造上效率极高。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Robotics Section -->
+    <section id="robot">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <h2 class="section-title">机器人原生</h2>
+            </div>
+
+            <div class="content-block">
+                <div class="content-label">核心观点</div>
+                <div class="content-body">
+                    <h3>工业 AI 如何接管物理世界</h3>
+                    <p><strong>AI 想要创造万亿级价值，必须走出屏幕。</strong> Gecko Robotics 通过"机器人原生（Robot Native）"数据，为人类最基础、最昂贵的资产（如航母、电站、炼油厂）建立了一个"数字神经系统"。这标志着 AI 从"语言处理"转向"原子控制"。</p>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <div class="content-label">核心概念</div>
+                <div class="content-body">
+                    <h4>1. 什么是"机器人原生数据"？</h4>
+                    <p>Jake Loosararian 提出了一个让 Jason 感到震撼的概念。</p>
+                    <ul>
+                        <li><strong>深度解释</strong>：目前的 LLM（大语言模型）是基于互联网上的文字训练的。但互联网上没有关于"某座 50 年楼龄的桥梁内部裂纹是如何演变"的数据。</li>
+                        <li><strong>Gecko 的方案</strong>：通过能够在垂直表面爬行的自主机器人，利用超声波、激光雷达采集资产的深层结构数据。这些数据是"原生的"，是物理世界的真相。</li>
+                    </ul>
+
+                    <h4>2. 工业界的高额 ROI（投资回报率）</h4>
+                    <p>不同于波士顿动力那种跳舞或叠衣服的机器人，Gecko 专注于"硬核任务"。</p>
+                    <ul>
+                        <li><strong>案例分析</strong>：一艘驱逐舰如果因为腐蚀未能及时检测而返厂大修，成本是数千万美元且损失数月的服役时间。Gecko 的机器人可以在几天内完成全身扫描，预测未来 5 年的失效点。</li>
+                        <li><strong>商业模式</strong>：这种技术将原本"被动维修"变成了"主动防御"。</li>
+                    </ul>
+
+                    <h4>3. 对劳动力市场的重塑：增强而非取代</h4>
+                    <p>Jake 对"机器人抢走工作"的论调持有不同看法。</p>
+                    <ul>
+                        <li><strong>现状</strong>：重工业面临严重的焊工、检测员短缺，现在的年轻人没人愿意在 40 摄氏度的高温下爬进充满危险气体的油罐里。</li>
+                        <li><strong>赋能</strong>：通过机器人，一个 60 岁、经验丰富但体力下降的老技师，可以坐在空调房里远程操作 10 台机器人。他从"体力劳动者"变成了"AI 资产管理员"。</li>
+                    </ul>
+
+                    <h4>4. 2026 年的通用机器人蓝图</h4>
+                    <p>Jake 预测，未来 3 年，机器人将拥有"视觉理解力"。如果你指着一堵墙对机器人说"把它拆了"，机器人不再需要程序员写几万行代码，而是通过观察人类动作的视频，自主理解"拆墙"的物理动作逻辑。</p>
+
+                    <div class="quote">
+                        "Infrastructure is the skeleton of our civilization. If it breaks, everything stops."
+                        <span class="quote-author">— Jake Loosararian, Gecko Robotics CEO [01:25:30]</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Personal Reflection -->
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <h2 class="section-title">个人感受</h2>
+            </div>
+
+            <div class="content-block">
+                <div class="content-label">观察</div>
+                <div class="content-body">
+                    <p>看完这段对话，最直观的感受是<strong>"务实主义的胜利"</strong>。</p>
+                    <p>这三位 CEO 身上都有一种极强的"现实感"。Brian Armstrong 在谈论法律条文时的缜密，Andrew Feldman 在谈论 750 兆瓦电力时的狂热，以及 Jake Loosararian 穿着钢头靴（虽然在达沃斯，但他给人的感觉依然是在工地现场）的那种粗粝感。</p>
+                    <p>他们不再讨论 AI 会不会产生意识，而是讨论<strong>如何把每一度电转化成推理结果，如何把每一笔转账变成智能合约，如何把每一处生锈的焊缝变成可分析的数据。</strong> 这种将宏大叙事解构为工程问题的能力，正是 2026 年技术领袖的共同特质。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Insights -->
+    <section id="insights">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">06</span>
+                <h2 class="section-title">延伸思考</h2>
+            </div>
+
+            <div class="takeaways-grid">
+                <div class="takeaway-item">
+                    <h4>数字资产与物理资产的边界模糊</h4>
+                    <p>当 Brian 提到"万物上链"，而 Jake 提到"资产数字化"时，两者其实在向同一个终点靠拢：未来的每一座工厂、每一艘轮船，都将在链上拥有一个实时的、可交易的、数据化的镜像。这是否意味着"所有权"和"管理权"将发生根本性分离？</p>
+                </div>
+                <div class="takeaway-item">
+                    <h4>算力即地缘政治</h4>
+                    <p>Andrew 的访谈暗示了一个冷酷的现实：未来的强国标志不再是黄金储备，而是<strong>"有效推理算力"</strong>。如果一个国家无法提供廉价、大规模、稳定的电力给 AI 数据中心，它将在未来的知识竞赛中彻底掉队。</p>
+                </div>
+                <div class="takeaway-item">
+                    <h4>机器人的"ChatGPT 时刻"</h4>
+                    <p>Jake 提到的机器人通过视频学习动作，预示着物理世界的感知也将迎来一个参数爆炸的转折点。当机器人学会了"常识"，那将是继生成式 AI 之后，人类社会最大的冲击波。</p>
+                </div>
+            </div>
+
+            <div class="content-block" style="margin-top: 80px;">
+                <div class="content-label">精华收获</div>
+                <div class="content-body">
+                    <h3>关键建议</h3>
+
+                    <div class="bento-grid">
+                        <div class="bento-card large">
+                            <h4 style="color: var(--green); font-size: 16px; margin-bottom: 15px;">💡 投资者</h4>
+                            <p style="margin: 0;">不要只盯着 AI 软件层，关注电力基建、散热技术、高带宽存储以及那些掌握着非公开物理数据（暗数据）的公司。</p>
+                        </div>
+                        <div class="bento-card">
+                            <h4 style="color: var(--green); font-size: 16px; margin-bottom: 15px;">🚀 创业者</h4>
+                            <p style="margin: 0;">2026 年的机会在"推理延迟的消除"和"特定领域的机器人原生应用"。寻找那些互联网上没有数据的地方。</p>
+                        </div>
+                        <div class="bento-card">
+                            <h4 style="color: var(--green); font-size: 16px; margin-bottom: 15px;">🌍 大众认知</h4>
+                            <p style="margin: 0;">加密货币已从投资品变为支付协议；AI 的本质是能源转换器；机器人是人类意志在原子世界的延伸，而非对手。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusion -->
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">07</span>
+                <h2 class="section-title">结语</h2>
+            </div>
+
+            <div class="content-block">
+                <div class="content-label">总结</div>
+                <div class="content-body">
+                    <p style="font-size: 18px; line-height: 2; color: var(--white);">这场来自 2026 达沃斯的访谈，为我们划定了一道分水岭。分水岭的一边是过去那个依赖互联网广告、低息货币和碎片化信息的旧世界；分水岭的另一边是一个由<strong>可编程货币、液冷算力和自主机器人</strong>构建的高效、透明、但也更具竞争性的新世界。</p>
+                    <p style="font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--green); margin-top: 40px; line-height: 1.4;">"我们不仅在观看历史，<br>我们正在编写代码。"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p style="font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; color: var(--green); margin-bottom: 20px;">DAVOS 2026 REPORT</p>
+            <p>基于 2026 年达沃斯论坛现场访谈视频重构</p>
+            <p>Coinbase CEO's Top 3 Crypto Trends for 2026 + More from Davos! | All-In Podcast</p>
+          
+        </div>
+    </footer>
+
+    <script>
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
