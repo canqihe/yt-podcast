@@ -14,35 +14,15 @@
 
 ## 📖 已收录文章
 
-### 🤖 人工智能产业现状：OpenAI 播客核心洞见
-- **分类**: AI 产业
-- **来源**: OpenAI 播客
-- **时长**: 约 15 分钟
-- **标签**: #AI产业 #技术洞见 #OpenAI
+**当前收录：14 篇深度洞察文章**
 
-深入剖析 OpenAI 在 AI 产业中的战略布局、技术突破与未来愿景。
+涵盖领域：
+- 🤖 **AI 战略** - Anthropic CEO、OpenAI 动态、xAI 工程文化
+- 💰 **金融市场** - 白银市场、ARK 投资研究、Robinhood 转型
+- 🚀 **前沿科技** - 量子计算、达沃斯峰会
+- 🔮 **未来预测** - 库兹韦尔奇点理论、AI 发展预测
 
-### 🔮 雷·库兹韦尔：奇点、人工智能与人类未来
-- **分类**: 未来预测
-- **时长**: 约 20 分钟
-- **标签**: #奇点理论 #未来预测 #库兹韦尔
-
-探索著名未来学家雷·库兹韦尔关于技术奇点的革命性预测。
-
-### 💰 Tom Lee 市场洞察与投资策略简报 2026
-- **分类**: 金融投资
-- **时长**: 约 18 分钟
-- **标签**: #金融投资 #市场策略 #加密货币
-
-Fundstrat 联合创始人 Tom Lee 的 2026 年市场展望与投资策略。
-
-### 🚀 xAI 运营模式、工程文化与战略愿景深度简报
-- **分类**: 工程文化
-- **来源**: Sulaiman (Sully) Ghori 访谈
-- **时长**: 约 20 分钟
-- **标签**: #xAI #工程文化 #马斯克
-
-深入解析 xAI 的内部运作机制、核心战略及其独特的工程文化。
+查看完整文章列表请访问 [index.html](index.html)
 
 ## 🚀 快速开始
 
@@ -75,11 +55,28 @@ cd yt-podcast
 ```
 yt-podcast/
 ├── index.html                      # 主页（文章列表）
-├── ai-insights-report.html         # OpenAI 播客洞察
-├── kurzweil-singularity.html       # 库兹韦尔奇点理论
-├── tom-lee-brief.html              # Tom Lee 投资策略
-├── xai-strategic-brief.html        # xAI 工程文化
-├── README.md                       # 项目说明文档
+├── articles/                       # 文章目录
+│   ├── robinhood-transformation.html        # Robinhood 商业转型案例
+│   ├── davos_2026.html                      # 2026 达沃斯技术巅峰对话
+│   ├── quantum_interview.html                # 量子计算现状与未来
+│   ├── dario-amodei-ai-briefing.html        # Anthropic CEO AI 战略
+│   ├── silver-market-report-2026.html       # 2026 白银市场分析
+│   ├── moonshots-ai-2026.html               # AI 发展预测
+│   ├── satya-nadella-interview.html         # 微软 CEO 访谈
+│   ├── musk-interview-theverge.html         # 马斯克专访
+│   ├── demis-hassabis-interview.html        # DeepMind CEO 访谈
+│   ├── ark-big-ideas-2026.html              # ARK 投资研究
+│   ├── ai-insights-report.html              # OpenAI 播客洞察
+│   ├── kurzweil-singularity.html            # 库兹韦尔奇点理论
+│   ├── tom-lee-brief.html                   # Tom Lee 投资策略
+│   └── xai-strategic-brief.html             # xAI 工程文化
+├── design-system/                  # 设计系统
+│   ├── README.md                # 设计系统说明
+│   ├── design-spec.md            # 设计规范文档
+│   ├── design-tokens.css         # 设计令牌
+│   ├── style.css                 # 样式表
+│   └── template-standalone.html  # 独立模板
+├── README.md                      # 项目说明文档
 └── .git/                          # Git 仓库配置
 ```
 
