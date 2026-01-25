@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robinhood的转型之路 | 商业案例研究 (夜间模式)</title>
+
+    <!-- Anthropic Brand Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Dark Mode Colors */
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1a1a1a;
+            --bg-card: #1f1f1f;
+            --bg-elevated: #252525;
+
+            --text-primary: #f5f5f5;
+            --text-secondary: #b0b0b0;
+            --text-tertiary: #808080;
+
+            --border-color: #333333;
+            --border-light: #404040;
+
+            /* Accent Colors */
+            --accent-orange: #d97757;
+            --accent-blue: #6a9bcc;
+            --accent-green: #788c5d;
+
+            /* Special backgrounds */
+            --accent-orange-dim: rgba(217, 119, 87, 0.15);
+            --accent-blue-dim: rgba(106, 155, 204, 0.15);
+            --accent-green-dim: rgba(120, 140, 93, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lora', Georgia, serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* Typography - Anthropic Brand */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 6rem 0;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--accent-orange) 0%, transparent 70%);
+            opacity: 0.12;
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--accent-orange);
+            color: var(--text-primary);
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            border-radius: 100px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            color: var(--text-primary);
+        }
+
+        .hero-title .highlight {
+            color: var(--accent-orange);
+            position: relative;
+        }
+
+        .hero-title .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background: var(--accent-orange);
+            opacity: 0.25;
+            z-index: -1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-weight: 400;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .hero-stat {
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-orange);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .hero-stat.blue { border-color: var(--accent-blue); }
+        .hero-stat.green { border-color: var(--accent-green); }
+
+        .hero-stat-value {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .hero-stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ========== NAVIGATION ========== */
+        .nav {
+            position: sticky;
+            top: 0;
+            background: rgba(10, 10, 10, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .nav-logo {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-orange);
+        }
+
+        .nav-links a.active {
+            color: var(--accent-orange);
+        }
+
+        /* ========== SECTION STYLES ========== */
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-number {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--accent-orange);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .section-description {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* ========== TRANSFORMATION TIMELINE ========== */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(even) {
+            direction: rtl;
+        }
+
+        .timeline-item:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .timeline-content {
+            padding: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .timeline-year {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--accent-orange);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .timeline-content p {
+            color: var(--text-secondary);
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            top: 2rem;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            background: var(--accent-orange);
+            border-radius: 50%;
+            border: 4px solid var(--bg-primary);
+        }
+
+        /* ========== BUSINESS ENGINES ========== */
+        .engines-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .engine-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .engine-card:hover {
+            border-color: var(--accent-orange);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            transform: translateY(-4px);
+        }
+
+        .engine-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--accent-orange);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .engine-card:nth-child(2) .engine-icon { background: var(--accent-blue); }
+        .engine-card:nth-child(3) .engine-icon { background: var(--accent-green); }
+
+        .engine-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .engine-description {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .engine-metric {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* ========== TOPICS GRID ========== */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .topic-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-orange);
+        }
+
+        .topic-card:nth-child(2)::before { background: var(--accent-blue); }
+        .topic-card:nth-child(3)::before { background: var(--accent-green); }
+        .topic-card:nth-child(4)::before { background: var(--accent-orange); }
+        .topic-card:nth-child(5)::before { background: var(--accent-blue); }
+        .topic-card:nth-child(6)::before { background: var(--accent-green); }
+
+        .topic-number {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--border-light);
+            line-height: 1;
+            position: absolute;
+            top: 1rem;
+            right: 2rem;
+            opacity: 0.5;
+        }
+
+        .topic-timestamp {
+            display: inline-block;
+            padding: 0.375rem 0.75rem;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .topic-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .topic-content {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .topic-highlight {
+            background: var(--accent-orange-dim);
+            border-left: 3px solid var(--accent-orange);
+            padding: 1rem;
+            margin-top: 1.5rem;
+            font-style: italic;
+            color: var(--text-primary);
+        }
+
+        /* ========== CONTRAST SECTION ========== */
+        .contrast-section {
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .contrast-section .section-title {
+            color: var(--text-primary);
+        }
+
+        .contrast-section .section-description {
+            color: var(--text-secondary);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 4rem 0;
+        }
+
+        .comparison-card {
+            padding: 3rem;
+            border-radius: 8px;
+        }
+
+        .comparison-card.past {
+            background: var(--bg-elevated);
+            border: 2px solid var(--border-color);
+        }
+
+        .comparison-card.now {
+            background: var(--accent-orange-dim);
+            border: 2px solid var(--accent-orange);
+        }
+
+        .comparison-year {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1.5rem;
+        }
+
+        .comparison-card.past .comparison-year { color: var(--text-tertiary); }
+        .comparison-card.now .comparison-year { color: var(--accent-orange); }
+
+        .comparison-list {
+            list-style: none;
+        }
+
+        .comparison-list li {
+            padding: 0.75rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .comparison-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .comparison-card.past .comparison-list li::before { color: var(--text-tertiary); }
+        .comparison-card.now .comparison-list li::before { color: var(--accent-orange); }
+
+        /* ========== HARMONIC SECTION ========== */
+        .harmonic-section {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            color: var(--text-primary);
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .harmonic-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .harmonic-quote {
+            font-size: 1.5rem;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .harmonic-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .harmonic-stat {
+            text-align: center;
+        }
+
+        .harmonic-stat-value {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .harmonic-stat-label {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+        }
+
+        /* ========== INSIGHTS ========== */
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .insight-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .insight-card:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .insight-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .insight-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .insight-content {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ========== KEY TAKEAWAYS ========== */
+        .takeaways-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .takeaway-item {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .takeaway-number {
+            flex-shrink: 0;
+            width: 60px;
+            height: 60px;
+            background: var(--accent-orange);
+            color: var(--text-primary);
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .takeaway-item:nth-child(2) .takeaway-number { background: var(--accent-blue); }
+        .takeaway-item:nth-child(3) .takeaway-number { background: var(--accent-green); }
+        .takeaway-item:nth-child(4) .takeaway-number { background: var(--accent-orange); }
+
+        .takeaway-content h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .takeaway-content p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ========== QUOTE SECTION ========== */
+        .quote-section {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            text-align: center;
+            padding: 8rem 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .quote-mark {
+            font-size: 6rem;
+            font-family: 'Poppins', Arial, sans-serif;
+            color: var(--accent-orange);
+            opacity: 0.3;
+            line-height: 1;
+            margin-bottom: 2rem;
+        }
+
+        .quote-text {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-family: 'Poppins', Arial, sans-serif;
+            font-weight: 500;
+            line-height: 1.4;
+            max-width: 900px;
+            margin: 0 auto 2rem;
+            color: var(--text-primary);
+        }
+
+        .quote-author {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+        }
+
+        /* ========== CTA ========== */
+        .cta-section {
+            background: linear-gradient(135deg, var(--accent-orange) 0%, #b8654a 100%);
+            color: var(--text-primary);
+            text-align: center;
+            padding: 6rem 0;
+        }
+
+        .cta-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-description {
+            font-size: 1.125rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--text-primary);
+            color: var(--accent-orange);
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p {
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: var(--accent-orange);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .engines-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .harmonic-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 2rem;
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+                padding-left: 4rem;
+            }
+
+            .timeline-item:nth-child(even) {
+                direction: ltr;
+            }
+
+            .timeline-marker {
+                left: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            section {
+                padding: 4rem 0;
+            }
+
+            .takeaway-item {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* ========== ANIMATIONS ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        /* Custom scrollbar for dark mode */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-light);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-orange);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">Case Study</div>
+                <h1 class="hero-title">
+                    从"Meme股"到<br>
+                    <span class="highlight">全天候金融巨头</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Robinhood如何从依赖市场波动的单一业务，进化为拥有11条独立"亿级营收线"的金融帝国。一个关于商业韧性、第一性原理思维和AI赋能的转型故事。
+                </p>
+
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">+200%</div>
+                        <div class="hero-stat-label">年度增长率</div>
+                    </div>
+                    <div class="hero-stat blue">
+                        <div class="hero-stat-value">11</div>
+                        <div class="hero-stat-label">亿级营收线</div>
+                    </div>
+                    <div class="hero-stat green">
+                        <div class="hero-stat-value">$100B</div>
+                        <div class="hero-stat-label">市值</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container nav-container">
+            <div class="nav-logo">Robinhood 转型案例</div>
+            <ul class="nav-links">
+                <li><a href="#transformation">转型历程</a></li>
+                <li><a href="#engines">三大引擎</a></li>
+                <li><a href="#topics">核心观点</a></li>
+                <li><a href="#comparison">对比</a></li>
+                <li><a href="#insights">洞察</a></li>
+                <li><a href="#takeaways">收获</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Transformation Timeline -->
+    <section id="transformation">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">01 — 转型历程</div>
+                <h2 class="section-title">从V6到W16的进化之路</h2>
+                <p class="section-description">
+                    Vlad Tenev用汽车引擎比喻：从V6到V8，再到拥有11个气缸的超级跑车引擎，Robinhood完成了从周期性公司到全天候巨头的跨越。
+                </p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2020-2021</div>
+                        <h3 class="timeline-title">"顺风车"时代</h3>
+                        <p>市场上涨、利率下降，Robinhood迅速崛起，但被批评为依赖市场环境的周期性公司。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2022-2023</div>
+                        <h3 class="timeline-title">痛苦转型</h3>
+                        <p>利率上升、市场环境逆转，团队被迫进行多元化转型，构建11条独立业务线。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2024</div>
+                        <h3 class="timeline-title">全天候巨头</h3>
+                        <p>拥有11条年营收过亿美元的业务线，无论市场环境如何，都能保持强劲增长。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Engines -->
+    <section id="engines" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">02 — 三大引擎</div>
+                <h2 class="section-title">11条业务线背后的支柱</h2>
+                <p class="section-description">
+                    通过交易收入、净利息收入和订阅收入三大支柱，Robinhood构建了稳定的收入结构。
+                </p>
+            </div>
+
+            <div class="engines-grid">
+                <div class="engine-card">
+                    <div class="engine-icon">💱</div>
+                    <h3 class="engine-title">交易收入</h3>
+                    <p class="engine-description">传统的交易佣金和订单流支付，为活跃交易者提供低成本交易服务。</p>
+                    <div class="engine-metric">$3.7B+</div>
+                </div>
+
+                <div class="engine-card">
+                    <div class="engine-icon">🏦</div>
+                    <h3 class="engine-title">净利息收入</h3>
+                    <p class="engine-description">通过现金托管和借贷赚取息差，Cash Sweep项目从零增长到数百亿美元。</p>
+                    <div class="engine-metric">$4.2B+</div>
+                </div>
+
+                <div class="engine-card">
+                    <div class="engine-icon">⭐</div>
+                    <h3 class="engine-title">订阅收入</h3>
+                    <p class="engine-description">Robinhood Gold会员服务，已成长为独立的9位数（过亿美元）业务。</p>
+                    <div class="engine-metric">$500M+</div>
+                </div>
+            </div>
+
+            <div style="background: var(--bg-elevated); padding: 2rem; border-radius: 8px; border: 1px solid var(--border-color); margin-top: 3rem;">
+                <h3 style="margin-bottom: 1rem; font-size: 1.25rem; color: var(--text-primary);">🎯 战略三部曲</h3>
+                <ol style="padding-left: 1.5rem; line-height: 2; color: var(--text-secondary);">
+                    <li><strong>第一阶段：</strong>成为活跃交易者的首选平台（目前的引擎）</li>
+                    <li><strong>第二阶段：</strong>争夺"钱包份额"，成为用户的一站式金融平台</li>
+                    <li><strong>第三阶段：</strong>从美国本土走向全球，从零售业务扩展到机构业务</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- Topics Grid -->
+    <section id="topics">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">03 — 核心观点</div>
+                <h2 class="section-title">六大主题深度解析</h2>
+                <p class="section-description">
+                    从AI助手Cortex到资产代币化，Vlad Tenev分享了他对金融科技未来的思考。
+                </p>
+            </div>
+
+            <div class="topics-grid">
+                <div class="topic-card">
+                    <div class="topic-number">01</div>
+                    <div class="topic-timestamp">[08:16-12:00]</div>
+                    <h3 class="topic-title">AI助手Cortex</h3>
+                    <div class="topic-content">
+                        <p>拥有"超级金融智能"的AI助手，掌握实时市场数据和用户个人财务状况，可通过语音指令扫描整个市场并执行交易。</p>
+                        <div class="topic-highlight">
+                            "这是将复杂的金融数据分析平权化给普通投资者的重要一步。"
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-number">02</div>
+                    <div class="topic-timestamp">[08:16-12:00]</div>
+                    <h3 class="topic-title">预测市场革命</h3>
+                    <div class="topic-content">
+                        <p>2024年大选引爆预测市场，从交易产品转变为"新闻媒体产品"。用户可以交易大选结果、体育赛事甚至天气。</p>
+                        <div class="topic-highlight">
+                            "预测市场未来将颠覆保险行业，通过对冲飓风风险替代传统保险。"
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-number">03</div>
+                    <div class="topic-timestamp">[12:49-26:30]</div>
+                    <h3 class="topic-title">散户的成熟</h3>
+                    <div class="topic-content">
+                        <p>从"Meme狂热"到理性投资，散户投资组合更加多元化。现在散户不再单纯追逐故事，而是投资于有真实收入增长的科技公司。</p>
+                        <div class="topic-highlight">
+                            "The health of the retail investor has improved." — Vlad Tenev
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-number">04</div>
+                    <div class="topic-timestamp">[27:37-34:40]</div>
+                    <h3 class="topic-title">财报会革命</h3>
+                    <div class="topic-content">
+                        <p>将枯燥的财报电话会议变成数万人观看的"节目"。灵感来自NBA赛后采访，引入直播和散户问答。</p>
+                        <div class="topic-highlight">
+                            "如果我都觉得无聊，听众肯定更无聊。" — 第一性原理思考
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-number">05</div>
+                    <div class="topic-timestamp">[35:20-46:20]</div>
+                    <h3 class="topic-title">资产代币化</h3>
+                    <div class="topic-content">
+                        <p>代币化是解决资产流动性的终极方案，让私有资产像稳定币一样实现24/7即时交易和结算。</p>
+                        <div class="topic-highlight">
+                            "未来散户参与早期风投将成为常态，这将极大促进创业精神。"
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-number">06</div>
+                    <div class="topic-timestamp">[12:49-26:30]</div>
+                    <h3 class="topic-title">代际策略</h3>
+                    <div class="topic-content">
+                        <p>既要陪着老用户成长（更高级的图表、Web版），又要用新产品（加密货币、预测市场）抓住18-24岁年轻人。</p>
+                        <div class="topic-highlight">
+                            "金融公司最大的死亡陷阱是成为'上一代人的公司'。"
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section id="comparison" class="contrast-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number" style="color: var(--accent-orange);">04 — 转型对比</div>
+                <h2 class="section-title">2021 vs 2024</h2>
+                <p class="section-description">
+                    从Meme股狂热到理性投资，散户市场正在发生质的变化。
+                </p>
+            </div>
+
+            <div class="comparison-grid">
+                <div class="comparison-card past">
+                    <div class="comparison-year">2021 — Meme狂热时代</div>
+                    <ul class="comparison-list">
+                        <li>稍纵即逝的叙事驱动市场</li>
+                        <li>散户资金来自政府刺激支票</li>
+                        <li>投向GameStop出于怀旧和无聊</li>
+                        <li>追逐故事，缺乏理性分析</li>
+                        <li>投资组合单一，高度集中</li>
+                        <li>Robinhood依赖市场上涨</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-card now">
+                    <div class="comparison-year">2024 — 理性投资时代</div>
+                    <ul class="comparison-list">
+                        <li>AI等实质性技术变革驱动</li>
+                        <li>散户自有资金，长期投资</li>
+                        <li>投资有真实收入的科技公司</li>
+                        <li>"散户健康状况已改善"</li>
+                        <li>投资组合多元化</li>
+                        <li>11条业务线，全天候商业模式</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Harmonic Section -->
+    <section class="harmonic-section">
+        <div class="container">
+            <h2 class="harmonic-title">超越金融：Harmonic与数学超级智能</h2>
+            <p class="harmonic-quote">
+                "Harmonic的目标不仅仅是做题，而是通过解决黎曼猜想等数学难题，解锁理论物理的瓶颈，最终实现'大统一理论'。"
+            </p>
+
+            <div class="harmonic-stats">
+                <div class="harmonic-stat">
+                    <div class="harmonic-stat-value">10/12</div>
+                    <div class="harmonic-stat-label">Aristotle模型普特南竞赛成绩</div>
+                </div>
+                <div class="harmonic-stat">
+                    <div class="harmonic-stat-value">∞</div>
+                    <div class="harmonic-stat-label">黎曼猜想等千禧年难题</div>
+                </div>
+                <div class="harmonic-stat">
+                    <div class="harmonic-stat-value">?</div>
+                    <div class="harmonic-stat-label">超光速与时间旅行</div>
+                </div>
+            </div>
+
+            <p style="margin-top: 3rem; color: var(--text-secondary); max-width: 700px; margin-left: auto; margin-right: auto;">
+                Vlad半开玩笑但严肃地讨论：如果物理学突破，未来可能实现超光速旅行。
+                关于时间旅行，"回到过去"可能违反物理定律，但"前往未来"相对更容易想象。
+            </p>
+        </div>
+    </section>
+
+    <!-- Insights -->
+    <section id="insights">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">05 — 延伸思考</div>
+                <h2 class="section-title">金融与科技的边界消融</h2>
+                <p class="section-description">
+                    Vlad的愿景揭示了一个明显的趋势：金融与科技的边界正在彻底消融。
+                </p>
+            </div>
+
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-icon">🔄</div>
+                    <h3 class="insight-title">资产形态的重构</h3>
+                    <p class="insight-content">
+                        当私有公司股权、甚至现实资产都能像比特币一样24/7流动时，传统的流动性溢价理论将被重写。
+                    </p>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-icon">👥</div>
+                    <h3 class="insight-title">散户的力量</h3>
+                    <p class="insight-content">
+                        从GameStop的盲目冲动到如今投资AI和私有市场，散户正在获得原本只属于华尔街精英的工具。
+                    </p>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-icon">🤖</div>
+                    <h3 class="insight-title">AI的终极应用</h3>
+                    <p class="insight-content">
+                        Harmonic的案例提醒我们，AI的最大价值可能不在于生成文本或图像，而在于攻克人类智力无法企及的科学难题。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote -->
+    <section class="quote-section">
+        <div class="container">
+            <div class="quote-mark">"</div>
+            <p class="quote-text">
+                The health of the retail investor has improved.<br>
+                散户投资者的健康状况已经改善。
+            </p>
+            <p class="quote-author">— Vlad Tenev, CEO of Robinhood</p>
+        </div>
+    </section>
+
+    <!-- Key Takeaways -->
+    <section id="takeaways">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">06 — 精华收获</div>
+                <h2 class="section-title">核心商业洞察</h2>
+                <p class="section-description">
+                    从这场深度对话中提取的关键商业智慧和战略启示。
+                </p>
+            </div>
+
+            <div class="takeaways-list">
+                <div class="takeaway-item">
+                    <div class="takeaway-number">1</div>
+                    <div class="takeaway-content">
+                        <h3>商业韧性</h3>
+                        <p>不要做"顺风车"企业。在顺境时扩张，在逆境时必须通过多元化转型构建"全天候"的商业模式。</p>
+                    </div>
+                </div>
+
+                <div class="takeaway-item">
+                    <div class="takeaway-number">2</div>
+                    <div class="takeaway-content">
+                        <h3>第一性原理</h3>
+                        <p>打破常规（如枯燥的财报会），从最基本的逻辑出发重新设计用户体验，往往能带来数量级的增长。</p>
+                    </div>
+                </div>
+
+                <div class="takeaway-item">
+                    <div class="takeaway-number">3</div>
+                    <div class="takeaway-content">
+                        <h3>拥抱代币化</h3>
+                        <p>关注资产上链的趋势，这不仅是加密货币的叙事，更是未来所有资产流动性的基础设施。</p>
+                    </div>
+                </div>
+
+                <div class="takeaway-item">
+                    <div class="takeaway-number">4</div>
+                    <div class="takeaway-content">
+                        <h3>AI作为工具</h3>
+                        <p>作为投资者，利用AI（如Cortex）来处理复杂的金融数据，将成为缩小与机构信息差的关键手段。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">深入了解金融科技的未来</h2>
+            <p class="cta-description">
+                观看完整的56分钟访谈，探索预测市场、资产代币化和AI助手的更多细节。
+            </p>
+            <a href="https://youtu.be/7cvVgxJYb-I" target="_blank" class="cta-button">
+                📺 在YouTube上观看完整访谈
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Based on interview with <strong>Sourcery</strong> • Host: Molly O'Shea</p>
+            <p>Guest: <strong>Vlad Tenev</strong>, CEO of Robinhood & Co-founder of Harmonic</p>
+            <p style="margin-top: 1.5rem;">
+                <a href="https://youtu.be/7cvVgxJYb-I" target="_blank">youtube.com/watch?v=7cvVgxJYb-I</a>
+            </p>
+            <p style="margin-top: 2rem; color: var(--text-tertiary);">
+                Designed with Anthropic Brand Guidelines • 2026
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Active nav link on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements
+        document.querySelectorAll('.engine-card, .topic-card, .insight-card, .takeaway-item, .timeline-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
