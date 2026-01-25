@@ -67,9 +67,27 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(ellipse at top right, rgba(74, 158, 255, 0.1) 0%, transparent 50%),
-                        radial-gradient(ellipse at bottom left, rgba(168, 85, 247, 0.08) 0%, transparent 50%);
+            background:
+                /* 渐变遮罩层 */
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.95) 40%, var(--bg-dark) 70%),
+                /* 图片背景 */
+                url('../images/bg-satya.png') no-repeat right center / cover;
             pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* 额外的渐变叠加层 */
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .header-content {
@@ -435,6 +453,22 @@
 
             .topic-content {
                 margin-left: 0;
+            }
+
+            /* 移动端背景图优化 */
+            .header::before {
+                opacity: 0.3;
+                background:
+                    linear-gradient(to left, rgba(10, 10, 11, 0.5) 0%, rgba(10, 10, 11, 0.98) 50%, var(--bg-dark) 80%),
+                    url('../images/bg-satya.png') no-repeat right center / cover;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* 小屏幕完全隐藏背景图，只保留渐变 */
+            .header::before {
+                background: radial-gradient(ellipse at top right, rgba(74, 158, 255, 0.08) 0%, transparent 60%),
+                            radial-gradient(ellipse at bottom left, rgba(168, 85, 247, 0.06) 0%, transparent 60%);
             }
         }
     </style>
