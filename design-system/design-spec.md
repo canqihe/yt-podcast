@@ -291,23 +291,68 @@ background: linear-gradient(180deg, #2a2a2e 0%, transparent 100%);
 
 ### 滚动动画
 
+**实现方式：使用 CSS Transition 避免闪动**
+
 ```css
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* 初始状态 - 隐藏 */
+.point-card,
+.takeaway-card,
+.topic {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* 触发动画 - 显示 */
+.point-card.animate-in,
+.takeaway-card.animate-in,
+.topic.animate-in {
+  opacity: 1;
+  transform: translateY(0);
 }
 ```
 
-**使用**：
+**Header 元素使用 Keyframes（页面加载时触发）**：
+```css
+.header .animate-in {
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+}
+```
+
+**JavaScript 触发**：
+```javascript
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('animate-in');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+  observer.observe(el);
+});
+```
+
+**使用示例**：
 ```html
-<div class="point-card animate-in delay-1">...</div>
-<div class="point-card animate-in delay-2">...</div>
+<!-- Header 元素 - 使用 keyframes -->
+<div class="badge-wrapper animate-in">...</div>
+<span class="title-line-1 animate-in delay-1">...</span>
+
+<!-- 卡片元素 - 使用 transition -->
+<div class="point-card">...</div>
+<div class="takeaway-card">...</div>
+<div class="topic">...</div>
+```
+
+**延迟类**：
+```css
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
 ```
 
 ---
