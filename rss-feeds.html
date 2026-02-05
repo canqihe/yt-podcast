@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HN 热门博客订阅源 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #5f6368;
+            --text-muted: #80868b;
+            --border: #e0e0e0;
+            --accent: #ff6600;
+            --accent-hover: #e65c00;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            padding: 48px 0;
+            margin-bottom: 40px;
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 16px;
+            background: rgba(255, 102, 0, 0.1);
+            color: var(--accent);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: clamp(36px, 6vw, 56px);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .title span {
+            color: var(--accent);
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 32px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 280px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 15px;
+            transition: all 0.2s ease;
+            background: var(--bg-primary);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 18px;
+            border: 1px solid var(--border);
+            background: var(--bg-primary);
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        /* Grid */
+        .blogs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        /* Blog Card */
+        .blog-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .blog-card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .blog-card:hover::before {
+            opacity: 1;
+        }
+
+        .blog-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .blog-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .blog-domain {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+        }
+
+        .external-icon {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            color: var(--text-muted);
+            margin-left: 8px;
+            margin-top: 2px;
+        }
+
+        .blog-links {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .blog-link {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .blog-link:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .blog-link svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border);
+            padding: 48px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .footer-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Results */
+        .results-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding: 16px 20px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .results-count {
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        .results-count strong {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* Hidden state */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 32px 0;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+
+            .filter-buttons {
+                width: 100%;
+            }
+
+            .filter-btn {
+                flex: 1;
+                text-align: center;
+            }
+
+            .blogs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge">HN 热门博客</div>
+                <h1 class="title">2025 年度<span>精选博客</span>订阅源</h1>
+                <p class="subtitle">
+                    基于 Hacker News 热度评选的 100 个高质量技术博客。<br>
+                    涵盖 AI、编程、创业、安全等多个领域，一键订阅所有优质内容源。
+                </p>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value">100</div>
+                        <div class="stat-label">精选博客</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">RSS</div>
+                        <div class="stat-label">订阅格式</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">免费</div>
+                        <div class="stat-label">完全开源</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Filters -->
+        <div class="filters">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="searchInput" placeholder="搜索博客名称或域名...">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">全部 (100)</button>
+                <button class="filter-btn" data-filter="tech">技术博客</button>
+                <button class="filter-btn" data-filter="ai">AI & ML</button>
+                <button class="filter-btn" data-filter="startup">创业</button>
+                <button class="filter-btn" data-filter="security">安全</button>
+            </div>
+        </div>
+
+        <!-- Results Info -->
+        <div class="results-info">
+            <span class="results-count">显示 <strong>100</strong> 个博客</span>
+            <span style="font-size: 13px; color: var(--text-muted);">点击卡片访问博客</span>
+        </div>
+
+        <!-- Blogs Grid -->
+        <div class="blogs-grid" id="blogsGrid">
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-text">
+                    数据来源：<a href="https://refactoringenglish.com/tools/hn-popularity/" class="footer-link" target="_blank">HN Popularity Contest 2025</a><br>
+                    由 Hacker News 社区投票评选的最受欢迎技术博客
+                </p>
+                <p class="footer-text">
+                    💡 提示：使用 RSS 阅读器（如 Feedly、Inoreader）订阅这些博客，不错过任何优质内容
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Blog data
+        const blogs = [
+            { title: "Simon Willison", domain: "simonwillison.net", rss: "https://simonwillison.net/atom/everything/", url: "https://simonwillison.net", category: "tech" },
+            { title: "Jeff Geerling", domain: "jeffgeerling.com", rss: "https://www.jeffgeerling.com/blog.xml", url: "https://jeffgeerling.com", category: "tech" },
+            { title: "Sean Goedecke", domain: "seangoedecke.com", rss: "https://www.seangoedecke.com/rss.xml", url: "https://seangoedecke.com", category: "tech" },
+            { title: "Krebs on Security", domain: "krebsonsecurity.com", rss: "https://krebsonsecurity.com/feed/", url: "https://krebsonsecurity.com", category: "security" },
+            { title: "Daring Fireball", domain: "daringfireball.net", rss: "https://daringfireball.net/feeds/main", url: "https://daringfireball.net", category: "tech" },
+            { title: "Eric Migicovsky", domain: "ericmigi.com", rss: "https://ericmigi.com/rss.xml", url: "https://ericmigi.com", category: "tech" },
+            { title: "Antirez", domain: "antirez.com", rss: "http://antirez.com/rss", url: "http://antirez.com", category: "tech" },
+            { title: "Idiallo", domain: "idiallo.com", rss: "https://idiallo.com/feed.rss", url: "https://idiallo.com", category: "tech" },
+            { title: "Maurycy Z", domain: "maurycyz.com", rss: "https://maurycyz.com/index.xml", url: "https://maurycyz.com", category: "tech" },
+            { title: "Pluralistic", domain: "pluralistic.net", rss: "https://pluralistic.net/feed/", url: "https://pluralistic.net", category: "tech" },
+            { title: "Terence Eden", domain: "shkspr.mobi", rss: "https://shkspr.mobi/blog/feed/", url: "https://shkspr.mobi", category: "tech" },
+            { title: "lcamtuf", domain: "lcamtuf.substack.com", rss: "https://lcamtuf.substack.com/feed", url: "https://lcamtuf.substack.com", category: "security" },
+            { title: "Mitchell Hashimoto", domain: "mitchellh.com", rss: "https://mitchellh.com/feed.xml", url: "https://mitchellh.com", category: "tech" },
+            { title: "Dynomight", domain: "dynomight.net", rss: "https://dynomight.net/feed.xml", url: "https://dynomight.net", category: "tech" },
+            { title: "Daniel J. Bernstein", domain: "utcc.utoronto.ca", rss: "https://utcc.utoronto.ca/~cks/space/blog/?atom", url: "https://utcc.utoronto.ca/~cks", category: "tech" },
+            { title: "Xe Iaso", domain: "xeiaso.net", rss: "https://xeiaso.net/blog.rss", url: "https://xeiaso.net", category: "tech" },
+            { title: "The Old New Thing", domain: "microsoft.com", rss: "https://devblogs.microsoft.com/oldnewthing/feed", url: "https://devblogs.microsoft.com/oldnewthing", category: "tech" },
+            { title: "Ken Shirriff", domain: "righto.com", rss: "https://www.righto.com/feeds/posts/default", url: "https://righto.com", category: "tech" },
+            { title: "Armin Ronacher", domain: "lucumr.pocoo.org", rss: "https://lucumr.pocoo.org/feed.atom", url: "https://lucumr.pocoo.org", category: "tech" },
+            { title: "Skyfall", domain: "skyfall.dev", rss: "https://skyfall.dev/rss.xml", url: "https://skyfall.dev", category: "tech" },
+            { title: "Gary Marcus", domain: "garymarcus.substack.com", rss: "https://garymarcus.substack.com/feed", url: "https://garymarcus.substack.com", category: "ai" },
+            { title: "Rachel by the Bay", domain: "rachelbythebay.com", rss: "https://rachelbythebay.com/w/atom.xml", url: "https://rachelbythebay.com", category: "tech" },
+            { title: "Overreacted", domain: "overreacted.io", rss: "https://overreacted.io/rss.xml", url: "https://overreacted.io", category: "tech" },
+            { title: "Tim Sheppard", domain: "timsh.org", rss: "https://timsh.org/rss/", url: "https://timsh.org", category: "tech" },
+            { title: "John D. Cook", domain: "johndcook.com", rss: "https://www.johndcook.com/blog/feed/", url: "https://johndcook.com", category: "tech" },
+            { title: "Giles Thomas", domain: "gilesthomas.com", rss: "https://gilesthomas.com/feed/rss.xml", url: "https://gilesthomas.com", category: "startup" },
+            { title: "matklad", domain: "matklad.github.io", rss: "https://matklad.github.io/feed.xml", url: "https://matklad.github.io", category: "tech" },
+            { title: "Derek Thompson", domain: "derekthompson.org", rss: "https://www.theatlantic.com/feed/author/derek-thompson/", url: "https://www.theatlantic.com/author/derek-thompson", category: "startup" },
+            { title: "Evan Hahn", domain: "evanhahn.com", rss: "https://evanhahn.com/feed.xml", url: "https://evanhahn.com", category: "tech" },
+            { title: "Terrible Software", domain: "terriblesoftware.org", rss: "https://terriblesoftware.org/feed/", url: "https://terriblesoftware.org", category: "tech" },
+            { title: "Rakhim", domain: "rakhim.exotext.com", rss: "https://rakhim.exotext.com/rss.xml", url: "https://rakhim.exotext.com", category: "tech" },
+            { title: "Joan Westenberg", domain: "joanwestenberg.com", rss: "https://joanwestenberg.com/rss", url: "https://joanwestenberg.com", category: "startup" },
+            { title: "Xania", domain: "xania.org", rss: "https://xania.org/feed", url: "https://xania.org", category: "tech" },
+            { title: "Micah Lee", domain: "micahflee.com", rss: "https://micahflee.com/feed/", url: "https://micahflee.com", category: "security" },
+            { title: "Nesbitt", domain: "nesbitt.io", rss: "https://nesbitt.io/feed.xml", url: "https://nesbitt.io", category: "tech" },
+            { title: "Construction Physics", domain: "construction-physics.com", rss: "https://www.construction-physics.com/feed", url: "https://www.construction-physics.com", category: "tech" },
+            { title: "Tedium", domain: "tedium.co", rss: "https://feed.tedium.co/", url: "https://tedium.co", category: "tech" },
+            { title: "Susam", domain: "susam.net", rss: "https://susam.net/feed.xml", url: "https://susam.net", category: "tech" },
+            { title: "Entropic Thoughts", domain: "entropicthoughts.com", rss: "https://entropicthoughts.com/feed.xml", url: "https://entropicthoughts.com", category: "ai" },
+            { title: "Hillel Wayne", domain: "buttondown.com", rss: "https://buttondown.com/hillelwayne/rss", url: "https://buttondown.com/hillelwayne", category: "tech" },
+            { title: "Dwarkesh Patel", domain: "dwarkesh.com", rss: "https://www.dwarkeshpatel.com/feed", url: "https://www.dwarkeshpatel.com", category: "tech" },
+            { title: "Borretti", domain: "borretti.me", rss: "https://borretti.me/feed.xml", url: "https://borretti.me", category: "tech" },
+            { title: "Where's Your Ed At", domain: "wheresyoured.at", rss: "https://www.wheresyoured.at/rss/", url: "https://www.wheresyoured.at", category: "tech" },
+            { title: "Jayd", domain: "jayd.ml", rss: "https://jayd.ml/feed.xml", url: "https://jayd.ml", category: "tech" },
+            { title: "Max Woolf", domain: "minimaxir.com", rss: "https://minimaxir.com/index.xml", url: "https://minimaxir.com", category: "ai" },
+            { title: "George Hotz", domain: "geohot.github.io", rss: "https://geohot.github.io/blog/feed.xml", url: "https://geohot.github.io", category: "ai" },
+            { title: "Paul Graham", domain: "paulgraham.com", rss: "http://www.aaronsw.com/2002/feeds/pgessays.rss", url: "https://paulgraham.com", category: "startup" },
+            { title: "Filfre.net", domain: "filfre.net", rss: "https://www.filfre.net/feed/", url: "https://www.filfre.net", category: "tech" },
+            { title: "Jim Nielsen", domain: "blog.jim-nielsen.com", rss: "https://blog.jim-nielsen.com/feed.xml", url: "https://blog.jim-nielsen.com", category: "tech" },
+            { title: "Dan's Farq", domain: "dfarq.homeip.net", rss: "https://dfarq.homeip.net/feed/", url: "https://dfarq.homeip.net", category: "tech" },
+            { title: "Jyn", domain: "jyn.dev", rss: "https://jyn.dev/atom.xml", url: "https://jyn.dev", category: "tech" },
+            { title: "Geoffrey Litt", domain: "geoffreylitt.com", rss: "https://www.geoffreylitt.com/feed.xml", url: "https://www.geoffreylitt.com", category: "tech" },
+            { title: "Downtown Doug Brown", domain: "downtowndougbrown.com", rss: "https://www.downtowndougbrown.com/feed/", url: "https://www.downtowndougbrown.com", category: "tech" },
+            { title: "Brutecat", domain: "brutecat.com", rss: "https://brutecat.com/rss.xml", url: "https://brutecat.com", category: "tech" },
+            { title: "Eli Bendersky", domain: "eli.thegreenplace.net", rss: "https://eli.thegreenplace.net/feeds/all.atom.xml", url: "https://eli.thegreenplace.net", category: "tech" },
+            { title: "Abort Retry Fail", domain: "abortretry.fail", rss: "https://www.abortretry.fail/feed", url: "https://www.abortretry.fail", category: "tech" },
+            { title: "Fabien Sanglard", domain: "fabiensanglard.net", rss: "https://fabiensanglard.net/rss.xml", url: "https://fabiensanglard.net", category: "tech" },
+            { title: "Old VCR", domain: "oldvcr.blogspot.com", rss: "https://oldvcr.blogspot.com/feeds/posts/default", url: "https://oldvcr.blogspot.com", category: "tech" },
+            { title: "Bogdan", domain: "bogdanthegeek.github.io", rss: "https://bogdanthegeek.github.io/blog/index.xml", url: "https://bogdanthegeek.github.io", category: "tech" },
+            { title: "Hugo Tunius", domain: "hugotunius.se", rss: "https://hugotunius.se/feed.xml", url: "https://hugotunius.se", category: "tech" },
+            { title: "Gwern", domain: "gwern.net", rss: "https://gwern.substack.com/feed", url: "https://gwern.net", category: "ai" },
+            { title: "Berthub.eu", domain: "berthub.eu", rss: "https://berthub.eu/articles/index.xml", url: "https://berthub.eu", category: "tech" },
+            { title: "Chad Nauseam", domain: "chadnauseam.com", rss: "https://chadnauseam.com/rss.xml", url: "https://chadnauseam.com", category: "tech" },
+            { title: "Simone.org", domain: "simone.org", rss: "https://simone.org/feed/", url: "https://simone.org", category: "tech" },
+            { title: "IT Notes", domain: "it-notes.dragas.net", rss: "https://it-notes.dragas.net/feed/", url: "https://it-notes.dragas.net", category: "tech" },
+            { title: "Beej's Blog", domain: "beej.us", rss: "https://beej.us/blog/rss.xml", url: "https://beej.us", category: "tech" },
+            { title: "Hey Paris", domain: "hey.paris", rss: "https://hey.paris/index.xml", url: "https://hey.paris", category: "tech" },
+            { title: "Daniel Wirtz", domain: "danielwirtz.com", rss: "https://danielwirtz.com/rss.xml", url: "https://danielwirtz.com", category: "tech" },
+            { title: "Mat Duggan", domain: "matduggan.com", rss: "https://matduggan.com/rss/", url: "https://matduggan.com", category: "tech" },
+            { title: "Refactoring English", domain: "refactoringenglish.com", rss: "https://refactoringenglish.com/index.xml", url: "https://refactoringenglish.com", category: "tech" },
+            { title: "Works On My Machine", domain: "worksonmymachine.substack.com", rss: "https://worksonmymachine.substack.com/feed", url: "https://worksonmymachine.substack.com", category: "tech" },
+            { title: "Philip Laine", domain: "philiplaine.com", rss: "https://philiplaine.com/index.xml", url: "https://philiplaine.com", category: "tech" },
+            { title: "Steve Blank", domain: "steveblank.com", rss: "https://steveblank.com/feed/", url: "https://steveblank.com", category: "startup" },
+            { title: "Bernstein Bear", domain: "bernsteinbear.com", rss: "https://bernsteinbear.com/feed.xml", url: "https://bernsteinbear.com", category: "tech" },
+            { title: "Daniel Delaney", domain: "danieldelaney.net", rss: "https://danieldelaney.net/feed", url: "https://danieldelaney.net", category: "tech" },
+            { title: "Troy Hunt", domain: "troyhunt.com", rss: "https://www.troyhunt.com/rss/", url: "https://www.troyhunt.com", category: "security" },
+            { title: "Herman", domain: "herman.bearblog.dev", rss: "https://herman.bearblog.dev/feed/", url: "https://herman.bearblog.dev", category: "tech" },
+            { title: "Tom Renner", domain: "tomrenner.com", rss: "https://tomrenner.com/index.xml", url: "https://tomrenner.com", category: "tech" },
+            { title: "Pixelmelt Blog", domain: "blog.pixelmelt.dev", rss: "https://blog.pixelmelt.dev/rss/", url: "https://blog.pixelmelt.dev", category: "tech" },
+            { title: "Martin Anderson", domain: "martinalderson.com", rss: "https://martinalderson.com/feed.xml", url: "https://martinalderson.com", category: "tech" },
+            { title: "Daniel Hooper", domain: "danielchasehooper.com", rss: "https://danielchasehooper.com/feed.xml", url: "https://danielchasehooper.com", category: "tech" },
+            { title: "Simon Tatham", domain: "chiark.greenend.org.uk", rss: "https://www.chiark.greenend.org.uk/~sgtatham/quasiblog/feed.xml", url: "https://www.chiark.greenend.org.uk/~sgtatham", category: "tech" },
+            { title: "Grant Slatton", domain: "grantslatton.com", rss: "https://grantslatton.com/rss.xml", url: "https://grantslatton.com", category: "tech" },
+            { title: "Experimental History", domain: "experimental-history.com", rss: "https://www.experimental-history.com/feed", url: "https://www.experimental-history.com", category: "tech" },
+            { title: "Anil Dash", domain: "anildash.com", rss: "https://anildash.com/feed.xml", url: "https://anildash.com", category: "tech" },
+            { title: "Ares Luna", domain: "aresluna.org", rss: "https://aresluna.org/main.rss", url: "https://aresluna.org", category: "tech" },
+            { title: "Michael Stapelberg", domain: "michael.stapelberg.ch", rss: "https://michael.stapelberg.ch/feed.xml", url: "https://michael.stapelberg.ch", category: "tech" },
+            { title: "Miguel Grinberg", domain: "miguelgrinberg.com", rss: "https://blog.miguelgrinberg.com/feed", url: "https://blog.miguelgrinberg.com", category: "tech" },
+            { title: "Keygen", domain: "keygen.sh", rss: "https://keygen.sh/blog/feed.xml", url: "https://keygen.sh", category: "tech" },
+            { title: "Matthew Garrett", domain: "mjg59.dreamwidth.org", rss: "https://mjg59.dreamwidth.org/data/rss", url: "https://mjg59.dreamwidth.org", category: "tech" },
+            { title: "Computer.rip", domain: "computer.rip", rss: "https://computer.rip/rss.xml", url: "https://computer.rip", category: "tech" },
+            { title: "Ted Unangst", domain: "tedunangst.com", rss: "https://www.tedunangst.com/flak/rss", url: "https://www.tedunangst.com", category: "tech" }
+        ];
+
+        // Render blogs
+        function renderBlogs(blogsToRender) {
+            const grid = document.getElementById('blogsGrid');
+            grid.innerHTML = blogsToRender.map(blog => `
+                <div class="blog-card" data-category="${blog.category}" onclick="window.open('${blog.url}', '_blank')">
+                    <div class="blog-header">
+                        <div>
+                            <div class="blog-title">${blog.title}</div>
+                            <div class="blog-domain">${blog.domain}</div>
+                        </div>
+                        <svg class="external-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </div>
+                    <div class="blog-links">
+                        <a href="${blog.url}" class="blog-link" onclick="event.stopPropagation()">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                            </svg>
+                            访问
+                        </a>
+                        <a href="${blog.rss}" class="blog-link" onclick="event.stopPropagation()">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 5c7.18 0 13 5.82 13 13M6 11c3.87 0 7 3.13 7 7M6 17a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1H7a1 1 0 01-1-1v-2z"/>
+                            </svg>
+                            RSS
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter blogs
+        function filterBlogs(category) {
+            const cards = document.querySelectorAll('.blog-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // Update count
+            document.querySelector('.results-count strong').textContent = visibleCount;
+        }
+
+        // Search blogs
+        function searchBlogs(query) {
+            const cards = document.querySelectorAll('.blog-card');
+            const lowerQuery = query.toLowerCase();
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const title = card.querySelector('.blog-title').textContent.toLowerCase();
+                const domain = card.querySelector('.blog-domain').textContent.toLowerCase();
+
+                if (title.includes(lowerQuery) || domain.includes(lowerQuery)) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // Update count
+            document.querySelector('.results-count strong').textContent = visibleCount;
+        }
+
+        // Filter button click handlers
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                filterBlogs(btn.dataset.filter);
+            });
+        });
+
+        // Search input handler
+        const searchInput = document.getElementById('searchInput');
+        let searchTimeout;
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                searchBlogs(e.target.value);
+            }, 300);
+        });
+
+        // Initial render
+        renderBlogs(blogs);
+    </script>
+</body>
+</html>
