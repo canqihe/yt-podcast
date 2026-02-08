@@ -9,10 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Space+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 纯黑极简风 */
-            --bg-primary: #000000;
-            --bg-secondary: #0a0a0a;
-            --bg-card: #050505;
+            /* 深色极简风 - 增加层次感 */
+            --bg-primary: #08080a;
+            --bg-secondary: #0f0f12;
+            --bg-card: #131318;
+            --bg-card-hover: #1a1a20;
             --text-primary: #f5f2eb;
             --text-secondary: #9a9589;
             --accent-blue: #4a9eff;
@@ -40,7 +41,28 @@
             overflow-x: hidden;
         }
 
-        /* Animated background mesh - 纯黑极简 + 微妙光晕 */
+        /* 添加微妙的纹理效果 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background-image:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 255, 255, 0.01) 2px,
+                    rgba(255, 255, 255, 0.01) 4px
+                );
+            opacity: 0.5;
+        }
+
+        /* Animated background mesh - 深色极简 + 丰富层次 */
         .bg-mesh {
             position: fixed;
             top: 0;
@@ -52,11 +74,15 @@
             opacity: 1;
             background:
                 /* Hero 区域顶部的蓝色光晕（极淡） */
-                radial-gradient(ellipse at 50% 30%, rgba(74, 158, 255, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 30%, rgba(74, 158, 255, 0.06) 0%, transparent 50%),
+                /* 右上角紫色光晕 */
+                radial-gradient(ellipse at 85% 20%, rgba(168, 85, 247, 0.04) 0%, transparent 45%),
                 /* 底部微妙的渐变过渡 */
-                radial-gradient(ellipse at 50% 100%, rgba(20, 20, 25, 0.08) 0%, transparent 40%),
-                /* 基础纯黑 */
-                linear-gradient(to bottom, #000000 0%, #030303 100%);
+                radial-gradient(ellipse at 50% 100%, rgba(20, 20, 25, 0.12) 0%, transparent 40%),
+                /* 左下角金色光晕 */
+                radial-gradient(ellipse at 15% 80%, rgba(245, 158, 11, 0.03) 0%, transparent 40%),
+                /* 基础深色渐变 */
+                linear-gradient(to bottom, #08080a 0%, #0c0c0f 50%, #101014 100%);
         }
 
         /* ===== 流星雨效果（已注释） ===== */
@@ -224,9 +250,9 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(to bottom,
-                rgba(0, 0, 0, 0.75) 0%,
-                rgba(0, 0, 0, 0.55) 50%,
-                rgba(0, 0, 0, 0.85) 100%);
+                rgba(8, 8, 10, 0.85) 0%,
+                rgba(8, 8, 10, 0.65) 50%,
+                rgba(16, 16, 20, 0.95) 100%);
             z-index: -1;
         }
 
@@ -235,15 +261,17 @@
             align-items: center;
             gap: 10px;
             padding: 10px 20px;
-            background: rgba(245, 242, 235, 0.08);
-            border: 1px solid rgba(245, 242, 235, 0.15);
+            background: rgba(245, 242, 235, 0.06);
+            border: 1px solid rgba(245, 242, 235, 0.12);
             border-radius: 100px;
             font-family: 'Space Mono', monospace;
             font-size: 12px;
             color: var(--text-primary);
             margin-bottom: 40px;
             animation: fadeInUp 0.8s ease-out;
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
+            box-shadow:
+                0 0 20px rgba(34, 197, 94, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
         .badge-dot {
@@ -301,8 +329,8 @@
             justify-content: space-between;
             align-items: flex-end;
             margin-bottom: 50px;
-            padding-bottom: 25px;
-            border-bottom: 1px solid var(--border);
+            padding-bottom: 28px;
+            border-bottom: 1px solid rgba(245, 242, 235, 0.06);
         }
 
         .section-title {
@@ -310,7 +338,6 @@
             font-size: 36px;
             font-weight: 600;
             line-height: 1;
-            margin-bottom: 2px;
         }
 
         .section-subtitle {
@@ -321,7 +348,6 @@
             align-items: flex-end;
             gap: 8px;
             line-height: 1;
-            padding-bottom: 2px;
         }
 
         .section-subtitle .count-highlight {
@@ -337,7 +363,7 @@
 
         /* Article Card */
         .article-card {
-            background: var(--bg-card);
+            background: linear-gradient(145deg, var(--bg-card) 0%, rgba(19, 19, 24, 0.8) 100%);
             border: 1px solid var(--border);
             border-radius: 20px;
             padding: 32px;
@@ -348,6 +374,9 @@
             text-decoration: none;
             color: inherit;
             display: block;
+            box-shadow:
+                0 4px 20px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.03);
         }
 
         .article-card::before {
@@ -366,7 +395,10 @@
         .article-card:hover {
             transform: translateY(-8px);
             border-color: var(--border-hover);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(145deg, var(--bg-card-hover) 0%, rgba(26, 26, 32, 0.9) 100%);
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
         .article-card:hover::before {
@@ -442,7 +474,8 @@
             font-family: 'Space Mono', monospace;
             font-size: 11px;
             padding: 6px 12px;
-            background: var(--bg-secondary);
+            background: rgba(15, 15, 18, 0.6);
+            border: 1px solid rgba(245, 242, 235, 0.05);
             border-radius: 6px;
             color: var(--text-secondary);
         }
@@ -502,7 +535,7 @@
 
         /* Footer */
         footer {
-            background: var(--bg-secondary);
+            background: linear-gradient(to top, #0c0c0f 0%, #0f0f12 100%);
             padding: 60px 0 40px;
             border-top: 1px solid var(--border);
         }
@@ -539,19 +572,21 @@
             justify-content: center;
             width: 48px;
             height: 48px;
-            background: rgba(245, 242, 235, 0.05);
-            border: 1px solid var(--border);
+            background: rgba(245, 242, 235, 0.04);
+            border: 1px solid rgba(245, 242, 235, 0.08);
             border-radius: 50%;
             color: var(--text-primary);
             text-decoration: none;
             transition: all 0.3s ease;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
         }
 
         .social-link:hover {
-            background: rgba(245, 242, 235, 0.1);
+            background: rgba(245, 242, 235, 0.08);
             border-color: var(--accent-blue);
             color: var(--accent-blue);
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 158, 255, 0.2);
         }
 
         .social-icon {
@@ -563,7 +598,7 @@
 
         .footer-bottom {
             padding-top: 30px;
-            border-top: 1px solid var(--border);
+            border-top: 1px solid rgba(245, 242, 235, 0.06);
             text-align: center;
         }
 
