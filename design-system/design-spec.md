@@ -105,7 +105,6 @@ background: linear-gradient(180deg, #2a2a2e 0%, transparent 100%);
 
 ```html
 <span class="badge">20VC Podcast</span>
-<a href="#" class="badge">← 返回首页</a>
 ```
 
 **样式**：
