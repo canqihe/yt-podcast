@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>尤瓦尔·赫拉利：故事、权力与真相的虚无</title>
+    <style>
+        /* ========== Design Tokens - Philosophy Theme ========== */
+        :root {
+            --bg-primary: #0a0a0e;
+            --bg-card: #14141a;
+            --text-primary: #f0f0f5;
+            --text-secondary: #9a9ab0;
+            --text-tertiary: #6a6a80;
+            --accent-purple: #a855f7;
+            --accent-pink: #ec4899;
+            --accent-blue: #3b82f6;
+            --border: #2a2a35;
+            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            --font-size-hero: clamp(48px, 10vw, 120px);
+            --font-size-section: clamp(32px, 5vw, 56px);
+            --font-size-topic: clamp(24px, 4vw, 36px);
+            --font-size-number: clamp(64px, 15vw, 120px);
+            --font-heavy: 800;
+            --letter-spacing-tight: -0.03em;
+            --line-height-tight: 0.95;
+            --card-padding: 40px;
+            --radius-lg: 16px;
+            --radius-pill: 100px;
+            --transition-fast: 0.3s ease;
+            --hover-lift: translateY(-4px);
+            --gradient-accent: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+            --gradient-primary: linear-gradient(135deg, #f0f0f5 0%, #9a9ab0 100%);
+            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+        }
+
+        /* ========== Reset ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ========== Scrollbar ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-purple);
+        }
+
+        /* ========== Container ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 0;
+        }
+
+        /* ========== Badge ========== */
+        .badge-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .badge:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* ========== Title ========== */
+        .title {
+            font-size: var(--font-size-hero);
+            font-weight: var(--font-heavy);
+            line-height: var(--line-height-tight);
+            letter-spacing: var(--letter-spacing-tight);
+            margin-bottom: 24px;
+        }
+
+        .title-line-1 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-line-2 {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== Subtitle ========== */
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        /* ========== Meta Grid ========== */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .meta-item {
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        /* ========== CTA Button ========== */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--gradient-accent);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 16px;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.5);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== Section ========== */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            font-size: var(--font-size-section);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 64px;
+        }
+
+        /* ========== Points Grid ========== */
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* ========== Point Card ========== */
+        .point-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .point-card:hover {
+            border-color: var(--accent-purple);
+            transform: var(--hover-lift);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .point-card:hover::before {
+            opacity: 1;
+        }
+
+        .point-number {
+            font-size: 48px;
+            font-weight: var(--font-heavy);
+            color: var(--border);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .point-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-purple);
+        }
+
+        .point-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ========== Topic ========== */
+        .topic {
+            margin-bottom: 80px;
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .topic-number {
+            font-size: var(--font-size-number);
+            font-weight: var(--font-heavy);
+            line-height: 1;
+            background: var(--gradient-number);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .topic-info {
+            flex: 1;
+            padding-top: 16px;
+        }
+
+        .topic-title {
+            font-size: var(--font-size-topic);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .topic-timestamp {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--accent-pink);
+        }
+
+        .topic-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--card-padding);
+            margin-left: clamp(40px, 10vw, 120px);
+        }
+
+        .topic-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-purple);
+        }
+
+        .topic-core-point {
+            font-size: 18px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .topic-detail {
+            padding-left: 24px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .topic-detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .topic-detail-content {
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--accent-purple);
+            padding: 24px;
+            background: rgba(168, 85, 247, 0.08);
+            margin: 24px 0;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-primary);
+        }
+
+        .thought-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .thought-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        /* ========== Takeaways ========== */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .takeaway-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-fast);
+        }
+
+        .takeaway-card:hover {
+            border-color: var(--accent-pink);
+            transform: var(--hover-lift);
+        }
+
+        .takeaway-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .takeaway-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .takeaway-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: var(--font-heavy);
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .footer-quote {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: var(--font-heavy);
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 48px 0;
+            line-height: 1.2;
+        }
+
+        .footer-note {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Divider ========== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header animations - use keyframes for initial page load */
+        .header .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        /* Card animations - use transition for scroll trigger */
+        .point-card,
+        .takeaway-card,
+        .topic {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .point-card.animate-in,
+        .takeaway-card.animate-in,
+        .topic.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .topic-content {
+                margin-left: 0;
+            }
+
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper animate-in">
+                    <span class="badge">Stories, Power & Truth</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1 animate-in delay-1">尤瓦尔·赫拉利</span>
+                    <span class="title-line-2 animate-in delay-2">故事、权力与真相</span>
+                </h1>
+                <p class="subtitle animate-in delay-3">
+                    当今世界最清醒的头脑之一，历史学家尤瓦尔·赫拉利，在这场对话中再次剥开了人类文明的层层包装。
+                    探讨"虚构故事"的核心逻辑、地缘政治的"低幼化"、AI对人类亲密关系的收割，
+                    以及在算法撕裂的社会中，个人如何通过"调查"自己的心灵来获得真正的解放。
+                </p>
+                <div class="meta-grid animate-in delay-4">
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Yuval Noah Harari</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Nikhil Kamath</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">01:23:51</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=N0S048D2tj4" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看完整视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心洞见</h2>
+            <div class="points-grid">
+                <!-- Point Card 1 -->
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">虚构的力量</h3>
+                    <p class="point-desc">人类之所以能统治地球，并非因为个体强大，而是因为我们能通过"共同的虚构故事"实现大规模协作。</p>
+                </div>
+
+                <!-- Point Card 2 -->
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">地缘政治的退化</h3>
+                    <p class="point-desc">现代政客正在抛弃耗时几代人建立的政治信用，将世界拖回唯权力论的丛林时代。</p>
+                </div>
+
+                <!-- Point Card 3 -->
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">真相的价值</h3>
+                    <p class="point-desc">真相虽然复杂，但如果一个人无法面对真相，他将永远无法解决自身痛苦的根源。</p>
+                </div>
+
+                <!-- Point Card 4 -->
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">AI 重构宗教</h3>
+                    <p class="point-desc">AI 正在通过接管"书籍的解释权"和"亲密关系的建立"，深刻地改变人类的精神世界。</p>
+                </div>
+
+                <!-- Point Card 5 -->
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">算法的诅咒</h3>
+                    <p class="point-desc">我们犯下的最大错误，就是将管理公共对话的编辑职位交给了只追求"参与度"的算法。</p>
+                </div>
+
+                <!-- Point Card 6 -->
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">生命的意义</h3>
+                    <p class="point-desc">生命并非一场需要表演的剧本，而是关于"理解痛苦并从中解脱"的过程。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度对话</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">虚构的力量：为何"讲故事"能统治世界？</h3>
+                        <span class="topic-timestamp">03:00 - 10:02</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        人类之所以能统治地球，并非因为个体强大，而是因为我们能通过"共同的虚构故事"实现大规模协作。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">历史的本质</div>
+                        <p class="topic-detail-content">赫拉利重申了《人类简史》的灵魂：历史是由人类想象力和虚构作品塑造的。除了宗教，经济体系（公司、金钱）本质上也是人类发明的"故事"，它们在现实世界并无实体，却驱动着全人类的运转。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">案例分析：基督教的畅销密码</div>
+                        <p class="topic-detail-content">基督教提供了一个极其迷人的承诺——"上帝爱你"。这种爱不同于人类易变的爱，它来自全知全能的造物主，甚至愿意为你牺牲。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">警示</div>
+                        <p class="topic-detail-content">一个想法越迷人，我们就越该警惕。证据往往苍白无力（如死后世界），但人们却因为渴望相信而选择盲从。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "一个想法越有吸引力，它不是真相的可能性就越大。"
+                        <br><br>
+                        <span style="font-size: 14px; color: var(--text-tertiary);">— Yuval Noah Harari [07:37]</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">地缘政治的退化：从"信任"回到"幼稚园"</h3>
+                        <span class="topic-timestamp">10:02 - 18:42</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        现代政客正在抛弃耗时几代人建立的政治信用，将世界拖回唯权力论的丛林时代。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">回到幼稚园</div>
+                        <p class="topic-detail-content">赫拉利对当下的地缘政治感到悲观，认为世界正在"回到幼稚园"。他猛烈抨击了那种"世界只有权力斗争，没有友谊"的虚无主义观点。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">银行家的类比</div>
+                        <p class="topic-detail-content">木匠造桌子，工程师造桥，而银行家和政客本质上是在"制造信任"。如果你为了眼前的利益（如关税或领土）而去羞辱和刺伤最好的盟友，这种信任的崩塌需要几十年才能修复。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">权力的基础</div>
+                        <p class="topic-detail-content">权力的基础是合作，而非纯粹的武力。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "人类的权力基于合作，而非武力。"
+                        <br><br>
+                        <span style="font-size: 14px; color: var(--text-tertiary);">— Yuval Noah Harari [14:49]</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">政治结构的解体：从"国家关系"到"门阀政治"</h3>
+                        <span class="topic-timestamp">18:42 - 23:34</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        民主制度的根基正在从"国家间的契约"倒退回"个人/家族间的私人恩怨"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">系统性崩溃</div>
+                        <p class="topic-detail-content">赫拉利以特朗普对普京的评价为例，指出了现代政治系统性的崩溃。普京违背了对奥巴马或拜登的承诺，在特朗普看来这不算背叛，因为"他没对我违约"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">中世纪回归</div>
+                        <p class="topic-detail-content">这种逻辑将现代国家间的稳定关系拉回到了中世纪的"王朝外交"。外交政策变成了与特定家族（如特朗普家族）做生意，而非与美国做生意。这彻底摧毁了现代政治文明的基石。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">真相的价值：它是幸福的唯一入口</h3>
+                        <span class="topic-timestamp">23:34 - 28:57</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        真相虽然复杂，但如果一个人无法面对真相，他将永远无法解决自身痛苦的根源。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">真相定义</div>
+                        <p class="topic-detail-content">真相是"连接现实"。以巴以冲突为例，真相是极其复杂的（两方都曾遭受暴行，两方都有生存权利），但拒绝承认复杂性的人只会在错误的道路上浪费财富和权力。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">心理洞察</div>
+                        <p class="topic-detail-content">如果你在镜子面前是一个对自己都撒谎的人，你永远找不到痛苦的真因，也就无法获得真正的幸福。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 重构宗教：当非人类智能成为"解释者"</h3>
+                        <span class="topic-timestamp">28:57 - 37:12</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 正在通过接管"书籍的解释权"和"亲密关系的建立"，深刻地改变人类的精神世界。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">书的宗教</div>
+                        <p class="topic-detail-content">宗教（如犹太教、基督教）是"书的宗教"，而人类历史上从未有人能记住书里的每一个词，但 AI 可以。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">重新解释的权力</div>
+                        <p class="topic-detail-content">AI 不必改变书的内容，它只需要通过"重新解释"就能获得绝对权威。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从注意力到亲密关系</div>
+                        <p class="topic-detail-content">过去十年，算法在竞争我们的"注意力"；未来十年，AI 将竞争"亲密关系"。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "战场正在从注意力转向亲密关系。"
+                        <br><br>
+                        <span style="font-size: 14px; color: var(--text-tertiary);">— Yuval Noah Harari [31:57]</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">算法的诅咒：被摧毁的公共对话</h3>
+                        <span class="topic-timestamp">37:12 - 48:00</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        我们犯下的最大错误，就是将管理公共对话的编辑职位交给了只追求"参与度"的算法。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">民主的核心</div>
+                        <p class="topic-detail-content">民主的核心是自纠错机制（如选举），但如果媒体和法院被操纵，机制就会失效。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">算法的指标问题</div>
+                        <p class="topic-detail-content">算法被给予的任务不是"寻找真理"或"建立信任"，而是简单的"提高参与度"。为了让人留在线上，算法发现点击"仇恨"、"贪婪"和"恐惧"按钮最有效。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">方法论建议</div>
+                        <p class="topic-detail-content">他提到了台湾的实验——调整算法，奖励那些能获得不同群体共同认同的内容，而不是只在单一群体中煽动狂热的内容。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">生命的意义：在观察中解构"我"</h3>
+                        <span class="topic-timestamp">48:00 - 01:03:11</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        生命并非一场需要表演的剧本，而是关于"理解痛苦并从中解脱"的过程。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">个人哲学</div>
+                        <p class="topic-detail-content">赫拉利分享了他的个人哲学（深受佛教影响）。痛苦的根源不是欲望，而是对现实的"无知"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">失控的思维</div>
+                        <p class="topic-detail-content">尝试控制你的下一个念头，或者尝试在睡觉时停止大脑里那个烦人的想法。你会发现，我们甚至连自己的思想都控制不了，谈何控制世界？</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我不相信宇宙像一个故事那样运作。"
+                        <br><br>
+                        <span style="font-size: 14px; color: var(--text-tertiary);">— Yuval Noah Harari [49:02]</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">权力的未来：AI 公司与"非人类法人"</h3>
+                        <span class="topic-timestamp">01:03:11 - 01:12:31</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        世界权力的天平正在从人类转向量子位，AI 可能成为第一个能自主决策的"非人类公司"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">科幻式的现实</div>
+                        <p class="topic-detail-content">法律上已经存在"法人"（如公司），如果 AI 接管了公司的决策权，那么它将成为真正的独立实体。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">货币演变</div>
+                        <p class="topic-detail-content">未来 AI 可能不再需要人类的美元或欧元，它们可能会交易数据、服务器时长或属于它们自己的代币。人类将像马一样，看着人类交易金币却完全不理解背后的逻辑。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">青年指南：在不确定性中"广撒网"</h3>
+                        <span class="topic-timestamp">01:13:00 - 结束</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        面对不可预知的未来，年轻人应优化"精神技能"和"广度"，而非死磕单一的硬技能。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">操作指南</div>
+                        <p class="topic-detail-content">不要只训练窄技能（如写代码，因为 AI 很快会写得更好）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">四维发展</div>
+                        <p class="topic-detail-content">
+                            <strong>1. 脑（智力）</strong>：理解复杂逻辑。<br>
+                            <strong>2. 心（社交与情感）</strong>：建立真实连接。<br>
+                            <strong>3. 手（身体素质）</strong>：保持对物理世界的感知。<br>
+                            <strong>4. 灵（精神调查）</strong>：通过冥想等手段，调查现实的本质。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">灵性定义</div>
+                        <p class="topic-detail-content">宗教是给出不容置疑的答案，而灵性是提出永无止境的问题并去调查现实。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <!-- Takeaway Card 1 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔄</div>
+                    <h3 class="takeaway-title">认知重塑</h3>
+                    <p class="takeaway-desc">权力不是只有武力，真实的权力来自于能够构建信任和合作的能力。</p>
+                </div>
+
+                <!-- Takeaway Card 2 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧘</div>
+                    <h3 class="takeaway-title">可行动建议</h3>
+                    <p class="takeaway-desc">面对焦虑，不要试图控制外界，先尝试"调查"你的思想来源，意识到"我"不是我的想法。</p>
+                </div>
+
+                <!-- Takeaway Card 3 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💡</div>
+                    <h3 class="takeaway-title">生存策略</h3>
+                    <p class="takeaway-desc">在 AI 时代，社交情绪能力（EQ）和精神自律（Mindfulness）比纯粹的技术知识更具保值性。</p>
+                </div>
+
+                <!-- Takeaway Card 4 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔦</div>
+                    <h3 class="takeaway-title">终极洞察</h3>
+                    <p class="takeaway-desc">真相可能并不悦耳，但它是唯一能让我们不把生命浪费在解决错误问题上的灯塔。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">个人感受</h3>
+            <p class="footer-desc">
+                赫拉利在这段对话中展现了一种深沉的人文关怀。他并非一个冷酷的技术决定论者，他反复强调的"冥想"和"观察"，其实是在试图把人类从算法的数字奴役中拽回来。他谈到普京和习在私下讨论"长生不老"时的那种观察视角，充满了历史学家对人性贪婪与恐惧的悲悯。
+            </p>
+            <div class="footer-quote">
+                "我不相信宇宙像一个故事那样运作"
+            </div>
+            <p class="footer-note">
+                <strong>延伸思考：</strong><br>
+                如果我们赖以生存的社会契约（金钱、国家、法律）都是故事，那么当 AI 开始编写比人类更动听、更懂我们心理弱点的故事时，人类的主体性是否还会存在？赫拉利提出的"从注意力转向亲密关系"是一个极具警示性的信号，这预示着未来的孤独者可能不再向人类寻求慰藉，而是向一个完美的数字投影投降。
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
