@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI浪潮下的文明反思 | Dario Amodei x Nikhil Kamath</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/style.css">
+    <style>
+        .topic-detail {
+            margin-bottom: var(--detail-margin-bottom);
+            padding-left: var(--spacing-lg);
+            border-left: 2px solid var(--border);
+            position: relative;
+        }
+
+        .topic-detail-label {
+            display: inline-block;
+            font-size: var(--font-size-tiny);
+            text-transform: uppercase;
+            letter-spacing: var(--letter-spacing-wide);
+            color: var(--text-tertiary);
+            margin-bottom: var(--spacing-sm);
+            background: rgba(255, 107, 53, 0.1);
+            padding: 4px 12px;
+            border-radius: var(--radius-pill);
+        }
+
+        .topic-detail-content {
+            color: var(--text-secondary);
+            line-height: var(--line-height-relaxed);
+        }
+
+        .quote-block {
+            margin: var(--spacing-xl) 0;
+            padding: var(--spacing-lg);
+            background: var(--quote-bg);
+            border-left: 3px solid var(--accent-orange);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            font-style: italic;
+            color: var(--text-primary);
+        }
+
+        .quote-author {
+            display: block;
+            margin-top: var(--spacing-sm);
+            font-size: var(--font-size-small);
+            color: var(--text-tertiary);
+            font-style: normal;
+        }
+
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .takeaway-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+        }
+
+        .takeaway-card:hover {
+            border-color: var(--accent-cyan);
+            transform: var(--hover-lift);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .takeaway-emoji {
+            font-size: 40px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .takeaway-title {
+            font-size: 18px;
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-sm);
+            color: var(--accent-cyan);
+        }
+
+        .takeaway-desc {
+            color: var(--text-secondary);
+            line-height: var(--line-height-relaxed);
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+            margin: var(--section-padding-vertical) 0;
+        }
+
+        /* Animation classes */
+        .point-card,
+        .takeaway-card,
+        .topic {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .point-card.animate-in,
+        .takeaway-card.animate-in,
+        .topic.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .header .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper animate-in">
+                    <span class="badge">People by WTF</span>
+                </div>
+
+                <h1 class="title">
+                    <span class="title-line-1 animate-in delay-1">AI浪潮下的</span>
+                    <span class="title-line-2 animate-in delay-2">文明反思</span>
+                </h1>
+
+                <p class="subtitle animate-in delay-2">
+                    这不仅仅是一场关于人工智能的技术访谈，更是一次关于人类文明转折点的深度省思。Anthropic创始人兼CEO Dario Amodei 揭示了一个令人屏息的真相：我们正站在一场"海啸"面前，而大多数人仍选择闭上眼睛。
+                </p>
+
+                <div class="meta-grid animate-in delay-3">
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Dario Amodei</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Nikhil Kamath</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">01:08:35</div>
+                    </div>
+                </div>
+
+                <a href="https://www.youtube.com/watch?v=68ylaeBbdsg" target="_blank" class="cta-button animate-in delay-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    观看完整视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心洞察</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">海啸般的AI浪潮</h3>
+                    <p class="point-desc">AI的进化就像远方地平线上的海啸，肉眼清晰可见，但社会却在寻找各种借口自我安慰。社会认知的滞后形成了巨大鸿沟。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">从生物到AI的转型</h3>
+                    <p class="point-desc">Dario从生物物理学转向AI，源于对生物系统极端复杂性的"绝望"。他意识到AI才是解决人类复杂难题的终极工具。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">缩放法则的化学反应</h3>
+                    <p class="point-desc">智能是数据、算力和模型大小按比例混合后的"化学产物"。AI已从文本检索进化为真正的推理和创造。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">人类会变得更蠢吗？</h3>
+                    <p class="point-desc">如果人类将所有思考都外包给AI，确实存在"去技能化"的巨大风险。防范思维退化是保持竞争力的最后防线。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度对话</h2>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">从生物的绝望到AI的曙光</h3>
+                        <span class="topic-timestamp">00:00:00 - 00:06:00</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">Dario的转型源于对生物复杂性的"绝望"，他认为AI是解决人类复杂难题（如攻克疾病）的终极工具。</p>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">思维转折点</div>
+                        <p class="topic-detail-content">大约15年前，AlexNet（早期神经网络）的出现让他意识到，人工智能拥有与人脑相似的潜力，但具备更强的扩展性。"也许这才是解决生物学问题的最终方案。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Anthropic的诞生</div>
+                        <p class="topic-detail-content">他与OpenAI的分歧在于对"正确路径"的执着。如果AI将成为匹配人脑的通用工具，其经济、地缘和安全影响将是巨大的，必须建立在一个更具责任感的治理框架下。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Don't argue with someone else's vision... if you have a strong vision, you should just go off and do your own thing."
+                        <span class="quote-author">— Dario Amodei [00:05:36]</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">揭秘缩放法则：智能的"化学反应"</h3>
+                        <span class="topic-timestamp">00:06:00 - 00:10:00</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">智能是数据、算力和模型大小按比例混合后的"化学产物"，这种演进正在重新定义什么是计算机。</p>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">智能的本质</div>
+                        <p class="topic-detail-content">现在的AI不再只是文本匹配，而是展现出了预测、推理和创造的能力。5年前计算机无法写出一篇关于特定主题的论文，也无法分析视频中球交换了多少次。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">超越搜索</div>
+                        <p class="topic-detail-content">Google只是在检索已有的信息，而Claude等模型是在"思考"并产生互联网上不存在的新答案。这种从"检索"到"推理"的跃迁，是本质的改变。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">权力集中与"公益"约束</h3>
+                        <span class="topic-timestamp">00:10:00 - 00:17:30</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">面对AI权力的高度集中，Anthropic试图通过独特的"长期利益信托（LTBT）"和主动监管来制衡。</p>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">长期利益信托</div>
+                        <p class="topic-detail-content">Anthropic设立了由财务无利害关系人组成的信托机构，负责任命大多数董事会成员。这是一种制度化的权力制衡。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">监管捕获辩论</div>
+                        <p class="topic-detail-content">Anthropic支持的加州SB 53法案（透明度法案），明确豁免了年收入5亿美元以下的公司。他们的目标是约束自己和其他3-4家巨头，而不是扼杀初创企业。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">行动胜过语言</div>
+                        <p class="topic-detail-content">Anthropic曾因为担心引发军备竞赛而推迟发布Claude 1（早于ChatGPT），这在商业上极其昂贵，但证明了他们的立场。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">海啸般的社会风险</h3>
+                        <span class="topic-timestamp">00:17:30 - 00:23:00</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">技术进展超乎预期，但社会意识严重滞后，人类正处于危险的认知盲区。</p>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">海啸隐喻</div>
+                        <p class="topic-detail-content">AI的进化就像远方地平线上的海啸，肉眼清晰可见，但社会却在寻找各种借口自我安慰（比如那是"光线的折射"）。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">可解释性科学</div>
+                        <p class="topic-detail-content">Anthropic已经可以像人类做MRI扫描一样，观察神经网络内部的"神经元"，找到对应诗歌韵律或特定概念的电路。这意味着我们正在从"黑盒训练"转向"理解与控制"。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">当Claude比你更了解你自己</h3>
+                        <span class="topic-timestamp">00:23:00 - 00:32:45</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">AI正在通过数据连接成为个人的"肩膀天使"，但这种亲密感也伴随着被操纵的风险。</p>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">读心术案例</div>
+                        <p class="topic-detail-content">一位合伙人将日记输入Claude，模型竟然指出了他尚未写下的潜在恐惧。这种深入灵魂的连接既可以帮助人类成为更好的版本，也可能被用于非法操纵。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">不走广告路线</div>
+                        <p class="topic-detail-content">为了避免人类成为"被售卖的产品"，Dario坚持Anthropic不会采用广告模式。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI的意识与"辞职按钮"</h3>
+                        <span class="topic-timestamp">00:32:45 - 00:36:40</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">意识可能是复杂系统的"涌现属性"，Anthropic已经为模型设置了拒绝参与暴力或残酷对话的自主权。</p>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">涌现论</div>
+                        <p class="topic-detail-content">当系统足够复杂、能够反思自身决策时，就可能产生类似意识的属性。虽然模型与人脑结构不同，但在关键的"处理模式"上是相似的。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"辞职"功能</div>
+                        <p class="topic-detail-content">为了应对极端或暴力的内容，Anthropic给模型设置了"终止对话"的能力，就像员工说"我不干了"一样。这不仅是安全策略，也带有一丝对未来"道德主体"的预判。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">印度角色与"放射科医生"隐喻</h3>
+                        <span class="topic-timestamp">00:36:40 - 00:44:50</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">印度不仅是市场，更是合作伙伴；AI不会消灭人类职业，但会彻底改变职业重心。</p>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从消费者到开发者</div>
+                        <p class="topic-detail-content">印度公司（如Tata, Infosys等）拥有深厚的客户关系和行业Know-how，这是AI无法轻易取代的。Anthropic的策略是提供工具增强这些公司，而不是直接竞争。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">放射科医生的启示</div>
+                        <p class="topic-detail-content">虽然AI扫描更准，但放射科医生依然存在，他们的角色变成了"陪同患者解读报告、提供人文关怀的人"。当流程中的某些部分被极速提升后，那些"尚未被自动化"的部分将成为新的瓶颈，价值反而会激增。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">如何在巨头的阴影下寻找护城河</h3>
+                        <span class="topic-timestamp">00:44:50 - 00:53:55</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">不要做简单的"包装层（Wrapper）"，真正的护城河在于行业垂直领域的专业性、物理交互和批判性思维。</p>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">避开逻辑死角</div>
+                        <p class="topic-detail-content">如果你的应用只是给Claude套个壳，巨头分分钟可以吞掉你。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">寻找"非AI专家"领域</div>
+                        <p class="topic-detail-content">例如生物发现或受监管的金融服务。Anthropic内部主要是AI科学家，缺乏这些领域的深层合规经验，这是创业者的机会。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">软技能崛起</div>
+                        <p class="topic-detail-content">当AI能生成一切时，"街头智慧（Street Smarts）"和"批判性思维"将成为防范虚假信息、诈骗和错误认知的核心生存技能。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">人类会变得更蠢吗？"脱氧"式退化风险</h3>
+                        <span class="topic-timestamp">00:53:55 - 00:57:00</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">如果人类将所有思考都外包给AI，确实存在"去技能化（Deskilling）"的巨大风险。</p>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">个体的选择</div>
+                        <p class="topic-detail-content">即便AI能做得更好，学习和思考依然是丰富自我的过程。就像Dario依然习惯心算一样，这让思维闭环更紧凑。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">教育的警钟</div>
+                        <p class="topic-detail-content">如果学生只是让AI写作业，那就是纯粹的作弊和退化。我们需要重新定义人类在工作流中扮演的角色。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">闭源vs开源：模型质量的"幂律分布"</h3>
+                        <span class="topic-timestamp">00:57:00 - 01:02:00</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">对于顶级AI模型，质量而非价格是唯一的决定因素；数据正在从静态采集转向"动态合成（RL）"。</p>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">榜单虚荣心</div>
+                        <p class="topic-detail-content">许多模型针对Benchmark（基准测试）进行了优化甚至蒸馏，但在未公开测试中表现往往会大幅下降。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">人才幂律</div>
+                        <p class="topic-detail-content">就像招募顶尖程序员一样，第一名和第一万名的价值有天壤之别。在AI模型层，用户对极致质量的追求远超对价格的敏感度。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">11</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">终极预测：生物技术的复兴与"免费预测未来"</h3>
+                        <span class="topic-timestamp">01:02:00 - 01:08:35</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">生物技术将迎来类似数字技术的爆发，通过第一性原理的外推，未来其实是可以"免费预测"的。</p>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">可编程的生命</div>
+                        <p class="topic-detail-content">mRNA、肽类（Peptides）疗法和细胞疗法（如CAR-T）正在让药物开发变得像写代码一样可优化、可迭代。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">预测未来的秘诀</div>
+                        <p class="topic-detail-content">人们往往因为结论"太奇怪、变化太大"而拒绝相信。但如果你能排除情感干扰，单纯地通过简单的曲线外推和第一性原理进行逻辑推理，你会发现未来其实就在那里，只是很少有人愿意直视。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🌊</div>
+                    <h3 class="takeaway-title">认知的海啸</h3>
+                    <p class="takeaway-desc">AI发展的速度与社会认知的滞后形成了巨大的鸿沟。不要等待政府或社会的普遍共识，个人需要先建立对AI的深度理解。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚖️</div>
+                    <h3 class="takeaway-title">职业的重心偏移</h3>
+                    <p class="takeaway-desc">正如"放射科医生"的例子，未来的核心价值不在于"执行技术"，而在于"行走于患者之间"——即沟通、关怀、责任和对复杂机构关系的驾驭。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧠</div>
+                    <h3 class="takeaway-title">防范思维退化</h3>
+                    <p class="takeaway-desc">避免"完全外包思考"。保留心算、手动逻辑推演和批判性怀疑，是保持人类智力竞争力的最后防线。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧬</div>
+                    <h3 class="takeaway-title">投资未来的资产</h3>
+                    <p class="takeaway-desc">除了AI本身，生物技术（尤其是可编程疗法）是下一个十年的黄金赛道。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔮</div>
+                    <h3 class="takeaway-title">第一性原理外推</h3>
+                    <p class="takeaway-desc">预测未来不需要魔法，只需要直面那些由于"太怪异"而被众人忽视的逻辑必然性。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p style="color: var(--text-tertiary); text-align: center; font-size: 14px;">
+                "智能是一种化学反应，而人类的选择决定了这股能量是点燃文明的火花，还是摧毁一切的爆炸。"
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
