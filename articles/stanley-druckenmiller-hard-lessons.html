@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>斯坦·德鲁肯米勒：先投资，后调查 - 摩根士丹利专访</title>
+    <style>
+        /* ========== Design Tokens ========== */
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-card: #141416;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            --accent-orange: #ff6b35;
+            --accent-cyan: #00d4ff;
+            --border: #2a2a2e;
+            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            --font-size-hero: clamp(48px, 10vw, 120px);
+            --font-size-section: clamp(32px, 5vw, 56px);
+            --font-size-topic: clamp(24px, 4vw, 36px);
+            --font-size-number: clamp(64px, 15vw, 120px);
+            --font-heavy: 800;
+            --letter-spacing-tight: -0.03em;
+            --line-height-tight: 0.95;
+            --card-padding: 40px;
+            --radius-lg: 16px;
+            --radius-pill: 100px;
+            --transition-fast: 0.3s ease;
+            --hover-lift: translateY(-4px);
+            --gradient-accent: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-cyan) 100%);
+            --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+        }
+
+        /* ========== Reset ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ========== Scrollbar ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-orange);
+        }
+
+        /* ========== Container ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(0, 212, 255, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 0;
+        }
+
+        /* ========== Badge ========== */
+        .badge-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .badge:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* ========== Title ========== */
+        .title {
+            font-size: var(--font-size-hero);
+            font-weight: var(--font-heavy);
+            line-height: var(--line-height-tight);
+            letter-spacing: var(--letter-spacing-tight);
+            margin-bottom: 24px;
+        }
+
+        .title-line-1 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-line-2 {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== Subtitle ========== */
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        /* ========== Meta Grid ========== */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .meta-item {
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        /* ========== CTA Button ========== */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--gradient-accent);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 16px;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.5);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== Section ========== */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            font-size: var(--font-size-section);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 64px;
+        }
+
+        /* ========== Points Grid ========== */
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* ========== Point Card ========== */
+        .point-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .point-card:hover {
+            border-color: var(--accent-orange);
+            transform: var(--hover-lift);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .point-card:hover::before {
+            opacity: 1;
+        }
+
+        .point-number {
+            font-size: 48px;
+            font-weight: var(--font-heavy);
+            color: var(--border);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .point-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-orange);
+        }
+
+        .point-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ========== Topic ========== */
+        .topic {
+            margin-bottom: 80px;
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .topic-number {
+            font-size: var(--font-size-number);
+            font-weight: var(--font-heavy);
+            line-height: 1;
+            background: var(--gradient-number);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .topic-info {
+            flex: 1;
+            padding-top: 16px;
+        }
+
+        .topic-title {
+            font-size: var(--font-size-topic);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .topic-timestamp {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--accent-cyan);
+        }
+
+        .topic-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--card-padding);
+            margin-left: clamp(40px, 10vw, 120px);
+        }
+
+        .topic-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-orange);
+        }
+
+        .topic-core-point {
+            font-size: 18px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .topic-detail {
+            padding-left: 24px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .topic-detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .topic-detail-content {
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--accent-orange);
+            padding: 24px;
+            background: rgba(255, 107, 53, 0.05);
+            margin: 24px 0;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-primary);
+        }
+
+        .thought-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .thought-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        /* ========== Takeaways ========== */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .takeaway-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-fast);
+        }
+
+        .takeaway-card:hover {
+            border-color: var(--accent-cyan);
+            transform: var(--hover-lift);
+        }
+
+        .takeaway-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .takeaway-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .takeaway-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: var(--font-heavy);
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .footer-quote {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: var(--font-heavy);
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 48px 0;
+            line-height: 1.2;
+        }
+
+        .footer-note {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Divider ========== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header animations - use keyframes for initial page load */
+        .header .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        /* Card animations - use transition for scroll trigger */
+        .point-card,
+        .takeaway-card,
+        .topic {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .point-card.animate-in,
+        .takeaway-card.animate-in,
+        .topic.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .topic-content {
+                margin-left: 0;
+            }
+
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper animate-in">
+                    <span class="badge">投资智慧</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1 animate-in delay-1">斯坦·德鲁肯米勒</span>
+                    <span class="title-line-2 animate-in delay-2">先投资，后调查</span>
+                </h1>
+                <p class="subtitle animate-in delay-3">
+                    传奇对冲基金经理德鲁肯米勒深度剖析：如何在高压下决策、如何识别范式转移、以及如何与自己的情绪和谐共处。这不仅仅是一次市场预测，这是一堂关于人生决策的哲学课。
+                </p>
+                <div class="meta-grid animate-in delay-4">
+                    <div class="meta-item">
+                        <div class="meta-label">作者</div>
+                        <div class="meta-value">Morgan Stanley 摩根士丹利</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Stan Druckenmiller</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">28分25秒</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=z_pk4eBDaLA" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看完整访谈
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心洞察</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">范式转移识别</h3>
+                    <p class="point-desc">当所有人都在追逐 AI 热潮时，寻找被忽视的转型公司。Teva 药业从仿制药转型生物类似药的案例，揭示了市场真空期的巨大机会。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">扣动扳机的勇气</h3>
+                    <p class="point-desc">成功不在于智商高低，而在于识别卓越人才的能力和果断执行的勇气。德鲁肯米勒坦言他的优势是"扣动扳机"的能力。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">仓位管理哲学</h3>
+                    <p class="point-desc">从索罗斯学到的最宝贵一课：对错不重要，重要的是你正确时赚了多少，错误时赔了多少。这是复利增长的核心秘密。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">反向投资的真相</h3>
+                    <p class="point-desc">80/20法则：大众在 80% 的时间里是正确的。不要为了反向而反向，只需避免在最后 20% 的崩溃中被困。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">心理博弈</h3>
+                    <p class="point-desc">在英伟达从 150 美元涨到 1400 美元的过程中，德鲁肯米勒在 800 美元时因为"无法承受成功的压力"而过早卖出。这是顶级投资者面临的最大挑战。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">勇气的价值</h3>
+                    <p class="point-desc">智慧会随着年龄增长，但勇气是稀缺的。30 岁时的德鲁肯米勒比现在更优秀，因为那时他有勇气下重注。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">案例拆解：Teva 药业的"逆向"逻辑</h3>
+                        <span class="topic-timestamp">00:00 - 03:50</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        优秀的投资不在于关注当下，而在于预判未来。Teva 的案例揭示了当公司估值与未来增长路径发生错位时隐藏的巨大机会。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">范式转移</div>
+                        <p class="topic-detail-content">新任 CEO Richard Francis 正在将公司从"仿制药"转型为以"生物类似药（Biosimilars）"驱动的增长型公司。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">筹码分布陷阱</div>
+                        <p class="topic-detail-content">当时的投资者主要是"价值投资者"，他们痛恨增长策略；而"增长投资者"又因为转型尚未完成而拒绝入场。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">结果</div>
+                        <p class="topic-detail-content">这种无人相信的真空期让股价在 6-7 个月内从 16 美元翻倍至 32 美元。</p>
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">个人感受</div>
+                        德鲁肯米勒坦言他并不追求"性感"的 AI 话题，而是享受这种"没人相信但你有极端信心"的时刻。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">投资者的特质：IQ 并不重要，关键是"扣动扳机"</h3>
+                        <span class="topic-timestamp">03:51 - 06:38</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        成功的投资者不需要在每个领域都成为专家，但必须拥有识别卓越人才的能力和果断执行的勇气。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">核心优势</div>
+                        <p class="topic-detail-content">他认为自己的优势不是智商（IQ），而是"扣动扳机（Trigger pulling）"的能力。他笑称岳母认为他是个"白痴"，自己也从未进过班级前 10%。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">人才过滤器</div>
+                        <p class="topic-detail-content">他不仅过滤数据，更过滤人。当他感受到团队中生物技术分析师那种极端兴奋的情感时，这种"热情"比事实本身更能打动他。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">师承逻辑：天赋与导师的化学反应</h3>
+                        <span class="topic-timestamp">06:39 - 08:33</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        复利能力是天赋，但如何将其发挥到极致则需要导师的指引，尤其是学习如何"下重注"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">导师影响</div>
+                        <p class="topic-detail-content">他提到了两位对他影响深远的导师：匹兹堡的导师教会了他基础分析；乔治·索罗斯让他学到了最宝贵的一课——仓位管理（Sizing）。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "It's not whether you're right or wrong, it's how much you make when you're right and how much you lose when you're wrong."<br>
+                        ——"对错并不重要，重要的是你正确时赚了多少，错误时赔了多少。"
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">宏观展望：刺激政策下的美国经济与配置逻辑</h3>
+                        <span class="topic-timestamp">08:34 - 12:22</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        美国经济依然强劲，但在估值高位，投资者应布局大宗商品与做空债券，以应对潜在的通胀回归。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">背景分析</div>
+                        <p class="topic-detail-content">美国经济在刺激法案推动下依然强劲，而美联储正倾向于降息，这构成了一个矛盾的背景。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">资产配置</div>
+                        <p class="topic-detail-content">美元：看空，因购买力处于历史高位；铜：看好，供给极端匮乏叠加 AI 需求；黄金：作为地缘政治风险的对冲；债券：做空债券，对冲风险资产波动。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">市场演变与反向投资的真相</h3>
+                        <span class="topic-timestamp">12:23 - 15:04</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        反向投资（Contrarianism）被过誉了；趋势通常是正确的，你只需要避免在最后 20% 的崩溃中被困。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">80/20法则</div>
+                        <p class="topic-detail-content">索罗斯教导他，大众在 80% 的时间里是正确的，只有 20% 的时间是错的。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">波动性的利用</div>
+                        <p class="topic-detail-content">面对如今量化交易和多策略对冲基金带来的高频波动，他认为这只是"噪音"，对于持有 18 个月到 3 年视角的投资者来说，波动反而是更好的入场点。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Nvidia 传奇：当逻辑遭遇"恐高症"</h3>
+                        <span class="topic-timestamp">15:05 - 21:27</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        识别出伟大的趋势只是第一步，能在飞涨的股价面前拿住仓位才是最难的心理考验。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">发现过程</div>
+                        <p class="topic-detail-content">2022 年中，通过观察斯坦福学生从加密货币转向 AI，以及团队中年轻天才的建议，德鲁肯米勒在 Chat GPT 爆发前就买入了英伟达。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">翻倍再翻倍</div>
+                        <p class="topic-detail-content">他在 Chat GPT 发布后翻倍仓位，在听取了摩根士丹利分析师的宏观建议后再次加仓。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">惨痛教训</div>
+                        <p class="topic-detail-content">他在英伟达从 150 美元涨到 390 美元时发誓会持有至少 2-3 年。然而当股价冲到 800 美元时，他"无法承受这种成功带来的心理压力"，违背了自己的原则将其卖掉。五周后股价冲到了 1400 美元。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "I couldn't stand success... I was sick."<br>
+                        ——"我无法忍受成功的喜悦（这种巨大的盈利规模），我当时感觉很不舒服（因为过早卖出而感到挫败）。"
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">自我解构：技术分析的消亡与"勇气的丧失"</h3>
+                        <span class="topic-timestamp">21:28 - 25:44</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        市场变得越来越聪明，过去的"银弹"已经失效；随着年龄增长，维持年轻时的勇气比积累智慧更难。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">失效的信号</div>
+                        <p class="topic-detail-content">他坦言，技术分析（看图表）在今天只有 20% 的效力，因为所有人都学会了。同样，"利空不跌"这种经典的买入信号也因为过于普及而失效。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">智慧 vs 勇气</div>
+                        <p class="topic-detail-content">这是整段访谈最令人动容的部分。德鲁肯米勒认为自己现在的智慧和工具远超 30 岁时，但他在 30 岁时更优秀，因为那时他有勇气下重注。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"胆小鬼"心态</div>
+                        <p class="topic-detail-content">他自嘲现在经常"认怂（Chickening out）"，称自己为"德鲁肯米勒（Druckenmiller）"变成了"Truckenmiller"（谐音，指退缩）。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">硬教训：管理情绪与克服"冒名顶替综合症"</h3>
+                        <span class="topic-timestamp">25:45 - 28:25</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        职业生涯是由数百个错误组成的；成功的关键在于止损后迅速恢复，停止对自己的精神折磨。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">1999年 NASDAQ 惨案</div>
+                        <p class="topic-detail-content">他在一月份完美逃顶，却在三月（最高点）因为情绪激动重新入场。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">心理状态</div>
+                        <p class="topic-detail-content">他透露自己以前在遭遇回撤时，每周会因为焦虑呕吐一两次。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">个人感悟</div>
+                        <p class="topic-detail-content">他承认自己有长达 15 年、甚至更久的"冒名顶替综合症（Imposter Syndrome）"，总觉得自己的成功是某种随机的意外。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">建议</div>
+                        <p class="topic-detail-content">如果你真的优秀，那就接受自己会犯错、会情绪化的事实。停止 48 小时的折磨，直接 Move on。</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💡</div>
+                    <h3 class="takeaway-title">先投资，后调查</h3>
+                    <p class="takeaway-desc">当你观察到类似 AI 这种范式转移时，先建立一个小头寸，防止错过，然后再深入研究。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">承认"平庸"</h3>
+                    <p class="takeaway-desc">德鲁肯米勒的成功不在于全知全能，而在于他承认自己不懂生物技术，但他懂谁是天才，懂什么时候该"认怂"，什么时候该"扣动扳机"。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">对抗"成功的压力"</h3>
+                    <p class="takeaway-desc">大多数人害怕亏损，但顶级投资者的挑战是害怕"赚得太多导致心理失衡"。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🦁</div>
+                    <h3 class="takeaway-title">勇气的价值</h3>
+                    <p class="takeaway-desc">智慧会随着年龄增长，但勇气是稀缺的。在投资中，看对并下重注才是财富跨越的关键。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">关于这次访谈</h3>
+            <p class="footer-desc">
+                这篇深度文章基于传奇对冲基金经理斯坦·德鲁肯米勒在摩根士丹利《Hard Lessons》系列节目中的专访。德鲁肯米勒不仅分享了他的最新市场观点，更深刻剖析了支撑他三十年不败战绩的底层逻辑、心理博弈以及他所经历的那些"惨痛教训"。
+            </p>
+            <div class="footer-quote">
+                "对错并不重要，重要的是你正确时赚了多少，错误时赔了多少。"
+            </div>
+            <p class="footer-note">
+                在金融界，斯坦·德鲁肯米勒是一个神话。从1981年到2010年，他管理的Duquesne Capital年化收益率高达30%，且没有一个亏损年。他曾是索罗斯的头号干将，主导了"狙击英镑"的历史性战役。然而，在这段访谈中，他并没有以"预言家"自居，反而坦诚地谈到了自己的"平庸"、恐慌、甚至在面对英伟达大涨时的"惜败"。
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

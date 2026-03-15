@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent 的范式转移：从模型能力到 Harness 控制架 | Harrison Chase, LangChain</title>
+    <style>
+        /* ========== Design Tokens ========== */
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-card: #141416;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            --accent-orange: #ff6b35;
+            --accent-cyan: #00d4ff;
+            --border: #2a2a2e;
+            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            --font-size-hero: clamp(48px, 10vw, 120px);
+            --font-size-section: clamp(32px, 5vw, 56px);
+            --font-size-topic: clamp(24px, 4vw, 36px);
+            --font-size-number: clamp(64px, 15vw, 120px);
+            --font-heavy: 800;
+            --letter-spacing-tight: -0.03em;
+            --line-height-tight: 0.95;
+            --card-padding: 40px;
+            --radius-lg: 16px;
+            --radius-pill: 100px;
+            --transition-fast: 0.3s ease;
+            --hover-lift: translateY(-4px);
+            --gradient-accent: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-cyan) 100%);
+            --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+        }
+
+        /* ========== Reset ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ========== Scrollbar ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-orange);
+        }
+
+        /* ========== Container ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(0, 212, 255, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 0;
+        }
+
+        /* ========== Badge ========== */
+        .badge-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .badge:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* ========== Title ========== */
+        .title {
+            font-size: var(--font-size-hero);
+            font-weight: var(--font-heavy);
+            line-height: var(--line-height-tight);
+            letter-spacing: var(--letter-spacing-tight);
+            margin-bottom: 24px;
+        }
+
+        .title-line-1 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-line-2 {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== Subtitle ========== */
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        /* ========== Meta Grid ========== */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .meta-item {
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        /* ========== CTA Button ========== */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--gradient-accent);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 16px;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.5);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== Section ========== */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            font-size: var(--font-size-section);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 64px;
+        }
+
+        /* ========== Points Grid ========== */
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* ========== Point Card ========== */
+        .point-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .point-card:hover {
+            border-color: var(--accent-orange);
+            transform: var(--hover-lift);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .point-card:hover::before {
+            opacity: 1;
+        }
+
+        .point-number {
+            font-size: 48px;
+            font-weight: var(--font-heavy);
+            color: var(--border);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .point-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-orange);
+        }
+
+        .point-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ========== Topic ========== */
+        .topic {
+            margin-bottom: 80px;
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .topic-number {
+            font-size: var(--font-size-number);
+            font-weight: var(--font-heavy);
+            line-height: 1;
+            background: var(--gradient-number);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .topic-info {
+            flex: 1;
+            padding-top: 16px;
+        }
+
+        .topic-title {
+            font-size: var(--font-size-topic);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .topic-timestamp {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--accent-cyan);
+        }
+
+        .topic-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--card-padding);
+            margin-left: clamp(40px, 10vw, 120px);
+        }
+
+        .topic-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-orange);
+        }
+
+        .topic-core-point {
+            font-size: 18px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .topic-detail {
+            padding-left: 24px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .topic-detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .topic-detail-content {
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--accent-orange);
+            padding: 24px;
+            background: rgba(255, 107, 53, 0.05);
+            margin: 24px 0;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-primary);
+        }
+
+        .thought-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .thought-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        /* ========== Takeaways ========== */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .takeaway-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-fast);
+        }
+
+        .takeaway-card:hover {
+            border-color: var(--accent-cyan);
+            transform: var(--hover-lift);
+        }
+
+        .takeaway-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .takeaway-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .takeaway-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: var(--font-heavy);
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .footer-quote {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: var(--font-heavy);
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 48px 0;
+            line-height: 1.2;
+        }
+
+        .footer-note {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Divider ========== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header animations - use keyframes for initial page load */
+        .header .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        /* Card animations - use transition for scroll trigger */
+        .point-card,
+        .takeaway-card,
+        .topic {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .point-card.animate-in,
+        .takeaway-card.animate-in,
+        .topic.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .topic-content {
+                margin-left: 0;
+            }
+
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper animate-in">
+                    <span class="badge">AI 架构</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1 animate-in delay-1">AI Agent 的</span>
+                    <span class="title-line-2 animate-in delay-2">范式转移</span>
+                </h1>
+                <p class="subtitle animate-in delay-3">
+                    从模型能力到 Harness 控制架：LangChain 创始人深度解析新一代 AI 智能体堆栈的演进路径
+                </p>
+                <div class="meta-grid animate-in delay-4">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Matt Turck</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Harrison Chase (LangChain)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">47 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=rSKh6bVuVZI" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看完整视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <!-- Point Card 1 -->
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">范式转移</h3>
+                    <p class="point-desc">从追求模型能力提升，转向构建强大的 Harness（控制架）控制机制，这是决定 AI 智能体能否落地的关键。</p>
+                </div>
+
+                <!-- Point Card 2 -->
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">长航程代理爆发</h3>
+                    <p class="point-desc">2024 年末见证长航程代理的爆发，代码执行能力成为现代代理标配，Claude Code 和 Deep Research 等产品成功验证了这一方向。</p>
+                </div>
+
+                <!-- Point Card 3 -->
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">代码即代理</h3>
+                    <p class="point-desc">每个长航程代理都应该是代码代理，因为代码是模型训练中最优质的数据，且可作为极度通用的工具。</p>
+                </div>
+
+                <!-- Point Card 4 -->
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">环境交互机制</h3>
+                    <p class="point-desc">Harness 是模型与环境交互的一套机制，包括工具集、上下文管理、提示词压缩和 UI，比模型选择本身更重要。</p>
+                </div>
+
+                <!-- Point Card 5 -->
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">架构原语</h3>
+                    <p class="point-desc">四大核心原语：系统提示词、规划工具、子代理和文件系统，构成了现代代理架构的基础。</p>
+                </div>
+
+                <!-- Point Card 6 -->
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">记忆系统</h3>
+                    <p class="point-desc">智能体需要整合语义、情节和程序性记忆，其中程序性记忆让代理能够自我学习和优化。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">智能体的演进：从简单循环到"长航程"代理</h3>
+                        <span class="topic-timestamp">00:00 - 06:27</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        早期的智能体因模型能力受限而失败，但 2024 年末见证了"长航程代理"的爆发，尤其是代码执行能力成为了现代代理的标配。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">历史回溯</div>
+                        <p class="topic-detail-content">Harrison 回忆说，在 ChatGPT 发布之前，LangChain 就已经提出了"在循环中运行 LLM 并调用工具"的想法。然而，早期的 AutoGPT 等项目之所以未能真正商用，是因为当时的模型（如 GPT-3.5）无法在复杂的推理循环中保持稳定性。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">转折点</div>
+                        <p class="topic-detail-content">2024 年 11、12 月，随着 Claude 3.5 Sonnet 等更强模型的出现，以及开发者对"Harness（控制架）"原语的掌握，我们看到了 Claude Code 和 Deep Research 等产品的成功。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两种风格的代理</div>
+                        <p class="topic-detail-content">对话式代理（Conversational Agents）：侧重低延迟、语音交互，通常只调用一两个简单工具。长航程代理（Long Horizon Agents）：这是目前的创新前沿，具备规划、连贯性和深度的代码执行能力。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"代码即代理"</div>
+                        <p class="topic-detail-content">Harrison 提出了一个重要论断：每一个长航程代理都应该是代码代理。因为代码是模型训练中最优质的数据，且代码可以作为一种极度通用的工具，用来解析文件、进行数学运算或实现复杂的逻辑循环。</p>
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">个人感受</div>
+                        Harrison 在描述早期 AutoGPT 的失败时带着一种"先行者的冷静"，他认为技术的爆发是模型能力与工程架构（Harness）共同进化的结果，而非单一因素。
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">延伸思考</div>
+                        如果代码执行是代理的基础，那么传统的 UI 交互是否会逐渐退居幕后，取而代之的是代理在沙箱中默默运行数百行脚本？
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">核心争鸣：模型 vs. 框架，以及何为"Harness"？</h3>
+                        <span class="topic-timestamp">06:27 - 10:11</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        "Harness（控制架/马甲）"是目前最重要的差异化来源，它决定了模型如何与环境交互，甚至比模型本身更重要。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Harness 的定义</div>
+                        <p class="topic-detail-content">Harrison 用通俗的语言解释道，Harness 是模型与其环境交互的一套机制。它包括工具集、上下文管理、提示词压缩和 UI。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">秘密武器</div>
+                        <p class="topic-detail-content">他以 Manis 和 Claude Code 为例，指出这些产品的成功不在于它们用了什么特殊的私有模型，而在于它们的"马甲"做得极好。这种马甲让模型能更精准地操作文件系统和执行命令。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">耦合与解耦</div>
+                        <p class="topic-detail-content">有趣的是，虽然 Anthropic 训练了能直接编辑文件的模型能力，但 Claude Code 却使用了完全不同的、在框架层实现的工具集。这说明目前的最佳实践往往是在框架层进行定制。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "The harness is the most important thing... cloud models are great but the harness is really what made that work."
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">视觉信息描述</div>
+                        视频背景位于旧金山的 Chase Center，两人坐在宽敞的现代场馆内，背后是充满活力的活动现场。这种非正式的对话环境凸显了 AI 社区目前那种"随时随地都在讨论技术前沿"的氛围。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">现代代理架构（上）：系统提示词与规划</h3>
+                        <span class="topic-timestamp">10:11 - 13:14</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        智能体的行为受"标准作业程序（SOP）"驱动，现代架构正从强制性的显式规划转向更灵活的"心理草稿纸"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">系统提示词（System Prompt）</div>
+                        <p class="topic-detail-content">这是代理的灵魂。它类似于人类入职时的 SOP。在现代架构中，这个提示词通常由框架自带的基础指令和用户自定义的 .md 文件组合而成。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">规划工具（Planning Tool）</div>
+                        <p class="topic-detail-content">过去：以前需要强制模型分步：第一步做什么，第二步做什么。这在模型变弱时有效，但应对突发情况非常僵化。现在：现代代理更倾向于维护一个"规划文件（Plan.md）"。这是一个动态的任务清单，模型可以随时读写和修改，但执行时更具灵活性。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">现代代理架构（下）：子代理、文件系统与上下文压缩</h3>
+                        <span class="topic-timestamp">13:14 - 22:04</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        解决大模型"上下文焦虑"的关键在于隔离与主动管理：通过子代理隔离风险，通过文件系统外挂记忆，通过工具触发压缩。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">子代理（Sub-agents）</div>
+                        <p class="topic-detail-content">这是为了上下文隔离。主代理启动一个拥有全新上下文窗口的子代理，完成后只传回结果。这能有效防止上下文窗口由于冗余信息而"爆炸"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">文件系统（File System）</div>
+                        <p class="topic-detail-content">Harrison 强调，代理需要文件系统不仅是为了存数据，更是为了管理自己的上下文。例如，一个 6 万 token 的搜索结果，系统会先存入文件，只给 LLM 看前 1000 个，让 LLM 自己决定是否要读取剩下的内容。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">上下文压缩（Compaction）</div>
+                        <p class="topic-detail-content">传统的压缩是自动触发的（如达到窗口 80% 时）。LangChain 目前正在探索由模型主动触发压缩。如果模型觉得当前话题已结束，它可以调用工具清空不必要的历史，降低延迟并减少干扰。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">代理记忆系统：短时记忆 vs. 长时记忆</h3>
+                        <span class="topic-timestamp">22:04 - 27:48</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        记忆定义了智能体。现代堆栈需要整合语义、情节和程序性记忆，特别是"程序性记忆"让代理能够自我学习。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三种长时记忆</div>
+                        <p class="topic-detail-content">语义记忆（Semantic）：类似 RAG，存储事实性知识。情节记忆（Episodic）：回顾过去的对话和交互历史。程序性记忆（Procedural）：关于"如何做某事"的指令。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">动态学习</div>
+                        <p class="topic-detail-content">在 Deep Agents 框架中，指令（Instructions）被存储为文件。这意味着代理在运行过程中可以自行修改这些文件，从而实现"学习如何更好地完成任务"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">企业级编排</div>
+                        <p class="topic-detail-content">Harrison 建议企业不要纠结于"一个大模型管所有"还是"成千上万个小模型"。重点在于积累高质量的行业指令和工具集，无论底层脚手架如何变，这些资产都是永恒的。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">基础设施层：为何沙箱（Sandbox）是必经之路？</h3>
+                        <span class="topic-timestamp">27:48 - 33:35</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        由于代理必将编写和运行代码，安全、隔离的计算沙箱（如 Daytona）正成为 AI 堆栈中不可或缺的底层。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">安全博弈</div>
+                        <p class="topic-detail-content">如果将 API Key 直接传给沙箱内的代码，提示词注入（Prompt Injection）可能会让模型泄露密钥。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">解决方案</div>
+                        <p class="topic-detail-content">使用沙箱外的代理机制注入密钥。Harrison 指出，开发者目前在"让代理在沙箱内运行"还是"代理从外部调用沙箱工具"之间各占一半比例。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">低层稳定性</div>
+                        <p class="topic-detail-content">观测性（Observability）、评估（Eval）和沙箱（Sandbox）是目前堆栈中最稳定的部分，值得长期投入。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">LangChain 的转型：从抽象库到代理运行时</h3>
+                        <span class="topic-timestamp">33:35 - 40:19</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        LangChain 正在自我革命，从早期的"五行代码实现 RAG"转向支持大规模生产的低层原语（LangGraph）。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">早期 LangChain</div>
+                        <p class="topic-detail-content">侧重于高度抽象的"Chain"，方便快速上手，但在生产环境中缺乏灵活性。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">LangGraph 的诞生</div>
+                        <p class="topic-detail-content">这是一个底层的、无偏见的编排层。它提供持久化执行、流式输出和深度的人机协同能力。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Deep Agents</div>
+                        <p class="topic-detail-content">这是 LangChain 推出的"电池全内置"版 Harness 示例，展示了如何组合提示词、工具、规划和文件系统。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">开发者指南：在变动中寻找确定性</h3>
+                        <span class="topic-timestamp">40:19 - 47:05</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 开发者的真正壁垒在于对业务流程的深度理解（指令）和自研工具，而非对特定框架或模型的依赖。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">观测性 Plus+</div>
+                        <p class="topic-detail-content">Harrison 认为 AI 开发最难的点在于"不确定性"。你需要通过 LangSmith 等工具将每一次 Trace（追踪）转化为测试用例，从而实现持续改进。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">无代码化趋势</div>
+                        <p class="topic-detail-content">Harrison 宣布推出无代码平台，让非技术人员也能通过 UI 配置代理的提示词、工具和记忆，因为这些才是驱动代理的核心资产。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <!-- Takeaway Card 1 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💡</div>
+                    <h3 class="takeaway-title">认知改变</h3>
+                    <p class="takeaway-desc">不要过度关注底座模型。目前的竞争焦点是 Harness（控制架），即如何管理模型的上下文、文件操作和工具调用逻辑。</p>
+                </div>
+
+                <!-- Takeaway Card 2 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">核心资产</h3>
+                    <p class="takeaway-desc">作为 AI Builder，你最有价值的资产是特定领域的 SOP 指令和定制化工具（Tools）。</p>
+                </div>
+
+                <!-- Takeaway Card 3 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🚀</div>
+                    <h3 class="takeaway-title">行动建议</h3>
+                    <p class="takeaway-desc">为你的代理建立代码执行环境（沙箱）；采用上下文隔离策略（如子代理或文件外挂）以应对复杂长任务；建立严密的观测性闭环。</p>
+                </div>
+
+                <!-- Takeaway Card 4 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">技术预测</h3>
+                    <p class="takeaway-desc">未来的智能体将能够管理自己的内存和上下文压缩，实现真正的自主长航程运行。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">一切都在重构</h3>
+            <p class="footer-desc">
+                这不仅是对技术细节的罗列，更是对未来 AI 基础设施演进路径的深度预言。理解 Harrison 提出的"Harness"概念及其背后的四大核心组件，将是你理解未来十年 AI 应用开发的关键。
+            </p>
+            <div class="footer-quote">
+                "The harness is the most important thing"
+            </div>
+            <p class="footer-note">
+                内容整理自 The MAD Podcast with Matt Turck，视频链接：<a href="https://www.youtube.com/watch?v=rSKh6bVuVZI" target="_blank" style="color: var(--accent-cyan);">youtube.com/watch?v=rSKh6bVuVZI</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
