@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物理 AI 时代与美国的财富重构 —— All-In Podcast 奥斯汀峰会</title>
+    <style>
+        /* ========== Design Tokens ========== */
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-card: #141416;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            --accent-orange: #ff6b35;
+            --accent-cyan: #00d4ff;
+            --border: #2a2a2e;
+            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            --font-size-hero: clamp(48px, 10vw, 120px);
+            --font-size-section: clamp(32px, 5vw, 56px);
+            --font-size-topic: clamp(24px, 4vw, 36px);
+            --font-size-number: clamp(64px, 15vw, 120px);
+            --font-heavy: 800;
+            --letter-spacing-tight: -0.03em;
+            --line-height-tight: 0.95;
+            --card-padding: 40px;
+            --radius-lg: 16px;
+            --radius-pill: 100px;
+            --transition-fast: 0.3s ease;
+            --hover-lift: translateY(-4px);
+            --gradient-accent: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-cyan) 100%);
+            --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+        }
+
+        /* ========== Reset ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ========== Scrollbar ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-orange);
+        }
+
+        /* ========== Container ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(0, 212, 255, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 0;
+        }
+
+        /* ========== Badge ========== */
+        .badge-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .badge:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* ========== Title ========== */
+        .title {
+            font-size: var(--font-size-hero);
+            font-weight: var(--font-heavy);
+            line-height: var(--line-height-tight);
+            letter-spacing: var(--letter-spacing-tight);
+            margin-bottom: 24px;
+        }
+
+        .title-line-1 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-line-2 {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== Subtitle ========== */
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        /* ========== Meta Grid ========== */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .meta-item {
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        /* ========== CTA Button ========== */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--gradient-accent);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 16px;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.5);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== Section ========== */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            font-size: var(--font-size-section);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 64px;
+        }
+
+        /* ========== Points Grid ========== */
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* ========== Point Card ========== */
+        .point-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .point-card:hover {
+            border-color: var(--accent-orange);
+            transform: var(--hover-lift);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .point-card:hover::before {
+            opacity: 1;
+        }
+
+        .point-number {
+            font-size: 48px;
+            font-weight: var(--font-heavy);
+            color: var(--border);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .point-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-orange);
+        }
+
+        .point-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ========== Topic ========== */
+        .topic {
+            margin-bottom: 80px;
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .topic-number {
+            font-size: var(--font-size-number);
+            font-weight: var(--font-heavy);
+            line-height: 1;
+            background: var(--gradient-number);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .topic-info {
+            flex: 1;
+            padding-top: 16px;
+        }
+
+        .topic-title {
+            font-size: var(--font-size-topic);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .topic-timestamp {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--accent-cyan);
+        }
+
+        .topic-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--card-padding);
+            margin-left: clamp(40px, 10vw, 120px);
+        }
+
+        .topic-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-orange);
+        }
+
+        .topic-core-point {
+            font-size: 18px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .topic-detail {
+            padding-left: 24px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .topic-detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .topic-detail-content {
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--accent-orange);
+            padding: 24px;
+            background: rgba(255, 107, 53, 0.05);
+            margin: 24px 0;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-primary);
+        }
+
+        .thought-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .thought-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        /* ========== Takeaways ========== */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .takeaway-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-fast);
+        }
+
+        .takeaway-card:hover {
+            border-color: var(--accent-cyan);
+            transform: var(--hover-lift);
+        }
+
+        .takeaway-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .takeaway-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .takeaway-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: var(--font-heavy);
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .footer-quote {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: var(--font-heavy);
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 48px 0;
+            line-height: 1.2;
+        }
+
+        .footer-note {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Divider ========== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header animations - use keyframes for initial page load */
+        .header .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        /* Card animations - use transition for scroll trigger */
+        .point-card,
+        .takeaway-card,
+        .topic {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .point-card.animate-in,
+        .takeaway-card.animate-in,
+        .topic.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .topic-content {
+                margin-left: 0;
+            }
+
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper animate-in">
+                    <span class="badge">硬科技</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1 animate-in delay-1">物理 AI 时代与</span>
+                    <span class="title-line-2 animate-in delay-2">美国的财富重构</span>
+                </h1>
+                <p class="subtitle animate-in delay-3">
+                    当 Uber 创始人 Travis Kalanick 结束七年潜行，与 PC 工业传奇 Michael Dell 在奥斯汀同台。数字化正在从"比特"世界全面侵入"原子"世界——从"食物计算机"到 AI 工厂，再到改变 2500 万美国儿童命运的"Invest America"法案。
+                </p>
+                <div class="meta-grid animate-in delay-4">
+                    <div class="meta-item">
+                        <div class="meta-label">节目</div>
+                        <div class="meta-value">All-In Podcast</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Travis Kalanick, Michael Dell</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">01:15:56</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=9y7TTU1jIvk" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看完整访谈
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心洞察</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">从 Bits 到 Atoms</h3>
+                    <p class="point-desc">Travis Kalanick 提出"原子的计算机"概念：制造=CPU、房地产=存储、物流=网络，数字化正在入侵物理世界。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">物理 AI 堆栈</h3>
+                    <p class="point-desc">Atoms 进入自动化采矿和机器人底盘领域，特斯拉成为物理 AI 时代的霸主，类似 2000 年代的谷歌。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">视觉的 GPT 时刻</h3>
+                    <p class="point-desc">语言是最高级的压缩机制，人类大脑只需 100 瓦能量，全行业等待视觉模型的效率飞跃。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">加州的"自杀"</h3>
+                    <p class="point-desc">真相与正义是社会的免疫系统，当免疫系统受损，城市就会衰落。奥斯汀取代旧金山成为新中心。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">AI 工厂时代</h3>
+                    <p class="point-desc">Dell 已部署 4000+ AI 工厂，AI 业务从 20 亿飙升至 500 亿。企业面临"重构或死亡"的选择。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">Invest America 革命</h3>
+                    <p class="point-desc">62.5 亿美元捐赠，为 2500 万儿童建立"特朗普账户"，通过复利共享国家增长红利。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">隐身七年后的回归：从 Cloud Kitchens 到 Atoms</h3>
+                        <span class="topic-timestamp">00:00 - 05:52</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Travis Kalanick 结束了长达七年的潜行状态，正式将其公司更名为"Atoms"，旨在通过数字化基础设施彻底改造物理世界。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">潜行模式</div>
+                        <p class="topic-detail-content">Travis 回忆了过去几年的隐秘岁月，他要求数千名员工在 LinkedIn 上只能标注"Stealth（潜行）"，甚至连父母都以为他们在 CIA 工作。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">原子的计算机</div>
+                        <p class="topic-detail-content">如果说 Michael Dell 创造了操作比特的计算机，那么 Atoms 正在建造操作原子的计算机。制造=原子的 CPU，房地产=原子的存储，物流=原子的网络。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">全球网络</div>
+                        <p class="topic-detail-content">Travis 描述了他在 30 多个国家（如韩国、中东、拉美）使用不同代码名称运营的复杂全球网络。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "If you're digitizing the physical world, you're treating atoms like bits. You're building an atoms-based computer."<br><br>
+                        （如果你正在数字化物理世界，你就在把原子当作比特处理。你在建造一台基于原子的计算机。）
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">物理 AI 堆栈：挖矿、机器人与特斯拉的霸主地位</h3>
+                        <span class="topic-timestamp">05:53 - 11:00</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Atoms 的野心远超食物，正在进入自动化采矿和机器人底盘领域，并视特斯拉为物理 AI 时代的"谷歌"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">自动化采矿</div>
+                        <p class="topic-detail-content">Travis 宣布收购了自动化采矿公司 Pronto。自动化不仅能提高效率，更重要的是能让人们去往环境恶劣、原本不适合人类工作的地区进行开采。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">物理 AI 堆栈</div>
+                        <p class="topic-detail-content">在"物理 AI 堆栈"中，土地开发、化学、制造业与算法同等重要。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">特斯拉时代</div>
+                        <p class="topic-detail-content">在 2000 年代，创业者会被问"如果谷歌做了怎么办？"；而在物理 AI 时代，这个问题变成了"如果特斯拉做了怎么办？"特斯拉在制造业和物理 AI 的结合上已经处于统治地位。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">自动驾驶的决战：Waymo、特斯拉与"视觉 ChatGPT 时刻"</h3>
+                        <span class="topic-timestamp">11:01 - 16:21</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Waymo 目前在技术证明上领先，但特斯拉在科学硬核模式和规模上具有潜力，全行业都在等待视觉模型的"GPT 爆发时刻"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Waymo 的存在证明</div>
+                        <p class="topic-detail-content">存在证明已经完成，但在制造规模和迫切感上仍需提升。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">特斯拉的困难模式</div>
+                        <p class="topic-detail-content">特斯拉选择了"困难模式"，即仅依靠视觉（Vision）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">语言作为压缩机制</div>
+                        <p class="topic-detail-content">语言是人类最高级的压缩机制。相比于 Waymo 机器需要消耗比人类高 100 倍的能量来开车，人类大脑只需 100 瓦能量。当 AI 能够通过语言在不同感官 Agent 之间交流时，效率将迎来飞跃。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "When does the ChatGPT moment happen for vision is basically the thing."<br><br>
+                        （视觉领域的 ChatGPT 时刻何时到来，是目前最核心的问题。）
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">离美入德（克萨斯）：加州的"自杀"与奥斯汀的崛起</h3>
+                        <span class="topic-timestamp">16:22 - 25:22</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Travis 分享了迁居奥斯汀的心路历程，批评加州当前的治理模式（真相与正义的缺失）正在扼杀城市的活力。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">离开加州的痛苦</div>
+                        <p class="topic-detail-content">作为一个土生土长的洛杉矶人，Travis 称离开加州是一个极其痛苦、类似于"哀悼"的过程。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">旧金山的"自杀"</div>
+                        <p class="topic-detail-content">他批评旧金山在 Market Street 等核心地带设置大量空置的自行车道和巴士车道，是一种"潜意识里勒死城市"的行为。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">真相与正义</div>
+                        <p class="topic-detail-content">真相与正义是社会的免疫系统。当免疫系统受损（如 DA 不起诉犯罪、无家可归者问题失控），各种社会弊病就会爆发。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">奥斯汀的能量</div>
+                        <p class="topic-detail-content">相比之下，奥斯汀让他感到一种"人人都在建设未来"的积极氛围。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">中国竞争力的思考：制造业的饥渴感</h3>
+                        <span class="topic-timestamp">25:23 - 36:00</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        中国在制造业基地和城市建设上的进步令人震惊，美国需要正视这种"饥渴感"并提升自己的水平。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">云厨房业务</div>
+                        <p class="topic-detail-content">Travis 提到，他在中国运营着全球最大的云厨房业务之一。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">深圳的崛起</div>
+                        <p class="topic-detail-content">他惊叹于深圳的发展已经超越了新加坡。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">竞争意识</div>
+                        <p class="topic-detail-content">他称赞中国制造者具有极强的竞争意识。他呼吁美国应该像对待成年人之间的"友好比赛"一样与中国竞争，而不是敌对。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">移民政策</div>
+                        <p class="topic-detail-content">他希望美国能改善移民政策，留住顶尖人才。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Michael Dell：42 年的复利与德州模式</h3>
+                        <span class="topic-timestamp">36:01 - 43:30</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Michael Dell 回顾了从宿舍创业到年收入 1400 亿美元的历程，强调德州的低税收、亲商环境是其成功的基石。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">1000 美元起步</div>
+                        <p class="topic-detail-content">Michael Dell 在 42 年前仅凭 1000 美元在德州大学宿舍起家。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">德州的崛起</div>
+                        <p class="topic-detail-content">德州现在拥有美国前 10 大城市中的 4 个，且全美十分之一的婴儿出生在德州。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 业务爆发</div>
+                        <p class="topic-detail-content">Dell 的 AI 基础设施业务从 20 亿增长到 100 亿、250 亿，今年将达到 500 亿。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从计算到思考</div>
+                        <p class="topic-detail-content">我们正从 60 年的"计算时代"跨越到机器开始"思考"的时代。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "We had 60 years of calculating computing. Now we have machines that are thinking and helping us think."<br><br>
+                        （我们经历了 60 年的计算化编程。现在，我们拥有了能够思考并帮助我们思考的机器。）
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 工厂与企业的文化障碍</h3>
+                        <span class="topic-timestamp">43:31 - 52:16</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 的普及障碍不在技术，而在文化与领导力；企业必须重新想象自己的架构，否则将在 2030 年代被 AI 原生公司淘汰。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">4000+ AI 工厂</div>
+                        <p class="topic-detail-content">Dell 已经部署了 4000 多个"AI 工厂"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">加速折旧政策</div>
+                        <p class="topic-detail-content">虽然政府的加速折旧政策有助于投资，但真正的挑战是企业如何通过 AI 改变组织运作方式。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 原生业务</div>
+                        <p class="topic-detail-content">未来每个行业都会出现 AI 原生业务。2025 年诞生的公司增长速度将比 2018 年的公司快 4 倍，因为它们从第一天起就拥有了这些极其高效的工具。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">分布式智能：开源与边缘计算的复兴</h3>
+                        <span class="topic-timestamp">52:17 - 59:59</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 不会只存在于巨头的云端，主权 AI、开源模型以及边缘设备（手机、PC）上的推理将成为主流。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">最低成本的 Token</div>
+                        <p class="topic-detail-content">"最低成本的 Token 是在数据产生的地方生成的"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">云账单冲击</div>
+                        <p class="topic-detail-content">由于公共云的高昂成本（"当你收到账单时就不爱云了"），企业正在转向私有数据训练。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Hugging Face 合作</div>
+                        <p class="topic-detail-content">Dell 与 Hugging Face 的合作，强调即使是小型机器也能流畅运行谷歌的 Gemma 等开源模型。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">分布式优势</div>
+                        <p class="topic-detail-content">这种分布式架构保护了隐私，也让个人和中小企业拥有了强大的工具。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AGI 与社会影响：从"线性代数"到"Invest America"计划</h3>
+                        <span class="topic-timestamp">01:00:00 - 01:07:30</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 的社会恐惧部分源于术语误导，Michael Dell 宣布捐赠 62.5 亿美元为 2500 万贫困儿童开设个人账户。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">术语误导</div>
+                        <p class="topic-detail-content">Michael Dell 幽默地建议，如果把 AI 改名为"线性代数矩阵乘法和统计学"，公众可能就不会那么害怕了。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">震撼捐赠</div>
+                        <p class="topic-detail-content">通过他的基金会，向全美邮政编码中位收入低于 15 万美元地区的 2500 万名 2 至 10 岁儿童，每人捐赠 250 美元。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">62.5 亿美元</div>
+                        <p class="topic-detail-content">这项 62.5 亿美元的捐赠将直接进入这些孩子的"Invest America"账户。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">社会保障 2.0：美国梦的重新连接</h3>
+                        <span class="topic-timestamp">01:07:31 - 01:15:56</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        通过《投资美国法案》，每个美国孩子都将拥有一个"特朗普账户"，通过复利共享国家增长红利。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Invest America Act</div>
+                        <p class="topic-detail-content">从 2027 年起，每个美国孩子出生时都会获得一个绑定社保号的 1000 美元账户。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">红白蓝理念</div>
+                        <p class="topic-detail-content">这不是红蓝之争，而是"红白蓝（美国）"的理念。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">目标</div>
+                        <p class="topic-detail-content">让 70% 感觉被抛弃的人重新连接到资本主义的增长中。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">机制</div>
+                        <p class="topic-detail-content">账户可以购买标普 500 指数，父母也可以通过类似 Robinhood 的 App 进行定投。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">愿景</div>
+                        <p class="topic-detail-content">在 15 年内将 5 万亿美元转移到普通家庭手中，通过所有权社会解决养老金危机。</p>
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">延伸思考</div>
+                        如果每个人在 2030 年代都拥有自己的本地 AI 助理，且每个孩子一出生就拥有了由全美顶尖科技公司股票支撑的账户，这种"科技 + 资本所有权"的结合，是否真的能像 Michael Dell 预言的那样，开启一个生产力爆炸的"黄金时代"？
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏭</div>
+                    <h3 class="takeaway-title">物理 AI 是下一个万亿机遇</h3>
+                    <p class="takeaway-desc">不要只盯着大模型，制造业、房地产和物流的数字化转型（Atoms 模式）才是 AI 真正落地并创造巨大价值的战场。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔄</div>
+                    <h3 class="takeaway-title">重构或死亡</h3>
+                    <p class="takeaway-desc">AI 不是一个插件，而是一个需要自顶向下改变文化和流程的"wholesale rearchitecture（整体再架构）"。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔑</div>
+                    <h3 class="takeaway-title">所有权是消除贫富差距的钥匙</h3>
+                    <p class="takeaway-desc">通过"Invest America"机制，让每个公民从出生起就成为"国家股东"，通过复利享受科技进步的红利。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📈</div>
+                    <h3 class="takeaway-title">复利的威力</h3>
+                    <p class="takeaway-desc">无论是个人的 1000 美元起步，还是 Michael Dell 42 年的坚持，成功的核心都在于不断添加、从不停止。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">核心启示</h3>
+            <p class="footer-desc">
+                从比特到原子，从计算到思考，从个人财富到社会契约
+            </p>
+            <div class="footer-quote">
+                "如果你正在数字化物理世界，<br>你就在把原子当作比特处理。"
+            </div>
+            <p class="footer-note">
+                基于 All-In Podcast 奥斯汀峰会现场录制 | 2026
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
