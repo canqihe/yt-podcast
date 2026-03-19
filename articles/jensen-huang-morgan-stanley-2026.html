@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>算力即 GDP：黄仁勋在摩根士丹利 TMT 峰会的全景演讲 | 2026</title>
+    <style>
+        /* ========== Design Tokens ========== */
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-card: #141416;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            --accent-orange: #ff6b35;
+            --accent-cyan: #00d4ff;
+            --border: #2a2a2e;
+            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            --font-size-hero: clamp(48px, 10vw, 120px);
+            --font-size-section: clamp(32px, 5vw, 56px);
+            --font-size-topic: clamp(24px, 4vw, 36px);
+            --font-size-number: clamp(64px, 15vw, 120px);
+            --font-heavy: 800;
+            --letter-spacing-tight: -0.03em;
+            --line-height-tight: 0.95;
+            --card-padding: 40px;
+            --radius-lg: 16px;
+            --radius-pill: 100px;
+            --transition-fast: 0.3s ease;
+            --hover-lift: translateY(-4px);
+            --gradient-accent: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-cyan) 100%);
+            --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+        }
+
+        /* ========== Reset ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ========== Scrollbar ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-orange);
+        }
+
+        /* ========== Container ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                /* 渐变遮罩层 */
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.95) 40%, var(--bg-primary) 70%),
+                /* 图片背景 */
+                url('images/jensen-huang-morgan-stanley-bg.png') no-repeat right center / cover;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* 额外的渐变叠加层 */
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(0, 212, 255, 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 0;
+        }
+
+        /* ========== Badge ========== */
+        .badge-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .badge:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* ========== Title ========== */
+        .title {
+            font-size: var(--font-size-hero);
+            font-weight: var(--font-heavy);
+            line-height: var(--line-height-tight);
+            letter-spacing: var(--letter-spacing-tight);
+            margin-bottom: 24px;
+        }
+
+        .title-line-1 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-line-2 {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== Subtitle ========== */
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        /* ========== Meta Grid ========== */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .meta-item {
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        /* ========== CTA Button ========== */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--gradient-accent);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 16px;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.5);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== Section ========== */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            font-size: var(--font-size-section);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 64px;
+        }
+
+        /* ========== Points Grid ========== */
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* ========== Point Card ========== */
+        .point-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .point-card:hover {
+            border-color: var(--accent-orange);
+            transform: var(--hover-lift);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .point-card:hover::before {
+            opacity: 1;
+        }
+
+        .point-number {
+            font-size: 48px;
+            font-weight: var(--font-heavy);
+            color: var(--border);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .point-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-orange);
+        }
+
+        .point-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ========== Topic ========== */
+        .topic {
+            margin-bottom: 80px;
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .topic-number {
+            font-size: var(--font-size-number);
+            font-weight: var(--font-heavy);
+            line-height: 1;
+            background: var(--gradient-number);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .topic-info {
+            flex: 1;
+            padding-top: 16px;
+        }
+
+        .topic-title {
+            font-size: var(--font-size-topic);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .topic-timestamp {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--accent-cyan);
+        }
+
+        .topic-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--card-padding);
+            margin-left: clamp(40px, 10vw, 120px);
+        }
+
+        .topic-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-orange);
+        }
+
+        .topic-core-point {
+            font-size: 18px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .topic-detail {
+            padding-left: 24px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .topic-detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .topic-detail-content {
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--accent-orange);
+            padding: 24px;
+            background: rgba(255, 107, 53, 0.05);
+            margin: 24px 0;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-primary);
+        }
+
+        .thought-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .thought-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        /* ========== Takeaways ========== */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .takeaway-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-fast);
+        }
+
+        .takeaway-card:hover {
+            border-color: var(--accent-cyan);
+            transform: var(--hover-lift);
+        }
+
+        .takeaway-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .takeaway-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .takeaway-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: var(--font-heavy);
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .footer-quote {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: var(--font-heavy);
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 48px 0;
+            line-height: 1.2;
+        }
+
+        .footer-note {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Divider ========== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header animations - use keyframes for initial page load */
+        .header .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        /* Card animations - use transition for scroll trigger */
+        .point-card,
+        .takeaway-card,
+        .topic {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .point-card.animate-in,
+        .takeaway-card.animate-in,
+        .topic.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .topic-content {
+                margin-left: 0;
+            }
+
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper animate-in">
+                    <span class="badge">AI · 算力经济</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1 animate-in delay-1">算力即 GDP</span>
+                    <span class="title-line-2 animate-in delay-2">黄仁勋的 AI 工厂蓝图</span>
+                </h1>
+                <p class="subtitle animate-in delay-3">
+                    在 2026 摩根士丹利 TMT 峰会上，黄仁勋用极其宏大的视角，拆解了英伟达如何从 1998 年被质疑"何时破产"的 3 亿美元公司，演变成如今定义"AI 工厂"法则的巨人。算力即收入，算力即 GDP。
+                </p>
+                <div class="meta-grid animate-in delay-4">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Morgan Stanley TMT 会议</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">黄仁勋 (Jensen Huang)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">43 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=xv7UVAfyebk" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看完整对话
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">加速计算的本质</h3>
+                    <p class="point-desc">软件的核心循环通常只占代码的 5%，却占据了 99% 的计算时间。英伟达的成功源于 33 年前对这一范式的笃定。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">全栈革命的必要性</h3>
+                    <p class="point-desc">只有掌控从芯片到库、再到系统架构的每一个环节，才能实现每年一次的跨代创新。拥有端到端的系统控制权是无可替代的优势。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">AI 的三次进化</h3>
+                    <p class="point-desc">从生成式（Generative）到推理式（Reasoning），再到代理式（Agentic）。AI 正从"回答者"转变为"行动者"。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">算力即收入</h3>
+                    <p class="point-desc">数据中心已转型为"AI 工厂"。在电力和土地受限的现代，算力直接等于 GDP，而"每瓦代币"是衡量工厂盈利能力的核心指标。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">供应链即战略武器</h3>
+                    <p class="point-desc">在资源稀缺时代，强大的资产负债表不仅是财务保障，更是战略武器。通过锁定供应链为客户提供"确定性"。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">物理 AI 的未来</h3>
+                    <p class="point-desc">AI 的下一个前沿是走出屏幕，进入物理世界。物理 AI（机器人、自动驾驶）和数字生物学将驱动未来十年的增长。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">从百万到万亿：英伟达的初心与算法黎明</h3>
+                        <span class="topic-timestamp">00:00 - 05:19</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        英伟达的成功并非一蹴而就，而是源于 33 年前对"加速计算"这一全新计算范式的笃定，以及对算法深层逻辑的极致掌控。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">IPO 的记忆与反差</div>
+                        <p class="topic-detail-content">主持人回顾了 27 年前在交易大厅介绍英伟达时的情景，当时 IPO 估值仅为 3 亿美元，而现在英伟达一个季度的净利润就高达 460 亿美元。黄仁勋幽默地回忆道，当时路演时投资者唯一的疑问是："你们什么时候破产？"</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">加速计算的本质</div>
+                        <p class="topic-detail-content">黄仁勋解释说，他们起步时就意识到，软件中 5% 的代码（核心循环）往往消耗了 99% 的算力。英伟达选择了当时最复杂的算法——计算机图形学中的光线模拟作为突破口。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">重新定义游戏产业</div>
+                        <p class="topic-detail-content">在《侏罗纪公园》开启视觉革命的时代，英伟达通过 RTX 等算法，将原本仅限于电影制作的图形技术消费化，实际上亲手缔造了现代 3D 游戏产业。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "The inner loop of the software tends to be about 5% of the code but 99% of the compute time."
+                        <br><br>
+                        —— 软件的核心循环通常只占代码的 5%，却占据了 99% 的计算时间。
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">个人感受</div>
+                        黄仁勋在谈到早期被质疑的经历时，带着一种"幸存者"的坦然和对技术远见的自豪。他强调英伟达对算法的深入理解是其所有创新的基石。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">全栈革命：为什么英伟达能一年更新一次基础设施</h3>
+                        <span class="topic-timestamp">05:19 - 11:10</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        加速计算是典型的"全栈"问题。只有掌控从芯片到库、再到系统架构的每一个环节，才能实现每年一次的跨代创新。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">全栈部署能力</div>
+                        <p class="topic-detail-content">黄仁勋提到了"前线部署工程师"（DevTech Engineers）的概念。早在 33 年前，英伟达就将工程师派驻到游戏公司，将技术集成到 Unreal Engine 等引擎中。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">重构 PC 架构</div>
+                        <p class="topic-detail-content">为了解决 PC 架构与图形性能的不兼容，英伟达发明了 DirectNvidia（后来的 DirectX）和 AGP（后来的 PCI Express）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">DGX-1 的传承</div>
+                        <p class="topic-detail-content">这种从顶层算法到底层架构的思维，直接催生了世界上第一台 AI 超级计算机 DGX-1。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">拥有每一个芯片</div>
+                        <p class="topic-detail-content">黄仁勋指出，如果你不能控制所有的芯片（CPU、GPU、DPU、交换机）和连接（NVLink），你就无法像英伟达一样每年发布一个全新的基础设施，因为你无法同步成千上万个组件的创新节奏。</p>
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">视觉信息描述</div>
+                        虽然是访谈形式，但黄仁勋描述了 DGX 系统与微软 Azure 超算的性能如何精确对齐，强调了这种"全栈设计"带来的确定性。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 的三次进化：从"对话"到"推理"，再到"行动"的代理时代</h3>
+                        <span class="topic-timestamp">11:10 - 18:08</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 正经历从生成式（Generative）到推理式（Reasoning），再到代理式（Agentic）的飞跃。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三次拐点</div>
+                        <p class="topic-detail-content">
+                            1. <strong>生成式 AI</strong>：将信息从一种形式转化为另一种。<br>
+                            2. <strong>推理与接地（o1）</strong>：通过检索增强生成（RAG）和自我纠正（Self-reflection），解决了幻觉问题，使 AI 变得更可靠，但也带来了千倍级别的算力需求增长。<br>
+                            3. <strong>代理式 AI（Agentic AI）</strong>：黄仁勋提到了一个现象级软件 <strong>Open Claw</strong>（在 2026 年背景下），称其仅用三周就达到了 Linux 30 年的装机水平。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">提示词的转变</div>
+                        <p class="topic-detail-content">过去的 Prompt 是"是什么、谁是、什么时候"，现在的 Prompt 是"去创建、去做、去构建（Create, Do, Build）"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">代币消费的爆炸</div>
+                        <p class="topic-detail-content">一个代理（Agent）可能会持续在后台运行，进行研究、阅读手册、使用工具，这种模式下消耗的代币（Tokens）是前代的百万倍。</p>
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">延伸思考</div>
+                        当 AI 开始主动"做"任务而非仅仅回答问题时，人类的工作流将彻底从"操作工具"转变为"管理专家代币"。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 工厂经济学：算力即收入，每瓦代币的生死战</h3>
+                        <span class="topic-timestamp">18:08 - 25:50</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        数据中心已转型为"AI 工厂"。在电力和土地受限的现代，算力直接等于 GDP，而"每瓦代币"是衡量工厂盈利能力的核心指标。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">工厂论</div>
+                        <p class="topic-detail-content">数据中心不再是存储数据的仓库，而是生产代币的工厂。黄仁勋直言，由于算力与公司收入（甚至是国家 GDP）直接挂钩，CEO 必须亲自审核计算架构的选择。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">每瓦代币的意义</div>
+                        <p class="topic-detail-content">假设一个工厂只有 1GW 的供电，如果英伟达的每瓦代币产出是竞品的 10 倍，那么使用英伟达架构的公司收入也将是对手的 10 倍。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">推理之王</div>
+                        <p class="topic-detail-content">黄仁勋引用 SemiAnalysis 的数据，称英伟达是"推理之王"，因为其单位成本下的代币产出（Tokens per Dollar）和每瓦产出是全行业最高的。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Compute equals revenues. We know that for a fact."
+                        <br><br>
+                        —— 算力等于收入，这是既定的事实。
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">方法论指南</div>
+                        对于构建 AI 工厂的企业：<br>
+                        1. 必须在电力受限的情况下选择效率最高的架构。<br>
+                        2. 算力部署不能看"PPT 性能"，而要看实际的代币产出率。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">软件的未来：每家公司都是代理公司</h3>
+                        <span class="topic-timestamp">22:50 - 26:07</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        未来的软件不再仅仅是工具，而是"数字专家"。软件产业将从"许可授权"模式转型为"代币租赁"模式。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">数字劳动力</div>
+                        <p class="topic-detail-content">就像公司聘请人类专家一样，未来企业会租赁数字代理来完成工作。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">市场扩容</div>
+                        <p class="topic-detail-content">目前的 IT 产业规模约为数万亿美元。黄仁勋预测，由于代理能做更多实效性的工作，未来的软件市场规模将远超今日。CAD、EDA 等专业软件公司将因为提供"专家代币"而获得巨大的业务增量。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">供应链主权与生态帝国：300 亿美金投资 OpenAI 背后的逻辑</h3>
+                        <span class="topic-timestamp">26:07 - 34:50</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        在资源稀缺时代，强大的资产负债表（Balance Sheet）不仅是财务保障，更是战略武器。英伟达通过锁定供应链，为客户提供"确定性"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">约束下的选择</div>
+                        <p class="topic-detail-content">黄仁勋表示他喜欢"约束"（Constraints）。在土地、电力和芯片稀缺时，客户别无选择，只能选择最先进、最可靠的英伟达。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">战略供应链</div>
+                        <p class="topic-detail-content">英伟达利用资金锁定了包括 HBM 内存、晶圆、CoWoS 封装、线缆甚至陶瓷电容在内的所有关键组件。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">重磅投资披露</div>
+                        <p class="topic-detail-content">黄仁勋确认英伟达将向 OpenAI 投资 300 亿美元。由于 OpenAI 预计在年底上市，这被视为最后一次大规模入股的机会。同时，他提到正在全力帮助 OpenAI 将算力扩展到 AWS、OCI（甲骨文）等云端。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">MSL 实验室</div>
+                        <p class="topic-detail-content">他首次提到了一家名为 MSL 的新型 AI 实验室，其实力堪比 Meta，正产生巨大的 GPU 需求。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "A strong balance sheet today is not only helpful, it's strategic."
+                        <br><br>
+                        —— 在今天，强大的资产负债表不仅有帮助，它更是战略性的。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">下一个十年：物理 AI、数字生物学与全球算力 GDP</h3>
+                        <span class="topic-timestamp">34:50 - 42:53</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 的下一个前沿是走出屏幕，进入物理世界。物理 AI（机器人、自动驾驶）和数字生物学将驱动未来十年的增长。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">物理智能</div>
+                        <p class="topic-detail-content">AI 需要理解重力、因果律、物体恒常性等物理法则。英伟达通过 Cosmos（物理 AI 模型）、Groot（机器人模型）和 Earth-2（地球气候模拟）已经确立了领先地位。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">数字生物学</div>
+                        <p class="topic-detail-content">黄仁勋提到了与礼来（Eli Lilly）合作的 AI 实验室，强调通过全栈软件在数字空间模拟生物化学反应。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">预测</div>
+                        <p class="topic-detail-content">
+                            1. 两年内，人们将不再谈论"代理 AI"，因为它们已无处不在。<br>
+                            2. 未来十年将是"物理 AI"的时代。<br>
+                            3. 每一家公司都需要算力作为燃料，不仅是为了搜索或购物，而是为了驱动整个企业的"数字员工"。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔄</div>
+                    <h3 class="takeaway-title">认知重塑</h3>
+                    <p class="takeaway-desc">算力不再是 IT 开支，而是生产资料。算力与收入的比例关系已成为衡量企业竞争力的核心。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">效率为王</h3>
+                    <p class="takeaway-desc">在能源有限的未来，单位能源的代币产出（Tokens/Watt）是决定胜负的唯一指标。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🤖</div>
+                    <h3 class="takeaway-title">行动导向</h3>
+                    <p class="takeaway-desc">AI 正在从"回答者"转变为"行动者（Agent）"，企业应尽早布局能够产生实际任务结果的"代理系统"。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏗️</div>
+                    <h3 class="takeaway-title">全栈必要性</h3>
+                    <p class="takeaway-desc">为了保持创新速度，拥有端到端的系统控制权（如英伟达所做的）是无可替代的优势。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">延伸思考</h3>
+            <p class="footer-desc">
+                黄仁勋在演讲中提到"算力即 GDP"，这暗示了未来主权国家对算力的争夺将等同于过去对石油的争夺。
+            </p>
+            <div class="footer-quote">
+                "Compute equals revenues. We know that for a fact."
+            </div>
+            <p class="footer-note">
+                如果未来的软件公司都变成"代币消费者"，那么全球财富的分配逻辑将向拥有高效算力基础设施的一方极度倾斜。我们是否正进入一个由代币（Tokens）定义的信用和价值体系？
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
