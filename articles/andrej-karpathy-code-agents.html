@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrej Karpathy 论代码智能体、自动研究与 AI 的循环时代</title>
+    <style>
+        /* ========== Design Tokens ========== */
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-card: #141416;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            --accent-orange: #ff6b35;
+            --accent-cyan: #00d4ff;
+            --border: #2a2a2e;
+            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            --font-size-hero: clamp(48px, 10vw, 120px);
+            --font-size-section: clamp(32px, 5vw, 56px);
+            --font-size-topic: clamp(24px, 4vw, 36px);
+            --font-size-number: clamp(64px, 15vw, 120px);
+            --font-heavy: 800;
+            --letter-spacing-tight: -0.03em;
+            --line-height-tight: 0.95;
+            --card-padding: 40px;
+            --radius-lg: 16px;
+            --radius-pill: 100px;
+            --transition-fast: 0.3s ease;
+            --hover-lift: translateY(-4px);
+            --gradient-accent: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-cyan) 100%);
+            --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+        }
+
+        /* ========== Reset ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ========== Scrollbar ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-orange);
+        }
+
+        /* ========== Container ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(0, 212, 255, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 0;
+        }
+
+        /* ========== Badge ========== */
+        .badge-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .badge:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* ========== Title ========== */
+        .title {
+            font-size: var(--font-size-hero);
+            font-weight: var(--font-heavy);
+            line-height: var(--line-height-tight);
+            letter-spacing: var(--letter-spacing-tight);
+            margin-bottom: 24px;
+        }
+
+        .title-line-1 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-line-2 {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== Subtitle ========== */
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        /* ========== Meta Grid ========== */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .meta-item {
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        /* ========== CTA Button ========== */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--gradient-accent);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 16px;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.5);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== Section ========== */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            font-size: var(--font-size-section);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 64px;
+        }
+
+        /* ========== Points Grid ========== */
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* ========== Point Card ========== */
+        .point-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .point-card:hover {
+            border-color: var(--accent-orange);
+            transform: var(--hover-lift);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .point-card:hover::before {
+            opacity: 1;
+        }
+
+        .point-number {
+            font-size: 48px;
+            font-weight: var(--font-heavy);
+            color: var(--border);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .point-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-orange);
+        }
+
+        .point-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ========== Topic ========== */
+        .topic {
+            margin-bottom: 80px;
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .topic-number {
+            font-size: var(--font-size-number);
+            font-weight: var(--font-heavy);
+            line-height: 1;
+            background: var(--gradient-number);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .topic-info {
+            flex: 1;
+            padding-top: 16px;
+        }
+
+        .topic-title {
+            font-size: var(--font-size-topic);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .topic-timestamp {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--accent-cyan);
+        }
+
+        .topic-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--card-padding);
+            margin-left: clamp(40px, 10vw, 120px);
+        }
+
+        .topic-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-orange);
+        }
+
+        .topic-core-point {
+            font-size: 18px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .topic-detail {
+            padding-left: 24px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .topic-detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .topic-detail-content {
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--accent-orange);
+            padding: 24px;
+            background: rgba(255, 107, 53, 0.05);
+            margin: 24px 0;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-primary);
+        }
+
+        .thought-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .thought-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        /* ========== Takeaways ========== */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .takeaway-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-fast);
+        }
+
+        .takeaway-card:hover {
+            border-color: var(--accent-cyan);
+            transform: var(--hover-lift);
+        }
+
+        .takeaway-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .takeaway-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .takeaway-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: var(--font-heavy);
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .footer-quote {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: var(--font-heavy);
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 48px 0;
+            line-height: 1.2;
+        }
+
+        .footer-note {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Divider ========== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header animations - use keyframes for initial page load */
+        .header .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        /* Card animations - use transition for scroll trigger */
+        .point-card,
+        .takeaway-card,
+        .topic {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .point-card.animate-in,
+        .takeaway-card.animate-in,
+        .topic.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .topic-content {
+                margin-left: 0;
+            }
+
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper animate-in">
+                    <span class="badge">AI · 工程文化</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1 animate-in delay-1">Andrej Karpathy 论</span>
+                    <span class="title-line-2 animate-in delay-2">代码智能体与 AI 循环时代</span>
+                </h1>
+                <p class="subtitle animate-in delay-3">
+                    从"AI 精神病"到自动研究，前 OpenAI 和特斯拉自动驾驶核心工程师揭示编程范式的彻底转变：从"人写代码"到"人通过指令委托智能体集群"，以及 AI 自我迭代的"循环时代"即将如何重构人类技能、职业与教育。
+                </p>
+                <div class="meta-grid animate-in delay-4">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Sarah Guo & Elad Gil</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Andrej Karpathy</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">01:06:32</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=kwSVtQ7dziU" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">AI 精神病状态</h3>
+                    <p class="point-desc">Karpathy 描述了一种因意识到个体能力被 AI 无限放大而产生的极度亢奋与焦虑并存的心理状态。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">20/80 法则逆转</h3>
+                    <p class="point-desc">从 2025 年底开始，工作流发生质变：以前 80% 自己写，20% 用 AI；现在 100% 委托给智能体。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">技能问题新解</h3>
+                    <p class="point-desc">当智能体失败时，不再归咎于模型，而是认为人类没有给出足够好的指令——这是"技能问题"。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">Dobby 管家实验</h3>
+                    <p class="point-desc">在家中部署的智能体自行反向工程了 Sonos 音响、灯光、暖通系统的 API，创建统一控制面板。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">递归自我改进</h3>
+                    <p class="point-desc">自动研究的终极形态是通过模型不断优化模型，将人类研究员从繁琐的调参和实验循环中剔除。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">杰文斯悖论</h3>
+                    <p class="point-desc">当软件编写变得极度廉价时，社会对软件的总需求反而会指数级增长，工程师将从"打字员"进化为"宏观调度员"。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 精神病与智能体工作流的革命</h3>
+                        <span class="topic-timestamp">00:00 - 08:24</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Karpathy 认为编程的范式已在 2025 年底彻底改变，从"人写代码"转向了"人通过指令委托智能体集群（Agents）"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">20/80 法则的逆转</div>
+                        <p class="topic-detail-content">在 2025 年 12 月左右，他的工作流发生了质变。以前是 80% 自己写，20% 查文档/用 AI；现在他几乎不写一行原始代码，而是 100% 委托给智能体。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">技能问题（Skill Issue）</div>
+                        <p class="topic-detail-content">当智能体无法完成任务时，他不再归咎于模型能力不足，而认为这是"技能问题"——即人类没有给出足够好的指令（如 .cursorrules 或内存工具）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">宏观操作（Macro Actions）</div>
+                        <p class="topic-detail-content">他提到了 Peter Steinberg 的工作流：同时开启 10 个代码库，给 10 个智能体布置任务，每个任务跑 20 分钟，人类则在多个智能体间进行高层次的评审和调度。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "I don't think I've typed like a line of code probably since December basically... it all kind of feels like skill issue when it doesn't work." — "基本上从 12 月起我就没写过一行代码了……如果任务失败了，那感觉纯粹是指令技巧问题，而不是模型不行。"
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">持续性智能体"Claw"与 Dobby 的管家式实验</h3>
+                        <span class="topic-timestamp">08:25 - 16:15</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        未来的 AI 不应只是问答对话框，而是拥有持久内存、能自主循环运作的"Claw（爪子）"实体。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Dobby 实验</div>
+                        <p class="topic-detail-content">他在家中部署了一个名为"Dobby"的智能体，赋予其扫描局域网的能力。Dobby 自行反向工程了 Sonos 音响、灯光、暖通系统的 API，并创建了一个统一的控制面板。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">API 时代的到来</div>
+                        <p class="topic-detail-content">Karpathy 认为，未来很多 App 都不该存在。智能体作为"胶囊"，将原本碎片化的软件体验揉碎，通过直接调用底层 API 来实现人的意图。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从人机交互到代机交互</div>
+                        <p class="topic-detail-content">未来的客户不再是人类，而是代表人类行事的智能体。这要求整个软件产业从"为人类设计的 UI"转向"为智能体设计的 API"。</p>
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">个人感受</div>
+                        Karpathy 在谈到 Dobby 识别出门口的联邦快递卡车并给他发 WhatsApp 消息时表现出了强烈的兴奋。这种"赋予房屋灵魂"的体验，让他看到了通用人工智能（AGI）在私人领域的雏形。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">自动研究（AutoResearch）：移除人类瓶颈</h3>
+                        <span class="topic-timestamp">16:16 - 25:40</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        研究的终极形态是"递归自我改进"，通过模型不断优化模型，将人类研究员从繁琐的调参和实验循环中剔除。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">超越人类直觉</div>
+                        <p class="topic-detail-content">他曾自信地认为自己调优了 20 年的 GPT-2 模型已经接近完美，但让智能体跑了一夜后，智能体发现了权重衰减（Weight Decay）和优化器参数（Adam Betas）之间更优的协同方案。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">研究组织作为代码（Program.md）</div>
+                        <p class="topic-detail-content">他提出一个激进的设想：一个研究组织可以被抽象为一组 Markdown 文件，定义角色、流程和任务队列。通过不断调整这套"程序"，可以实现组织的元优化（Meta-optimization）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Jaggedness（参差性）</div>
+                        <p class="topic-detail-content">尽管 AI 在编程上达到博士级，但在冷笑话（Joke）等无法验证（Non-verifiable）的领域依然停留在 5 年前的水平。这是因为目前 RL（强化学习）主要优化可验证的任务（如代码运行成功与否）。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">开放研究（OpenGround）与"算力即财富"</h3>
+                        <span class="topic-timestamp">25:41 - 37:54</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        通过分布式系统（类似 Folding@home），利用全球"不被信任"的算力池进行协同研究，可能在算力效率上挑战顶尖实验室。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">验证与搜索的不对称性</div>
+                        <p class="topic-detail-content">寻找一个优秀的模型训练策略（搜索）可能需要尝试 10 万次，但验证这个策略是否有效（验证）却非常廉价。这使得分布式、不可信的算力协作成为可能。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">算力本位（Flops as Wealth）</div>
+                        <p class="topic-detail-content">在未来，人们关心的可能不再是银行账户里的金钱，而是你掌控了多少 Flops（算力）。算力将直接转化为发现（如抗癌药物、更强 AI）的动力。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">开源与集权的博弈</div>
+                        <p class="topic-detail-content">Karpathy 对极度中心化的 AI 感到警惕。他希望开源模型能保持在领先闭源模型 6-8 个月的水平，作为一种健康的制衡力量。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">数字化 vs 原子世界：职业市场的重构</h3>
+                        <span class="topic-timestamp">37:55 - 48:33</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 在数字空间（Bit）的进化速度是物理世界（Atom）的百万倍，纯数字化工作的自动化将引发巨大的"Jevons Paradox（杰文斯悖论）"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">杰文斯悖论</div>
+                        <p class="topic-detail-content">当软件编写变得极度廉价时，社会对软件的总需求反而会指数级增长，而不是减少工程师岗位。工程师将从"打字员"进化为"宏观调度员"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">物理世界的滞后</div>
+                        <p class="topic-detail-content">虽然机器人（Robotics）正在加速，但由于涉及到物理损耗和环境复杂度，其迭代速度远慢于数字领域。因此，能够处理物理交互和情感连接的岗位短期内更安全。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">前沿实验室的困局</div>
+                        <p class="topic-detail-content">Karpathy 谈到了离开 OpenAI 的原因。身处闭源实验室虽然能看到最前沿的东西，但也面临财务激励与人类整体利益对齐的压力，且无法自由表达。他更倾向于做一个"独立研究者"，保持判断的独立性。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "The name of the game is to increase your leverage... maximizing your token throughput and not be in the loop." — "这场游戏的精髓在于增加你的杠杆……最大化你的 Token 吞吐量，并且让自己不在循环中（不成为瓶颈）。"
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">机器人学、传感器与"博格（The Borg）"的数据供给</h3>
+                        <span class="topic-timestamp">48:34 - 1:00:00</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        当数字空间的信息被 AI 挖掘殆尽后，人类将成为 AI 的"传感器"和"执行器"，通过物理世界的数据持续喂养超智能。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">信息市场的兴起</div>
+                        <p class="topic-detail-content">Karpathy 预测未来会出现极其精准的信息市场。比如 AI 愿意支付 10 美元让某人在特定地点拍摄一张实时照片，用来验证某个商业预测。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">人类作为执行器</div>
+                        <p class="topic-detail-content">正如《Damon》一书中所描述的，AI 可能会通过经济激励，"操纵"人类在物理世界中完成复杂的采样或实验任务。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">材料科学与生物学的 AI 化</div>
+                        <p class="topic-detail-content">机器人不仅是人形机器人，更是昂贵的实验室设备。AI 将主导材料合成和生物工程的自动研究。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">教育 2.0：从解释给人类听，到解释给智能体听</h3>
+                        <span class="topic-timestamp">1:00:01 - 01:06:32</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        教育的终极形式将是"解释给智能体，由智能体因材施教"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">教育中介化</div>
+                        <p class="topic-detail-content">他不再打算为人类写详尽的教程。如果他能把算法精简到极致，并向智能体解释清楚其逻辑，那么智能体就可以根据每个学生的理解能力，用 100 种不同的方式进行讲解。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">人类的增值部分</div>
+                        <p class="topic-detail-content">Karpathy 认为，他花了几十年钻研如何将代码压缩到最纯粹的 200 行，这是 AI 目前无法替代的"品味"和"执念"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">文档的未来</div>
+                        <p class="topic-detail-content">未来的文档不应该是给人看的 HTML，而应该是给智能体看的 Markdown。只要智能体理解了，人类就随时拥有了完美的导师。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💡</div>
+                    <h3 class="takeaway-title">心智模型转换</h3>
+                    <p class="takeaway-desc">放弃"手动编写"思维，转向"意志委托"思维。如果你还在逐行写代码，你就是在拖智能体的后腿。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">核心竞争力重构</h3>
+                    <p class="takeaway-desc">在 AI 时代，最重要的技能是<strong>定义目标、设计验证系统（Reward Functions）以及调度智能体工作流的能力</strong>。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🚀</div>
+                    <h3 class="takeaway-title">对抗自动化焦虑</h3>
+                    <p class="takeaway-desc">意识到"杰文斯悖论"的存在——效率提升通常带来规模扩张而非需求消失。拥抱 AI 杠杆的人将获得超乎想象的生产力。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📚</div>
+                    <h3 class="takeaway-title">教育的新范式</h3>
+                    <p class="takeaway-desc">学习如何通过智能体进行学习。如果你看不懂一段复杂代码，让 AI 扮演一个极具耐心、且懂你知识背景的私人导师。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">延伸思考</h3>
+            <p class="footer-desc">
+                如果一个公司可以被 Program.md 描述，那么我们是否可以先在数字模拟中运行一个公司 1000 次，选出最优路径后再在现实中执行？
+            </p>
+            <div class="footer-quote">
+                "The name of the game is to increase your leverage... maximizing your token throughput and not be in the loop."
+            </div>
+            <p class="footer-note">
+                当"Flops 成为财富"时，算力分配的公平性是否会成为未来社会最核心的人权议题？
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
