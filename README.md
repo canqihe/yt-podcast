@@ -1,135 +1,93 @@
-# 📺 YouTube 播客知识库
+# YouTube Podcast Knowledge Base
 
-> 从海量播客内容中提炼价值，让深度洞察触手可及
+> Turning deep podcast conversations into structured, accessible knowledge
 
-这是一个精选自 YouTube 播客的深度知识聚合平台，致力于将优质的播客内容转化为结构化、易获取的知识体系。每篇文章都是对深度对话的精心提炼，涵盖人工智能、未来科技、金融投资等领域。
+A curated knowledge platform that distills the best YouTube podcast content into structured, in-depth articles covering AI, finance, science, and more. Each article is a carefully crafted synthesis of expert conversations.
 
-## ✨ 特性
+## Features
 
-- 🎯 **精选内容** - 从顶尖播客中提取最有价值的洞见
-- 📚 **结构化呈现** - 将长对话转化为易于消化的文章格式
-- 🎨 **精美设计** - 现代化的暗色主题，提供舒适的阅读体验
-- 📱 **响应式布局** - 完美适配桌面和移动设备
-- ⚡ **快速访问** - 单页应用架构，瞬间加载内容
+- **Curated Content** - Extracting the most valuable insights from top podcasts
+- **Structured Presentation** - Long-form conversations reorganized into scannable articles
+- **Multi-Scheme Dark Theme** - 6 curated color palettes for visual variety
+- **Responsive Design** - Optimized for desktop and mobile
+- **Zero Dependencies** - Pure HTML/CSS/JS, no build step required
 
-## 📖 已收录文章
+## Articles
 
-**当前收录：14 篇深度洞察文章**
+**43 articles** across multiple domains:
 
-涵盖领域：
-- 🤖 **AI 战略** - Anthropic CEO、OpenAI 动态、xAI 工程文化
-- 💰 **金融市场** - 白银市场、ARK 投资研究、Robinhood 转型
-- 🚀 **前沿科技** - 量子计算、达沃斯峰会
-- 🔮 **未来预测** - 库兹韦尔奇点理论、AI 发展预测
+| Domain | Examples |
+|--------|---------|
+| **AI Strategy & Agents** | Dario Amodei (3x), Andrej Karpathy, Harrison Chase, Bret Taylor, Joelle Pineau |
+| **AI Markets & Compute** | a16z, SemiAnalysis, Coatue, Alfred Lin (Sequoia) |
+| **AI Society & Future** | Ben Horowitz, Marc Andreessen, Alex Karp, Yuval Harari |
+| **Investing & Finance** | Stanley Druckenmiller, Tom Lee, ARK Invest |
+| **Company Earnings** | Google Q4 2025, Micron Q2 2026 |
+| **Science & Health** | David Sinclair (aging), Dr. Arif Khan (child development) |
+| **Space & Frontier Tech** | Musk, NASA, Starcloud, Quantum Computing, Brain-Computer Interfaces |
+| **Tech Leaders** | Satya Nadella, Demis Hassabis, Jensen Huang, Kurzweil |
 
-查看完整文章列表请访问 [index.html](index.html)
+Browse all articles at [index.html](index.html)
 
-## 🚀 快速开始
+## Quick Start
 
-### 本地预览
-
-1. 克隆仓库
 ```bash
-git clone https://github.com/canqihe/yt-podcast.git
+git clone git@github.com:canqihe/yt-podcast.git
 cd yt-podcast
+open index.html
 ```
 
-2. 打开 `index.html` 文件
-   - 直接在浏览器中打开
-   - 或使用本地服务器（如 Live Server）
+Or visit the [GitHub Pages](https://canqihe.github.io/yt-podcast/) deployment.
 
-### 在线访问
+## Design System
 
-访问 [GitHub Pages](https://canqihe.github.io/yt-podcast/) 查看部署版本（如果已配置）。
+The design system lives in `design-system/` and supports **6 color schemes** that can be swapped by changing 5 CSS variables:
 
-## 🛠️ 技术栈
+| # | Scheme | Primary | Secondary |
+|---|--------|---------|-----------|
+| 1 | Orange-Cyan | `#ff6b35` | `#00d4ff` |
+| 2 | Purple-Pink | `#a855f7` | `#ec4899` |
+| 3 | Green-Yellow | `#22c55e` | `#eab308` |
+| 4 | Blue-Indigo | `#3b82f6` | `#818cf8` |
+| 5 | Coral-Gold | `#f97066` | `#fbbf24` |
+| 6 | Teal-Violet | `#14b8a6` | `#a78bfa` |
 
-- **HTML5** - 语义化结构
-- **CSS3** - 自定义样式与动画
-- **Vanilla JavaScript** - 交互功能
-- **Google Fonts** - 字体支持（Fraunces, Source Serif 4, Space Mono）
-- **Tailwind CSS** - 部分页面使用
+All gradients, glows, shadows, and accent elements auto-inherit from these variables. See `design-system/design-tokens.css` for full documentation.
 
-## 📂 项目结构
+## Tech Stack
+
+- **HTML5 / CSS3 / Vanilla JS** - No build tools, no frameworks
+- **CSS Custom Properties** - Design tokens for consistent theming
+- **Intersection Observer** - Scroll-triggered animations
+- **Google Fonts** - Typography (Fraunces, Source Serif 4, Space Mono)
+
+## Project Structure
 
 ```
 yt-podcast/
-├── index.html                      # 主页（文章列表）
-├── articles/                       # 文章目录
-│   ├── robinhood-transformation.html        # Robinhood 商业转型案例
-│   ├── davos_2026.html                      # 2026 达沃斯技术巅峰对话
-│   ├── quantum_interview.html                # 量子计算现状与未来
-│   ├── dario-amodei-ai-briefing.html        # Anthropic CEO AI 战略
-│   ├── silver-market-report-2026.html       # 2026 白银市场分析
-│   ├── moonshots-ai-2026.html               # AI 发展预测
-│   ├── satya-nadella-interview.html         # 微软 CEO 访谈
-│   ├── musk-interview-theverge.html         # 马斯克专访
-│   ├── demis-hassabis-interview.html        # DeepMind CEO 访谈
-│   ├── ark-big-ideas-2026.html              # ARK 投资研究
-│   ├── ai-insights-report.html              # OpenAI 播客洞察
-│   ├── kurzweil-singularity.html            # 库兹韦尔奇点理论
-│   ├── tom-lee-brief.html                   # Tom Lee 投资策略
-│   └── xai-strategic-brief.html             # xAI 工程文化
-├── design-system/                  # 设计系统
-│   ├── README.md                # 设计系统说明
-│   ├── design-spec.md            # 设计规范文档
-│   ├── design-tokens.css         # 设计令牌
-│   ├── style.css                 # 样式表
-│   └── template-standalone.html  # 独立模板
-├── README.md                      # 项目说明文档
-└── .git/                          # Git 仓库配置
+├── index.html                  # Homepage (article grid)
+├── articles/                   # 43 in-depth articles
+│   └── images/                 # Article hero images
+├── design-system/
+│   ├── design-tokens.css       # Design tokens & color schemes
+│   ├── style.css               # Shared stylesheet
+│   ├── design-spec.md          # Design specification
+│   └── template-standalone.html  # Article template
+├── images/                     # Shared assets
+├── videos/                     # Video files
+├── rss-feeds.html              # RSS feed reader
+├── rss-reader.html             # RSS reader UI
+└── README.md
 ```
 
-## 🎨 设计特点
+## Contributing
 
-### 视觉设计
-- 暗色主题，减轻视觉疲劳
-- 渐变色彩和毛玻璃效果
-- 精心设计的卡片布局
-- 流畅的滚动动画
+Issues and pull requests are welcome.
 
-### 用户体验
-- 直观的导航结构
-- 快速的页面切换
-- 清晰的内容层级
-- 友好的交互反馈
+## License
 
-## 🔮 未来计划
+Content is curated from YouTube podcasts for educational purposes. Original content belongs to respective creators.
 
-- [ ] 添加搜索功能
-- [ ] 实现标签筛选
-- [ ] 支持文章收藏
-- [ ] 添加阅读进度追踪
-- [ ] 集成评论系统
-- [ ] 支持深色/浅色主题切换
-- [ ] 添加更多播客内容
-
-## 📝 内容来源
-
-所有内容均精选自 YouTube 播客，并在文章中注明原始视频链接。
-
-## 🤝 贡献
-
-欢迎提交 Issue 和 Pull Request！
-
-如果您发现了错误或有改进建议，请随时提出。
-
-## 📄 许可证
-
-本项目内容仅供学习交流使用，版权归原作者所有。
-
-## 👨‍💻 维护者
+## Maintainer
 
 [canqihe](https://github.com/canqihe)
-
-## 🙏 致谢
-
-- 所有播客创作者和分享者
-- YouTube 平台
-- 开源社区
-
----
-
-**Made with ❤️ for knowledge sharing**
-
-如果这个项目对您有帮助，请给一个 ⭐️ Star！
