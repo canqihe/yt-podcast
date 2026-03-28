@@ -2,6 +2,25 @@
  * Design Tokens - 深色渐变风格设计系统
  * 用途：视频总结文章网页
  * 创建日期：2025-01-25
+ *
+ * ========== 配色方案 ==========
+ *
+ * 生成文章时，随机选择一套配色方案，替换 :root 中的强调色变量。
+ * 只需要替换 5 个变量，其余样式自动继承。
+ *
+ * ┌─────────────┬────────────────┬────────────────┐
+ * │ 方案        │ --accent-primary │ --accent-secondary │
+ * ├─────────────┼────────────────┼────────────────┤
+ * │ 1. 橙青     │ #ff6b35        │ #00d4ff        │
+ * │ 2. 紫粉     │ #a855f7        │ #ec4899        │
+ * │ 3. 绿黄     │ #22c55e        │ #eab308        │
+ * │ 4. 蓝靛     │ #3b82f6        │ #818cf8        │
+ * │ 5. 珊瑚金   │ #f97066        │ #fbbf24        │
+ * │ 6. 青紫     │ #14b8a6        │ #a78bfa        │
+ * └─────────────┴────────────────┴────────────────┘
+ *
+ * 每套方案对应的 rgba 值（用于 glow / quote-bg / shadow）：
+ * 见下方各方案的注释。
  */
 
 :root {
@@ -16,24 +35,72 @@
   --text-secondary: #a0a0a0;
   --text-tertiary: #666666;
 
-  /* Accent Colors */
-  --accent-orange: #ff6b35;
-  --accent-cyan: #00d4ff;
-  --accent-gradient: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-cyan) 100%);
+  /*
+   * ========== 配色方案（随机选一套，替换下面 5 个变量） ==========
+   *
+   * 方案 1: 橙青（默认）
+   */
+  --accent-primary: #ff6b35;
+  --accent-secondary: #00d4ff;
+  --accent-primary-rgb: 255, 107, 53;
+  --accent-secondary-rgb: 0, 212, 255;
+
+  /*
+   * 方案 2: 紫粉
+   * --accent-primary: #a855f7;
+   * --accent-secondary: #ec4899;
+   * --accent-primary-rgb: 168, 85, 247;
+   * --accent-secondary-rgb: 236, 72, 153;
+   */
+
+  /*
+   * 方案 3: 绿黄
+   * --accent-primary: #22c55e;
+   * --accent-secondary: #eab308;
+   * --accent-primary-rgb: 34, 197, 94;
+   * --accent-secondary-rgb: 234, 179, 8;
+   */
+
+  /*
+   * 方案 4: 蓝靛
+   * --accent-primary: #3b82f6;
+   * --accent-secondary: #818cf8;
+   * --accent-primary-rgb: 59, 130, 246;
+   * --accent-secondary-rgb: 129, 140, 248;
+   */
+
+  /*
+   * 方案 5: 珊瑚金
+   * --accent-primary: #f97066;
+   * --accent-secondary: #fbbf24;
+   * --accent-primary-rgb: 249, 112, 102;
+   * --accent-secondary-rgb: 251, 191, 36;
+   */
+
+  /*
+   * 方案 6: 青紫
+   * --accent-primary: #14b8a6;
+   * --accent-secondary: #a78bfa;
+   * --accent-primary-rgb: 20, 184, 166;
+   * --accent-secondary-rgb: 167, 139, 250;
+   */
+
+  /* Accent Colors（自动继承，不需要手动改） */
+  --accent-gradient: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
 
   /* UI Colors */
   --border: #2a2a2e;
-  --border-hover: var(--accent-orange);
+  --border-hover: var(--accent-primary);
 
   /* Gradients */
   --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
-  --gradient-accent: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-cyan) 100%);
+  --gradient-accent: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
   --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
 
-  /* Background Effects */
-  --bg-glow-orange: radial-gradient(ellipse at top right, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
-  --bg-glow-cyan: radial-gradient(ellipse at bottom left, rgba(0, 212, 255, 0.08) 0%, transparent 50%);
-  --quote-bg: rgba(255, 107, 53, 0.05);
+  /* Background Effects（自动继承 rgb 变量，不需要手动改） */
+  --bg-glow-primary: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.1) 0%, transparent 50%);
+  --bg-glow-secondary: radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.08) 0%, transparent 50%);
+  --quote-bg: rgba(var(--accent-primary-rgb), 0.05);
 
   /* ========== Typography ========== */
 

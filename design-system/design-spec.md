@@ -42,7 +42,7 @@
 
 ## 🎨 配色方案
 
-### 色彩表
+### 基础色彩（固定不变）
 
 | 用途 | CSS 变量 | 颜色值 | 说明 |
 |------|---------|--------|------|
@@ -51,21 +51,34 @@
 | 主文本 | `--text-primary` | #ffffff | 纯白 |
 | 次要文本 | `--text-secondary` | #a0a0a0 | 中灰色 |
 | 第三文本 | `--text-tertiary` | #666666 | 深灰色 |
-| 橙色强调 | `--accent-orange` | #ff6b35 | 主强调色 |
-| 青色强调 | `--accent-cyan` | #00d4ff | 次强调色 |
 | 边框 | `--border` | #2a2a2e | 深灰色边框 |
+
+### 强调色（每篇文章随机选择一套）
+
+生成文章时，从以下 6 套方案中**随机选择一套**，替换 `:root` 中的 5 个变量：
+
+| # | 方案名 | `--accent-primary` | `--accent-secondary` | `--accent-primary-rgb` | `--accent-secondary-rgb` |
+|---|--------|-------------------|---------------------|----------------------|------------------------|
+| 1 | 橙青 | `#ff6b35` | `#00d4ff` | `255, 107, 53` | `0, 212, 255` |
+| 2 | 紫粉 | `#a855f7` | `#ec4899` | `168, 85, 247` | `236, 72, 153` |
+| 3 | 绿黄 | `#22c55e` | `#eab308` | `34, 197, 94` | `234, 179, 8` |
+| 4 | 蓝靛 | `#3b82f6` | `#818cf8` | `59, 130, 246` | `129, 140, 248` |
+| 5 | 珊瑚金 | `#f97066` | `#fbbf24` | `249, 112, 102` | `251, 191, 36` |
+| 6 | 青紫 | `#14b8a6` | `#a78bfa` | `20, 184, 166` | `167, 139, 250` |
+
+**只需要替换这 5 个变量**，所有引用 `var(--accent-primary)` / `var(--accent-secondary)` / `var(--accent-primary-rgb)` / `var(--accent-secondary-rgb)` 的样式会自动更新，包括渐变、光晕、阴影、引用块等。
 
 ### 渐变
 
 ```css
-/* 主标题渐变 */
+/* 主标题渐变（固定） */
 background: linear-gradient(135deg, #ffffff 0%, #666666 100%);
 
-/* 强调色渐变 */
-background: linear-gradient(135deg, #ff6b35 0%, #00d4ff 100%);
+/* 强调色渐变（自动继承配色方案） */
+background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
 
-/* 数字渐变 */
-background: linear-gradient(180deg, #2a2a2e 0%, transparent 100%);
+/* 数字渐变（固定） */
+background: linear-gradient(180deg, var(--border) 0%, transparent 100%);
 ```
 
 ---
