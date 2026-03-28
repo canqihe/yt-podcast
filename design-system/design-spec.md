@@ -371,6 +371,66 @@ document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
 
 ---
 
+## 🖼️ Header 背景图（可选）
+
+如果文章有封面图/嘉宾照片，应在 Header 中添加背景图，提升视觉层次感。
+
+### 有背景图时的样式
+
+将 `.header::before` 从纯渐变替换为**渐变遮罩 + 背景图**，并新增 `.header::after` 作为额外的光晕叠加层：
+
+```css
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+        /* 渐变遮罩：左侧纯黑确保文字可读，右侧透出图片 */
+        linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.95) 40%, var(--bg-primary) 70%),
+        /* 背景图 */
+        url('images/图片文件名.jpg') no-repeat right center / cover;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* 额外的渐变叠加层（橙色+青色光晕） */
+.header::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at top right, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom left, rgba(0, 212, 255, 0.12) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+```
+
+### 无背景图时的样式（默认）
+
+```css
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at top right, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom left, rgba(0, 212, 255, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+}
+/* 无背景图时不需要 .header::after */
+```
+
+### 使用规范
+
+| 项目 | 说明 |
+|------|------|
+| 图片路径 | `articles/images/文章名-bg.jpg` |
+| 图片来源 | YouTube 封面图、嘉宾照片、视频截图等 |
+| 遮罩方向 | 从右到左渐变，右侧透出图片，左侧纯黑保文字可读 |
+| 透明度 | `opacity: 0.6`，保持图片不抢文字焦点 |
+| 判断标准 | 有图片就用背景图版，没有就用默认渐变版 |
+
+---
+
 ## 🏗️ 页面结构
 
 ```html
@@ -489,3 +549,4 @@ design-system/
 ## 🔄 版本历史
 
 - **v1.0** (2025-01-25)：初始版本，提取自 moonshots-ai-2026.html
+- **v1.1** (2026-03-28)：新增 Header 背景图规范

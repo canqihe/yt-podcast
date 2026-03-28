@@ -6,795 +6,878 @@
     <title>美光科技 2026 Q2 财报：AI 内存需求爆发，营收近三倍增长</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700;800&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-card: #1a1a24;
-            --text-primary: #f0f0f5;
-            --text-secondary: #a0a0b0;
-            --accent-green: #00ff88;
-            --accent-green-dim: rgba(0, 255, 136, 0.1);
-            --accent-blue: #00d4ff;
-            --accent-blue-dim: rgba(0, 212, 255, 0.1);
-            --border-color: #2a2a3a;
-            --glow-green: 0 0 30px rgba(0, 255, 136, 0.3);
-            --glow-blue: 0 0 30px rgba(0, 212, 255, 0.3);
+            --bg: #fafaf8;
+            --bg-card: #ffffff;
+            --bg-card-alt: #f5f4f1;
+            --text: #1a1a1a;
+            --text-secondary: #6b6b6b;
+            --text-tertiary: #9a9a9a;
+            --accent: #c45d3e;
+            --accent-light: #f0ddd6;
+            --accent-subtle: rgba(196, 93, 62, 0.06);
+            --green: #1a7f4e;
+            --green-light: #e6f4ed;
+            --green-subtle: rgba(26, 127, 78, 0.06);
+            --blue: #2563eb;
+            --blue-light: #dbeafe;
+            --border: #e8e6e2;
+            --border-light: #f0eeea;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-serif: 'Noto Serif SC', 'Georgia', serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+            --max-width: 720px;
+            --max-wide: 1080px;
+            --radius: 12px;
+            --radius-lg: 16px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Noto Sans SC', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .particles {
-            position: fixed;
+        ::selection {
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        /* ===== Navbar ===== */
+        .navbar {
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 0;
+            z-index: 100;
+            background: rgba(250, 250, 248, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-light);
+            padding: 0 24px;
         }
-
-        .particle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: var(--accent-green);
-            border-radius: 50%;
-            opacity: 0;
-            animation: float 15s infinite;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                opacity: 0;
-                transform: translateY(100vh) scale(0);
-            }
-            10% {
-                opacity: 0.6;
-            }
-            90% {
-                opacity: 0.6;
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-100vh) scale(1);
-            }
-        }
-
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
+        .navbar-inner {
+            max-width: var(--max-wide);
             margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        header {
-            padding: 3rem 0;
-            border-bottom: 1px solid var(--border-color);
-            animation: fadeInDown 1s ease-out;
-        }
-
-        .header-content {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: 'Orbitron', monospace;
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--accent-green);
-            text-shadow: var(--glow-green);
-        }
-
-        .ticker {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: space-between;
+            height: 56px;
         }
-
-        .ticker-badge {
-            background: var(--accent-green);
-            color: var(--bg-primary);
-            padding: 0.25rem 0.5rem;
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .navbar-brand-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+        }
+        .navbar-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+        .navbar-meta .ticker-badge {
+            background: var(--green);
+            color: white;
+            padding: 2px 8px;
             border-radius: 4px;
+            font-size: 11px;
             font-weight: 700;
-            font-size: 0.75rem;
+            font-family: var(--font-mono);
+        }
+        .navbar-meta .price-tag {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            color: var(--green);
         }
 
-        .stock-price {
-            font-family: 'JetBrains Mono', monospace;
-            text-align: right;
-        }
-
-        .price {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--accent-green);
-        }
-
-        .change {
-            font-size: 0.875rem;
-            color: var(--accent-green);
-        }
-
+        /* ===== Hero ===== */
         .hero {
-            padding: 3rem 0;
-            animation: fadeIn 1s ease-out 0.3s both;
+            max-width: var(--max-wide);
+            margin: 0 auto;
+            padding: 64px 24px 48px;
         }
-
-        .hero-title {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(1.75rem, 4vw, 2.5rem);
-            font-weight: 900;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .hero-inner {
+            max-width: var(--max-width);
         }
-
-        .hero-subtitle {
-            font-size: 1.125rem;
+        .hero-category {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--green);
+            margin-bottom: 24px;
+        }
+        .hero-category::before {
+            content: '';
+            width: 16px;
+            height: 2px;
+            background: var(--green);
+            border-radius: 1px;
+        }
+        .hero h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 700;
+            line-height: 1.3;
+            letter-spacing: -0.01em;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+        .hero-desc {
+            font-size: 17px;
             color: var(--text-secondary);
-            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+        .hero-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .hero-meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+        .hero-meta-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
         }
 
-        .date-badge {
-            display: inline-block;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
+        /* ===== Main ===== */
+        .main {
+            max-width: var(--max-wide);
+            margin: 0 auto;
+            padding: 0 24px 80px;
         }
 
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-header-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--green-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .section-header-icon svg {
+            width: 18px;
+            height: 18px;
+        }
+        .section-header h2 {
+            font-family: var(--font-serif);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        /* ===== Key Metrics ===== */
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-            animation: fadeInUp 1s ease-out 0.5s both;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 64px;
         }
-
         .metric-card {
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.25rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: all 0.25s;
         }
-
-        .metric-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.5s ease;
-        }
-
-        .metric-card:hover::before {
-            transform: scaleX(1);
-        }
-
         .metric-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--glow-green);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
         }
-
         .metric-label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+            margin-bottom: 8px;
         }
-
         .metric-value {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.75rem;
+            font-family: var(--font-mono);
+            font-size: 28px;
             font-weight: 700;
-            color: var(--text-primary);
+            color: var(--green);
+            line-height: 1.2;
+            margin-bottom: 8px;
         }
-
-        .metric-value.highlight {
-            color: var(--accent-green);
-            text-shadow: var(--glow-green);
-        }
-
-        .metric-expectation {
+        .metric-compare {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-            font-size: 0.75rem;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-secondary);
         }
-
-        .beat-badge {
-            background: var(--accent-green);
-            color: var(--bg-primary);
-            padding: 0.125rem 0.5rem;
+        .metric-compare .beat {
+            background: var(--green);
+            color: white;
+            padding: 2px 6px;
             border-radius: 4px;
-            font-size: 0.75rem;
+            font-size: 11px;
             font-weight: 700;
+            font-family: var(--font-mono);
         }
 
+        /* ===== Revenue Chart ===== */
         .chart-section {
-            margin: 3rem 0;
-            animation: fadeInUp 1s ease-out 0.7s both;
+            margin-bottom: 64px;
         }
-
-        .section-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
         .chart-container {
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
         }
-
-        .revenue-chart {
+        .chart-bars {
             display: flex;
             align-items: flex-end;
-            justify-content: space-around;
-            height: 250px;
-            gap: 1.5rem;
-            margin-top: 2rem;
+            gap: 24px;
+            height: 220px;
+            padding-top: 40px;
             position: relative;
         }
-
-        .revenue-chart::before {
+        .chart-bars::after {
             content: '';
             position: absolute;
+            bottom: 0;
             left: 0;
             right: 0;
-            bottom: 0;
             height: 1px;
-            background: var(--border-color);
+            background: var(--border);
         }
-
-        .bar-group {
+        .bar-col {
             flex: 1;
-            max-width: 100px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.75rem;
+            gap: 12px;
             position: relative;
         }
-
         .bar {
             width: 100%;
-            background: linear-gradient(180deg, var(--accent-green), rgba(0, 255, 136, 0.3));
+            max-width: 72px;
             border-radius: 6px 6px 0 0;
-            position: relative;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--green-light);
+            border: 2px solid var(--green);
+            border-bottom: none;
+            transition: all 0.3s;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.2);
+            position: relative;
         }
-
         .bar:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 12px 40px rgba(0, 255, 136, 0.4);
-            filter: brightness(1.2);
+            background: var(--green);
+            border-color: var(--green);
         }
-
         .bar.current {
-            background: linear-gradient(180deg, var(--accent-blue), rgba(0, 212, 255, 0.3));
-            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.2);
+            background: var(--blue-light);
+            border-color: var(--blue);
         }
-
-        .bar-value {
+        .bar.current:hover {
+            background: var(--blue);
+        }
+        .bar.guidance {
+            background: var(--blue-light);
+            border: 2px dashed var(--blue);
+            border-bottom: none;
+            opacity: 0.6;
+        }
+        .bar-val {
             position: absolute;
-            top: -35px;
+            top: -32px;
             left: 50%;
             transform: translateX(-50%);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.875rem;
+            font-family: var(--font-mono);
+            font-size: 13px;
             font-weight: 700;
-            color: var(--text-primary);
+            color: var(--text);
             white-space: nowrap;
-            background: var(--bg-card);
-            padding: 0.375rem 0.5rem;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
             opacity: 0;
-            transition: all 0.3s ease;
+            transition: opacity 0.2s;
             pointer-events: none;
         }
-
-        .bar:hover .bar-value {
+        .bar:hover .bar-val {
             opacity: 1;
-            top: -45px;
         }
-
         .bar-label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
+            font-size: 12px;
+            color: var(--text-tertiary);
             text-align: center;
-            font-weight: 500;
-            line-height: 1.4;
+            line-height: 1.3;
         }
-
         .bar-label strong {
             display: block;
-            color: var(--text-primary);
-            font-weight: 700;
+            color: var(--text-secondary);
+            font-weight: 600;
         }
 
+        /* ===== Unit Breakdown ===== */
+        .units-section {
+            margin-bottom: 64px;
+        }
         .units-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-            animation: fadeInUp 1s ease-out 0.9s both;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
         }
-
         .unit-card {
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.25rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: all 0.25s;
         }
-
+        .unit-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
         .unit-name {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
         }
-
+        .unit-sub {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
         .unit-revenue {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.25rem;
+            font-family: var(--font-mono);
+            font-size: 24px;
             font-weight: 700;
-            color: var(--accent-green);
+            color: var(--green);
+            line-height: 1.2;
         }
-
         .unit-growth {
-            font-size: 0.75rem;
-            color: var(--accent-green);
-            margin-top: 0.25rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--green);
+            font-family: var(--font-mono);
         }
 
+        /* ===== Guidance ===== */
         .guidance-section {
-            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 3rem 0;
-            animation: fadeInUp 1s ease-out 1.1s both;
+            margin-bottom: 64px;
         }
-
+        .guidance-card {
+            background: var(--blue-light);
+            border: 1px solid #bfdbfe;
+            border-radius: var(--radius-lg);
+            padding: 32px;
+        }
+        .guidance-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--blue);
+            margin-bottom: 4px;
+        }
+        .guidance-card .guidance-sub {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
         .guidance-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
         }
-
-        .guidance-item {
-            text-align: center;
+        .guidance-item-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: 4px;
         }
-
-        .guidance-label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-        }
-
-        .guidance-value {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.5rem;
+        .guidance-item-value {
+            font-family: var(--font-mono);
+            font-size: 24px;
             font-weight: 700;
-            color: var(--accent-blue);
-            text-shadow: var(--glow-blue);
+            color: var(--blue);
+            line-height: 1.2;
+        }
+        .guidance-item-compare {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
         }
 
-        .guidance-compare {
-            font-size: 0.75rem;
-            color: var(--accent-green);
-            margin-top: 0.25rem;
-        }
-
+        /* ===== Stock Performance ===== */
         .stock-section {
-            margin: 3rem 0;
-            animation: fadeInUp 1s ease-out 1.3s both;
+            margin-bottom: 64px;
         }
-
-        .stock-cards {
+        .stock-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
         }
-
         .stock-card {
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.25rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
             text-align: center;
+            transition: all 0.25s;
         }
-
+        .stock-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
         .stock-period {
-            font-size: 0.75rem;
+            font-size: 13px;
             color: var(--text-secondary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
         }
-
         .stock-return {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 28px;
             font-weight: 700;
-            color: var(--accent-green);
+            color: var(--green);
+            line-height: 1.2;
+        }
+        .stock-note {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-top: 4px;
         }
 
-        .highlights {
-            margin: 3rem 0;
-            animation: fadeInUp 1s ease-out 1.5s both;
+        /* ===== Highlights ===== */
+        .highlights-section {
+            margin-bottom: 64px;
         }
-
-        .highlight-list {
-            display: grid;
-            gap: 0.75rem;
+        .highlights-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
-
         .highlight-item {
             display: flex;
             align-items: flex-start;
-            gap: 0.75rem;
-            padding: 0.75rem;
+            gap: 14px;
+            padding: 16px 20px;
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: all 0.25s;
         }
-
         .highlight-item:hover {
-            border-color: var(--accent-green);
-            box-shadow: var(--glow-green);
+            border-color: var(--green);
+            box-shadow: var(--shadow-sm);
         }
-
-        .highlight-icon {
-            width: 20px;
-            height: 20px;
-            background: var(--accent-green);
+        .highlight-dot {
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
+            background: var(--green);
             flex-shrink: 0;
-            margin-top: 0.125rem;
+            margin-top: 8px;
         }
-
         .highlight-text {
-            font-size: 0.875rem;
+            font-size: 14px;
             color: var(--text-secondary);
+            line-height: 1.65;
         }
 
-        .back-link {
-            display: inline-flex;
+        /* ===== Footer ===== */
+        .footer {
+            max-width: var(--max-wide);
+            margin: 0 auto;
+            padding: 48px 24px 64px;
+            border-top: 1px solid var(--border);
+            display: flex;
             align-items: center;
-            gap: 0.5rem;
-            color: var(--accent-green);
-            text-decoration: none;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.875rem;
-            margin-top: 2rem;
-            transition: all 0.3s ease;
+            justify-content: space-between;
         }
-
-        .back-link:hover {
-            color: var(--accent-blue);
-            transform: translateX(-4px);
+        .footer-left {
+            font-size: 12px;
+            color: var(--text-tertiary);
         }
-
-        footer {
-            margin-top: 3rem;
-            padding: 2rem 0;
-            border-top: 1px solid var(--border-color);
-            text-align: center;
+        .footer-left a {
             color: var(--text-secondary);
-            font-size: 0.75rem;
-            animation: fadeIn 1s ease-out 1.7s both;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-left a:hover {
+            color: var(--accent);
+        }
+        .footer-disclaimer {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-style: italic;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* ===== Scroll Animation ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
+        /* ===== Responsive ===== */
+        @media (max-width: 900px) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .units-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .guidance-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
-
-        @media (max-width: 768px) {
-            .header-content {
+        @media (max-width: 600px) {
+            .hero {
+                padding: 40px 20px 32px;
+            }
+            .hero h1 {
+                font-size: 28px;
+            }
+            .navbar-meta {
+                display: none;
+            }
+            .metrics-grid {
                 grid-template-columns: 1fr;
-                text-align: center;
             }
-
-            .stock-price {
-                text-align: center;
-            }
-
-            .metrics-grid,
-            .units-grid,
-            .guidance-grid,
-            .stock-cards {
+            .units-grid {
                 grid-template-columns: 1fr;
             }
-
-            .revenue-chart {
-                height: 200px;
-                gap: 1rem;
+            .guidance-grid {
+                grid-template-columns: 1fr;
+            }
+            .stock-grid {
+                grid-template-columns: 1fr;
+            }
+            .chart-bars {
+                gap: 12px;
+                height: 180px;
+            }
+            .bar-val {
+                opacity: 1;
+                top: -28px;
+                font-size: 11px;
+            }
+            .hero-meta {
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+            .footer {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
-    <div class="particles" id="particles"></div>
 
-    <div class="container">
-        <header>
-            <div class="header-content">
-                <div class="logo">MICRON</div>
-                <div class="ticker">
-                    <span class="ticker-badge">MU</span>
-                    <span>NASDAQ</span>
-                    <span>|</span>
-                    <span>AI 内存领导者</span>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="../index.html" class="navbar-brand">
+                <span class="navbar-brand-dot"></span>
+                Earnings Insights
+            </a>
+            <div class="navbar-meta">
+                <span class="ticker-badge">MU</span>
+                <span class="price-tag">$461.84</span>
+                <span>NASDAQ</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-category">财报分析</div>
+            <h1>美光科技 2026 Q2 财报</h1>
+            <p class="hero-desc">
+                营收近三倍增长，AI 内存需求激增推动业绩创历史新高。EPS 超预期 31%，营收超预期 19%，毛利率从去年同期的 36.8% 飙升至 74.4%。
+            </p>
+            <div class="hero-meta">
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">公司</span>
+                    <span class="hero-meta-value">Micron Technology</span>
                 </div>
-                <div class="stock-price">
-                    <div class="price">$461.84</div>
-                    <div class="change">+0.01%</div>
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">季度</span>
+                    <span class="hero-meta-value">FY2026 Q2</span>
+                </div>
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">发布日期</span>
+                    <span class="hero-meta-value">2026年3月18日</span>
                 </div>
             </div>
-        </header>
+        </div>
+    </section>
 
-        <section class="hero">
-            <h1 class="hero-title">2026财年Q2财报</h1>
-            <p class="hero-subtitle">营收近三倍增长，AI内存需求激增推动业绩创历史新高</p>
-            <span class="date-badge">发布于 2026年3月18日</span>
-        </section>
+    <!-- Main Content -->
+    <div class="main">
 
-        <section class="metrics-grid">
-            <div class="metric-card">
+        <!-- Key Metrics -->
+        <div class="section-header reveal">
+            <div class="section-header-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+            </div>
+            <h2>核心财务数据</h2>
+        </div>
+        <div class="metrics-grid">
+            <div class="metric-card reveal">
                 <div class="metric-label">每股收益 (EPS)</div>
-                <div class="metric-value highlight">$12.20</div>
-                <div class="metric-expectation">
-                    <span style="color: var(--text-secondary);">vs 预期 $9.31</span>
-                    <span class="beat-badge">+31%</span>
+                <div class="metric-value">$12.20</div>
+                <div class="metric-compare">
+                    vs 预期 $9.31 <span class="beat">+31%</span>
                 </div>
             </div>
-
-            <div class="metric-card">
+            <div class="metric-card reveal">
                 <div class="metric-label">营收</div>
-                <div class="metric-value highlight">$23.86B</div>
-                <div class="metric-expectation">
-                    <span style="color: var(--text-secondary);">vs 预期 $20.07B</span>
-                    <span class="beat-badge">+19%</span>
+                <div class="metric-value">$23.86B</div>
+                <div class="metric-compare">
+                    vs 预期 $20.07B <span class="beat">+19%</span>
                 </div>
             </div>
-
-            <div class="metric-card">
+            <div class="metric-card reveal">
                 <div class="metric-label">毛利率</div>
-                <div class="metric-value highlight">74.4%</div>
-                <div class="metric-expectation">
-                    <span style="color: var(--text-secondary);">vs 去年 36.8%</span>
-                    <span class="beat-badge">+37.6pp</span>
+                <div class="metric-value">74.4%</div>
+                <div class="metric-compare">
+                    vs 去年 36.8% <span class="beat">+37.6pp</span>
                 </div>
             </div>
-
-            <div class="metric-card">
+            <div class="metric-card reveal">
                 <div class="metric-label">净利润</div>
-                <div class="metric-value">$13.8B</div>
-                <div class="metric-expectation">
-                    <span style="color: var(--text-secondary);">vs 去年 $1.58B</span>
-                    <span class="beat-badge">+774%</span>
+                <div class="metric-value" style="color: var(--text);">$13.8B</div>
+                <div class="metric-compare">
+                    vs 去年 $1.58B <span class="beat">+774%</span>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="chart-section">
-            <h2 class="section-title">营收增长趋势</h2>
+        <!-- Revenue Chart -->
+        <div class="chart-section reveal">
+            <div class="section-header">
+                <div class="section-header-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M3 3v18h18"/><polyline points="18 9 13 14 9 10 3 16"/></svg>
+                </div>
+                <h2>营收增长趋势</h2>
+            </div>
             <div class="chart-container">
-                <div class="revenue-chart">
-                    <div class="bar-group">
-                        <div class="bar" style="height: 60px;">
-                            <span class="bar-value">$8.05B</span>
+                <div class="chart-bars">
+                    <div class="bar-col">
+                        <div class="bar" style="height: 45px;">
+                            <span class="bar-val">$8.05B</span>
                         </div>
                         <span class="bar-label"><strong>Q2 2025</strong>基准期</span>
                     </div>
-                    <div class="bar-group">
-                        <div class="bar" style="height: 90px;">
-                            <span class="bar-value">$11.32B</span>
+                    <div class="bar-col">
+                        <div class="bar" style="height: 67px;">
+                            <span class="bar-val">$11.32B</span>
                         </div>
                         <span class="bar-label"><strong>Q4 2025</strong>增长期</span>
                     </div>
-                    <div class="bar-group">
-                        <div class="bar" style="height: 110px;">
-                            <span class="bar-value">$13.64B</span>
+                    <div class="bar-col">
+                        <div class="bar" style="height: 82px;">
+                            <span class="bar-val">$13.64B</span>
                         </div>
-                        <span class="bar-label"><strong>Q1 2026</strong>持续增长</span>
+                        <span class="bar-label"><strong>Q1 2026</strong>加速</span>
                     </div>
-                    <div class="bar-group">
-                        <div class="bar current" style="height: 180px;">
-                            <span class="bar-value">$23.86B</span>
+                    <div class="bar-col">
+                        <div class="bar current" style="height: 143px;">
+                            <span class="bar-val">$23.86B</span>
                         </div>
                         <span class="bar-label"><strong>Q2 2026</strong>当前季度</span>
                     </div>
-                    <div class="bar-group">
-                        <div class="bar" style="height: 200px; background: linear-gradient(180deg, rgba(0, 212, 255, 0.4), rgba(0, 212, 255, 0.1)); border: 3px dashed var(--accent-blue);">
-                            <span class="bar-value">$33.5B<br><small>(预期)</small></span>
+                    <div class="bar-col">
+                        <div class="bar guidance" style="height: 175px;">
+                            <span class="bar-val">~$33.5B (指引)</span>
                         </div>
-                        <span class="bar-label"><strong>Q3 2026</strong>指引目标</span>
+                        <span class="bar-label"><strong>Q3 2026</strong>目标</span>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="units-grid">
-            <div class="unit-card">
-                <div class="unit-name">云业务</div>
-                <div class="unit-revenue">$7.75B</div>
-                <div class="unit-growth">↑ 160%+ 同比增长</div>
-            </div>
-            <div class="unit-card">
-                <div class="unit-name">移动和客户端</div>
-                <div class="unit-revenue">$7.71B</div>
-                <div class="unit-growth">↑ 244% 同比增长</div>
-            </div>
-            <div class="unit-card">
-                <div class="unit-name">HBM (高带宽内存)</div>
-                <div class="unit-revenue">强劲增长</div>
-                <div class="unit-growth">HBM4 已量产</div>
-            </div>
-        </section>
-
-        <section class="guidance-section">
-            <h2 class="section-title">Q3 财务指引 (超预期)</h2>
-            <div class="guidance-grid">
-                <div class="guidance-item">
-                    <div class="guidance-label">预期营收</div>
-                    <div class="guidance-value">~$33.5B</div>
-                    <div class="guidance-compare">vs 预期 $24.3B</div>
+        <!-- Unit Breakdown -->
+        <div class="units-section reveal">
+            <div class="section-header">
+                <div class="section-header-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
                 </div>
-                <div class="guidance-item">
-                    <div class="guidance-label">预期 EPS</div>
-                    <div class="guidance-value">~$19.15</div>
-                    <div class="guidance-compare">vs 预期 $12.05</div>
+                <h2>业务板块</h2>
+            </div>
+            <div class="units-grid">
+                <div class="unit-card">
+                    <div class="unit-name">云业务</div>
+                    <div class="unit-sub">数据中心 & AI 集群</div>
+                    <div class="unit-revenue">$7.75B</div>
+                    <div class="unit-growth">&#9650; 160%+ YoY</div>
                 </div>
-                <div class="guidance-item">
-                    <div class="guidance-label">同比增长</div>
-                    <div class="guidance-value">200%+</div>
-                    <div class="guidance-compare">去年 $9.3B</div>
+                <div class="unit-card">
+                    <div class="unit-name">移动和客户端</div>
+                    <div class="unit-sub">智能手机 & PC</div>
+                    <div class="unit-revenue">$7.71B</div>
+                    <div class="unit-growth">&#9650; 244% YoY</div>
+                </div>
+                <div class="unit-card">
+                    <div class="unit-name">HBM</div>
+                    <div class="unit-sub">高带宽内存</div>
+                    <div class="unit-revenue">强劲增长</div>
+                    <div class="unit-growth">HBM4 已量产</div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="stock-section">
-            <h2 class="section-title">股价表现</h2>
-            <div class="stock-cards">
+        <!-- Guidance -->
+        <div class="guidance-section reveal">
+            <div class="guidance-card">
+                <h3>Q3 财务指引</h3>
+                <p class="guidance-sub">远超市场预期，增长势头持续</p>
+                <div class="guidance-grid">
+                    <div>
+                        <div class="guidance-item-label">预期营收</div>
+                        <div class="guidance-item-value">~$33.5B</div>
+                        <div class="guidance-item-compare">vs 市场预期 $24.3B</div>
+                    </div>
+                    <div>
+                        <div class="guidance-item-label">预期 EPS</div>
+                        <div class="guidance-item-value">~$19.15</div>
+                        <div class="guidance-item-compare">vs 市场预期 $12.05</div>
+                    </div>
+                    <div>
+                        <div class="guidance-item-label">同比增长</div>
+                        <div class="guidance-item-value">200%+</div>
+                        <div class="guidance-item-compare">去年同期 $9.3B</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stock Performance -->
+        <div class="stock-section reveal">
+            <div class="section-header">
+                <div class="section-header-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+                <h2>股价表现</h2>
+            </div>
+            <div class="stock-grid">
                 <div class="stock-card">
-                    <div class="stock-period">2025年</div>
+                    <div class="stock-period">2025年全年</div>
                     <div class="stock-return">+200%</div>
-                    <div style="color: var(--text-secondary); font-size: 0.75rem; margin-top: 0.25rem;">股价翻三倍</div>
+                    <div class="stock-note">股价翻三倍</div>
                 </div>
                 <div class="stock-card">
                     <div class="stock-period">2026年至今</div>
                     <div class="stock-return">+62%</div>
-                    <div style="color: var(--text-secondary); font-size: 0.75rem; margin-top: 0.25rem;">持续强劲</div>
+                    <div class="stock-note">持续强劲</div>
                 </div>
                 <div class="stock-card">
                     <div class="stock-period">过去一年</div>
                     <div class="stock-return">+350%</div>
-                    <div style="color: var(--text-secondary); font-size: 0.75rem; margin-top: 0.25rem;">科技股领涨</div>
+                    <div class="stock-note">科技股领涨</div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="highlights">
-            <h2 class="section-title">关键亮点</h2>
-            <div class="highlight-list">
+        <!-- Highlights -->
+        <div class="highlights-section reveal">
+            <div class="section-header">
+                <div class="section-header-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <h2>关键亮点</h2>
+            </div>
+            <div class="highlights-list">
                 <div class="highlight-item">
-                    <div class="highlight-icon"></div>
+                    <div class="highlight-dot"></div>
                     <div class="highlight-text">AI 内存需求激增：Nvidia GPU 推动高带宽内存（HBM）需求爆发式增长</div>
                 </div>
                 <div class="highlight-item">
-                    <div class="highlight-icon"></div>
+                    <div class="highlight-dot"></div>
                     <div class="highlight-text">市值前10科技股中唯一今年上涨的公司，Oracle 跌22%，微软和特斯拉双位数下跌</div>
                 </div>
                 <div class="highlight-item">
-                    <div class="highlight-icon"></div>
+                    <div class="highlight-dot"></div>
                     <div class="highlight-text">HBM4 已开始为 Nvidia Vera Rubin 量产，HBM4e 预计 2027 年量产</div>
                 </div>
                 <div class="highlight-item">
-                    <div class="highlight-icon"></div>
+                    <div class="highlight-dot"></div>
                     <div class="highlight-text">2027 年资本支出将大幅增加超过 $10B，在爱达荷州和纽约州建设新工厂</div>
                 </div>
                 <div class="highlight-item">
-                    <div class="highlight-icon"></div>
+                    <div class="highlight-dot"></div>
                     <div class="highlight-text">DRAM 和 NAND 供应不足，内存公司签订长期合同确保产能</div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <a href="../index.html" class="back-link">← 返回首页</a>
-
-        <footer>
-            <p>数据来源：美光科技投资者关系 | CNBC 报道 | 2026年3月18日</p>
-            <p style="margin-top: 0.5rem;">本页面仅供参考，不构成投资建议</p>
-        </footer>
     </div>
 
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-left">
+            <a href="../index.html">&larr; 返回文章列表</a>
+            <span style="margin: 0 8px; color: var(--border);">|</span>
+            数据来源：美光科技投资者关系 / CNBC
+        </div>
+        <div class="footer-disclaimer">仅供参考，不构成投资建议</div>
+    </footer>
+
+    <!-- Scroll Animation -->
     <script>
-        function createParticles() {
-            const container = document.getElementById('particles');
-            const particleCount = 30;
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-                particle.style.background = Math.random() > 0.5 ? 'var(--accent-green)' : 'var(--accent-blue)';
-                container.appendChild(particle);
-            }
-        }
-
-        window.addEventListener('load', createParticles);
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
