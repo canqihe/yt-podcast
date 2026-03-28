@@ -94,7 +94,7 @@ background: linear-gradient(180deg, var(--border) 0%, transparent 100%);
 
 | 元素 | CSS 变量 | 值 |
 |------|---------|-----|
-| 超大标题 | `--font-size-hero` | clamp(48px, 10vw, 120px) |
+| 超大标题 | `--font-size-hero` | clamp(48px, 10vw, 120px) — 标题超过两行时需降低（见约束） |
 | 章节标题 | `--font-size-section` | clamp(32px, 5vw, 56px) |
 | 主题标题 | `--font-size-topic` | clamp(24px, 4vw, 36px) |
 | 章节编号 | `--font-size-number` | clamp(64px, 15vw, 120px) |
@@ -142,6 +142,8 @@ background: linear-gradient(180deg, var(--border) 0%, transparent 100%);
 - 字重 800
 - 字间距 -0.03em
 - 第二行使用橙→青渐变
+
+**约束：标题严格不超过两行。** 如果标题文字较长（尤其是中文），需降低 `--font-size-hero` 的最大值和 vw 系数，确保两行都不换行。参考值：`clamp(48px, 6.5vw, 88px)`。
 
 ---
 
