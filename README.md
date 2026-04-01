@@ -14,18 +14,20 @@ A curated knowledge platform that distills the best YouTube podcast content into
 
 ## Articles
 
-**43 articles** across multiple domains:
+**53 articles** across multiple domains:
 
 | Domain | Examples |
 |--------|---------|
 | **AI Strategy & Agents** | Dario Amodei (3x), Andrej Karpathy, Harrison Chase, Bret Taylor, Joelle Pineau |
+| **AI & Robotics** | Sergey Levine, Demis Hassabis, Brett Adcock, Figure AI |
 | **AI Markets & Compute** | a16z, SemiAnalysis, Coatue, Alfred Lin (Sequoia) |
 | **AI Society & Future** | Ben Horowitz, Marc Andreessen, Alex Karp, Yuval Harari |
 | **Investing & Finance** | Stanley Druckenmiller, Tom Lee, ARK Invest |
 | **Company Earnings** | Google Q4 2025, Micron Q2 2026 |
-| **Science & Health** | David Sinclair (aging), Dr. Arif Khan (child development) |
+| **Science & Health** | David Sinclair (aging), Dr. Arif Khan (child development), AI-designed life forms |
 | **Space & Frontier Tech** | Musk, NASA, Starcloud, Quantum Computing, Brain-Computer Interfaces |
-| **Tech Leaders** | Satya Nadella, Demis Hassabis, Jensen Huang, Kurzweil |
+| **Tech Leaders** | Satya Nadella, Demis Hassabis, Jensen Huang, Kurzweil, Elon Musk |
+| **Wisdom & Thinking** | Kevin Kelly (79 maxims), First principles thinking |
 
 Browse all articles at [index.html](index.html)
 
