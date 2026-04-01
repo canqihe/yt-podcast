@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brett Adcock：Figure AI 与机器人革命</title>
+    <style>
+        /* ========== Design Tokens ========== */
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-card: #141416;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            /* 配色方案5：珊瑚金 */
+            --accent-primary: #f97066;
+            --accent-secondary: #fbbf24;
+            --accent-primary-rgb: 249, 112, 102;
+            --accent-secondary-rgb: 251, 191, 36;
+            --border: #2a2a2e;
+            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            --font-size-hero: clamp(48px, 10vw, 120px);
+            --font-size-section: clamp(32px, 5vw, 56px);
+            --font-size-topic: clamp(24px, 4vw, 36px);
+            --font-size-number: clamp(64px, 15vw, 120px);
+            --font-heavy: 800;
+            --letter-spacing-tight: -0.03em;
+            --line-height-tight: 0.95;
+            --card-padding: 40px;
+            --radius-lg: 16px;
+            --radius-pill: 100px;
+            --transition-fast: 0.3s ease;
+            --hover-lift: translateY(-4px);
+            --gradient-accent: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+        }
+
+        /* ========== Reset ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ========== Scrollbar ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-primary);
+        }
+
+        /* ========== Container ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/brett-adcock-robot-interview-cover.jpg') no-repeat right center / cover;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 0;
+        }
+
+        /* ========== Badge ========== */
+        .badge-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .badge:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* ========== Title ========== */
+        .title {
+            font-size: clamp(42px, 8vw, 96px);
+            font-weight: var(--font-heavy);
+            line-height: var(--line-height-tight);
+            letter-spacing: var(--letter-spacing-tight);
+            margin-bottom: 24px;
+        }
+
+        .title-line-1 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-line-2 {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== Subtitle ========== */
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        /* ========== Meta Grid ========== */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .meta-item {
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ========== CTA Button ========== */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--gradient-accent);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 16px;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 20px rgba(var(--accent-primary-rgb), 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(var(--accent-primary-rgb), 0.5);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== Section ========== */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            font-size: var(--font-size-section);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 64px;
+        }
+
+        /* ========== Points Grid ========== */
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* ========== Point Card ========== */
+        .point-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .point-card:hover {
+            border-color: var(--accent-primary);
+            transform: var(--hover-lift);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .point-card:hover::before {
+            opacity: 1;
+        }
+
+        .point-number {
+            font-size: 48px;
+            font-weight: var(--font-heavy);
+            color: var(--border);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .point-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-primary);
+        }
+
+        .point-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ========== Topic ========== */
+        .topic {
+            margin-bottom: 80px;
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .topic-number {
+            font-size: var(--font-size-number);
+            font-weight: var(--font-heavy);
+            line-height: 1;
+            background: var(--gradient-number);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .topic-info {
+            flex: 1;
+            padding-top: 16px;
+        }
+
+        .topic-title {
+            font-size: var(--font-size-topic);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .topic-timestamp {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--accent-secondary);
+        }
+
+        .topic-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--card-padding);
+            margin-left: clamp(40px, 10vw, 120px);
+        }
+
+        .topic-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-primary);
+        }
+
+        .topic-core-point {
+            font-size: 18px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .topic-detail {
+            padding-left: 24px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .topic-detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .topic-detail-content {
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--accent-primary);
+            padding: 24px;
+            background: rgba(var(--accent-primary-rgb), 0.05);
+            margin: 24px 0;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-primary);
+        }
+
+        .thought-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .thought-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        /* ========== Takeaways ========== */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .takeaway-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-fast);
+        }
+
+        .takeaway-card:hover {
+            border-color: var(--accent-secondary);
+            transform: var(--hover-lift);
+        }
+
+        .takeaway-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .takeaway-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .takeaway-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: var(--font-heavy);
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .footer-quote {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: var(--font-heavy);
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 48px 0;
+            line-height: 1.2;
+        }
+
+        .footer-note {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Divider ========== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header animations - use keyframes for initial page load */
+        .header .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        /* Card animations - use transition for scroll trigger */
+        .point-card,
+        .takeaway-card,
+        .topic {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .point-card.animate-in,
+        .takeaway-card.animate-in,
+        .topic.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .topic-content {
+                margin-left: 0;
+            }
+
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .meta-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper animate-in">
+                    <span class="badge">机器人 · 创业 · AI</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1 animate-in delay-1">Brett Adcock</span>
+                    <span class="title-line-2 animate-in delay-2">Figure AI 与机器人革命</span>
+                </h1>
+                <p class="subtitle animate-in delay-3">
+                    从伊利诺伊州 700 人小镇的农场，到改变世界的科技公司。Figure AI 创始人 Brett Adcock 分享他如何用人形机器人重塑未来，以及 AI 时代真正的创业精神。
+                </p>
+                <div class="meta-grid animate-in delay-4">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Shawn Ryan</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Brett Adcock</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 177 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=99pOdGEGu6s" class="cta-button animate-in delay-4" target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看完整访谈
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">AI 不是泡沫</h3>
+                    <p class="point-desc">我们正处于人类历史上最大生产力革命的开端。AI 将引领一个前所未有的富足时代。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">人形机器人将普及</h3>
+                    <p class="point-desc">在我们的有生之年，人形机器人将像手机和汽车一样普及，成为每个家庭的一部分。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">解决真实问题</h3>
+                    <p class="point-desc">从招聘低效到城市交通，从劳动力短缺到校园安全——真正的问题值得用一生去解决。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">全情投入</h3>
+                    <p class="point-desc">创业需要全情投入——时间、金钱、精力。Brett 把 Archer 收益除买房外的全部资金投入了 Figure。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">学习速度即优势</h3>
+                    <p class="point-desc">从门外汉到专家的路径：承认无知、疯狂学习、找到正确的团队、执行。你不需要一开始就是专家。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">团队决定上限</h3>
+                    <p class="point-desc">你不能独自完成。找到世界上最好的人才，给他们资源和自主权，让他们发挥。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">人形机器人的安全与信任</h3>
+                        <span class="topic-timestamp">00:03:03 - 00:08:48</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        人形机器人进入家庭面临的最大挑战是安全性——既要确保硬件安全，又要确保 AI 行为的可预测性。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">绝对不要《终结者》</div>
+                        <p class="topic-detail-content">当被问及 AI 编造答案与物理机器人结合的风险时，Brett 的回答诚实而深刻："我们绝对不想要《终结者》成为现实。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从无到有的突破</div>
+                        <p class="topic-detail-content">四年前当 Figure 创立时，还没有人形机器人能在未来 10 年内进入普通家庭的路径。当时只有大型液压人形机器人，硬编码完成特定任务。而现在，Figure 已经成功地将未来 10 年的发展拉到了现在。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">安全的多层挑战</div>
+                        <p class="topic-detail-content">硬件安全：机器人的机械结构本身必须安全——不能夹伤人、不能撞击人、在出现故障时能够安全停止。AI 安全：机器人需要理解语义安全——比如家里有蜡烛时不能碰倒，有开水锅时要保持安全距离。自主安全：机器人需要在没有人类监控的情况下，在复杂的环境中（如家庭）安全工作。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我们还需要几年时间，但我相信在我们的有生之年，每个人都会拥有一个人形机器人，就像拥有手机和汽车一样。"
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">个人感受</div>
+                        Brett 对机器人的热爱是显而易见的。当他谈论孩子们给机器人起名字、甚至对有磨损的旧机器人产生情感依赖时，他的眼中闪烁着兴奋的光芒。这不仅仅是一项技术，更是将成为家庭成员的一部分。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 泡沫与富足时代</h3>
+                        <span class="topic-timestamp">00:08:48 - 00:16:34</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 不是泡沫，而是人类历史上最大生产力革命的开始，将引领一个前所未有的富足时代。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">绝对不是泡沫</div>
+                        <p class="topic-detail-content">当被问及 AI 是否处于经济泡沫时，Brett 的回答斩钉截铁："绝对不是。我认为在未来 36 个月内，我们将看到一些最具变革性的技术事件，这是我们历史上前所未有的。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两个世界的 AI 革命</div>
+                        <p class="topic-detail-content">物理世界：AI 进入物理世界，通过人形机器人执行人类的工作。从制造业、物流、仓储到零售，最终进入每个家庭。数字世界：AI 能够像人类一样使用计算机，能够思考、推理、完成任务。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">生产力的爆炸式增长</div>
+                        <p class="topic-detail-content">Brett 计算了一个令人震撼的前景：如果我们能够创造出数百万、数十亿甚至数万亿的"合成人类"（在数字世界中），这将带来人类历史上前所未有的生产力增长。最终的结果是什么？商品和服务的价格将下降到前所未有的水平——一个真正的富足时代。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我希望我的 AI 能够运行一个'Brett Adcock 操作系统'，帮我处理生活中所有的琐事：点餐、付税单、安排会议……我想把所有这些都委托给我的 AI。"
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">小镇根基与早期创业</h3>
+                        <span class="topic-timestamp">00:16:34 - 00:27:20</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        伊利诺伊州的农场生活塑造了 Brett 的企业家精神——从小被灌输"要掌控自己的命运，就必须经营自己的生意"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">700 人的小镇</div>
+                        <p class="topic-detail-content">Brett 生长在伊利诺伊州中部一个叫 Mikua 的小镇，全镇只有 700 人。他的家庭是第三代农场主，种植玉米和大豆。"我们家没有钱，"Brett 回忆道，"互联网对我来说是一种可能赚钱的方式，真的很有趣。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">兄弟同路</div>
+                        <p class="topic-detail-content">Brett 的弟弟 Colby 也走上了同样的道路——他运营着一家名为 Scout 的 AI 国防公司，为军方开发自主系统和 AI 模型。兄弟俩住得只隔一个街区，几乎每个周末都会见面。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">农场即创业学校</div>
+                        <p class="topic-detail-content">"农场本身就是非常具有企业家精神的。我父亲从小就在我们脑子里灌输：如果你想掌控自己的命运，想赚钱，想做你想做的事情，就需要经营自己的生意。他们一直告诉我们，到了某个时候，你需要离开这里，离开农业——这里的情况不太好——你需要开始自己的事业。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Vetery 的诞生</div>
+                        <p class="topic-detail-content">大学期间，Brett 开始专注于一个真正的问题：招聘行业极其低效。求职者投简历后石沉大海，需要通过猎头，整个过程更像是一个"男孩俱乐部"，而不是真正的精英体制。"我觉得整个过程极其糟糕，所以我创立了 Vetery。"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Archer Aviation 与飞行汽车</h3>
+                        <span class="topic-timestamp">00:27:20 - 00:36:43</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        通过垂直起降的电动飞机，重新定义城市交通——从堵车 1 小时到飞行 10 分钟。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">为什么是垂直起飞？</div>
+                        <p class="topic-detail-content">如果飞机需要跑道，机场就必须建在远离城市的地方。但直升机可以垂直起降，可以从建筑物楼顶或停机坪起飞——这意味着飞行器可以真正融入城市。"世界上一半人口居住在城市，到本世纪中叶将达到 70%，在城市里，你根本无法移动。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从门外汉到专家</div>
+                        <p class="topic-detail-content">Brett 从未学过如何制造飞机，但这并没有阻止他。"我不是在学软件长大的世界里醒来的，我学会了如何做软件，如何运行工程，都是通过试错。我觉得我也能学会这个。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">电动飞机的物理挑战</div>
+                        <p class="topic-detail-content">电池的能量密度只有航空煤油的 1/30。电力带来的突破：可以用许多小转子。在传统尺寸下，多个推进器的效率会急剧下降。但电力不同——小型和大型电机的效率都是 90%。这意味着你可以用 12 个电机创建一个高度冗余的系统。</p>
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">关键洞察</div>
+                        在旋翼机中，要创造最高效的升力装置，需要尽可能大的转子盘面积——这就是为什么直升机转子如此巨大。但在电动飞机中，你从一开始就面临一个致命问题：电池的能量密度只有航空煤油的 1/30。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">全押 Archer</h3>
+                        <span class="topic-timestamp">00:36:43 - 00:38:25</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Brett 将 Vetery 收益中除了买房外的全部资金投入了 Archer，并通过 SPAC 上市筹集了 10 亿美元。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">全押</div>
+                        <p class="topic-detail-content">"我基本上把所有钱都押在了 Archer 上，我买了房子，剩下的钱全投进去了。"这是一个压力巨大的时期。公司最终通过 SPAC（特殊目的收购公司）上市，筹集了 10 亿美元。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">被起诉</div>
+                        <p class="topic-detail-content">Archer 在上市过程中被起诉——原告是波音和由 Google 创始人 Larry Page 创立的 Kittyhawk（Brett 挖走了他们的核心 10-15 位工程师）。"我在《纽约时报》头版看到了关于我们的文章，那是疯了。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">最终成功</div>
+                        <p class="topic-detail-content">最终，Archer 成功上市，账面上有 10 亿美元，开始制造飞机并开发服务。如今 Archer 是一家 60 亿美元市值的上市公司。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">制造飞行机器人</h3>
+                        <span class="topic-timestamp">00:38:25 - 00:45:39</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Archer 的飞机本质上是一架 6,000 磅重的四座载人机器人，有 24 个自由度，需要复杂的控制软件。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">飞行机器人</div>
+                        <p class="topic-detail-content">"它基本上就是一个飞行机器人，有电池系统、电机、传感器、嵌入式软件、控制系统……非常像你今天早上看到的那台机器人。"这架 6,000 磅的飞机有 24 个自由度：机翼襟翼、前缘六个电机可倾斜 90 度用于垂直起飞和前飞转换、所有螺旋桨都有可变桨距。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">自动驾驶汽车</div>
+                        <p class="topic-detail-content">在湾区，Brett 已经可以随处使用 Waymo。"它太棒了，车开得非常像人类，体验太好了——坦率说，我更喜欢没有人类司机。"但他承认，我们正处于一个过渡阶段——自动驾驶硬件还不足够普及，技术还需要时间成熟。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">天空车道与未来城市</h3>
+                        <span class="topic-timestamp">00:45:39 - 00:49:59</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        未来城市将拥有三维交通网络——地面道路加上空中的"天空车道"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三维城市</div>
+                        <p class="topic-detail-content">Brett 描绘了一个未来城市的愿景：城市将被重新设计，拥有垂直交通网络。建筑物顶部将建有起降点，形成空中的"高速公路"。"想象一下，城市不再是平面的，而是立体的。你不再被限制在地面道路上。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">彻底改变城市规划</div>
+                        <p class="topic-detail-content">这将彻底改变城市规划。房地产价值将重新计算——靠近起降点的房产将升值。通勤时间将从小时级别降到分钟级别。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">监管挑战</div>
+                        <p class="topic-detail-content">Archer 受联邦航空管理局管辖，这是一个严格的监管环境。但与自动驾驶汽车不同，空域是一个相对受控的环境——不像道路上有无数不可预测的因素。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">空中出租车版的 Uber</h3>
+                        <span class="topic-timestamp">00:49:59 - 00:52:37</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Archer 的商业模式不是卖飞机，而是运营空中出租车服务——就像 Uber 一样。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">服务而非销售</div>
+                        <p class="topic-detail-content">"我们不卖飞机，我们运营服务。你打开 App，选择目的地，预约航班，然后到附近的起降点登机。"这与 Uber 的商业模式相似——Archer 提供平台、飞机和运营，用户按行程付费。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">价值主张</div>
+                        <p class="topic-detail-content">通过拼车模式，价格可以降到与 Uber 相当的水平，但时间从 1 小时缩短到 10 分钟。"这就是价值主张，同样的价格，十分之一的时间。"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">人形机器人的起源故事</h3>
+                        <span class="topic-timestamp">00:52:37 - 01:01:19</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        劳动力短缺是全球性危机，人形机器人是解决方案——因为世界是为人类设计的。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">世界是为人类设计的</div>
+                        <p class="topic-detail-content">"楼梯是为人类设计的，门把手是为人类设计的，工具是为人类设计的，工作流程是为人类设计的。如果你建造一个专用机器人——比如专门开门的机器人——它只能做一件事。但人形机器人可以做人类能做的所有事情。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">全球劳动力危机</div>
+                        <p class="topic-detail-content">全球正面临严重的劳动力短缺。在美国，婴儿潮一代正在退休，没有足够的年轻人接替。在其他发达国家，情况类似。"这不是一个美国问题，而是一个全球问题。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Figure 的使命</div>
+                        <p class="topic-detail-content">Figure 的使命是制造通用型人形机器人，能够在这些行业中工作，最终进入家庭。"我们不是在制造玩具或演示品，我们是在制造真正的劳动力。"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">自筹资金创立 Figure AI</h3>
+                        <span class="topic-timestamp">01:01:19 - 01:35:11</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Brett 用 Archer 的收益创立了 Figure，用自己的钱而不是 VC 的钱——这让他拥有完全的控制权。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">为什么离开 Archer？</div>
+                        <p class="topic-detail-content">"我意识到我真的想做一些更大的事情。Archer 是一家伟大的公司，但我对人形机器人的热情更大。我看到了一个机会——一个真正改变世界的机会。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">创立 Figure</div>
+                        <p class="topic-detail-content">2022 年，Brett 创立了 Figure。与之前的公司不同，这次他用自己的资金启动。"我不想再向 VC 融资了，我想用自己的钱，这样我可以完全掌控方向。VC 有他们自己的议程。他们想要快速退出，他们想要特定的增长曲线。但我想要按照我认为正确的方式构建公司。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Figure 的早期发展</div>
+                        <p class="topic-detail-content">Figure 从一个小团队开始，在加州的一个仓库里工作。Brett 亲自动手——从设计机器人到编写软件。"我以前是软件工程师，我花了 10 年时间做软件。但我总是坐那里，希望我在做硬件——我可以触摸的东西。在 Figure，我终于可以同时做两件事了。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从零到一</div>
+                        <p class="topic-detail-content">Figure 的第一个原型机 Figure 01 在 2023 年问世。但真正的突破是 Figure 02——它集成了 OpenAI 的大语言模型，能够理解和执行自然语言指令。"那是转折点，突然之间，机器人不再需要为每个任务编程。你可以告诉它做什么，它会理解并执行。"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 11 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">11</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Figure 3 机器人演示</h3>
+                        <span class="topic-timestamp">01:35:11 - 01:57:08</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Figure 3 代表了人形机器人的最新进展——更流畅的动作、更智能的决策、更自然的人类交互。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">运动能力</div>
+                        <p class="topic-detail-content">机器人能够流畅地行走、转弯、蹲下、起立。它的动作不再僵硬，而是接近人类的自然流畅度。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">操作能力</div>
+                        <p class="topic-detail-content">机器人可以抓取和放置各种物体——从杯子到工具。它的手部有精细的触觉反馈，能够调整抓握力度。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">感知能力</div>
+                        <p class="topic-detail-content">机器人使用摄像头、激光雷达和其他传感器来理解环境。它可以识别物体、导航、避开障碍物。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">交互能力</div>
+                        <p class="topic-detail-content">机器人可以理解自然语言指令，并做出适当的回应。它不仅可以执行命令，还可以提问澄清。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "这只是开始，我们还有很多工作要做。但路径是清晰的。我们知道如何让它变得更好。"
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 12 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">12</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">解决通用机器人问题</h3>
+                        <span class="topic-timestamp">01:57:08 - 02:00:43</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        通用机器人不是单一技术突破，而是多个技术领域的集成——硬件、软件、AI、制造。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第一性原理</div>
+                        <p class="topic-detail-content">"我们不模仿人类，我们思考完成任务需要什么。人类有两条腿是因为我们进化出这种方式。但机器人可能有两条腿、四条腿，甚至轮子——取决于什么最适合任务。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">模块化设计</div>
+                        <p class="topic-detail-content">Figure 的机器人采用模块化设计——手臂、腿部、躯干可以独立升级和更换。"这让我们能够快速迭代，我们不需要每次都重新设计整个机器人。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">数据驱动</div>
+                        <p class="topic-detail-content">Figure 收集大量数据——从机器人运行数据到人类操作数据——来训练 AI。"数据是燃料，你拥有的数据越多，你的 AI 就越好。"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 13 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">13</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">机器人团队协作与自我修复</h3>
+                        <span class="topic-timestamp">02:00:43 - 02:03:45</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        未来机器人的真正力量不是单独工作，而是团队协作——以及自我修复能力。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">团队协作</div>
+                        <p class="topic-detail-content">"它们不是各自为战，它们是一个团队。如果一个机器人发现了问题，它会告诉其他机器人。如果它们需要合作完成一个任务，它们会协调。"这需要机器人之间有通信协议，需要有一个"集体意识"或中央协调系统。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">自我修复</div>
+                        <p class="topic-detail-content">"机器人会坏，但它们不应该总是需要人类来修复。"Brett 描述了一个未来场景：一个机器人手臂失灵了。它会诊断问题，尝试重新启动子系统。如果不起作用，它会通知中央系统，另一个机器人会来帮助。"最终，我们希望机器人能够更换彼此的部件。"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 14 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">14</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">制造业回归美国</h3>
+                        <span class="topic-timestamp">02:03:45 - 02:11:30</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        人形机器人将使制造业回流美国成为可能——不是因为劳动力成本，而是因为竞争优势。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">当前问题</div>
+                        <p class="topic-detail-content">"制造业离开美国不是因为美国人不想做这些工作，而是因为成本。海外劳动力更便宜，所以制造业搬走了。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">机器人改变一切</div>
+                        <p class="topic-detail-content">"但当机器人的成本低于海外劳动力时，计算就变了。你可以在美国建厂，使用机器人。你不需要担心劳动力成本、劳动力短缺、劳动力问题。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">竞争优势</div>
+                        <p class="topic-detail-content">质量一致性：机器人不会疲劳，不会分心，产品质量一致。24/7 运营：机器人可以三班倒，工厂永不关闭。快速调整：如果产品设计变化，机器人可以重新编程，不需要重新培训工人。供应链韧性：本地制造意味着更短的供应链，更高的韧性。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 15 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">15</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Cover 学校安全技术</h3>
+                        <span class="topic-timestamp">02:11:30 - 02:43:18</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Cover 使用 NASA JPL 的技术开发非侵入式武器扫描系统，让学校更安全而不侵犯隐私。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">问题背景</div>
+                        <p class="topic-detail-content">"校园枪击事件 10 倍增长，我们必须做点什么。"但现有的解决方案都有问题：金属探测器侵扰、慢、昂贵；武装警察让学校感觉像监狱。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">技术解决方案</div>
+                        <p class="topic-detail-content">Cover 使用 NASA 喷气推进实验室开发的技术——最初用于探测其他行星上的物质——来探测隐蔽武器。系统是非侵入式的：人们正常走过，系统被动扫描。没有辐射，没有隐私侵犯。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">部署</div>
+                        <p class="topic-detail-content">Cover 正在与学校合作部署系统。"家长喜欢它，因为他们的孩子更安全。学生喜欢它，因为它不侵扰。老师喜欢它，因为他们感到更安全。"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 16 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">16</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">机器人风险：大问题</h3>
+                        <span class="topic-timestamp">02:43:18 - 02:48:44</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        机器人可能被恶意使用——这是一个真实的风险，需要社会共同应对。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">诚实面对风险</div>
+                        <p class="topic-detail-content">"是的，任何技术都可以被恶意使用。但我们不能因为风险就停止创新。我们需要管理风险。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Figure 的方法</div>
+                        <p class="topic-detail-content">设计安全：机器人被设计为在硬件上安全——速度限制、力限制、安全停止机制。AI 安全：机器人被训练为识别和避免危险情况。监管合规：Figure 与监管机构合作，确保机器人符合安全标准。透明度：Figure 对其技术保持透明，让社会能够监督。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我们需要一个社会对话，关于我们如何安全地整合这些技术。这不是一个公司可以独自解决的问题。"
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 17 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">17</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">给创业者的建议</h3>
+                        <span class="topic-timestamp">02:48:44 - 结束</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        创业不是关于想法，而是关于执行——而且要全情投入。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">1. 解决真实问题</div>
+                        <p class="topic-detail-content">"不要追逐趋势，解决真实问题。Vetery 解决了招聘问题。Archer 解决了交通问题。Figure 解决了劳动力问题。Cover 解决了安全问题。这些都是真实的问题，不是虚构的问题。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">2. 全情投入</div>
+                        <p class="topic-detail-content">"你不能半心半意，你必须全情投入。我把所有钱都投进了 Archer。我每周工作 7 天，每天工作很多小时。如果你不愿意全情投入，你可能不应该创业。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">3. 学习速度</div>
+                        <p class="topic-detail-content">"你不需要一开始就是专家，但你需要快速学习。我不知道如何制造飞机。但我学会了。我不知道如何制造机器人。但我正在学。学习速度是竞争优势。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">4. 团队是关键</div>
+                        <p class="topic-detail-content">"你不能独自完成，你需要一个伟大的团队。在 Archer，我找到了一个教授和他的团队。在 Figure，我聚集了世界上最好的机器人专家。你的团队决定你的上限。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">5. 长期思考</div>
+                        <p class="topic-detail-content">"创业不是短跑，是马拉松。Vetery 花了 6 年。Archer 花了 3 年才上市。Figure 还在路上。如果你想要快速退出，去找份工作。"</p>
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">最后的思考</div>
+                        当被问及他最大的遗憾时，Brett 沉默了一会儿。"我不认为我有遗憾，但我犯过很多错误。关键是从错误中学习，然后继续前进。创业就是跌倒了，爬起来，继续前进。"
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🚀</div>
+                    <h3 class="takeaway-title">AI 新时代</h3>
+                    <p class="takeaway-desc">AI 不是泡沫，而是新时代的开始。我们正处于人类历史上最大生产力革命的开端。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🤖</div>
+                    <h3 class="takeaway-title">机器人普及</h3>
+                    <p class="takeaway-desc">在我们的有生之年，人形机器人将像手机和汽车一样普及，成为每个家庭的一部分。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏙️</div>
+                    <h3 class="takeaway-title">三维城市</h3>
+                    <p class="takeaway-desc">未来城市将拥有三维交通网络——地面道路加上空中的"天空车道"。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">解决真实问题</h3>
+                    <p class="takeaway-desc">不要追逐趋势。解决真实、重要的问题——招聘、交通、劳动力、安全。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💪</div>
+                    <h3 class="takeaway-title">全情投入</h3>
+                    <p class="takeaway-desc">创业需要全情投入——时间、金钱、精力。如果你不愿意投入一切，你可能不应该创业。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📚</div>
+                    <h3 class="takeaway-title">学习速度</h3>
+                    <p class="takeaway-desc">你不需要一开始就是专家，但你需要快速学习。学习速度是竞争优势。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">👥</div>
+                    <h3 class="takeaway-title">团队决定上限</h3>
+                    <p class="takeaway-desc">你不能独自完成。找到世界上最好的人才，给他们资源和自主权，让他们发挥。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⏳</div>
+                    <h3 class="takeaway-title">长期思考</h3>
+                    <p class="takeaway-desc">创业不是短跑，是马拉松。如果你想要快速退出，去找份工作。如果你想要改变世界，准备好长期投入。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🌾</div>
+                    <h3 class="takeaway-title">背景不决定命运</h3>
+                    <p class="takeaway-desc">一个 700 人小镇的农场主之子，可以通过学习、努力和冒险，改变世界。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🙏</div>
+                    <h3 class="takeaway-title">保持谦逊</h3>
+                    <p class="takeaway-desc">即使你筹集了数十亿美元、正在改变世界——保持谦逊。承认你还在学习，承认你会犯错。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">👨‍👩‍👧‍👦</div>
+                    <h3 class="takeaway-title">家人是锚</h3>
+                    <p class="takeaway-desc">在疯狂的工作中，家人是你的锚。Brett 的妻子、三个孩子给了他动力和平衡。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">😊</div>
+                    <h3 class="takeaway-title">享受旅程</h3>
+                    <p class="takeaway-desc">创业很难。会有诉讼、压力、失败。但享受旅程——这是你选择的生活。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">改变世界的旅程</h3>
+            <p class="footer-desc">
+                Brett Adcock 的故事不仅是一个成功故事，更是一个关于梦想、风险和坚持的故事。
+                从一个 700 人小镇的农场，到改变世界的科技公司——Brett 的旅程证明，只要有足够的激情、决心和努力，一切皆有可能。
+            </p>
+            <div class="footer-quote">
+                "我坚信在我们的有生之年，每个人都会拥有一个人形机器人，就像拥有手机和汽车一样。"
+            </div>
+            <p class="footer-note">
+                本内容精选自 Shawn Ryan Show 第 292 期 · 原始视频时长 177 分钟 ·
+                由 AI 辅助整理和翻译
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
