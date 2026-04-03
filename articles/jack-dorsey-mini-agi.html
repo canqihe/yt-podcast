@@ -3,552 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>杰克·多西：每家公司现在都能成为微型 AGI</title>
+    <title>Jack Dorsey：每家公司都可以成为一个小型 AGI</title>
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <!-- 配色方案覆盖 -->
     <style>
-        /* ========== Design Tokens ========== */
         :root {
-            --bg-primary: #0a0a0b;
-            --bg-card: #141416;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0a0;
-            --text-tertiary: #666666;
-            /* 配色方案：蓝靛 */
-            --accent-primary: #3b82f6;
-            --accent-secondary: #818cf8;
-            --accent-primary-rgb: 59, 130, 246;
-            --accent-secondary-rgb: 129, 140, 248;
-            --border: #2a2a2e;
-            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
-            --font-size-hero: clamp(48px, 10vw, 120px);
-            --font-size-section: clamp(32px, 5vw, 56px);
-            --font-size-topic: clamp(24px, 4vw, 36px);
-            --font-size-number: clamp(64px, 15vw, 120px);
-            --font-heavy: 800;
-            --letter-spacing-tight: -0.03em;
-            --line-height-tight: 0.95;
-            --card-padding: 40px;
-            --radius-lg: 16px;
-            --radius-pill: 100px;
-            --transition-fast: 0.3s ease;
-            --hover-lift: translateY(-4px);
-            --gradient-accent: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
-            --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
-            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+            /* 方案: 紫粉 */
+            --accent-primary: #a855f7;
+            --accent-secondary: #ec4899;
+            --accent-primary-rgb: 168, 85, 247;
+            --accent-secondary-rgb: 236, 72, 153;
         }
+    </style>
 
-        /* ========== Reset ========== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: var(--font-system);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        /* ========== Scrollbar ========== */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-primary);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-primary);
-        }
-
-        /* ========== Container ========== */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* ========== Header ========== */
-        .header {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
+    <style>
         .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/jack-dorsey-mini-agi-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+        
+        .header::after {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background:
-                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.95) 40%, var(--bg-primary) 70%),
-                radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.08) 0%, transparent 50%);
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
             pointer-events: none;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 1;
-            padding: 80px 0;
-        }
-
-        /* ========== Badge ========== */
-        .badge-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 32px;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 8px 16px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-pill);
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: all var(--transition-fast);
-        }
-
-        .badge:hover {
-            border-color: var(--text-primary);
-            color: var(--text-primary);
-        }
-
-        /* ========== Title ========== */
-        .title {
-            font-size: var(--font-size-hero);
-            font-weight: var(--font-heavy);
-            line-height: var(--line-height-tight);
-            letter-spacing: var(--letter-spacing-tight);
-            margin-bottom: 24px;
-        }
-
-        .title-line-1 {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .title-line-2 {
-            background: var(--gradient-accent);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* ========== Subtitle ========== */
-        .subtitle {
-            font-size: 20px;
-            color: var(--text-secondary);
-            font-weight: 300;
-            max-width: 700px;
-            line-height: 1.6;
-            margin-bottom: 48px;
-        }
-
-        /* ========== Meta Grid ========== */
-        .meta-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            max-width: 700px;
-            margin-bottom: 32px;
-        }
-
-        .meta-item {
-            padding: 16px 0;
-            border-top: 1px solid var(--border);
-            white-space: nowrap;
-        }
-
-        .meta-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-tertiary);
-            margin-bottom: 8px;
-        }
-
-        .meta-value {
-            font-size: 16px;
-            color: var(--text-primary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* ========== CTA Button ========== */
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px 32px;
-            background: var(--gradient-accent);
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: var(--radius-pill);
-            font-weight: 600;
-            font-size: 16px;
-            transition: all var(--transition-fast);
-            box-shadow: 0 4px 20px rgba(var(--accent-primary-rgb), 0.3);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(var(--accent-primary-rgb), 0.5);
-        }
-
-        .cta-button svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* ========== Section ========== */
-        .section {
-            padding: 120px 0;
-        }
-
-        .section-title {
-            font-size: var(--font-size-section);
-            font-weight: var(--font-heavy);
-            letter-spacing: -0.02em;
-            margin-bottom: 64px;
-        }
-
-        /* ========== Points Grid ========== */
-        .points-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 24px;
-        }
-
-        /* ========== Point Card ========== */
-        .point-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: var(--card-padding);
-            border-radius: var(--radius-lg);
-            transition: all var(--transition-fast);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .point-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gradient-accent);
-            opacity: 0;
-            transition: opacity var(--transition-fast);
-        }
-
-        .point-card:hover {
-            border-color: var(--accent-primary);
-            transform: var(--hover-lift);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .point-card:hover::before {
-            opacity: 1;
-        }
-
-        .point-number {
-            font-size: 48px;
-            font-weight: var(--font-heavy);
-            color: var(--border);
-            margin-bottom: 16px;
-            line-height: 1;
-        }
-
-        .point-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--accent-primary);
-        }
-
-        .point-desc {
-            color: var(--text-secondary);
-            font-size: 15px;
-            line-height: 1.6;
-        }
-
-        /* ========== Topic ========== */
-        .topic {
-            margin-bottom: 80px;
-        }
-
-        .topic-header {
-            display: flex;
-            align-items: flex-start;
-            gap: 32px;
-            margin-bottom: 32px;
-        }
-
-        .topic-number {
-            font-size: var(--font-size-number);
-            font-weight: var(--font-heavy);
-            line-height: 1;
-            background: var(--gradient-number);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            flex-shrink: 0;
-        }
-
-        .topic-info {
-            flex: 1;
-            padding-top: 16px;
-        }
-
-        .topic-title {
-            font-size: var(--font-size-topic);
-            font-weight: var(--font-heavy);
-            letter-spacing: -0.02em;
-            margin-bottom: 16px;
-            line-height: 1.2;
-        }
-
-        .topic-timestamp {
-            display: inline-block;
-            padding: 6px 12px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 13px;
-            font-family: var(--font-mono);
-            color: var(--accent-secondary);
-        }
-
-        .topic-content {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: var(--card-padding);
-            margin-left: clamp(40px, 10vw, 120px);
-        }
-
-        .topic-section-title {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--accent-primary);
-        }
-
-        .topic-core-point {
-            font-size: 18px;
-            color: var(--text-primary);
-            line-height: 1.6;
-            margin-bottom: 32px;
-            font-weight: 300;
-        }
-
-        .topic-detail {
-            padding-left: 24px;
-            border-left: 2px solid var(--border);
-            margin-bottom: 24px;
-        }
-
-        .topic-detail-label {
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-        }
-
-        .topic-detail-content {
-            color: var(--text-tertiary);
-            line-height: 1.6;
-        }
-
-        .quote-block {
-            border-left: 3px solid var(--accent-primary);
-            padding: 24px;
-            background: rgba(var(--accent-primary-rgb), 0.05);
-            margin: 24px 0;
-            font-style: italic;
-            font-size: 17px;
-            color: var(--text-primary);
-        }
-
-        .thought-block {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 24px;
-            border-radius: 12px;
-            margin: 24px 0;
-        }
-
-        .thought-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-tertiary);
-            margin-bottom: 12px;
-        }
-
-        /* ========== Takeaways ========== */
-        .takeaways-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-        }
-
-        .takeaway-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 32px;
-            transition: all var(--transition-fast);
-        }
-
-        .takeaway-card:hover {
-            border-color: var(--accent-secondary);
-            transform: var(--hover-lift);
-        }
-
-        .takeaway-emoji {
-            font-size: 40px;
-            margin-bottom: 16px;
-        }
-
-        .takeaway-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .takeaway-desc {
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        /* ========== Footer ========== */
-        .footer {
-            border-top: 1px solid var(--border);
-            padding: 120px 0;
-            text-align: center;
-        }
-
-        .footer-title {
-            font-size: 24px;
-            font-weight: var(--font-heavy);
-            margin-bottom: 16px;
-        }
-
-        .footer-desc {
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 32px;
-            line-height: 1.6;
-        }
-
-        .footer-quote {
-            font-size: clamp(28px, 5vw, 48px);
-            font-weight: var(--font-heavy);
-            background: var(--gradient-accent);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin: 48px 0;
-            line-height: 1.2;
-        }
-
-        .footer-note {
-            color: var(--text-tertiary);
-            font-size: 14px;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        /* ========== Divider ========== */
-        .divider {
-            height: 1px;
-            background: var(--border);
-            margin: 0;
-        }
-
-        /* ========== Animations ========== */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Header animations - use keyframes for initial page load */
-        .header .animate-in {
-            animation: fadeInUp 0.6s ease forwards;
-            opacity: 0;
-        }
-
-        /* Card animations - use transition for scroll trigger */
-        .point-card,
-        .takeaway-card,
-        .topic {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .point-card.animate-in,
-        .takeaway-card.animate-in,
-        .topic.animate-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
-
-        /* ========== Responsive ========== */
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 20px;
-            }
-
-            .section {
-                padding: 80px 0;
-            }
-
-            .topic-content {
-                margin-left: 0;
-            }
-
-            .points-grid {
-                grid-template-columns: 1fr;
-            }
+            z-index: 0;
         }
     </style>
 </head>
@@ -557,17 +47,17 @@
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <div class="badge-wrapper animate-in">
-                    <span class="badge">组织架构 · AI 变革</span>
+                <div class="badge-wrapper">
+                    <span class="badge">AI · 组织变革 · 红杉资本</span>
                 </div>
                 <h1 class="title">
-                    <span class="title-line-1 animate-in delay-1">杰克·多西：</span>
-                    <span class="title-line-2 animate-in delay-2">每家公司现在都能成为微型 AGI</span>
+                    <span class="title-line-1">Jack Dorsey：</span>
+                    <span class="title-line-2">每家公司都可以成为一个小型 AGI</span>
                 </h1>
-                <p class="subtitle animate-in delay-3">
-                    在这场由红杉资本合伙人 Roelof Botha 主持的深度对谈中，Twitter 与 Block 的创始人 Jack Dorsey 揭示了他对未来公司形态的激进思考。这不仅是一场关于 AI 工具的讨论，更是一次关于"公司"这一人类发明在 AI 时代如何从底层逻辑进行彻底重构的实战分享。
+                <p class="subtitle">
+                    传统层级制已经完全过时。Jack Dorsey 分享他如何裁掉 Block 40% 员工，然后围绕 AI"智能层"从零重建整个公司。这不是关于提高 10% 的生产力——这是一场彻底的结构性变革。
                 </p>
-                <div class="meta-grid animate-in delay-4">
+                <div class="meta-grid">
                     <div class="meta-item">
                         <div class="meta-label">主持人</div>
                         <div class="meta-value">Roelof Botha</div>
@@ -585,7 +75,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                     </svg>
-                    观看完整视频
+                    观看视频
                 </a>
             </div>
         </div>
@@ -598,38 +88,38 @@
             <div class="points-grid">
                 <div class="point-card">
                     <div class="point-number">01</div>
-                    <h3 class="point-title">等级制度的终结</h3>
-                    <p class="point-desc">传统公司等级制度本质上是为了解决"在人类规模下管理信息流"的古老问题，而 AI 的出现让这种层级失去了存在的必然性。</p>
+                    <h3 class="point-title">层级制已过时</h3>
+                    <p class="point-desc">传统层级制的存在理由是解决信息流动问题，但 AI 时代让这个存在理由彻底消失。所有的数字痕迹都可以输入 AI，构建公司的"世界模型"。</p>
                 </div>
 
                 <div class="point-card">
                     <div class="point-number">02</div>
-                    <h3 class="point-title">三位一体角色重构</h3>
-                    <p class="point-desc">Block 正在将复杂的职级简化为三种核心角色：IC（建设者）、DRI（负责人）、Player Coach（球员兼教练），组织深度从 5 层压缩到 2-3 层。</p>
+                    <h3 class="point-title">三种角色的未来</h3>
+                    <p class="point-desc">公司组织结构将从金字塔简化为三种角色：IC（构建者/操作者）、DRI（负责人）、Player-Coach（教练）。最终目标是完全扁平，所有人都直接向 CEO 汇报。</p>
                 </div>
 
                 <div class="point-card">
                     <div class="point-number">03</div>
-                    <h3 class="point-title">四层智能架构</h3>
-                    <p class="point-desc">未来公司由能力层、界面层、主动智能、世界模型四层组成，客户的实时需求将直接生成功能，取消传统产品路线图。</p>
+                    <h3 class="point-title">CEO 角色的转变</h3>
+                    <p class="point-desc">CEO 的职责从"管理者"变为"架构师"和"校准者"。公司的智能模型在中心，人类在边缘，不断校准这个智能朝着客户 outcomes 发展。</p>
                 </div>
 
                 <div class="point-card">
                     <div class="point-number">04</div>
-                    <h3 class="point-title">拒绝"副驾驶"思维</h3>
-                    <p class="point-desc">AI 不是用来提高 10% 效率的插件，而是必须作为核心重筑公司，否则企业将在未来的分发竞争中消亡。</p>
+                    <h3 class="point-title">围绕 AI 重建公司</h3>
+                    <p class="point-desc">大多数公司把 AI 当作"副驾驶"，但这应该是完全围绕 AI 重建整个公司。不是让员工提高 10% 的生产力，而是结构性变革。</p>
                 </div>
 
                 <div class="point-card">
                     <div class="point-number">05</div>
-                    <h3 class="point-title">"多西模式"圆环</h3>
-                    <p class="point-desc">决策权从顶层移交给客户和系统，智能核心在中央，人类在边缘进行引导，负责对齐与品味判断。</p>
+                    <h3 class="point-title">强势时主动行动</h3>
+                    <p class="point-desc">Jack 裁掉 Block 40% 员工不是因为公司陷入困境——恰恰相反。主动从强势位置行动，让你能够更体面地处理，更有尊严地对待离开和留下的人。</p>
                 </div>
 
                 <div class="point-card">
                     <div class="point-number">06</div>
-                    <h3 class="point-title">品味是唯一护城河</h3>
-                    <p class="point-desc">AI 让复制变得极其廉价，只有拥有强烈的观点、独特的品味和敢于挑战神圣不可侵犯业务的勇气，才能在未来生存。</p>
+                    <h3 class="point-title">多创始人时刻</h3>
+                    <p class="point-desc">不是只有创始人在产生所有想法。公司每天都有"多个创始人时刻"——聪明的员工想出巧妙主意，推动产品前进。识别和放大这些时刻。</p>
                 </div>
             </div>
         </div>
@@ -647,28 +137,34 @@
                 <div class="topic-header">
                     <span class="topic-number">01</span>
                     <div class="topic-info">
-                        <h3 class="topic-title">等级制度的终结：信息流的革命</h3>
-                        <span class="topic-timestamp">00:00 - 04:00</span>
+                        <h3 class="topic-title">传统层级制的根本缺陷</h3>
+                        <span class="topic-timestamp">00:02:39 - 00:07:13</span>
                     </div>
                 </div>
                 <div class="topic-content">
                     <div class="topic-section-title">核心观点</div>
                     <p class="topic-core-point">
-                        传统的公司等级制度本质上是为了解决"在人类规模下管理信息流"的古老问题，而 AI 的出现让这种层级失去了存在的必然性。
+                        传统层级制的存在是为了解决信息流动问题，但 AI 时代让这个存在理由彻底消失。
                     </p>
 
                     <div class="topic-section-title">深度阐述</div>
                     <div class="topic-detail">
-                        <div class="topic-detail-label">等级制度的起源</div>
-                        <p class="topic-detail-content">Jack 从第一性原理出发，剖析了等级制度的起源：过去 2000 年里，人类为了让大规模人群协同工作，不得不建立层级，让信息一级级向上传递、一级级向下传达。但在 Block 这种远程办公的公司，每一步操作（Slack 消息、代码提交、会议记录）都会产生数字资产。</p>
+                        <div class="topic-detail-label">第一性原理思考</div>
+                        <p class="topic-detail-content">Jack 从第一性原理出发思考这个问题：层级制究竟从何而来？为什么存在？答案是信息流动。当一家公司拥有成百上千名员工时，如何让所有人都在同一个"频道"上？人类几千年来发展出的解决方案是层级制——通过中层管理者上下传递信息。</p>
                     </div>
+
                     <div class="topic-detail">
-                        <div class="topic-detail-label">现状与愿景</div>
-                        <p class="topic-detail-content">传统公司依赖管理层作为信息中转站，这会导致严重的信息损耗和政治偏见。Jack 的愿景是将所有数字资产输入模型，构建一个"公司智能体"。不仅 CEO，每个员工都能与这个智能体对话。</p>
+                        <div class="topic-detail-label">数字痕迹的力量</div>
+                        <p class="topic-detail-content">Block 是一家完全远程优先的公司。他们做的每一件事——Slack 消息、邮件、代码提交、Google 文档、录制的会议——都会留下数字痕迹（artifacts）。这些痕迹完整记录了公司如何运作、如何构建产品、如何失败、如何犯错。</p>
                     </div>
+
                     <div class="topic-detail">
-                        <div class="topic-detail-label">重要原话</div>
-                        <p class="topic-detail-content">"Traditionally we've been relying upon humans in a management structure... instead we can take all of those artifacts and put an intelligence on top of it... treat the company as a mini-AGI." ——"传统上我们依赖管理结构中的人……相反，我们可以利用所有这些数字产物，在其上建立智能……将公司视为一个微型 AGI。"</p>
+                        <div class="topic-detail-label">新模式：智能层</div>
+                        <p class="topic-detail-content">传统模式依赖管理层在层级中上下传递信息。新模式是将所有数字痕迹输入 AI，构建公司的"世界模型"。这个 AI 不是给 CEO 专用的——公司里的任何人都可以与公司的"智能"对话，获得同样的信息访问权限和理解深度。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "公司本质上就是一个智能体（intelligence），但它从未被构建成最高效或信息损失最小的结构。"
                     </div>
                 </div>
             </div>
@@ -678,24 +174,40 @@
                 <div class="topic-header">
                     <span class="topic-number">02</span>
                     <div class="topic-info">
-                        <h3 class="topic-title">组织重塑：Block 的"三位一体"角色</h3>
-                        <span class="topic-timestamp">07:23 - 11:33</span>
+                        <h3 class="topic-title">三种角色的未来组织</h3>
+                        <span class="topic-timestamp">00:07:13 - 00:12:01</span>
                     </div>
                 </div>
                 <div class="topic-content">
                     <div class="topic-section-title">核心观点</div>
                     <p class="topic-core-point">
-                        Block 正在将复杂的职级简化为三种核心角色，通过将组织深度从 5 层压缩到 2-3 层，甚至尝试让 6000 人直属 CEO。
+                        公司组织结构将从金字塔简化为三种角色，最终实现"完全扁平"。
                     </p>
 
                     <div class="topic-section-title">深度阐述</div>
                     <div class="topic-detail">
-                        <div class="topic-detail-label">三种核心角色</div>
-                        <p class="topic-detail-content">Jack 提出未来理想的组织中只有三种人：<strong>1. IC (Individual Contributor) - 建设者/操作者</strong>：包括工程师、设计师、销售。他们利用 AI 智能体增强自身能力，一个人能完成过去 10 人的工作。核心能力是判断力与品味。<strong>2. DRI (Directly Responsible Individual) - 负责人</strong>：负责客户成果和策略，组建 IC 团队解决问题。核心能力是责任心与问责制。<strong>3. Player Coach - 球员兼教练</strong>：不只是口头指导，而是通过"做给别人看"来提升团队能力。未来这不再是一个行政职级，而是一个分配任务。</p>
+                        <div class="topic-detail-label">当前状态与目标</div>
+                        <p class="topic-detail-content">Block 从 CEO 到任何员工的最深层级是 5 层，目标是今年内降到 2-3 层。终极理想是所有人都直接向 CEO 汇报（Block 有约 6000 名员工）。这听起来荒谬，但当大部分工作通过"智能层"进行时，这变得完全可以管理。</p>
                     </div>
+
                     <div class="topic-detail">
-                        <div class="topic-detail-label">CEO 的直觉</div>
-                        <p class="topic-detail-content">Jack 甚至希望实现"0 层级"，让所有人都向他报告，依靠智能层来辅助管理。</p>
+                        <div class="topic-detail-label">1. IC（Individual Contributor）—— 构建者/操作者</div>
+                        <p class="topic-detail-content">工程师、设计师、销售人员、产品人员等，直接使用工具构建或运营公司。AI 增强他们的能力，一个人可以完成过去 10 个人的工作。核心人类技能：判断力、品味、创造力。占公司员工的绝大部分。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">2. DRI（Directly Responsible Individual）—— 负责人</div>
+                        <p class="topic-detail-content">对客户成果负责，制定策略，理解产品路线图，组建 IC 团队完成任务。核心人类技能：所有权和问责制。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">3. Player-Coach—— 教练</div>
+                        <p class="topic-detail-content">帮助其他人提升技能和工艺。不是通过"告诉"，而是通过"展示"来教学。可能是 IC，也可能是 DRI。核心人类技能：培养人类能力、同理心。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">未来愿景</div>
+                        <p class="topic-detail-content">Jack 预见，未来这不会是汇报结构，而是分配任务："我被分配去帮助这些 IC 掌握他们的工艺。"在极少数情况下，一个人可以同时承担所有三个角色。Jack 期望他的领导团队都做到这一点：既能构建，又能制定策略，还能指导他人。</p>
                     </div>
                 </div>
             </div>
@@ -705,24 +217,53 @@
                 <div class="topic-header">
                     <span class="topic-number">03</span>
                     <div class="topic-info">
-                        <h3 class="topic-title">未来的四层架构与客户驱动路线图</h3>
-                        <span class="topic-timestamp">11:34 - 16:47</span>
+                        <h3 class="topic-title">CEO 角色的根本转变</h3>
+                        <span class="topic-timestamp">00:12:01 - 00:16:27</span>
                     </div>
                 </div>
                 <div class="topic-content">
                     <div class="topic-section-title">核心观点</div>
                     <p class="topic-core-point">
-                        未来的公司由四个逻辑层组成，客户的实时需求将直接生成功能，从而取消传统意义上的"产品路线图"。
+                        CEO 的职责从"管理者"变为"架构师"和"校准者"。
                     </p>
 
                     <div class="topic-section-title">深度阐述</div>
                     <div class="topic-detail">
-                        <div class="topic-detail-label">四层架构详解</div>
-                        <p class="topic-detail-content">Jack 详细解释了他对产品架构的重构：<strong>能力层 (Capabilities)</strong>：公司的底层原子功能（如发卡、信贷）。<strong>界面层 (Interfaces)</strong>：触达用户的窗口（如 Cash App, Square 注册机）。<strong>主动智能 (Proactive Intelligence)</strong>：基于资金流（最真实的信号）主动预测并保护客户。<strong>世界模型 (World Model)</strong>：公司对自身和客户的深度理解。</p>
+                        <div class="topic-detail-label">过去 CEO 的三大职责</div>
+                        <p class="topic-detail-content">1. 确保正确的原则和团队动态（招聘、解雇、价值观、文化）<br>2. 确保决策在客户、行业趋势、竞争的背景下做出<br>3. 不断提高执行标准，推动成长</p>
                     </div>
+
                     <div class="topic-detail">
-                        <div class="topic-detail-label">突破性理念</div>
-                        <p class="topic-detail-content">如果客户在对话中要求一个不存在的功能，系统应能实时组合底层能力来满足。如果满足不了，这个"缺口"才是真正的研发路线图，而不是由管理层拍脑袋决定的。</p>
+                        <div class="topic-detail-label">未来 CEO 的职责</div>
+                        <p class="topic-detail-content">Jack 说他现在看到的图景是：公司的智能模型在中心，人类在边缘，不断校准这个智能朝着客户 outcomes 发展。但更重要的是，Jack 认为公司的终极限制因素是它的路线图（roadmap）。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第一层：能力（Capabilities）</div>
+                        <p class="topic-detail-content">公司的基础工具和功能。对于 Block：卡支付、点对点借贷等金融科技能力。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第二层：接口（Interfaces）</div>
+                        <p class="topic-detail-content">Square 注册表、Cash App、Tidal、Bitkey 等。通过特定导航与真实世界互动。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第三层：主动智能（Proactive Intelligence）</div>
+                        <p class="topic-detail-content">基于对客户的深刻理解。金钱是"最诚实的信号"。不再等待客户提问，而是主动提示客户。Jack 举了个例子：很多客户把 Cash App 当银行账户用。系统可以主动帮助他们管理现金流——确保房租、Spotify 订阅、孩子零花钱都按顺序支付，永远不会透支，甚至还有结余可以储蓄。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我认为安心（peace of mind）是最关键的价值。"
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第四层：世界模型（World Models）</div>
+                        <p class="topic-detail-content">对客户的深刻理解，对公司自身的理解。说到底，CEO 的工作是判断——判断我们想要构建的东西是否与我们的意图、价值观、品味一致，是否独特。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "判断我们想要构建的东西是否与我们的意图、价值观、品味一致，是否独特。"
                     </div>
                 </div>
             </div>
@@ -732,28 +273,49 @@
                 <div class="topic-header">
                     <span class="topic-number">04</span>
                     <div class="topic-info">
-                        <h3 class="topic-title">为什么"副驾驶"思维是危险的</h3>
-                        <span class="topic-timestamp">16:48 - 21:31</span>
+                        <h3 class="topic-title">从"副驾驶"到"核心引擎"</h3>
+                        <span class="topic-timestamp">00:16:27 - 00:22:55</span>
                     </div>
                 </div>
                 <div class="topic-content">
                     <div class="topic-section-title">核心观点</div>
                     <p class="topic-core-point">
-                        AI 不是用来提高 10% 效率的插件，而是必须作为核心重筑公司，否则企业将在未来的分发竞争中消亡。
+                        大多数公司把 AI 当作"副驾驶"，但这应该是完全围绕 AI 重建整个公司。
                     </p>
 
                     <div class="topic-section-title">深度阐述</div>
                     <div class="topic-detail">
-                        <div class="topic-detail-label">批评"副驾驶"做法</div>
-                        <p class="topic-detail-content">Jack 批评了目前行业内普遍将 AI 视为"副驾驶"的做法。他认为如果只是"加上 AI"，公司依然维持旧的结构，最终会因为缺乏差异化而死。</p>
+                        <div class="topic-detail-label">关键问题</div>
+                        <p class="topic-detail-content">Roelof 提出了一个关键问题：Block 有大量高质量数据，但对于数据质量较差的公司（如 Workday、ServiceNow），这个模式适用吗？</p>
                     </div>
+
                     <div class="topic-detail">
-                        <div class="topic-detail-label">学习经历</div>
-                        <p class="topic-detail-content">Jack 透露他在 2025 年初（推测为视频背景中的未来设定或口误）每天花 3 小时亲自编写代码和使用 AI 工具，这种"体感"让他意识到变革必须是结构性的。</p>
+                        <div class="topic-detail-label">Jack 的回答</div>
+                        <p class="topic-detail-content">"如果你正在构建一个深刻理解人性的业务，并且这种理解每天都在加深，那你就可以把公司构建为一个智能体。如果你不是，那 AI 可能只是一个附加功能。"</p>
                     </div>
+
                     <div class="topic-detail">
-                        <div class="topic-detail-label">资本主义模拟</div>
-                        <p class="topic-detail-content">Roelof Botha 类比了亚当·斯密的《国富论》，认为这种新模式更像是一个高效的市场系统，通过真实信号（客户需求）而非办公室政治来分配资源。</p>
+                        <div class="topic-detail-label">批评行业思维模式</div>
+                        <p class="topic-detail-content">Jack 批评了整个行业的思维模式："大多数公司把 AI 当成副驾驶，一种增强型的附加功能。而不是问：如何把 AI 作为核心，完全重建整个公司？"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">关键洞察</div>
+                        <p class="topic-detail-content">如果公司与前沿 AI 实验室太相似，就难以差异化，更难以生存下去。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">亚当·斯密的《国富论》</div>
+                        <p class="topic-detail-content">Roelof 分享了一个精彩的类比：亚当·斯密的《国富论》——如果信号正确，系统中大量参与者的自利行为可以带来最优结果。不需要"指挥与控制"。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "今天很多公司的运作方式更像是指挥与控制——层级、政治、权力博弈，真相常常模糊不清。我们设想的是一个基于真理的系统，消除所有层级，让创始人向往的那种 100 人规模的生产力回来。"
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"多创始人时刻"</div>
+                        <p class="topic-detail-content">Jack 有一个他最喜欢的概念——公司有多个"创始人时刻"。不是只有创始人在产生所有想法，而是每天都有聪明的人想出巧妙主意，推动产品前进。</p>
                     </div>
                 </div>
             </div>
@@ -763,24 +325,53 @@
                 <div class="topic-header">
                     <span class="topic-number">05</span>
                     <div class="topic-info">
-                        <h3 class="topic-title">决策机制："多西模式"圆环</h3>
-                        <span class="topic-timestamp">21:32 - 27:00</span>
+                        <h3 class="topic-title">裁员决策的幕后</h3>
+                        <span class="topic-timestamp">00:30:53 - 00:36:43</span>
                     </div>
                 </div>
                 <div class="topic-content">
                     <div class="topic-section-title">核心观点</div>
                     <p class="topic-core-point">
-                        决策权正在从顶层移交给客户和系统，人类的角色转向"对齐"与"品味判断"。
+                        在强势时行动，不要等到被逼到墙角时才反应。
                     </p>
 
                     <div class="topic-section-title">深度阐述</div>
                     <div class="topic-detail">
-                        <div class="topic-detail-label">三种管理模式</div>
-                        <p class="topic-detail-content">主持人将管理模式分为三类：<strong>1. 经理模式 (Manager Mode)</strong>：金字塔结构，VP 决策。<strong>2. 创始人模式 (Founder Mode)</strong>：扁平化，创始人决策。<strong>3. 多西模式 (Dorsey Mode)</strong>：圆环结构，智能核心在中央，人类在边缘进行引导。</p>
+                        <div class="topic-detail-label">时间线</div>
+                        <p class="topic-detail-content">2025 年 12 月，AI 模型发生了显著飞跃——从能做原型到理解大型遗留代码库。幻觉问题在编码能力方面几乎消失。</p>
                     </div>
+
                     <div class="topic-detail">
-                        <div class="topic-detail-label">决策重心</div>
-                        <p class="topic-detail-content">Jack 强调，在最理想的情况下，客户的查询和行为应该做出大部分决策，而人类负责判断这些决策是否符合公司的价值观和审美。</p>
+                        <div class="topic-detail-label">关键时刻</div>
+                        <p class="topic-detail-content">员工们放假回家，都在玩这些新工具。回来后，对话开始了："如果我们今天有这些工具，我们还会这样构建公司吗？" 答案是一致的：不会。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三步计算</div>
+                        <p class="topic-detail-content">1. 保持服务 100% 运行的最少人数是多少？<br>2. 满足监管合规要求的最少人数是多少？（金融监管严格）<br>3. 履行对华尔街承诺并重建为智能公司的最少人数是多少？<br>得出的数字就是裁员规模的依据。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从决策到执行</div>
+                        <p class="topic-detail-content">不到三周。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "不要等到被逼无奈时才行动。作为上市公司，我们面临各种挑战。其他公司可能也会在某个时候意识到这一点。我不想被动反应。我想提前行动，这样我们可以做得更有尊严。"
+                    </div>
+
+                    <div class="quote-block">
+                        "我们可以对被要求离开的人更慷慨。我们不是被动陷入平庸，而是主动追求卓越。"
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Ruth Porat 的名言</div>
+                        <p class="topic-detail-content">"如果要吃屎三明治，别小口啃。"（意指要下决心就彻底做）</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Jack 的补充</div>
+                        <p class="topic-detail-content">"否则就是每年 10% 或 20% 的裁员，持续多年。那是世界上最令人沮丧、最没有创造力的公司建设方式。你会感觉自己在不断输掉。"</p>
                     </div>
                 </div>
             </div>
@@ -790,24 +381,43 @@
                 <div class="topic-header">
                     <span class="topic-number">06</span>
                     <div class="topic-info">
-                        <h3 class="topic-title">大规模减员背后的逻辑：追求卓越而非应对平庸</h3>
-                        <span class="topic-timestamp">31:02 - 36:51</span>
+                        <h3 class="topic-title">董事会建设的建议</h3>
+                        <span class="topic-timestamp">00:36:43 - 00:41:34</span>
                     </div>
                 </div>
                 <div class="topic-content">
                     <div class="topic-section-title">核心观点</div>
                     <p class="topic-core-point">
-                        Block 裁减了约 40% 的员工（或大幅精简），这不是为了节省成本，而是为了在 AI 时代保持完整性。
+                        把投资者董事会成员当作你永远无法解雇的雇员来对待。
                     </p>
 
                     <div class="topic-section-title">深度阐述</div>
                     <div class="topic-detail">
-                        <div class="topic-detail-label">决策过程</div>
-                        <p class="topic-detail-content">Jack 回忆了去年 12 月模型能力大爆发时的决策过程：他自问自答——如果今天带上这些 AI 工具重新开始，我们需要多少人？三个最低限度：1. 维持服务运行的最低人数；2. 满足合规与监管的最低人数；3. 重筑智能核心的最低人数。</p>
+                        <div class="topic-detail-label">早期阶段</div>
+                        <p class="topic-detail-content">你的第一个董事会就是你的投资者。把这段关系当作"你永远无法解雇的雇用"——事实上他们可以解雇你（Jack 亲身经历过）。不要追求品牌名 VC，要追求人。</p>
                     </div>
+
+                    <div class="quote-block">
+                        "我们优化的是 Roelof 本人——他能提升我们的对话水平、提升我们的执行力，并一路挑战我们。"
+                    </div>
+
                     <div class="topic-detail">
-                        <div class="topic-detail-label">执行哲学</div>
-                        <p class="topic-detail-content">他引用 Ruth Porat 的名言："如果你不得不吃一顿屎，不要小口抿，要大口吞。"他选择在公司处于优势地位时主动重组，而不是等陷入困境时再被迫反应。这种前瞻性确保了对离开者的慷慨和对留下者的激励。</p>
+                        <div class="topic-detail-label">独立董事的重要性</div>
+                        <p class="topic-detail-content">Roelof 建议：一两年内就应该引入优秀的独立董事，至少在达到产品市场契合时。原因：创始人与投资者董事的关系和与独立董事不同。独立董事可以成为导师关系。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Roelof 的警告</div>
+                        <p class="topic-detail-content">"董事会经常建立得太晚、太匆忙，特别是在 IPO 前突然意识到需要更多成员，然后拼凑起来的人对公司的背景、历史和化学反应一无所知。"</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "你会被考验——做空报告、激进投资者、棘手融资——你想了解董事会成员之间的动态。"
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">董事会的核心职责</div>
+                        <p class="topic-detail-content">Jack 补充：董事会的核心职责是确保公司有正确的 CEO，其他所有委员会职责都是次要的。</p>
                     </div>
                 </div>
             </div>
@@ -817,28 +427,43 @@
                 <div class="topic-header">
                     <span class="topic-number">07</span>
                     <div class="topic-info">
-                        <h3 class="topic-title">董事会建设：你无法解雇的人选</h3>
-                        <span class="topic-timestamp">36:52 - 42:30</span>
+                        <h3 class="topic-title">双 CEO 的经验教训</h3>
+                        <span class="topic-timestamp">00:41:34 - 00:48:15</span>
                     </div>
                 </div>
                 <div class="topic-content">
                     <div class="topic-section-title">核心观点</div>
                     <p class="topic-core-point">
-                        早期的董事会投资人就像是你无法解雇的员工，必须基于个人而非品牌来选择。
+                        Jack 是唯一一个同时担任两家上市公司 CEO 的人——这是一个"反目标"，不要模仿。
                     </p>
 
                     <div class="topic-section-title">深度阐述</div>
                     <div class="topic-detail">
-                        <div class="topic-detail-label">招聘逻辑</div>
-                        <p class="topic-detail-content">不要迷信 VC 的名气，要找那个能提升你对话水平的人。</p>
+                        <div class="topic-detail-label">Jack 的立场</div>
+                        <p class="topic-detail-content">"公开公司？绝对不行。私人公司？可能未来会有更多趋势。但公开公司 CEO 双重任职应该是一个反目标（anti-goal），反模式。"</p>
                     </div>
+
                     <div class="topic-detail">
-                        <div class="topic-detail-label">独立董事</div>
-                        <p class="topic-detail-content">Roelof 建议在获得产品市场契合度 (PMF) 后尽快引入优秀的独立董事，他们能起到导师的作用。</p>
+                        <div class="topic-detail-label">他最大的遗憾</div>
+                        <p class="topic-detail-content">"我生活中唯一的遗憾——也是在商业中——是我决定不去学习某些东西的时候。"</p>
                     </div>
+
                     <div class="topic-detail">
-                        <div class="topic-detail-label">预防危机</div>
-                        <p class="topic-detail-content">董事会不仅是为了合规，更是在你遭遇空头报告、敌意收购或融资困境时，能够与你站在一起的亲密战友。</p>
+                        <div class="topic-detail-label">具体来说：过度授权</div>
+                        <p class="topic-detail-content">"在 Block，我最初想建立一个有多个 CEO 的结构，但我意识到我们只是在构建一个控股公司。Square 的 CEO，Cash App 的 CEO……公司的价值不是这些不相关的东西各自增长，而是如何把它们整合起来，因为我们有交易双方的数据，为什么不那样构建？"</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "这导致了不同的文化、价值观、执行水平——那是一团糟。"
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">会议模式的根本变化</div>
+                        <p class="topic-detail-content">仅仅两个月前，每个会议都是看幻灯片或 Google 文档。现在，每个人都带自己构建的原型——可能是模拟数据，也可能是真实数据。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "这比我们以前从幻灯片里获得的深度和真实感多得多。而且他们可以实时修改，我们可以围绕实际构建的东西进行对话。"
                     </div>
                 </div>
             </div>
@@ -848,28 +473,64 @@
                 <div class="topic-header">
                     <span class="topic-number">08</span>
                     <div class="topic-info">
-                        <h3 class="topic-title">克服"二阶段"困境与减少过度授权</h3>
-                        <span class="topic-timestamp">42:31 - 48:22</span>
+                        <h3 class="topic-title">DGAF 与信誉管理</h3>
+                        <span class="topic-timestamp">00:48:15 - 00:53:43</span>
                     </div>
                 </div>
                 <div class="topic-content">
                     <div class="topic-section-title">核心观点</div>
                     <p class="topic-core-point">
-                        Jack 的职业遗憾之一是过早地将权力授予了不同部门的"CEO"，导致公司变成了一家缺乏协同的控股公司。
+                        每个领导者都必须愿意为了做有趣的事情而暂时失去可信度。
                     </p>
 
                     <div class="topic-section-title">深度阐述</div>
                     <div class="topic-detail">
-                        <div class="topic-detail-label">现金贷 (Cash App) 的往事</div>
-                        <p class="topic-detail-content">当年几乎全公司甚至部分董事会成员都反对做 Cash App，认为它偏离了商户业务。Jack 顶住压力捍卫了这个只有 8 人的小团队。</p>
+                        <div class="topic-detail-label">"DGAF"（Don't Give A F***）</div>
+                        <p class="topic-detail-content">主持人分享了一个故事：当红杉雇用他时，他的优缺点评估里，"DGAF"既是优点也是缺点。Jack 说他在这方面会摇摆——他确实会收到很多仇恨、阻力、挑战，无论是内部还是外部。</p>
                     </div>
+
                     <div class="topic-detail">
-                        <div class="topic-detail-label">信誉代价</div>
-                        <p class="topic-detail-content">作为领导者，你必须忍受一段时间内失去利益相关者的信任，只要你确信这是"创始时刻"的延续。</p>
+                        <div class="topic-detail-label">Cash App 的故事</div>
+                        <p class="topic-detail-content">Square 的使命是"让商业变得简单"，专注于商人。然后他们构建了 Cash App——一个点对点支付工具，可以像发邮件一样轻松。</p>
                     </div>
+
+                    <div class="quote-block">
+                        "公司里每个人都讨厌 Cash App，讨厌了两三年。我们在上市 S1 文件里提到它的次数不到 8 次。投资者完全不理解。"
+                    </div>
+
+                    <div class="quote-block">
+                        "每一天我允许它继续存在、维护它，我都在失去可信度。但我知道如果它成功了，我可以赢回可信度。"
+                    </div>
+
                     <div class="topic-detail">
-                        <div class="topic-detail-label">原型驱动会议</div>
-                        <p class="topic-detail-content">现在的 Block 会议不再使用 PPT。员工带来自主开发的、基于真实数据的原型，这种高保真的展示让决策成本趋于零。</p>
+                        <div class="topic-detail-label">结果</div>
+                        <p class="topic-detail-content">"后来我们实现了货币化，它变得盈利，现在是公司业务的一半以上。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">关于信誉的哲学</div>
+                        <p class="topic-detail-content">"我认为关键是要接受你会暂时失去可信度——只要你理解如何赢回它。你不需要在乎人们怎么想，只要你有原则，知道这为什么重要，为什么必须存在。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">每个人都有东西教我</div>
+                        <p class="topic-detail-content">Jack 分享了他作为 CEO 时的一段经历："每个人都说你需要 CEO 教练。我找了一个，他人很好，但我什么都没学到。"</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "那时我决定转换心态：我交谈的每个人、我遇到的每个问题、我面临的每个挑战——那就是我的导师。"
+                    </div>
+
+                    <div class="quote-block">
+                        "为了让它成为导师，我必须决定从中学习。我会强迫自己每天写下每个经历中学到了什么。"
+                    </div>
+
+                    <div class="quote-block">
+                        "我最大的后悔是当我决定不从中学习的时候——因为我可能会重复同样的错误。"
+                    </div>
+
+                    <div class="quote-block">
+                        "即使负面反馈或信誉损失，也是在教会我什么。这种心态让我对自己经历有了掌控权。"
                     </div>
                 </div>
             </div>
@@ -879,55 +540,53 @@
                 <div class="topic-header">
                     <span class="topic-number">09</span>
                     <div class="topic-info">
-                        <h3 class="topic-title">自我修行：作为 CEO 的专注力训练</h3>
-                        <span class="topic-timestamp">48:23 - 56:25</span>
+                        <h3 class="topic-title">冥想与 CEO 的核心素质</h3>
+                        <span class="topic-timestamp">00:53:43 - 01:01:52</span>
                     </div>
                 </div>
                 <div class="topic-content">
                     <div class="topic-section-title">核心观点</div>
                     <p class="topic-core-point">
-                        冥想不是玄学，而是一种硬核的心理体能训练，旨在削弱本能反应，增强观察力。
+                        冥想不是"虚无缥缈"的东西，而是让大脑变强的身体训练。
                     </p>
 
                     <div class="topic-section-title">深度阐述</div>
                     <div class="topic-detail">
-                        <div class="topic-detail-label">极端专注</div>
-                        <p class="topic-detail-content">Jack 谈到了他在内观 (Vipassana) 冥想中的体验：前三天只盯着上唇感受呼吸，这能磨炼大脑的聚焦能力。</p>
+                        <div class="topic-detail-label">冥想的真实理解</div>
+                        <p class="topic-detail-content">"人们想到冥想，会想到虚无缥缈的东西——人在沙漠里，看着云，想象云飘走，想法是云，让它们消散。但真正的冥想是非常物理性的。"</p>
                     </div>
-                    <div class="topic-detail">
-                        <div class="topic-detail-label">应对痛苦</div>
-                        <p class="topic-detail-content">在长达 10 小时的静坐中观察疼痛但不产生排斥。</p>
-                    </div>
-                    <div class="topic-detail">
-                        <div class="topic-detail-label">无限导师</div>
-                        <p class="topic-detail-content">他不再寻找单一的导师，而是将生活中的每一次遭遇、每一个敌人、每一个困难都视为导师，强迫自己从中学习。</p>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Topic 10 -->
-            <div class="topic">
-                <div class="topic-header">
-                    <span class="topic-number">10</span>
-                    <div class="topic-info">
-                        <h3 class="topic-title">终章：AI 时代的"品味"将是唯一护城河</h3>
-                        <span class="topic-timestamp">56:26 - 结束</span>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">10 天冥想静修的经历</div>
+                        <p class="topic-detail-content">前 3 天：从凌晨 4:30 坐到晚上 9:00，专注于上唇的呼吸感。训练大脑专注于一点，训练大脑观察感觉，不从情感或智力角度做出反应。</p>
                     </div>
-                </div>
-                <div class="topic-content">
-                    <div class="topic-section-title">核心观点</div>
-                    <p class="topic-core-point">
-                        未来的 CEO 需要具备 ALE（真实性、逻辑、共情）特质，并拥有不断重编自己思维假设的能力。
-                    </p>
 
-                    <div class="topic-section-title">深度阐述</div>
                     <div class="topic-detail">
-                        <div class="topic-detail-label">ALE 框架</div>
-                        <p class="topic-detail-content">Authenticity (真实), Logic (逻辑), Empathy (共情)。</p>
+                        <div class="topic-detail-label">后 7 天</div>
+                        <p class="topic-detail-content">你上下扫描身体寻找感觉——疼痛。你盘腿坐着，3 小时不能动，非常痛苦。你观察这种疼痛，心态是：这不是永久的，如果我站起来它就消失了。</p>
                     </div>
+
+                    <div class="quote-block">
+                        "你在训练大脑认识到一切都是暂时的。不需要为将消失的东西受苦或依附。"
+                    </div>
+
                     <div class="topic-detail">
-                        <div class="topic-detail-label">反对平庸</div>
-                        <p class="topic-detail-content">现在的公司充斥着"复印件的复印件"。AI 让复制变得极其廉价，只有拥有强烈的观点、独特的品味和敢于挑战神圣不可侵犯的业务（Sacred Cows）的勇气，才能在未来生存。</p>
+                        <div class="topic-detail-label">CEO 的核心素质：ALE</div>
+                        <p class="topic-detail-content">Roelof 提出了一个缩写：ALE（Authenticity, Logic, Empathy）<br>• 真实性：你真实吗？人们看到的是真实的你吗？<br>• 逻辑性：你可预测吗？你理性吗？还是容易失控？<br>• 同理心：你真的关心团队吗？关心业务吗？</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Jack 的回答</div>
+                        <p class="topic-detail-content">"我重视那些能够不断重新编程自己思维和假设的人。质疑自己的要求、假设、决策——你对过去、公司历史、神圣禁忌、竞争对手有多固执。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">品味是真实的</div>
+                        <p class="topic-detail-content">"品味不只是知道什么东西看起来不错。更重要的是：我有观点吗？我有主观驱动的独特视角吗？它相关吗？它比现有的东西更有相关性吗？"</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "这正是任何创始人在做的：构建世界上不存在的东西，因为我想看到它存在。"
                     </div>
                 </div>
             </div>
@@ -942,33 +601,63 @@
             <h2 class="section-title">精华收获</h2>
             <div class="takeaways-grid">
                 <div class="takeaway-card">
-                    <div class="takeaway-emoji">🏢</div>
-                    <h3 class="takeaway-title">公司即智能体</h3>
-                    <p class="takeaway-desc">停止把 AI 当工具，开始把它当成组织的架构。未来的公司不应该是一个层级森严的金字塔，而应该是一个围着"智能核心"旋转的圆环。</p>
+                    <div class="takeaway-emoji">🏗️</div>
+                    <h3 class="takeaway-title">结构性变革，不是生产力提升</h3>
+                    <p class="takeaway-desc">这不是关于让员工用 AI 提高 10% 效率——这是围绕 AI 重建整个公司的组织结构。如果你只是把 AI 当作"副驾驶"，你可能会落后。</p>
                 </div>
 
                 <div class="takeaway-card">
                     <div class="takeaway-emoji">⚡</div>
-                    <h3 class="takeaway-title">减少组织熵值</h3>
-                    <p class="takeaway-desc">重新评估你的组织深度。如果你需要 5 层以上才能做决策，你已经太慢了。Block 将组织深度从 5 层压缩到 2-3 层，甚至尝试让 6000 人直属 CEO。</p>
+                    <h3 class="takeaway-title">强势时行动，弱势时反应</h3>
+                    <p class="takeaway-desc">Jack 裁员 40% 不是因为公司陷入困境——恰恰相反。主动从强势位置行动，让你能够更体面地处理，更有尊严地对待离开和留下的人。</p>
                 </div>
 
                 <div class="takeaway-card">
-                    <div class="takeaway-emoji">🎨</div>
-                    <h3 class="takeaway-title">原型大于 PPT</h3>
-                    <p class="takeaway-desc">在 AI 时代，低成本快速构建原型是表达判断力的唯一有效方式。现在的 Block 会议不再使用 PPT，员工带来自主开发的、基于真实数据的原型。</p>
+                    <div class="takeaway-emoji">🧠</div>
+                    <h3 class="takeaway-title">公司即智能体</h3>
+                    <p class="takeaway-desc">把公司想象成一个小型 AGI：所有的数字痕迹都输入 AI，任何人都可以与"公司智能"对话。这消除了信息流动的需求，也就消除了层级制的存在理由。</p>
                 </div>
 
                 <div class="takeaway-card">
-                    <div class="takeaway-emoji">🌱</div>
-                    <h3 class="takeaway-title">培养无限导师思维</h3>
-                    <p class="takeaway-desc">不再寻找单一的导师，而是将生活中的每一次遭遇、每一个敌人、每一个困难都视为导师，强迫自己从中学习。每一次负面反馈都是一次"重编代码"的学习机会。</p>
+                    <div class="takeaway-emoji">👥</div>
+                    <h3 class="takeaway-title">三个角色的未来</h3>
+                    <p class="takeaway-desc">构建者：被 AI 增强的个人贡献者。负责人：对客户 outcomes 负责。教练：帮助他人掌握工艺。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">愿意暂时失去可信度</h3>
+                    <p class="takeaway-desc">Cash App 被所有人讨厌了两三年，现在是公司业务的一半以上。如果你相信原则，准备好为它暂时失去可信度。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📚</div>
+                    <h3 class="takeaway-title">每个人都是你的导师</h3>
+                    <p class="takeaway-desc">不要只找一个导师——把每个遭遇都当作导师。决定从中学习，强迫自己写下学到的东西。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧘</div>
+                    <h3 class="takeaway-title">冥想是大脑训练</h3>
+                    <p class="takeaway-desc">不是虚无缥缈的东西，而是训练大脑专注、观察、不冲动反应的物理性练习。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💪</div>
+                    <h3 class="takeaway-title">DGAF 与原则</h3>
+                    <p class="takeaway-desc">Jack 说他最大的后悔是过度授权。当你公司的每个部分都完全"可读"（legible）时，授权的方程式完全不同。</p>
                 </div>
 
                 <div class="takeaway-card">
                     <div class="takeaway-emoji">✨</div>
-                    <h3 class="takeaway-title">守住"品味"</h3>
-                    <p class="takeaway-desc">AI 可以生成，但它无法决定"什么才是真正值得存在的"。这是人类最后的阵地。只有拥有强烈的观点、独特的品味，才能在未来生存。</p>
+                    <h3 class="takeaway-title">品味是差异化所在</h3>
+                    <p class="takeaway-desc">AI 会生成 80%，最后 20% 取决于你的创造力、品味、判断力。在充满"副本的副本"的世界里，有观点、有主观驱动才是稀缺的。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🌟</div>
+                    <h3 class="takeaway-title">多创始人时刻</h3>
+                    <p class="takeaway-desc">不是只有创始人在产生所有想法。公司每天都有"多个创始人时刻"——聪明的员工想出巧妙主意，推动产品前进。识别和放大这些时刻。</p>
                 </div>
             </div>
         </div>
@@ -977,15 +666,17 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <h3 class="footer-title">个人感受</h3>
+            <h3 class="footer-title">延伸思考</h3>
             <p class="footer-desc">
-                Jack Dorsey 在视频中展现了一种极度的清醒与决绝。他描述那种"生存恐惧与希望并存"的感觉非常真实。他并不是在推销 AI 工具，而是在推销一种对权力的重新分配。这种从管理 6000 人到管理一个"智能核心"的转变，对任何传统管理者来说都是巨大的心理挑战。
+                Jack Dorsey 的思考指向一个可能的未来：公司的边界正在模糊。当客户可以通过对话接口，实时请求目前不在路线图上的功能，而公司能够基于现有能力组合并交付——客户不再是消费产品的被动接受者，而是与公司共同构建产品的参与者。
             </p>
             <div class="footer-quote">
-                "Traditionally we've been relying upon humans in a management structure... treat the company as a mini-AGI."
+                "产品不是你列在路线图上的东西，而是你的能力与客户需求实时相遇的地方。"
             </div>
             <p class="footer-note">
-                <strong>延伸思考：</strong>如果信息完全透明且由 AI 整合，中层管理者的"权力租金"将彻底消失。这对社会就业结构意味着什么？当公司变成一个"微型 AGI"，它是否可以更像是一个去中心化的协议，而不是一个法律实体？
+                在这个意义上，未来的公司更像一个有机体——有自己的 DNA（价值观）、神经系统（AI 智能层）、免疫系统（判断机制）。人类在边缘不断校准，确保这个有机体朝着正确的方向进化。<br><br>
+                "我这一年每天早上花三个小时测试这些工具——每天都让我惊讶。复合增长的力量太不可思议了。"<br><br>
+                "有些人生活在抽象中，认为'哦，这些工具会让每个人提高 10 倍生产力'。我不认为这是生产力问题，我认为这是结构性变革。"
             </p>
         </div>
     </footer>
