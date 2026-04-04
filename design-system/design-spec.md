@@ -479,13 +479,13 @@ document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
     opacity: 0.6;
 }
 
-/* 额外的渐变叠加层（橙色+青色光晕） */
+/* 额外的渐变叠加层（使用强调色，自动适配配色方案） */
 .header::after {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(ellipse at top right, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom left, rgba(0, 212, 255, 0.12) 0%, transparent 50%);
+    background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
     pointer-events: none;
     z-index: 0;
 }
