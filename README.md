@@ -14,7 +14,7 @@ A curated knowledge platform that distills the best YouTube podcast content into
 
 ## Articles
 
-**53 articles** across multiple domains:
+**55 articles** across multiple domains:
 
 | Domain | Examples |
 |--------|---------|
@@ -22,7 +22,8 @@ A curated knowledge platform that distills the best YouTube podcast content into
 | **AI & Robotics** | Sergey Levine, Demis Hassabis, Brett Adcock, Figure AI |
 | **AI Markets & Compute** | a16z, SemiAnalysis, Coatue, Alfred Lin (Sequoia) |
 | **AI Society & Future** | Ben Horowitz, Marc Andreessen, Alex Karp, Yuval Harari |
-| **Investing & Finance** | Stanley Druckenmiller, Tom Lee, ARK Invest |
+| **Investing & Finance** | Stanley Druckenmiller, Tom Lee, ARK Invest, Steve Keen (financial crash warning) |
+| **Defense & Military Tech** | Palantir, Anduril, military industrial complex |
 | **Company Earnings** | Google Q4 2025, Micron Q2 2026 |
 | **Science & Health** | David Sinclair (aging), Dr. Arif Khan (child development), AI-designed life forms |
 | **Space & Frontier Tech** | Musk, NASA, Starcloud, Quantum Computing, Brain-Computer Interfaces |
@@ -68,7 +69,7 @@ All gradients, glows, shadows, and accent elements auto-inherit from these varia
 ```
 yt-podcast/
 ├── index.html                  # Homepage (article grid)
-├── articles/                   # 43 in-depth articles
+├── articles/                   # 55 in-depth articles
 │   └── images/                 # Article hero images
 ├── design-system/
 │   ├── design-tokens.css       # Design tokens & color schemes
