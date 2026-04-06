@@ -14,7 +14,7 @@ A curated knowledge platform that distills the best YouTube podcast content into
 
 ## Articles
 
-**55 articles** across multiple domains:
+**65 articles** across multiple domains:
 
 | Domain | Examples |
 |--------|---------|
@@ -69,7 +69,7 @@ All gradients, glows, shadows, and accent elements auto-inherit from these varia
 ```
 yt-podcast/
 ├── index.html                  # Homepage (article grid)
-├── articles/                   # 55 in-depth articles
+├── articles/                   # 65 in-depth articles
 │   └── images/                 # Article hero images
 ├── design-system/
 │   ├── design-tokens.css       # Design tokens & color schemes
