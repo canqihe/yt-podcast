@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demis Hassabis：为什么大模型不会商品化，为什么我们还没触及扩展定律的极限</title>
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <style>
+        /* 配色方案：蓝靛（适合 AI/深度学习主题） */
+        :root {
+            --accent-primary: #3b82f6;
+            --accent-secondary: #818cf8;
+            --accent-primary-rgb: 59, 130, 246;
+            --accent-secondary-rgb: 129, 140, 248;
+        }
+
+        /* 背景图样式 */
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/demis-hassabis-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">AI 洞察</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">Demis Hassabis</span>
+                    <span class="title-line-2">AGI、扩展定律与 AI 的未来</span>
+                </h1>
+                <p class="subtitle">
+                    如果现代 AI 行业是一座大厦，那么支撑它的 90% 的突破性成果都来自谷歌。DeepMind CEO 分享他对 AGI 时间表、模型商品化、药物研发革命和 AI 安全的深度思考。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Harry Stebbings</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Demis Hassabis</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 32 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=SSya123u9Yk" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看完整访谈
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">AGI 五年内到来</h3>
+                    <p class="point-desc">Demis 基于自 2010 年以来的持续推演，认为 AGI 有很大概率在五年内实现，他们至今仍在"正轨"上。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">扩展定律未死</h3>
+                    <p class="point-desc">虽然性能提升从指数级放缓，但继续扩展算力仍然能带来可观回报，只是需要更多投入。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">模型不会商品化</h3>
+                    <p class="point-desc">顶尖实验室之间的差距正在拉大，因为现有算法创新正在被"榨干"，需要新的突破才能继续前进。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">DeepMind 的逆袭</h3>
+                    <p class="point-desc">通过整合谷歌内部的人才、算力和资源，以创业公司的专注度执行，从追赶者变成了领先者。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">药物研发革命</h3>
+                    <p class="point-desc">AI 将在 5-10 年内完成整个药物设计引擎，Isomorphic Labs 正在构建通用药物发现平台。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">AI 安全与监管</h3>
+                    <p class="point-desc">需要国际标准的监管体系，建立类似国际原子能机构的 AI 安全机构，制定基准测试和认证机制。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">关于 AGI：定义与时间表</h3>
+                        <span class="topic-timestamp">01:21 - 02:58</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AGI（通用人工智能）的标准应该清晰——它必须具备人类大脑的所有认知能力。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AGI 的定义</div>
+                        <p class="topic-detail-content">Demis 对 AGI 的定义始终如一：一个展现出人类大脑所有认知能力的系统。这个定义并非随意选择，而是基于一个基本事实——人类大脑是我们在整个宇宙中已知的唯一"通用智能可行"的存在证明。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">时间表预测</div>
+                        <p class="topic-detail-content">"五年内有很大概率实现。"这个时间框架比很多人想象的要短，但 Demis 并非随口而言。他提到，早在 2010 年 DeepMind 创立之初，他的联合创始人 Shane Legg 就在博客中预测过 AGI 的到来。那时候 AI 还是冷门领域，几乎没人关注。他们通过推演算力和算法的进步速度，预测从 2010 年算起大约需要 20 年。现在回头看，他们几乎还在正轨上。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我有一个关于时间的概率分布，但我认为在接下来的五年内，AGI 实现的可能性很大。" [02:10]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 发展的最大瓶颈</h3>
+                        <span class="topic-timestamp">02:58 - 03:48</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        算力是当前 AI 发展的最大瓶颈，原因不仅是训练更大模型需要更多算力，更重要的是实验本身需要大量算力。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">研究实验的算力需求</div>
+                        <p class="topic-detail-content">当人们谈论"扩展定律"（scaling laws）时，通常指的是构建参数越来越多、架构越来越大的系统。但 Demis 指出，算力紧缺还有另一个被忽视的原因——研究实验本身。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">云计算即工作台</div>
+                        <p class="topic-detail-content">当研究人员有了新的算法想法，需要在合理的规模上测试它，否则结果无法应用到实际系统中。如果有大量研究员都在产生新想法，那么测试这些想法所需的算力就会非常惊人。"云计算就是我们的工作台。"Demis 这样描述。在这个工作台上，每一个新想法都需要足够的资源来验证，这正是算力需求爆炸式增长的原因。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">扩展定律触顶了吗？</h3>
+                        <span class="topic-timestamp">03:48 - 04:40</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        我们没有触及扩展定律的极限，但回报率正在从指数级增长转向更平缓但仍可观的线性增长。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从指数级到线性</div>
+                        <p class="topic-detail-content">很多人声称 AI 的性能提升正在"平台化"，Demis 认为这种看法过于简单。在早期，每新一代大型语言模型都能带来近乎翻倍的性能提升——这是指数级的增长。但显然，这种指数级增长不可能永远持续。在某个点，增速必然会放缓。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">放缓不等于停滞</div>
+                        <p class="topic-detail-content">然而，放缓不等于停滞。Demis 强调，他和 Google DeepMind 仍然在通过算力扩展获得"非常可观的回报"。只是这些回报从早期的指数级变成了现在更平缓、但仍然重要的增长。他做了一个重要的区分：当增长不再呈指数级时，不代表扩展不再有价值。只是我们进入了一个新阶段——需要更多投入才能获得提升，但提升依然真实存在。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我不这么认为。这其实更微妙一些。当所有领先公司开始构建这些大型语言模型时，每一代新系统都能带来巨大的性能飞跃……在某个点这必然会放缓。但这并不意味着继续扩展现有系统没有很好的回报。" [03:55]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 的超预期与缺失</h3>
+                        <span class="topic-timestamp">04:40 - 05:24</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 在大多数领域都超出了 Demis 的预期，但仍然缺少一些关键能力，尤其是持续学习。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">超出预期的进展</div>
+                        <p class="topic-detail-content">回顾过去五到十年，AI 的发展实际上比 Demis 当初想象的更快。比如视频生成模型，以及 DeepMind 最新的 Genie 系统——这是一个可以交互的世界模型。如果能时光倒流，把 Genie 展示给十年前的 Demis，他会感到震惊。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">持续学习的缺失</div>
+                        <p class="topic-detail-content">但有些东西仍然缺失。最明显的就是"持续学习"（continual learning）——这些系统在训练完成后、部署到世界后，无法继续学习新东西。它们的能力在部署的那一刻就被固定了。</p>
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">个人感受</div>
+                        Demis 对此的语气中透露出一种矛盾——他对 AI 的整体进展感到惊喜，但对某些基础能力的缺失保持着清醒。这种清醒正是一个科学家应有的态度。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">为什么 AI 无法像人类一样持续学习？</h3>
+                        <span class="topic-timestamp">05:24 - 06:10</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        人类大脑通过睡眠和强化学习优雅地整合新知识，而 AI 研究者还没有找到等效的机制。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">人脑的记忆巩固机制</div>
+                        <p class="topic-detail-content">这是一个看似基础却极其困难的问题。为什么人类可以持续学习，而 AI 不能？Demis 指出，所有顶尖实验室都在研究这个问题。人类大脑有一种优雅的解决方案——通过睡眠进行记忆巩固（consolidation）。白天形成的记忆会在睡眠中重放，其中一部分信息被优雅地整合到现有的知识库中。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 需要类似的机制</div>
+                        <p class="topic-detail-content">他思考了一段时间，认为 AI 可能需要类似的机制——一种能够将新信息与现有知识库优雅融合的方法，而不是简单地覆盖或遗忘。</p>
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">延伸思考</div>
+                        这个问题的解决可能是 AGI 道路上的关键里程碑。如果 AI 无法像人类一样终身学习，它就永远只是"预训练 + 部署"的工具，而非真正的智能体。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">DeepMind 的逆袭之路</h3>
+                        <span class="topic-timestamp">06:10 - 09:10</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        通过整合谷歌内部的所有 AI 人才、算力和资源，DeepMind 从追赶者变成了领先者。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从落后到领先</div>
+                        <p class="topic-detail-content">几年前，DeepMind 在大模型领域还处于落后位置。但今天，Harry 在社交媒体上公开表示，DeepMind 已经成为他研究新节目时的"首选"。这种转变是如何发生的？</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">组织架构调整</div>
+                        <p class="topic-detail-content">Demis 给出了答案：组织架构的调整。谷歌内部实际上一直拥有业界最深厚、最广泛的研究团队——Google Brain、Google Research 和 DeepMind。过去十年中，支撑现代 AI 行业的 90% 的突破都来自这些团队之一。无论是 AlphaGo 和强化学习，还是 Transformer 架构，都是这些团队的成果。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三大整合策略</div>
+                        <p class="topic-detail-content">问题在于，这些力量是分散的。DeepMind 的整合策略包括：1. <strong>人才整合</strong>：把全公司最顶尖的人才集中到一个方向；2. <strong>资源整合</strong>：合并算力资源，构建统一的大型模型；3. <strong>创业心态</strong>：以近乎初创公司的节奏和专注度推进。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我认为我们基本上把公司周围的所有人才聚集在一起，朝一个方向推进……然后以近乎初创公司的无情专注和节奏行事，以回到前沿，并在许多领域保持领先。" [07:20]
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">个人感受</div>
+                        Demis 谈到这里时语气坚定。这不仅是技术问题，更是组织管理和战略执行的问题。他的回答透露出一个信念：如果有人能实现下一个突破，那应该是他们——因为他们拥有所有必要的"配料"。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">什么能力可能成为下一个突破？</h3>
+                        <span class="topic-timestamp">08:01 - 09:10</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        持续学习、新的记忆系统架构、长期规划能力，以及解决"锯齿状智能"的不一致性问题。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">四个关键缺失能力</div>
+                        <p class="topic-detail-content">当被问及"如果有人能实现突破，那应该是我们"时，Demis 列举了几个仍然缺失的关键能力：1. <strong>持续学习</strong>：前面已经讨论过；2. <strong>新的记忆系统</strong>：目前的长上下文窗口是一种"暴力"方案——把所有东西都塞进去。他认为需要发明更精细的记忆架构；3. <strong>长期规划</strong>：现有系统不擅长跨越多年时间尺度的规划，而人类可以做到这一点；4. <strong>一致性问题</strong>：Demis 把当前 AI 称为"锯齿状智能"（jagged intelligence）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">锯齿状智能</div>
+                        <p class="topic-detail-content">在某些任务上表现出色，但换一种提问方式，它们可能在很基础的事情上失败。一个真正通用的智能不应该有这些"空洞"——它应该在不同表达方式下保持稳定的推理能力。</p>
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">延伸思考</div>
+                        当文件位置改变、代理配置稍有变动，整个系统就崩溃——这就是"锯齿状智能"的体现。Demis 认为这是灾难性的，真正的通用智能不应该存在这种漏洞。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">模型会商品化吗？</h3>
+                        <span class="topic-timestamp">09:10 - 09:59</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        顶尖实验室之间的差距正在拉大，拥有算法创新能力的一方将获得越来越大优势。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">差距扩大趋势</div>
+                        <p class="topic-detail-content">很多人担心大模型会商品化——所有模型的能力趋同，竞争变成单纯的成本比拼。Demis 不同意这种看法。他认为，目前三到四家领先实验室之间的差距正在扩大。原因很简单：现有的算法创新正在被"榨干"，想要获得新的提升，需要发明全新的算法思路。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">创新者的优势</div>
+                        <p class="topic-detail-content">那些有能力发明新算法的实验室，将在未来几年获得更大优势。与此同时，AI 工具本身（编程工具、数学工具）也在帮助研究者构建下一代系统——这进一步扩大了领先者的优势。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我认为差距开始拉大了……那些有能力发明新算法思路的实验室，在未来几年将开始获得更大优势，因为现有思路的所有价值正在被榨干。" [09:30]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">开源模型的未来</h3>
+                        <span class="topic-timestamp">09:59 - 11:25</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        开源模型将继续存在，但通常会落后前沿模型约六个月；它们更适合小型开发者和学术用途。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">DeepMind 的开源传统</div>
+                        <p class="topic-detail-content">DeepMind 一直是开放科学和开源模型的支持者。从最初的 Transformer 到 AlphaFold，他们向研究社区贡献了大量成果。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">六个月的差距</div>
+                        <p class="topic-detail-content">但 Demis 对开源未来的判断很现实：开源模型通常会落后于绝对前沿约六个月。开源社区需要时间来重新实现和理解那些最新的创新。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Gemma 系列</div>
+                        <p class="topic-detail-content">这并不意味着 Google 会放弃开源。他们正在推进 Gemma 系列开源模型，目标是成为"同尺寸中最优"的选择。这些模型更适合：小型开发者、学术研究者、初创公司的早期阶段、边缘计算场景。</p>
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">延伸思考</div>
+                        Demis 的描述勾勒出了一个分层市场：前沿模型由少数顶尖实验室提供，而开源模型则服务于更广泛的"长尾"需求。这种格局可能在未来几年持续。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">后 LLM 时代的世界</h3>
+                        <span class="topic-timestamp">11:25 - 13:03</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        LLM 不会被替代，而是会作为基础组件，与其他系统（如世界模型）共同构成完整的 AGI。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">不同观点的碰撞</div>
+                        <p class="topic-detail-content">关于 LLM 之后的世界，业界有不同观点。OpenAI 的首席科学家 Ilya Sutskever 认为可能需要全新的范式。Demis 则持不同看法。他坚定地认为基础模型不会消失，它们展现出的能力已经证明了自己的价值。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">叠加而非替代</div>
+                        <p class="topic-detail-content">问题不在于"是否需要替代 LLM"，而在于"LLM 是 AGI 的全部，还是只是其中一个关键组件"。他的判断是：LLM 将作为基础，在其上构建其他系统，比如世界模型。这不是替代关系，而是叠加关系。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">未来五年图景</div>
+                        <p class="topic-detail-content">当被问及五年后可能实现 AGI 的世界时，Demis 的回答充满了希望：科学和医学的"终极工具"、加速科学发现、找到疾病的治疗方法、迎来科学发现的"新黄金时代"。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我不认为它会被替代。我认为它将作为基础组件，在这些基础模型之上继续构建。" [12:10]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 11 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">11</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 能真正改变药物研发吗？</h3>
+                        <span class="topic-timestamp">13:03 - 15:01</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 将在 5-10 年内完成整个药物设计引擎，但缩短临床试验时间需要监管体系的配合。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">个人故事</div>
+                        <p class="topic-detail-content">Harry 提到一个切身问题：他的母亲患有多发性硬化症，即使 AI 加速了药物发现，临床试验仍可能需要十年，这意味着他的母亲可能无法及时受益。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第一步：解决药物设计问题</div>
+                        <p class="topic-detail-content">在 AlphaFold 解决蛋白质折叠问题后，DeepMind 分拆出了 Isomorphic Labs。这家公司专注于解决药物研发的其余环节——化合物设计、毒性测试等。Demis 预计，这个完整的药物设计引擎将在未来 5-10 年内准备就绪。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第二步：缩短临床试验</div>
+                        <p class="topic-detail-content">AI 可以通过以下方式加速：模拟人体代谢的部分过程、根据基因组分层患者、跳过某些步骤（如动物实验）。但关键在于监管体系。当首批"AI 设计的药物"完成整个流程后，监管机构需要足够的信心来接受模型的预测，从而允许简化流程。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "真正的革命将来自大约十几种 AI 药物完成整个流程……然后政府和监管机构看到这一点，他们有足够的数据来回溯测试这些模型的预测……那时我们可能真的可以信任模型的预测。" [14:20]
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">个人感受</div>
+                        Demis 谈到这个问题时语气充满决心。Isomorphic Labs 的目标是构建一个通用的药物设计平台，适用于从神经退行性疾病到心血管疾病、从免疫学到癌症的所有领域。他真正想做的，是"治愈癌症"——这不是口号，而是他们正在构建的技术的愿景。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 12 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">12</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 监管应该是什么样子？</h3>
+                        <span class="topic-timestamp">15:01 - 17:31</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        需要国际标准的监管体系，测试系统是否具有欺骗性等不良特性，并建立认证机制。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">霍金的警告</div>
+                        <p class="topic-detail-content">Stephen Hawking 曾说："我们在 AI 上必须一次做对，因为我们可能没有第二次机会。"Demis 完全同意这个判断。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两大风险</div>
+                        <p class="topic-detail-content">他担忧两个主要风险：1. <strong>恶意使用</strong>：这些技术是"双用途"的——可以用于科学和健康的巨大善举，也可能被不良行为者重新用于有害目的；2. <strong>技术风险</strong>：当系统变得更强大、更具代理性、更自主时，如何确保它们保持在人类设定的护栏内。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">理想的监管</div>
+                        <p class="topic-detail-content">理想的监管应该包括：<strong>最低标准</strong>（所有领先提供商都必须遵守的国际标准）、<strong>基准测试</strong>（检测不良特性的测试，如欺骗性）、<strong>认证机制</strong>（类似质量认证的"风筝标记"，表明模型具有某些安全保障和承诺）。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "不应该构建具有欺骗能力的系统，因为它们可能绕过其他安全保障。" [17:00]
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">延伸思考</div>
+                        Demis 指出了一个矛盾：我们正在面对人类历史上最具影响力的技术，但国际体系却处于高度碎片化状态。这种"时机上的疯狂"让 AI 监管变得格外困难。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 13 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">13</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">谁来裁决 AI 世界的真相？</h3>
+                        <span class="topic-timestamp">17:31 - 18:36</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        最终裁决权应该在政府，但技术工作应由 AI 安全研究所等独立技术机构完成。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">分层结构</div>
+                        <p class="topic-detail-content">在一个充斥着真假难辨内容的媒体环境中，谁来验证 AI 系统的安全性？Demis 的答案是分层结构：<strong>技术层面</strong>由 AI 安全研究所等独立技术机构进行技术评估和审计；<strong>政府层面</strong>由政府承担最终责任。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 安全研究所</div>
+                        <p class="topic-detail-content">他特别提到英国的 AI 安全研究所，认为它在 Rishi Sunak 任首相期间建立，正在做很棒的工作。美国也有类似机构。Demis 认为领先的 AI 研究国家都应该建立类似机构，配备高质量的研究人员，能够独立评估这些系统是否达到正确标准。这种"第三方审计"模式可能是建立公众信任的关键。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 14 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">14</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">如果只能用一次魔法棒解决 AI 安全</h3>
+                        <span class="topic-timestamp">18:36 - 19:58</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        建立一个类似国际原子能机构的国际 AI 安全机构，制定基准测试和禁止事项（如不可读的机器语言输出）。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">魔法棒的答案</div>
+                        <p class="topic-detail-content">当 Harry 给他一个"魔法棒"——只能用于解决 AI 安全的一个问题时，Demis 的回答是：建立一个国际机构，类似国际原子能机构。AI 安全研究所可以接入这个机构，研究社区也应该参与制定正确的基准测试。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">禁止事项</div>
+                        <p class="topic-detail-content">他特别提到一些需要禁止的行为：AI 系统输出人类无法理解的机器语言 token（这会引入新的脆弱性）。这些机构将测试这些方面，并给公众带来信心——这些将变得极其强大的系统已经过独立检查和审计。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我们需要某种国际机构，也许类似原子能机构……这些机构将测试这些东西，我认为这将给公众信心，以及学术界和民间社会，这些将变得极其强大的系统已经过独立检查和审计。" [19:10]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 15 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">15</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">就业问题：历史会重演吗？</h3>
+                        <span class="topic-timestamp">19:58 - 24:06</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 对就业的冲击将是工业革命的 10 倍，但速度是 10 倍；我们需要更好地缓解负面影响。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">不同观点</div>
+                        <p class="topic-detail-content">当 Harry 提到 Marc Andreessen 称"劳动置换问题完全是废话"时，Demis 表示他不同意。他承认，过去每次革命性技术都带来了大量工作 disruption。旧的工作消失，但新的、更高薪的工作出现——这是历史的常态。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">这次可能不同</div>
+                        <p class="topic-detail-content">Demis 将 AGI 的影响量化为"工业革命的 10 倍，但速度是 10 倍"。工业革命用了一个世纪展开，而 AGI 的变革将在十年内完成。他引用工业革命的历史：虽然带来了巨大动荡，但也带来了现代医学，儿童死亡率从 40% 降到极低水平。我们当然不希望这些进步没有发生，但这次，我们应该更好地缓解负面影响。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">短期 vs 长期</div>
+                        <p class="topic-detail-content">Demis 引用了一句名言："我们总是高估一年内能做的事，而低估十年内能做的事。"他判断：<strong>短期（今天到明年）</strong>：AI 在某些方面被过度炒作；<strong>长期（约十年尺度）</strong>：AI 的革命性仍然被严重低估。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">收入不平等问题</div>
+                        <p class="topic-detail-content">关于 AI 可能加剧的财富集中问题，Demis 提出了一些可能的解决方案：养老基金应该投资大型 AI 公司，确保每个人都有"一份"；每个国家都应该建立主权财富基金来投资 AI；重新分配生产力收益，让每个人受益。他提到，AI 可能在 5-10 年内带来可再生能源的突破，如核聚变、新型电池、超导体等，这些可能彻底改变经济的性质。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我有时把 AGI 的到来量化为：工业革命的 10 倍，但速度是 10 倍。在十年内展开，而不是一个世纪。" [21:00]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 16 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">16</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">如何解决 AI 引发的能源危机？</h3>
+                        <span class="topic-timestamp">24:06 - 25:34</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 在中长期将"自给自足"能源成本，通过优化电网、气候建模，以及推动聚变等新技术。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 的能源需求</div>
+                        <p class="topic-detail-content">AI 的能源需求是前所未有的。但 Demis 的判断令人意外：AI 在中长期将"多倍地回报"它消耗的能源。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三个方向</div>
+                        <p class="topic-detail-content">他列举了三个方向：1. <strong>优化现有基础设施</strong>：通过 AI 优化，国家电网可能获得 30-40% 的额外效率；2. <strong>气候和天气建模</strong>：AI 可以提供最好的天气建模系统，帮助理解气候变化的影响并采取缓解措施；3. <strong>突破性技术</strong>：AI 将帮助实现核聚变、新型电池、超导体等技术突破。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">太空探索</div>
+                        <p class="topic-detail-content">当人类拥有近乎无限的清洁能源（如核聚变）时，我们就能更便宜地进入太空——因为可以通过蒸馏海水获得无限火箭燃料。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我认为从中长期来看，AI 将在能源成本方面多倍地回报它……我们可能会从国家电网中获得 30-40% 的额外效率。" [24:30]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 17 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">17</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">为什么选择留在英国？</h3>
+                        <span class="topic-timestamp">25:34 - 27:38</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        英国拥有世界顶级的人才、科学传统，以及远离硅谷"喧嚣"的深度思考环境。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">留在伦敦的选择</div>
+                        <p class="topic-detail-content">Demis 和 DeepMind 完全可以选择搬到硅谷，但他们选择了留在伦敦。原因有四：1. <strong>人才优势</strong>：英国拥有世界前十大学中的三四所（剑桥、牛津、帝国理工、UCL），培养出了令人羡慕的毕业生和博士生；2. <strong>科学传统</strong>：从图灵、霍金、达尔文到牛顿，英国有深厚的科学突破和思想家传统；3. <strong>竞争环境</strong>：当时这里对深度科技创业人才的竞争更少，可以吸引欧洲顶尖大学的人才；4. <strong>地理距离</strong>：远离硅谷的"漩涡"反而有助于深度思考和原创性。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">深度思考的环境</div>
+                        <p class="topic-detail-content">Demis 提到，远离硅谷有一些劣势——不在这个网络中，不知道最新的八卦和趋势。但对于深度科技来说，这不是坏事。你不希望被最新的时尚分散注意力。DeepMind 从一开始就知道这是一场 20 年的马拉松。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "稍微远离那个漩涡其实很好。它非常有利于深度思考事情，以更原创的方式思考。这对于深度科技来说很棒。" [27:00]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 18 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">18</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">欧洲能否打造万亿美元科技巨头？</h3>
+                        <span class="topic-timestamp">27:38 - 29:20</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        欧洲缺乏的不是人才，而是成长阶段的资本。解锁养老基金的投资限制可能是关键。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">欧洲的现状</div>
+                        <p class="topic-detail-content">欧洲一直被美国批评缺乏大型科技公司。目前，欧洲还没有市值超过万亿美元的公司。Demis 认为这并非不可能——Spotify、Helsing 都有潜力，他自己的 Isomorphic Labs 也希望成为第一家。但欧洲确实存在结构性劣势：市场分散（多个小市场组合）、缺乏成长阶段的资本。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">魔法棒解决方案</div>
+                        <p class="topic-detail-content">他用"魔法棒"问题来回答如何解决这个问题：解锁养老基金对成长阶段科技公司的投资限制。欧洲擅长初创公司的早期阶段，但要跨越到"万亿级全球玩家"的鸿沟，需要十亿美元级别的融资。这种雄心和资本市场的支持能力，十年前 DeepMind 融资时缺失，今天仍然不足。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我们真的很擅长做初创公司的想法并将其带到一定水平……但如果你真的想跨越那个鸿沟，成为万亿级的全球参与者，那么那些十亿美元的融资轮从哪里来？" [28:40]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 19 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">19</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">初见埃隆·马斯克</h3>
+                        <span class="topic-timestamp">29:20 - 31:03</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        两个"野心过大"的人一见如故，因为他们都热爱科幻，思考方式都超出了常人。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第一次见面</div>
+                        <p class="topic-detail-content">2011 或 2012 年，在 Founders Fund 的投资组合会议上，Demis 和 Elon 第一次见面。那时候 DeepMind 还是"小小的后起之秀"，有一个简短的演讲时段，而 Elon 是压轴的主讲嘉宾。他们在会后相遇——Demis 记得 Elon 说是在洗手间擦肩而过时认识的。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">一见如故</div>
+                        <p class="topic-detail-content">两人立刻产生了共鸣——他们都"野心过大"，都热爱科幻。Demis 特别想去参观 SpaceX 的火箭工厂，Elon 邀请了他，这就是他们的第二次会面。</p>
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">个人感受</div>
+                        这段小故事展现了两位科技领域远见者之间的惺惺相惜。他们都思考着常人认为"过于宏大"的事情，这种思维方式让他们能够一见如故。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 20 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">20</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">被忽视的大问题 & 希望留下的遗产</h3>
+                        <span class="topic-timestamp">31:03 - 32:14</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        当技术和经济问题都解决后，我们仍需面对哲学问题；Demis 希望留下的遗产是推动科学进步，治愈疾病。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">被忽视的哲学问题</div>
+                        <p class="topic-detail-content">很多人在担心 AGI 带来的经济问题，但 Demis 担心的是更深层的问题。假设我们搞定了技术问题，也搞定了经济分配问题，然后呢？我们仍然需要回答：什么是意义？什么是目的？什么是意识？作为人类意味着什么？他说："我们需要一些伟大的新哲学家来帮助我们应对这个问题。"</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">希望留下的遗产</div>
+                        <p class="topic-detail-content">当被问及希望如何被记住时，Demis 的回答简洁而深刻："推进科学，构建为世界带来不可思议利益的技术，比如治愈可怕的疾病。"</p>
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">延伸思考</div>
+                        这个问题超越了技术和经济，触及人类存在的本质。当 AI 能够完成人类能做的所有事情时，人类的价值何在？这不是技术问题，而是哲学问题。
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">个人感受</div>
+                        这个回答与整场对话中 Demis 展现的形象完全一致。他是一个科学家，一个创新者，但最终是一个希望用自己的工作让世界变得更好的人。从 AlphaGo 到 AlphaFold，再到 Isomorphic Labs，他的职业生涯一直沿着这条轨迹前进。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">AGI 与技术发展</h3>
+                    <p class="takeaway-desc">AGI 有很大概率在五年内实现。扩展定律未死，但回报率从指数级转向线性。顶尖实验室的差距正在拉大，算法创新能力成为关键优势。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧠</div>
+                    <h3 class="takeaway-title">AI 的下一步突破</h3>
+                    <p class="takeaway-desc">持续学习、新的记忆系统架构、长期规划能力、解决"锯齿状智能"的一致性问题——这些是通往 AGI 的关键里程碑。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💊</div>
+                    <h3 class="takeaway-title">药物研发革命</h3>
+                    <p class="takeaway-desc">AI 将在 5-10 年内完成整个药物设计引擎。Isomorphic Labs 正在构建通用药物发现平台，但缩短临床试验需要监管体系的配合和信心建立。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚖️</div>
+                    <h3 class="takeaway-title">AI 安全与监管</h3>
+                    <p class="takeaway-desc">需要国际标准的监管体系，测试欺骗性等不良特性，建立认证机制。Demis 建议建立类似国际原子能机构的 AI 安全机构。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💼</div>
+                    <h3 class="takeaway-title">就业与不平等</h3>
+                    <p class="takeaway-desc">AI 的影响将是工业革命的 10 倍，但速度是 10 倍。需要通过养老基金投资、主权财富基金等方式重新分配收益，更好地缓解负面影响。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">能源问题</h3>
+                    <p class="takeaway-desc">AI 将在中长期"多倍回报"其能源消耗，通过优化电网（30-40% 效率提升）、气候建模，以及推动聚变、新型电池、超导体等突破。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏛️</div>
+                    <h3 class="takeaway-title">欧洲的挑战与机遇</h3>
+                    <p class="takeaway-desc">欧洲缺乏的不是人才，而是成长阶段的资本。解锁养老基金投资可能是解决方案。Demis 选择留在英国，因为这里有顶级人才、科学传统和深度思考环境。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🌟</div>
+                    <h3 class="takeaway-title">遗产与哲学</h3>
+                    <p class="takeaway-desc">Demis 希望留下的遗产是推动科学进步，治愈疾病。当技术和经济问题都解决后，我们仍需面对"意义"、"目的"、"意识"这些更深层的问题。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">关于 Demis Hassabis</h3>
+            <p class="footer-desc">
+                Demis Hassabis 是 Google DeepMind 的联合创始人兼 CEO。他带领团队创造了 AlphaGo（第一个击败人类世界冠军的围棋程序）和 AlphaFold（解决了 50 年历史的蛋白质结构预测难题，因此获得 2024 年诺贝尔化学奖）。他同时也是 Isomorphic Labs 的创始人，致力于用 AI 革命性地改变药物研发。
+            </p>
+            <div class="footer-quote">
+                "推进科学，构建为世界带来不可思议利益的技术，比如治愈可怕的疾病。"
+            </div>
+            <p class="footer-note">
+                本访谈来自 20VC with Harry Stebbings，视频链接：<a href="https://www.youtube.com/watch?v=SSya123u9Yk" target="_blank" style="color: var(--accent-primary);">YouTube</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
