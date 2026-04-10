@@ -23,6 +23,69 @@
             --border-hover: rgba(245, 242, 235, 0.15);
         }
 
+        /* 日间模式 */
+        [data-theme="light"] {
+            --bg-primary: #fafaf9;
+            --bg-secondary: #f5f5f4;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f9f9f8;
+            --text-primary: #1c1917;
+            --text-secondary: #78716c;
+            --accent-blue: #2563eb;
+            --accent-purple: #9333ea;
+            --accent-gold: #d97706;
+            --border: rgba(28, 25, 23, 0.12);
+            --border-hover: rgba(28, 25, 23, 0.2);
+        }
+
+        /* 主题切换按钮 */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+            flex-shrink: 0;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+            transform: translateY(-1px);
+        }
+
+        /* 深色模式下按钮更明显 */
+        :root .theme-toggle {
+            border-color: rgba(245, 242, 235, 0.15);
+        }
+
+        /* 日间模式下按钮更明显 */
+        [data-theme="light"] .theme-toggle {
+            border-color: rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-toggle svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        /* 主题切换按钮图标显示 - 根据按钮的 data-mode 显示对应图标 */
+        .theme-toggle[data-mode="light"] .sun-icon { display: block; }
+        .theme-toggle[data-mode="light"] .moon-icon { display: none; }
+
+        .theme-toggle[data-mode="dark"] .moon-icon { display: block; }
+        .theme-toggle[data-mode="dark"] .sun-icon { display: none; }
+
         * {
             margin: 0;
             padding: 0;
@@ -39,6 +102,7 @@
             color: var(--text-primary);
             line-height: 1.7;
             overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         /* 添加微妙的纹理效果 */
@@ -62,6 +126,11 @@
             opacity: 0.5;
         }
 
+        /* 日间模式纹理效果 - 移除条纹 */
+        [data-theme="light"] body::before {
+            display: none;
+        }
+
         /* Animated background mesh - 深色极简 + 丰富层次 */
         .bg-mesh {
             position: fixed;
@@ -83,6 +152,21 @@
                 radial-gradient(ellipse at 15% 80%, rgba(245, 158, 11, 0.03) 0%, transparent 40%),
                 /* 基础深色渐变 */
                 linear-gradient(to bottom, #08080a 0%, #0c0c0f 50%, #101014 100%);
+        }
+
+        /* 日间模式背景 */
+        [data-theme="light"] .bg-mesh {
+            background:
+                /* 顶部柔和蓝色光晕 */
+                radial-gradient(ellipse at 50% 30%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+                /* 右上角紫色光晕 */
+                radial-gradient(ellipse at 85% 20%, rgba(147, 51, 234, 0.05) 0%, transparent 45%),
+                /* 底部柔和渐变 */
+                radial-gradient(ellipse at 50% 100%, rgba(244, 244, 245, 0.8) 0%, transparent 40%),
+                /* 左下角金色光晕 */
+                radial-gradient(ellipse at 15% 80%, rgba(217, 119, 6, 0.04) 0%, transparent 40%),
+                /* 基础浅色渐变 */
+                linear-gradient(to bottom, #fafaf9 0%, #f5f5f4 50%, #f0f0ef 100%);
         }
 
         /* ===== 流星雨效果（已注释） ===== */
@@ -354,12 +438,14 @@
             font-size: 36px;
             font-weight: 600;
             line-height: 1;
+            transition: color 0.3s ease;
         }
 
         .section-subtitle {
             font-size: 14px;
             color: var(--text-secondary);
             margin-top: 8px;
+            transition: color 0.3s ease;
         }
 
         .count-highlight {
@@ -482,6 +568,13 @@
             background: rgba(74, 158, 255, 0.08);
             border-radius: 4px;
             color: var(--card-accent, var(--accent-blue));
+            transition: all 0.3s ease;
+        }
+
+        /* 日间模式分类标签 */
+        [data-theme="light"] .card-category {
+            background: rgba(37, 99, 235, 0.1);
+        }
             font-weight: 500;
         }
 
@@ -489,6 +582,7 @@
             font-family: 'Space Mono', monospace;
             font-size: 12px;
             color: var(--text-secondary);
+            transition: color 0.3s ease;
         }
 
         .card-title {
@@ -522,6 +616,7 @@
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            transition: color 0.3s ease;
         }
 
         .card-tags {
@@ -538,6 +633,22 @@
             background: rgba(15, 15, 18, 0.5);
             border-radius: 4px;
             color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .card-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            padding: 4px 10px;
+            background: rgba(15, 15, 18, 0.5);
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+
+        /* 日间模式标签样式 */
+        [data-theme="light"] .card-tag {
+            background: rgba(0, 0, 0, 0.06);
+            border: none;
         }
 
         .card-footer {
@@ -747,6 +858,11 @@
             border-top: 1px solid var(--border);
         }
 
+        /* 日间模式 Footer */
+        [data-theme="light"] footer {
+            background: linear-gradient(to top, #f0f0ef 0%, #f5f5f4 100%);
+        }
+
         .footer-content {
             display: flex;
             justify-content: space-between;
@@ -796,6 +912,18 @@
             box-shadow: 0 4px 12px rgba(74, 158, 255, 0.2);
         }
 
+        /* 日间模式社交链接 */
+        [data-theme="light"] .social-link {
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        [data-theme="light"] .social-link:hover {
+            background: rgba(37, 99, 235, 0.08);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+        }
+
         .social-icon {
             width: 22px;
             height: 22px;
@@ -807,6 +935,11 @@
             padding-top: 30px;
             border-top: 1px solid rgba(245, 242, 235, 0.06);
             text-align: center;
+        }
+
+        /* 日间模式 Footer 底部分隔线 */
+        [data-theme="light"] .footer-bottom {
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
         }
 
         .footer-bottom p {
@@ -958,6 +1091,16 @@
                             </svg>
                         </div>
                     </div>
+                    <!-- 主题切换按钮 -->
+                    <button class="theme-toggle" id="themeToggle" title="切换主题">
+                        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 2V4M12 20V22M4 12H2M22 12H20M6.34 6.34L4.93 4.93M19.07 19.07L17.66 17.66M6.34 17.66L4.93 19.07M19.07 4.93L17.66 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
 
@@ -3358,6 +3501,42 @@
 
         window.addEventListener('scroll', revealOnScroll);
         window.addEventListener('load', revealOnScroll);
+
+        // ===== 主题切换功能 =====
+        // Theme toggle: 每次加载跟随系统，点击切换日间/夜间
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        // 检测系统主题偏好并应用
+        function initTheme() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+            updateButtonIcon(prefersDark ? 'dark' : 'light');
+        }
+
+        // 更新按钮图标
+        function updateButtonIcon(theme) {
+            themeToggle.setAttribute('data-mode', theme);
+            themeToggle.title = theme === 'dark' ? '夜间模式' : '日间模式';
+        }
+
+        // 初始化：跟随系统
+        initTheme();
+
+        // 点击切换主题
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            html.setAttribute('data-theme', newTheme);
+            updateButtonIcon(newTheme);
+
+            // 添加按钮点击动画
+            themeToggle.style.transform = 'scale(0.9) rotate(15deg)';
+            setTimeout(() => {
+                themeToggle.style.transform = '';
+            }, 150);
+        });
     </script>
 </body>
 </html>
