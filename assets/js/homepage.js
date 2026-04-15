@@ -1,6 +1,20 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/jensen-huang-tpu-competition.html",
+        "card_class": "card-tech",
+        "category": "硬科技 · AI芯片",
+        "date": "2026-04-16",
+        "title": "Jensen Huang：TPU竞争、对华芯片出口与供应链护城河",
+        "excerpt": "英伟达CEO深度对话：为什么AI不会让软件商品化、TPU能打破英伟达垄断吗、为什么反对向中国限制芯片出口、英伟达为什么不成为云服务商、以及从电子到Token的价值创造。",
+        "tags": [
+            "#JensenHuang",
+            "#NVIDIA",
+            "#TPU竞争",
+            "#供应链管理"
+        ]
+    },
+    {
         "url": "articles/seo-to-agent-led-growth.html",
         "card_class": "card-finance",
         "category": "营销增长 · AI",
