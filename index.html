@@ -336,7 +336,6 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
-            transition: opacity 0.8s ease-in-out;
         }
 
         .hero-overlay {
@@ -3317,70 +3316,54 @@
     <script>
         // ===== 搜索和分页功能 =====
         document.addEventListener('DOMContentLoaded', function() {
-            // ===== Hero 背景视频循环播放（双视频交叉淡入淡出）=====
+            // ===== Hero 背景视频循环播放 =====
             const heroVideoA = document.getElementById('heroVideoA');
             const heroVideoB = document.getElementById('heroVideoB');
             const videoFiles = ['videos/1.mp4', 'videos/2.mp4', 'videos/3.mp4', 'videos/4.mp4'];
             let currentVideoIndex = 0;
-            let firstRoundComplete = false;
             let activeVideo = heroVideoA; // 当前显示的视频
             let nextVideo = heroVideoB;   // 下一个要显示的视频
-
-            function preloadVideos() {
-                if (firstRoundComplete) return;
-                for (let i = 1; i < 4; i++) {
-                    const v = document.createElement('video');
-                    v.preload = 'auto';
-                    v.src = videoFiles[i];
-                }
-            }
 
             function switchToNextVideo() {
                 const nextIndex = (currentVideoIndex + 1) % videoFiles.length;
                 currentVideoIndex = nextIndex;
 
-                if (nextIndex === 3) firstRoundComplete = true;
-
-                // 设置下一个视频源并开始播放
+                // 下一个视频已经预加载，直接播放
                 nextVideo.src = videoFiles[nextIndex];
                 nextVideo.play();
 
-                // 淡入下一个视频
-                nextVideo.style.opacity = '1';
-
-                // 淡出当前视频
+                // 隐藏当前视频，显示下一个视频
                 activeVideo.style.opacity = '0';
+                nextVideo.style.opacity = '1';
 
                 // 交换角色
                 const temp = activeVideo;
                 activeVideo = nextVideo;
                 nextVideo = temp;
+
+                // 为新激活的视频添加监听
+                activeVideo.addEventListener('ended', switchToNextVideo, { once: true });
             }
 
-            // 初始化第一个视频
+            // 初始化
             if (heroVideoA && heroVideoB) {
+                // 1. 立即加载并播放第一个视频
                 activeVideo.src = videoFiles[0];
                 activeVideo.play().catch(e => console.log('视频自动播放失败:', e));
 
-                // 预加载所有视频
-                activeVideo.addEventListener('loadeddata', () => {
-                    preloadVideos();
-                }, { once: true });
+                // 2. 立即预加载第二个视频（最紧急）
+                nextVideo.src = videoFiles[1];
+                nextVideo.preload = 'auto';
 
-                // 监听当前视频即将结束（提前0.8秒开始切换）
-                activeVideo.addEventListener('timeupdate', function onTimeUpdate() {
-                    const timeLeft = activeVideo.duration - activeVideo.currentTime;
-                    if (timeLeft <= 0.8 && timeLeft > 0) {
-                        activeVideo.removeEventListener('timeupdate', onTimeUpdate);
-                        switchToNextVideo();
-
-                        // 为新激活的视频添加监听
-                        activeVideo.addEventListener('timeupdate', onTimeUpdate);
-                    }
+                // 3. 在后台预加载第三个、第四个视频
+                [videoFiles[2], videoFiles[3]].forEach(src => {
+                    const v = document.createElement('video');
+                    v.preload = 'auto';
+                    v.src = src;
                 });
 
-                // 备用：监听ended事件
-                activeVideo.addEventListener('ended', switchToNextVideo);
+                // 监听视频结束
+                activeVideo.addEventListener('ended', switchToNextVideo, { once: true });
             }
 
             // 配置
