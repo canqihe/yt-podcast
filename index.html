@@ -3328,8 +3328,7 @@
                 const nextIndex = (currentVideoIndex + 1) % videoFiles.length;
                 currentVideoIndex = nextIndex;
 
-                // 下一个视频已经预加载，直接播放
-                nextVideo.src = videoFiles[nextIndex];
+                // 直接播放已预加载的下一个视频
                 nextVideo.play();
 
                 // 隐藏当前视频，显示下一个视频
@@ -3340,6 +3339,10 @@
                 const temp = activeVideo;
                 activeVideo = nextVideo;
                 nextVideo = temp;
+
+                // 用刚隐藏的视频预加载再下一个（循环回到开头时处理）
+                const preloadIndex = (currentVideoIndex + 1) % videoFiles.length;
+                nextVideo.src = videoFiles[preloadIndex];
 
                 // 为新激活的视频添加监听
                 activeVideo.addEventListener('ended', switchToNextVideo, { once: true });
