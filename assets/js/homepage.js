@@ -1257,14 +1257,10 @@ function renderArticles() {
         articlesGrid.innerHTML = html;
         console.log('renderArticles: 插入完成, 当前子元素数=' + articlesGrid.children.length);
 
-        // 更新 reveal 元素
-        window.reveals = Array.from(document.querySelectorAll('.reveal'));
-        console.log('renderArticles: reveal元素数=' + window.reveals.length);
-
-        // 触发滚动动画检查 - 使用 setTimeout 确保 DOM 更新完成
+        // 初始化滚动动画（使用 Intersection Observer）
         setTimeout(() => {
-            revealOnScroll();
-            console.log('renderArticles: revealOnScroll 已调用');
+            initScrollAnimations();
+            console.log('renderArticles: initScrollAnimations 已调用');
         }, 100);
     } else {
         console.error('renderArticles: 找不到 articlesGrid 元素!');
@@ -1477,9 +1473,61 @@ document.addEventListener('DOMContentLoaded', function() {
     init();
 });
 
-// ===== 滚动显示动画 =====
+// ===== 滚动显示动画 - 使用 Intersection Observer 提升性能 =====
 let reveals = [];
+let revealObserver = null;
 
+// 使用 Intersection Observer API（性能更好）
+function initIntersectionObserver() {
+    if ('IntersectionObserver' in window) {
+        revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // 动画完成后停止观察
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        });
+
+        // 观察所有 reveal 元素
+        reveals.forEach(element => {
+            revealObserver.observe(element);
+        });
+    } else {
+        // 降级到传统的滚动监听（带节流）
+        window.addEventListener('scroll', throttle(revealOnScroll, 100));
+        window.addEventListener('load', revealOnScroll);
+    }
+}
+
+// 节流函数
+function throttle(func, wait) {
+    let timeout;
+    let lastRan;
+    return function() {
+        const context = this;
+        const args = arguments;
+        if (!lastRan) {
+            func.apply(context, args);
+            lastRan = Date.now();
+        } else {
+            clearTimeout(timeout);
+            timeout = setTimeout(function() {
+                if ((Date.now() - lastRan) >= wait) {
+                    func.apply(context, args);
+                    lastRan = Date.now();
+                }
+            }, wait - (Date.now() - lastRan));
+        }
+    };
+}
+
+// 传统的滚动监听（降级方案）
 function revealOnScroll() {
     reveals.forEach(element => {
         const windowHeight = window.innerHeight;
@@ -1492,8 +1540,25 @@ function revealOnScroll() {
     });
 }
 
-window.addEventListener('scroll', revealOnScroll);
-window.addEventListener('load', revealOnScroll);
+// 初始化滚动动画
+function initScrollAnimations() {
+    if (revealObserver) {
+        // 清理旧的 observer
+        revealObserver.disconnect();
+    }
+
+    reveals = Array.from(document.querySelectorAll('.reveal'));
+
+    if ('IntersectionObserver' in window) {
+        initIntersectionObserver();
+    } else {
+        // 降级方案
+        window.addEventListener('scroll', throttle(revealOnScroll, 100));
+        window.addEventListener('load', revealOnScroll);
+    }
+}
+
+window.addEventListener('load', initScrollAnimations);
 
 // ===== 主题切换功能 =====
 const themeToggle = document.getElementById('themeToggle');
