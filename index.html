@@ -3324,8 +3324,18 @@
             let activeVideo = heroVideoA; // 当前显示的视频
             let nextVideo = heroVideoB;   // 下一个要显示的视频
 
-            // 记录每个 video 元素已加载的视频索引（避免重复设置 src）
-            const loadedIndex = { A: -1, B: -1 };
+            // 记录每个 video 元素已完全加载的视频索引
+            const fullyLoadedIndex = { A: -1, B: -1 };
+
+            // 强制完全缓存视频（通过静音播放到末尾）
+            function forceFullyCache(video, index) {
+                video.muted = true;
+                video.play().then(() => {
+                    video.pause();
+                    video.currentTime = 0;
+                    video.muted = false;
+                }).catch(() => {});
+            }
 
             function switchToNextVideo() {
                 const nextIndex = (currentVideoIndex + 1) % videoFiles.length;
@@ -3343,17 +3353,21 @@
                 activeVideo = nextVideo;
                 nextVideo = temp;
 
-                const tempIndex = loadedIndex.A;
-                loadedIndex.A = loadedIndex.B;
-                loadedIndex.B = tempIndex;
+                const tempIndex = fullyLoadedIndex.A;
+                fullyLoadedIndex.A = fullyLoadedIndex.B;
+                fullyLoadedIndex.B = tempIndex;
 
                 // 用刚隐藏的视频预加载再下一个（避免重复设置）
                 const preloadIndex = (currentVideoIndex + 1) % videoFiles.length;
                 const nextVideoKey = (nextVideo === heroVideoA) ? 'A' : 'B';
-                if (loadedIndex[nextVideoKey] !== preloadIndex) {
+                if (fullyLoadedIndex[nextVideoKey] !== preloadIndex) {
                     nextVideo.src = videoFiles[preloadIndex];
                     nextVideo.preload = 'auto';
-                    loadedIndex[nextVideoKey] = preloadIndex;
+                    // 监听可以流畅播放时，强制完整缓存
+                    nextVideo.addEventListener('canplaythrough', () => {
+                        forceFullyCache(nextVideo, preloadIndex);
+                    }, { once: true });
+                    fullyLoadedIndex[nextVideoKey] = preloadIndex;
                 }
 
                 // 为新激活的视频添加监听
@@ -3364,19 +3378,26 @@
             if (heroVideoA && heroVideoB) {
                 // 1. 立即加载并播放第一个视频
                 activeVideo.src = videoFiles[0];
-                loadedIndex.A = 0;
+                fullyLoadedIndex.A = 0;
                 activeVideo.play().catch(e => console.log('视频自动播放失败:', e));
 
                 // 2. 立即预加载第二个视频（最紧急）
                 nextVideo.src = videoFiles[1];
                 nextVideo.preload = 'auto';
-                loadedIndex.B = 1;
+                nextVideo.addEventListener('canplaythrough', () => {
+                    forceFullyCache(nextVideo, 1);
+                }, { once: true });
+                fullyLoadedIndex.B = 1;
 
-                // 3. 在后台预加载第三个、第四个视频
-                [videoFiles[2], videoFiles[3]].forEach(src => {
+                // 3. 在后台完全缓存第三个、第四个视频
+                [videoFiles[2], videoFiles[3]].forEach((src, i) => {
                     const v = document.createElement('video');
                     v.preload = 'auto';
+                    v.muted = true;
                     v.src = src;
+                    v.addEventListener('canplaythrough', () => {
+                        forceFullyCache(v, i + 2);
+                    }, { once: true });
                 });
 
                 // 监听视频结束
