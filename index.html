@@ -3324,6 +3324,9 @@
             let activeVideo = heroVideoA; // 当前显示的视频
             let nextVideo = heroVideoB;   // 下一个要显示的视频
 
+            // 记录每个 video 元素已加载的视频索引（避免重复设置 src）
+            const loadedIndex = { A: -1, B: -1 };
+
             function switchToNextVideo() {
                 const nextIndex = (currentVideoIndex + 1) % videoFiles.length;
                 currentVideoIndex = nextIndex;
@@ -3335,14 +3338,23 @@
                 activeVideo.style.opacity = '0';
                 nextVideo.style.opacity = '1';
 
-                // 交换角色
+                // 交换角色和索引记录
                 const temp = activeVideo;
                 activeVideo = nextVideo;
                 nextVideo = temp;
 
-                // 用刚隐藏的视频预加载再下一个（循环回到开头时处理）
+                const tempIndex = loadedIndex.A;
+                loadedIndex.A = loadedIndex.B;
+                loadedIndex.B = tempIndex;
+
+                // 用刚隐藏的视频预加载再下一个（避免重复设置）
                 const preloadIndex = (currentVideoIndex + 1) % videoFiles.length;
-                nextVideo.src = videoFiles[preloadIndex];
+                const nextVideoKey = (nextVideo === heroVideoA) ? 'A' : 'B';
+                if (loadedIndex[nextVideoKey] !== preloadIndex) {
+                    nextVideo.src = videoFiles[preloadIndex];
+                    nextVideo.preload = 'auto';
+                    loadedIndex[nextVideoKey] = preloadIndex;
+                }
 
                 // 为新激活的视频添加监听
                 activeVideo.addEventListener('ended', switchToNextVideo, { once: true });
@@ -3352,11 +3364,13 @@
             if (heroVideoA && heroVideoB) {
                 // 1. 立即加载并播放第一个视频
                 activeVideo.src = videoFiles[0];
+                loadedIndex.A = 0;
                 activeVideo.play().catch(e => console.log('视频自动播放失败:', e));
 
                 // 2. 立即预加载第二个视频（最紧急）
                 nextVideo.src = videoFiles[1];
                 nextVideo.preload = 'auto';
+                loadedIndex.B = 1;
 
                 // 3. 在后台预加载第三个、第四个视频
                 [videoFiles[2], videoFiles[3]].forEach(src => {
