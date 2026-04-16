@@ -1,6 +1,20 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/pentagon-anthropic-ai-fight.html",
+        "card_class": "card-ai",
+        "category": "AI · 国防安全",
+        "date": "2026-04-16",
+        "title": "五角大楼的 AI 计划 + Anthropic 之争内幕",
+        "excerpt": "当人工智能技术以惊人的速度发展时，全球最强大的军事机构——美国五角大楼正在经历一场静悄悄的变革。2025年初，五角大楼将 AI 公司 Anthropic 指定为「供应链风险」，这场争议的核心人物——战争部副部长 Emil Michael 首次详细解释原因，澄清外界对军方 AI 应用的误解。",
+        "tags": [
+            "#EmilMichael",
+            "#五角大楼",
+            "#Anthropic",
+            "#AI战略"
+        ]
+    },
+    {
         "url": "articles/jensen-huang-tpu-competition.html",
         "card_class": "card-tech",
         "category": "硬科技 · AI芯片",
