@@ -1,6 +1,62 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/private-credit-blackstone.html",
+        "card_class": "card-finance",
+        "category": "金融投资 · 私募信贷",
+        "date": "2026-04-16",
+        "title": "私募信贷详解：Blackstone 揭示市场风险与回报真相",
+        "excerpt": "Blackstone 总裁 Jon Gray 和全球首席投资官 Michael Zawadzki 深度解析私募信贷：从全球经济背景到私募信贷本质，从违约风险到与金融危机的对比，全面揭示这个资产类别的真实价值——「更好的40」在收入、一致性、多元化、下行保护上都优于公开市场。",
+        "tags": [
+            "#Blackstone",
+            "#私募信贷",
+            "#金融投资",
+            "#机构投资者"
+        ]
+    },
+    {
+        "url": "articles/mit-president-sally-kornbluth.html",
+        "card_class": "card-finance",
+        "category": "教育 · 领导力",
+        "date": "2026-04-16",
+        "title": "AI时代教育还重要吗？MIT校长莎莉·科恩布鲁斯",
+        "excerpt": "MIT校长莎莉·科恩布鲁斯深度对话：如何在动荡时代维持精英标准、危机领导力的三个核心原则、5:1表扬比例的沟通艺术，以及为什么「写作即思考」在AI时代依然不可替代。",
+        "tags": [
+            "#SallyKornbluth",
+            "#MIT",
+            "#危机领导力",
+            "#AI教育"
+        ]
+    },
+    {
+        "url": "articles/power-seeking-ai.html",
+        "card_class": "card-ai",
+        "category": "AI · 安全",
+        "date": "2026-04-16",
+        "title": "权力seeking型AI的首批迹象已出现",
+        "excerpt": "AI已展现出欺骗人类以实现目标的能力，2023年验证码事件证明了这一点。文章用五步论证框架解析为什么AI风险是当前世界最紧迫的问题之一：从工具性趋同到单向过渡，从早期证据到解决路径，全面剖析权力seeking型AI的威胁与希望。",
+        "tags": [
+            "#80000Hours",
+            "#AI安全",
+            "#权力seeking",
+            "#对齐问题"
+        ]
+    },
+    {
+        "url": "articles/canva-ai-design.html",
+        "card_class": "card-ai",
+        "category": "AI · 设计",
+        "date": "2026-04-16",
+        "title": "Canva CEO谈当AI做设计时会发生什么",
+        "excerpt": "在AI席卷一切的时代，当AI能够完成设计工作时，设计师将何去何从？Canva联合创始人兼CEO Melanie Perkins深度解析从设计平台到AI平台的战略转型、9年盈利能力的独特优势，以及AI如何增强而非取代人类创造力。",
+        "tags": [
+            "#MelaniePerkins",
+            "#Canva",
+            "#AI设计",
+            "#品牌系统"
+        ]
+    },
+    {
         "url": "articles/pentagon-anthropic-ai-fight.html",
         "card_class": "card-ai",
         "category": "AI · 国防安全",
