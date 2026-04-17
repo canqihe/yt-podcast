@@ -1,6 +1,34 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/elon-outcompetes-everyone.html",
+        "card_class": "card-future",
+        "category": "人物洞察 · 领导力",
+        "date": "2026-04-17",
+        "title": "为什么 Elon Musk 能够超越所有人",
+        "excerpt": "Eric Jorgenson 深度解析 Musk 超越常人的核心秘密：不是天赋异禀，而是建立了一套可复制的方法论。从乘数效应思维到疯狂紧迫感，从五步算法到 MrBeast 克隆策略，揭示 Musk 如何让每一个改进产生乘数而非加法效应。",
+        "tags": [
+            "#ElonMusk",
+            "#EricJorgenson",
+            "#领导力",
+            "#方法论"
+        ]
+    },
+    {
+        "url": "articles/peter-beck-rocket-lab.html",
+        "card_class": "card-future",
+        "category": "太空探索 · 商业航天",
+        "date": "2026-04-17",
+        "title": "Peter Beck：电子号火箭扩展速度超越猎鹰9号",
+        "excerpt": "Rocket Lab CEO Peter Beck 深度对话：从100美元起步到太空民主化时代，如何在资源匮乏中孕育创新，在绝境中培养拼搏精神。发动机爆炸后48小时重建性能提升13%、工程美学哲学、上市决策与持久企业建设。",
+        "tags": [
+            "#PeterBeck",
+            "#RocketLab",
+            "#商业航天",
+            "#太空探索"
+        ]
+    },
+    {
         "url": "articles/private-credit-blackstone.html",
         "card_class": "card-finance",
         "category": "金融投资 · 私募信贷",
