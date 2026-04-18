@@ -1334,11 +1334,13 @@ const articlesData = [
 // 生成文章卡片 HTML
 function createArticleCard(article) {
     const tagsHtml = article.tags.map(tag => `<span class="card-tag">${tag}</span>`).join('');
+    // 只保留 category 的第一个词（在" · "之前）
+    const singleWordCategory = article.category.split(' · ')[0];
 
     return `
         <a href="${article.url}" class="article-card ${article.card_class}" target="_blank" rel="noopener">
             <div class="card-header">
-                <span class="card-category">${article.category}</span>
+                <span class="card-category">${singleWordCategory}</span>
                 <span class="card-meta">${article.date}</span>
             </div>
             <h3 class="card-title">${article.title}</h3>
