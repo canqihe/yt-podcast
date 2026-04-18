@@ -1,6 +1,34 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/stan-druckenmiller-invest.html",
+        "card_class": "card-finance",
+        "category": "投资 · 宏观策略",
+        "date": "2026-04-18",
+        "title": "斯坦·德鲁肯米勒：投资传奇的诚实自白",
+        "excerpt": "30%年化收益率30年的传奇投资者，坦诚他不懂英伟达的收益、因过早卖出而痛苦，以及与冒名顶替综合症斗争15年的心路历程。从逆向投资被高估到依赖专家团队，从规模管理胜过判断到接受情绪化的自己。",
+        "tags": [
+            "#StanDruckenmiller",
+            "#投资哲学",
+            "#宏观策略",
+            "#索罗斯"
+        ]
+    },
+    {
+        "url": "articles/chipbook-open-source-data.html",
+        "card_class": "card-tech",
+        "category": "硬科技 · 投资研究",
+        "date": "2026-04-18",
+        "title": "ChipBook：如何使用开源数据驱动投资决策",
+        "excerpt": "SemiAnalysis ChipBook团队深度对话：如何通过系统性地收集和整合全球开源数据，将零散的半导体供应链信息转化为可操作的投资情报。从内存周期预测到地缘政治影响追踪，从WFE设备进出口到氦气供应链分析。",
+        "tags": [
+            "#SemiAnalysis",
+            "#ChipBook",
+            "#半导体投资",
+            "#开源数据"
+        ]
+    },
+    {
         "url": "articles/elon-outcompetes-everyone.html",
         "card_class": "card-future",
         "category": "人物洞察 · 领导力",
@@ -908,19 +936,6 @@ const articlesData = [
             "#HarrisonChase",
             "#LangChain",
             "#AIAgent"
-        ]
-    },
-    {
-        "url": "articles/stanley-druckenmiller-hard-lessons.html",
-        "card_class": "card-finance",
-        "category": "投资智慧",
-        "date": "2026-03-15",
-        "title": "斯坦·德鲁肯米勒：先投资，后调查",
-        "excerpt": "传奇对冲基金经理德鲁肯米勒深度剖析投资哲学与心理博弈：从 Teva 药业的逆向逻辑，到英伟达的恐高症；从索罗斯的仓位管理，到冒名顶替综合症。三十年不败战绩背后的勇气与脆弱。",
-        "tags": [
-            "#StanDruckenmiller",
-            "#对冲基金",
-            "#投资哲学"
         ]
     },
     {
