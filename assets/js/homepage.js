@@ -1,6 +1,34 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/jake-paul-traditional-vc.html",
+        "card_class": "card-finance",
+        "category": "风投 · 创作者经济",
+        "date": "2026-04-19",
+        "title": "Jake Paul：传统风投已过时，注意力比现金更有价值",
+        "excerpt": "从 Disney 童星到 7000 万粉丝的网红拳手，Jake Paul 正在用分发能力重塑 VC 行业。通过 Anti Fund 投资了 Ramp、Anduril、Cognition 等独角兽，他证明了「注意力比资本更有价值」——当创业者更愿意接网红的电话而非传统 VC 的电话时，游戏规则已经改变。",
+        "tags": [
+            "#JakePaul",
+            "#风投",
+            "#创作者经济",
+            "#注意力经济"
+        ]
+    },
+    {
+        "url": "articles/public-leif-abraham.html",
+        "card_class": "card-finance",
+        "category": "金融科技 · AI",
+        "date": "2026-04-19",
+        "title": "Public：AI券商悄然挑战传统金融巨头",
+        "excerpt": "在金融科技领域，一个正在悄然崛起的新势力正在挑战传统经纪巨头。Public，一家以AI为核心的新一代投资平台，正在直接对标嘉信理财、富达和先锋集团等老牌金融机构。从Level Up战略转型到AI智能体革命，从理财顾问的黄昏到关于AI的黑暗预言。",
+        "tags": [
+            "#LeifAbraham",
+            "#Public",
+            "#金融科技",
+            "#AI"
+        ]
+    },
+    {
         "url": "articles/stan-druckenmiller-invest.html",
         "card_class": "card-finance",
         "category": "投资 · 宏观策略",
