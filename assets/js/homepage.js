@@ -1,6 +1,20 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/jeremy-grantham-investing.html",
+        "card_class": "card-finance",
+        "category": "投资 · 价值投资",
+        "date": "2026-04-20",
+        "title": "Jeremy Grantham：60年传奇投资生涯的核心智慧",
+        "excerpt": "GMO 联合创始人 Jeremy Grantham 深度分享：如何在泡沫中保持清醒、在恐慌中精准抄底，以及价值投资的深层哲学。从蝴蝶式思考到团队的完美组合，从痛苦是超额收益的代价到价值是股市重力，这位 86 岁投资老将的经验告诉我们：价值投资不仅是一种策略，更是一种生存哲学。",
+        "tags": [
+            "#JeremyGrantham",
+            "#价值投资",
+            "#投资哲学",
+            "#GMO"
+        ]
+    },
+    {
         "url": "articles/jake-paul-traditional-vc.html",
         "card_class": "card-finance",
         "category": "风投 · 创作者经济",
