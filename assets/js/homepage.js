@@ -1,6 +1,20 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/aaron-levie-ai-developers.html",
+        "card_class": "card-ai",
+        "category": "AI · 企业采用",
+        "date": "2026-04-20",
+        "title": "Aaron Levie：每个人都错了，五年后我们会有更多开发者",
+        "excerpt": "Box CEO Aaron Levie 颠覆主流叙事：AI 不会取代人类，而是会创造更多工作机会。当 AI 赋能科技之外 85% 的经济体时，对工程师和专业人才的需求将大幅增长。从新兴职业代理操作员到 SaaS 价值向 API 转移，从网络安全新范式到前沿实验室的长期价值，全面揭示 AI 时代企业变革的真实图景。",
+        "tags": [
+            "#AaronLevie",
+            "#Box",
+            "#AI就业",
+            "#企业AI"
+        ]
+    },
+    {
         "url": "articles/jeremy-grantham-investing.html",
         "card_class": "card-finance",
         "category": "投资 · 价值投资",

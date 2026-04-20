@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aaron Levie：每个人都错了，五年后我们会有更多开发者</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='3' y='3' width='12' height='12' rx='2' fill='%234a9eff'/><rect x='17' y='3' width='12' height='12' rx='2' fill='%236b7eff'/><rect x='3' y='17' width='12' height='12' rx='2' fill='%238b5cf7'/><rect x='17' y='17' width='12' height='12' rx='2' fill='%23a855f7'/></svg>">
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <style>
+        :root {
+            /* 方案 2: 紫粉 */
+            --accent-primary: #a855f7;
+            --accent-secondary: #ec4899;
+            --accent-primary-rgb: 168, 85, 247;
+            --accent-secondary-rgb: 236, 72, 153;
+        }
+
+        /* 背景图启用 */
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/aaron-levie-ai-developers-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">AI · 企业采用</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">每个人都错了</span>
+                    <span class="title-line-2">五年后我们会有更多开发者</span>
+                </h1>
+                <p class="subtitle">
+                    Box CEO Aaron Levie 颠覆主流叙事：AI 不会取代人类，而是会创造更多工作机会。当 AI 赋能科技之外 85% 的经济体时，对工程师和专业人才的需求将大幅增长。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Harry Stebbings</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Aaron Levie (Box CEO)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">54分54秒</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=qrxQikecJL0" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看完整访谈
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">AI 创造而非摧毁工作</h3>
+                    <p class="point-desc">AI 降低的是内容生成门槛，而非专业判断门槛。当所有人都能生成内容时，对专业审查的需求反而增加。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">新兴职业：代理操作员</h3>
+                    <p class="point-desc">未来五年将创造 50 万到 100 万个"代理操作员"岗位，需要技术背景并能够为企业重新设计工作流程。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">SaaS 价值向 API 转移</h3>
+                    <p class="point-desc">在代理主导的世界中，软件价值将从用户界面转移到 API 层。拥有丰富业务逻辑、强大 API 的公司将更具优势。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">代理既是威胁也是解决方案</h3>
+                    <p class="point-desc">代理同时带来了两种新风险（AI 生成代码的漏洞、AI 辅助攻击），而解决方案也是代理。这将是网络安全的"黄金时代"。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">预算结构的革命性变化</h3>
+                    <p class="point-desc">AI 支出将从 IT 预算（占企业收入 10%-12%）转移到运营支出预算，可能将技术支出提升到企业收入的 20%。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">前沿实验室的长期价值</h3>
+                    <p class="point-desc">OpenAI 与 Anthropic 的竞争就像当年的云计算战争——市场足够大，最终每个人都会赢。企业不会想要单一供应商。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">硅谷短视：美中 AI 竞赛的本质</h3>
+                        <span class="topic-timestamp">01:51 - 05:12</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        美中之间的 AI 竞争并非生死存亡的"军备竞赛"，而是一场商业和经济竞争。一两个月的领先优势不会改变最终格局。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">对黄仁勋观点的支持</div>
+                        <p class="topic-detail-content">Levie 对著名播客主持人 Dwarkesh Patel 与英伟达 CEO 黄仁勋的辩论做出了回应。当 Patel 将美中 AI 竞争描绘成一场"输者通吃"的存在主义竞赛时，黄仁勋持更务实的态度——Levie 表示认同黄仁勋的观点。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">软件升级的现实</div>
+                        <p class="topic-detail-content">关于"如果中国率先获得更强大的 AI 模型（如 Mythos），就能升级所有系统并取得决定性优势"的观点，Levie 指出了其根本性缺陷：软件升级是一个持续多年的过程，不存在某个"魔法时刻"可以一劳永逸地建立安全优势。网络安全本质上是一场进攻方与防守方之间永恒的"蛙跳游戏"，双方会不断超越对方。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">对年轻一代的建议</div>
+                        <p class="topic-detail-content">黄仁勋在对话中还提出了一个关键但未被广泛传播的观点：如果因为恐惧 AI 会取代工作而劝阻年轻人进入工程、放射科、医疗等领域，这实际上是在伤害下一代和整个社会。Levie 强调，我们目前只知道如何用 AI 来增强人类工作，而非完全替代。人类并未从工作流程中被移除，只是改变了进入工作流程的位置。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我们正处于一场商业和经济竞赛中，而不是某种存在主义竞赛。一两个月的优势不会改变 AI 进展的总结果。" — Aaron Levie [02:59]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">就业市场的真相：AI 创造而非摧毁工作</h3>
+                        <span class="topic-timestamp">05:12 - 09:27</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        硅谷过于以自我为中心，错误地将科技行业等同于整个经济。当 AI 赋能其他 85% 的经济体时，对工程师和专业人才的需求将大幅增长。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">硅谷的短视症</div>
+                        <p class="topic-detail-content">Levie 批评了硅谷的"短视症"：科技从业者只关注科技行业内部的变化，而忽视了更广阔的经济图景。他指出，当 Box 与拖拉机公司、银行、制药企业交谈时，这些企业一致表示他们没有足够的工程师来实施 AI 自动化。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">工程师需求的爆发</div>
+                        <p class="topic-detail-content">当科技行业之外的经济部门（占 GDP 的 85%-90%）获得硅谷一直享有的工程能力时，对工程师的需求将大幅增加。计算机科学毕业生可能不再直接去 Google，而是去 John Deere（农业机械）、Caterpillar（工程机械）或 Eli Lilly（制药公司）。他们不再构建带按钮的应用程序，而是自动化制药研究、开发农业 AI、构建工业自动化系统。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">律师行业的例子</div>
+                        <p class="topic-detail-content">《金融时报》曾报道，律师们正被客户用 AI 生成的合同审查请求淹没。当每个人都觉得可以自己处理法律事务时，最终的限制是什么？是实际能够审查这些材料的律师数量。因此，AI 降低的是内容生成的门槛，而非专业判断的门槛。未来五年，律师的数量很可能会增加，而非减少。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">初级职位的挑战</div>
+                        <p class="topic-detail-content">关于初级职位被自动化的问题，Levie 承认这确实是一个挑战——当 AI 自动化了传统上由初级员工完成的任务时，如何进行下一代的专业培训？但他认为，这与"工作将消失"是不同的问题。企业仍需人类解决自动化无法解决的瓶颈问题。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我们如此短视。当经济的 85% 获得像科技一直拥有的那样工程访问权时，对工程师的需求将大幅增长。" — Aaron Levie [06:04]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">新兴职业：代理操作员（Agent Operator）</h3>
+                        <span class="topic-timestamp">09:27 - 12:57</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        未来五年将创造 50 万到 100 万个"代理操作员"岗位，这些专业人士需要技术背景，理解 AI 系统，并能够为企业重新设计工作流程。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">代理操作员的核心技能</div>
+                        <p class="topic-detail-content">Levie 正在研究一个全新的职业角色——"代理操作员"。这些人需要具备以下技能：深入理解 AI 技术、掌握 MCP（模型上下文协议）和 CLI（命令行界面）、能够编写技能（Skills）、理解代理配置文件（.mmd files）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">初创公司 vs 大型企业</div>
+                        <p class="topic-detail-content">为什么需要这样的角色？因为初创公司与大型企业之间存在根本性差异：初创公司可以从零开始设计工作流程，没有历史包袱、规模限制或监管约束；而财富 1000 强的制药公司、银行或咨询企业则完全不同——它们有监管约束、数据分散、员工习惯于特定的工作流程。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">核心职责</div>
+                        <p class="topic-detail-content">因此，代理操作员的核心职责是：帮助企业重新设计工作流程，使其适合代理而非人类执行。当代理完成原本由人类执行的大部分工作时，整个业务流程需要被重新构想。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">转型的复杂性</div>
+                        <p class="topic-detail-content">这种转型涉及：真正的变革管理、数据组织的正确方式、系统连接的正确方式、应对新模型发布时工作流程的调整（因为不同模型的提示方式可能不同）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">人才来源</div>
+                        <p class="topic-detail-content">Levie 指出，这些新岗位的候选人可能来自 IT、运营或工程背景，具体取决于公司的技术倾向性。而在软件数量方面，手机应用的数量有限，但后台系统进程（连接不同数据源、自动化工作流程）的需求是无限的。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "工作流程需要为代理重新设计，而不是为人。当代理完成原本由人类执行的大部分工作时，整个业务流程需要被重新构想。" — Aaron Levie [11:24]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">SaaS 软件的未来：从用户界面到 API</h3>
+                        <span class="topic-timestamp">12:57 - 18:57</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        在代理主导的世界中，SaaS 软件的价值将更多体现在 API 层面而非用户界面。拥有丰富业务逻辑和强大 API 的公司将更具优势。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"按钮与 API 比率"的变化</div>
+                        <p class="topic-detail-content">当代理能够完成原本需要人类点击按钮的操作时，软件的"按钮与 API 比率"将发生变化。Levie 分析了不同类型的软件如何受到代理的影响。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">受冲击较大的软件</div>
+                        <p class="topic-detail-content">那些通过大量点击操作和复杂用户界面提供价值的工具。当代理能够直接调用 API 完成这些操作时，用户界面的重要性下降。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">具有防御性的软件</div>
+                        <p class="topic-detail-content">1. ERP 系统等复杂软件：已经内置了大量业务逻辑（供应链自动化、会计规则等），这些逻辑不会消失。2. 内容管理系统：非结构化数据（合同、营销材料、报告）的生成和管理将因代理而爆发性增长，需要强大的数据骨干来管理和协调这些工作流程。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">过度简化的"数据库"说法</div>
+                        <p class="topic-detail-content">Levie 强调，将所有 SaaS 软件简单称为"数据库"是过度简化。软件公司在数据库之上的业务逻辑层是其真正价值所在——数据安全、访问控制、业务规则等。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">价值判断标准的变化</div>
+                        <p class="topic-detail-content">当代理成为主要用户时，价值判断标准变为：API 的质量和健壮性、API 中嵌入的专有业务逻辑、API 是否为代理就绪、能否以合理的方式将其货币化。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Box 的 API 优先战略</div>
+                        <p class="topic-detail-content">Levie 以 Box 为例说明：Box 早已采用"API 优先"战略，其 API 调用量已经远超用户界面的交互量。财富管理门户、发票处理等工作流程已经在后台使用 Box 的 API，而用户从未见过 Box 界面。因此，对 Box 而言，代理只是进一步放大了这一趋势。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "代理将成为你的非结构化数据的令人难以置信的消费者和创造者。我们将看到非结构化数据的爆炸。" — Aaron Levie [16:29]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">网络安全的新时代：代理既是威胁也是解决方案</h3>
+                        <span class="topic-timestamp">18:57 - 22:41</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 和代理同时带来了两种新的安全风险：AI 生成的代码可能包含漏洞，攻击方可以利用 AI 更快地发现漏洞。而解决方案也是代理。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">安全风险早已被"定价"</div>
+                        <p class="topic-detail-content">Levie 认为，网络安全风险从 GitHub Copilot 发布的那一天起就已经"被定价"了：当 AI 开始编写代码时，必然会产生人类无法全面审查的海量代码。每次发布新功能都存在安全漏洞的可能性，因为 AI 可能做出了错误的决定（例如打开了不应该开放的端口）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两种新的风险形式</div>
+                        <p class="topic-detail-content">1. 防守方的风险：AI 生成的代码量超过人类审查能力，每个新功能都可能引入漏洞。2. 攻击方的风险：利用开放模型，攻击方可以比以前更快地扫描互联网寻找漏洞。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">代理悖论</div>
+                        <p class="topic-detail-content">唯一的积极因素是：代理也可以被用来审查代码并试图保持安全。Levie 用一句精辟的话总结了这一悖论："代理是代理造成的问题的解决方案。"</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">网络安全的"黄金时代"</div>
+                        <p class="topic-detail-content">这也解释了为什么 Jason Lemkin（SaaStr 创始人）预测这将是网络安全的"黄金时代"——安全威胁正在飙升，对安全解决方案的需求也将同步增长。Levie 表示同意，认为"代理安全"领域将赚取大量资金。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">计算支出的增加</div>
+                        <p class="topic-detail-content">关于黄仁勋建议工程师在 AI 计算上花费 25 万-50 万美元的观点，Levie 认为方向是正确的：未来每人的计算支出将比以往任何时候都多。作为上市公司 CEO，他不能给出具体数字，但确认这个比例肯定会比今天高。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "代理是代理造成的问题的解决方案。这就是为什么代理安全也将赚取大量资金。" — Aaron Levie [20:52]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Token 最大化与企业预算管理</h3>
+                        <span class="topic-timestamp">22:41 - 33:53</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        企业需要制定 Token 预算分配策略，但更重要的是，AI 支出将从 IT 预算转移到运营支出预算，这将是一个历史性的转变。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">分层策略</div>
+                        <p class="topic-detail-content">Levie 分享了企业正在探索的 Token 分配策略：5% 的用户（做最有价值工作的人）获得最好的模型和无限容量；20% 的用户（做次有价值工作的人）获得有限制的、更高效的模型；其他人使用市场上最便宜的模型。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">内部"创投"模式</div>
+                        <p class="topic-detail-content">团队必须向中央预算委员会"推介"他们的 Token 预算申请，类似于初创公司向风险投资公司融资。然后每 3-6 个月审查一次，看看是否实现了预期价值。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 支出分类的根本性转变</div>
+                        <p class="topic-detail-content">传统上，企业技术支出受限于 IT 预算（约占企业收入的 10%-12%）。但 AI 技术使销售方能够进入"业务线"预算，向部门负责人推销能够提高 50%-100% 生产力的自动化工具。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">历史性的突破</div>
+                        <p class="topic-detail-content">这意味着什么？IT/技术支出可能从占企业收入的 10%-12% 增长到 20%；AI 预算将从 IT 资本支出转移到运营支出；决策将不再是"Salesforce 许可证 vs. Token"，而是"这个营销活动 vs. 营销自动化"。Levie 强调，这可能是技术史上第一次有技术可以突破 IT 预算的限制，直接进入更广阔的运营支出预算。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "有史以来第一次，我们有了一种技术可以突破企业 IT 预算的限制，直接进入业务线预算。" — Aaron Levie [26:38]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">开源模型与企业采用</h3>
+                        <span class="topic-timestamp">33:53 - 39:23</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        许多硅谷公司确实在使用中国开源模型来接近前沿模型性能，但这并不令人担忧。更重要的是，即使最好的模型也会犯错，人类仍需审查其工作。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">行业公开的秘密</div>
+                        <p class="topic-detail-content">Levie 确认了一个行业公开的秘密：许多公司使用"前沿模型来设定目标，然后用开源中国模型尽可能接近那个目标"。他认为这在经验上肯定是真实的，但他并不为此感到过度担忧（除了潜在的后门权重风险）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">人类审查的必要性</div>
+                        <p class="topic-detail-content">更重要的洞察是：即使使用最好的模型，仍需要人类在工作流程中审查其输出。Levie 分享了他使用世界最佳模型的经历——他仍需更改约 15% 的输出内容。这意味着我们远未能够将人类从工作流程中移除。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">信息敏感度的重要性</div>
+                        <p class="topic-detail-content">关于为什么很少有上市公司成功创建优秀的代理产品，Levie 指出：这需要一种前所未有的信息敏感度。传统新闻媒体两周后的报道已经过时，真正有价值的信息来自代理沙盒公司的工程师撰写的长文——关于他们如何处理内存、安全带等具体技术问题。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">CEO 工作的难度增加</div>
+                        <p class="topic-detail-content">这种信息获取方式的变化使得 CEO 的工作比以往任何时候都难：变化速度之快需要每周多次的响应，同时还要为客户在"变化海啸"中提供桥梁。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Box 的经验</div>
+                        <p class="topic-detail-content">Levie 分享了 Box 的经验：去年推出的新计划层级（包含最佳工作流程能力、业务自动化、应用开发能力，以代理为中心）已经推动了收入增长的重新加速。但华尔街仍在观望，希望看看所有公司在如此多的变化中最终会落在何处。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "即使使用最好的模型，仍需更改 15% 的输出。我们远未能够将人类从工作流程中移除。" — Aaron Levie [35:45]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">公开市场估值与 CEO 挑战</h3>
+                        <span class="topic-timestamp">39:23 - 46:30</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        软件公司的估值（如 3 倍现金流）可能过度低，但之前的过高估值也不合理。市场正在寻找新的平衡点。这一代创始人 CEO 中有很多人对 AI 非常精通，但每个技术浪潮都有赢家和输家。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">市场的当前状态</div>
+                        <p class="topic-detail-content">Levie 承认他每天都会查看公司股价——这是大多数上市公司 CEO 的共同习惯。关于当前软件公司以 3 倍自由现金流交易的市场环境，他认为：市场正将软件视为一个无差别的"桶状"行业；未来 1-2 年将开始出现公司间的分化：代理对某些软件公司有利，对其他公司施加压力；一些公司需要完全转向，一些公司可以骑上浪潮；钟摆正在寻找新的平衡点——之前的一些估值超出了可能的终端价值。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">这一代 CEO 的能力</div>
+                        <p class="topic-detail-content">当被问及这一代 CEO 是否有能力应对 AI 变革时，Levie 指出：许多创始人/技术背景的 CEO 非常"连线"（plugged in）；他们在周末使用 Cloud Code、Codex 等工具构建东西；他们不会让自己的公司输掉。但他也承认，每个技术浪潮都有赢家和输家，AI 浪潮可能也不例外。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Atlassian 的案例</div>
+                        <p class="topic-detail-content">关于哪家公司被市场不公平对待，Levie 提到了 Atlassian（股价下跌 78%）。他认为市场可能错误地认为"工程将被商品化"，但他的观点是"将有更多工程师"，因此为工程自动化销售基础设施应该是一个好位置。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">软件公司的生存法则</div>
+                        <p class="topic-detail-content">Levie 总结了当前软件公司的生存法则：必须深入工作流程、必须拥有数据、必须是该数据的最佳去处、必须是代理想要使用该数据的最佳场所。如果一家公司的数据不是代理在该类别中会"故意选择"的工作场所，那将是一个艰难的处境。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "如果你的数据不是代理在该类别中会故意选择的工作场所，那将是一个艰难的处境。" — Aaron Levie [44:08]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">前沿实验室的投资价值</h3>
+                        <span class="topic-timestamp">46:30 - 结尾</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        OpenAI 与 Anthropic 的竞争就像当年的 AWS vs Azure vs GCP——市场如此巨大，最终每个人都会赢。企业不会想要单一供应商。前沿实验室的估值可能仍会大幅增长。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">云计算的历史类比</div>
+                        <p class="topic-detail-content">Levie 用云计算的历史来类比 AI 前沿实验室的竞争：2010 年 AWS 收入 5 亿美元，Azure 刚刚推出，Google App Engine 还很微小；今天云计算是一个每年数千亿美元收入的生态系统；当年人们问：谁会赢？AWS、Azure 还是 GCP？答案是：市场如此巨大，每个人都赢了。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 的未来格局</div>
+                        <p class="topic-detail-content">Levie 认为 AI 将遵循类似模式：无法预测是 OpenAI 60% / Anthropic 40%，还是相反；但无论如何，这些市场都大得惊人；企业不会想要单一供应商（一个服务中断、API 变更、商业模式变化都会带来风险）；这将是一个多供应商、多 AI 的世界。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">四个关键洞察</div>
+                        <p class="topic-detail-content">1. 企业采用的速度将被低估：就像云的扩散花费了比硅谷认为更长的时间。2. 专业服务公司将是赢家：Accenture 的 AI 团队进入美国银行这类公司将获得巨大业务。3. 代理评估和可观察性将是一个重要类别：像 Brain Trust 这样的公司（为代理提供评估工具）将获得成功，因为企业需要知道他们的代理是否正确工作。4. 前沿实验室的估值可能还会大幅增长：从 8500 亿美元到 2 万亿美元？</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">最重要的思维转变</div>
+                        <p class="topic-detail-content">Levie 分享了他过去 12 个月最重要的思维转变：他比三年前更加相信软件必须是"无头优先"（headless first）的。两三年前，代理无法可靠地找到正确的文档或打开文件阅读。但在过去一年，这些能力加速发展，使得"无头优先"成为必然选择。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "市场如此巨大，最终每个人都赢了。企业不会想要单一供应商。" — Aaron Levie [48:43]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💡</div>
+                    <h3 class="takeaway-title">就业市场悖论</h3>
+                    <p class="takeaway-desc">AI 降低的是内容生成门槛，而非专业判断门槛。当所有人都能生成内容时，对专业审查的需求反而增加。律师、工程师的数量在未来五年很可能会增长，而非减少。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">重新定义企业自动化</h3>
+                    <p class="takeaway-desc">企业不能直接部署代理替代人类，而需要重新设计整个工作流程。这创造了"代理操作员"这一新兴职业，需要技术背景和对 AI 系统的深入理解。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔄</div>
+                    <h3 class="takeaway-title">SaaS 价值的转移</h3>
+                    <p class="takeaway-desc">在代理主导的世界中，软件价值将从用户界面转移到 API 层。拥有丰富业务逻辑、强大 API 的公司将更具优势；"按钮众多"的软件将面临压力。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🛡️</div>
+                    <h3 class="takeaway-title">网络安全的新范式</h3>
+                    <p class="takeaway-desc">代理同时带来了两种新风险（AI 生成代码的漏洞、AI 辅助攻击），而解决方案也是代理。这将是网络安全的"黄金时代"。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💰</div>
+                    <h3 class="takeaway-title">预算结构的革命性变化</h3>
+                    <p class="takeaway-desc">AI 支出将从 IT 预算（占企业收入 10%-12%）转移到运营支出预算，可能将技术支出提升到企业收入的 20%。这是技术史上的第一次。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🌐</div>
+                    <h3 class="takeaway-title">开源模型的角色</h3>
+                    <p class="takeaway-desc">许多硅谷公司使用开源中国模型来接近前沿性能。这不令人担忧，因为即使最好的模型也需要人类审查其工作。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⏳</div>
+                    <h3 class="takeaway-title">市场认知的滞后</h3>
+                    <p class="takeaway-desc">硅谷认为 AI 会快速自动化所有知识工作，但现实是：企业有监管约束、数据分散、员工习惯等现实障碍。AI 的扩散将花费比预期更长的时间，专业服务公司将从中受益。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🚀</div>
+                    <h3 class="takeaway-title">前沿实验室的长期价值</h3>
+                    <p class="takeaway-desc">OpenAI 与 Anthropic 的竞争就像当年的云计算战争——市场足够大，最终每个人都会赢。企业不会想要单一供应商，这将是多 AI 的世界。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">关于 Box 与 Aaron Levie</h3>
+            <p class="footer-desc">
+                Box 是一家企业内容管理和云存储公司，年收入超过 10 亿美元，市值约 32 亿美元。Aaron Levie 是其联合创始人兼 CEO，被认为是硅谷最具前瞻性的上市公司 CEO 之一，特别是在企业 AI 采用方面。
+            </p>
+            <div class="footer-quote">
+                "我们正处于一场商业和经济竞赛中，而不是某种存在主义竞赛。"
+            </div>
+            <p class="footer-note">
+                本文基于 20VC 播客节目《Aaron Levie: Everyone is Wrong; We'll Have More Developers in 5 Years》的内容总结
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
