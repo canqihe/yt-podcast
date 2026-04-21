@@ -1,6 +1,34 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/nick-bloom-uncertainty.html",
+        "card_class": "card-finance",
+        "category": "经济 · 决策",
+        "date": "2026-04-21",
+        "title": "如何在当今世界应对不确定性？",
+        "excerpt": "当媒体高呼『前所未有的不确定性』而股市却平静如水时，我们该相信谁？斯坦福经济学家Nick Bloom揭示经济政策不确定性指数的真相：三种测量方法为何分道扬镳、实物期权理论如何解释经济周期、Brexit十年如何让英国GDP损失6%，以及企业在高不确定性时代的三大生存策略。",
+        "tags": [
+            "#不确定性",
+            "#经济政策",
+            "#实物期权",
+            "#决策策略"
+        ]
+    },
+    {
+        "url": "articles/hormuz-blockade-trump-tariff.html",
+        "card_class": "card-finance",
+        "category": "地缘政治 · 贸易政策",
+        "date": "2026-04-21",
+        "title": "霍尔木兹海峡封锁的影响与特朗普新关税策略",
+        "excerpt": "CSIS贸易专家深度拆解：伊朗政权「三屏」权力结构、美国封锁的战略价值、讽刺的清洁能源推动。同时解析关税法律接力方案——从AIPA到第122条再到76项301调查，政府如何精心设计法律基础替换。",
+        "tags": [
+            "#霍尔木兹海峡",
+            "#关税政策",
+            "#地缘政治",
+            "#CSIS"
+        ]
+    },
+    {
         "url": "articles/aaron-levie-ai-developers.html",
         "card_class": "card-ai",
         "category": "AI · 企业采用",
