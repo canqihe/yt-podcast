@@ -1,6 +1,20 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/chatgpt-images-2-0.html",
+        "card_class": "card-ai",
+        "category": "AI · 图像生成",
+        "date": "2026-04-22",
+        "title": "ChatGPT Images 2.0：图像生成的文艺复兴",
+        "excerpt": "如果将 DALL·E 比作洞穴壁画，IMAGen 1 比作古代艺术，那么 IMAGen 2.0 就是文艺复兴。OpenAI 最新图像生成模型引入革命性『思考』能力，支持多语言文本渲染、批量连贯生成、实时网络搜索，标志着 AI 图像生成从被动响应向主动智能的重要转变。",
+        "tags": [
+            "#OpenAI",
+            "#图像生成",
+            "#IMAGen2",
+            "#多语言"
+        ]
+    },
+    {
         "url": "articles/nick-bloom-uncertainty.html",
         "card_class": "card-finance",
         "category": "经济 · 决策",

@@ -50,7 +50,7 @@ The design system lives in `design-system/` and supports **6 color schemes** tha
 | # | Scheme | Primary | Secondary |
 |---|--------|---------|-----------|
 | 1 | Orange-Cyan | `#ff6b35` | `#00d4ff` |
-| 2 | Purple-Pink | `#a855f7` | `#ec4899` |
+| 2 | Purple-Yellow | `#a855f7` | `#FFC107` |
 | 3 | Green-Yellow | `#22c55e` | `#eab308` |
 | 4 | Blue-Indigo | `#3b82f6` | `#818cf8` |
 | 5 | Coral-Gold | `#f97066` | `#fbbf24` |
