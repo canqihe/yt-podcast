@@ -1,6 +1,62 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/growth-ai-age-hubspot.html",
+        "card_class": "card-ai",
+        "category": "AI · 增长",
+        "date": "2026-04-22",
+        "title": "AI时代的增长：从平台转变到组织转型",
+        "excerpt": "HubSpot CEO Yamini Rangan与资深科技领袖Steve Vamos深度对话，探讨在AI驱动的时代企业和领导者如何应对变革、实现增长。AI的价值不在于工具本身，而在于如何将个人生产力的提升转化为整个组织的能力升级。",
+        "tags": [
+            "#HubSpot",
+            "#YaminiRangan",
+            "#AI增长",
+            "#组织变革"
+        ]
+    },
+    {
+        "url": "articles/xiaomi-alain-lam-cfo.html",
+        "card_class": "card-tech",
+        "category": "硬科技 · 造车新势力",
+        "date": "2026-04-22",
+        "title": "小米CFO深度对话：从手机到汽车，重新定义人车家生态",
+        "excerpt": "从决定造车到首款车型上市仅用不到三年时间，小米SU7用30分钟售出5万辆的奇迹背后，是完善的基础设施、浓厚的创新氛围和供应链本土化优势。智能电动车的本质是消费电子产品，传统车企的劣势不在于电动，而在于智能。",
+        "tags": [
+            "#小米",
+            "#AlainLam",
+            "#造车",
+            "#供应链"
+        ]
+    },
+    {
+        "url": "articles/openai-greg-brockman.html",
+        "card_class": "card-ai",
+        "category": "AI · 深度学习",
+        "date": "2026-04-22",
+        "title": "OpenAI联合创始人Greg Brockman：AI竞赛与未来",
+        "excerpt": "The Knowledge Project深度访谈。Greg Brockman首次完整披露Sam Altman被解雇的72小时细节，以及OpenAI十年来的技术路线图、AI竞赛的真实状态、算力即新时代石油、和对普通人未来的预言——当每个人都能拥有10万名AI员工时，关键不再是保住工作，而是用AI创造价值。",
+        "tags": [
+            "#GregBrockman",
+            "#OpenAI",
+            "#AI竞赛",
+            "#SamAltman"
+        ]
+    },
+    {
+        "url": "articles/10-years-openai-sam-altman-greg-brockman.html",
+        "card_class": "card-ai",
+        "category": "AI · 战略",
+        "date": "2026-04-22",
+        "title": "OpenAI 十年：Sam Altman · Greg Brockman 首次联合访谈",
+        "excerpt": "首次联合采访披露十年历程：从弱者到领跑者的戏剧性转变、个人 AGI 即将来临、Sora 为何被砍、三种经济未来、以及 Elon 诉讼背后的真相——Musk 想要『绝对控制』，OpenAI 拒绝了，因为『不应该有一个人 in charge of 整个未来』。",
+        "tags": [
+            "#SamAltman",
+            "#GregBrockman",
+            "#OpenAI",
+            "#个人AGI"
+        ]
+    },
+    {
         "url": "articles/chatgpt-images-2-0.html",
         "card_class": "card-ai",
         "category": "AI · 图像生成",
