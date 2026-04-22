@@ -14,22 +14,24 @@ A curated knowledge platform that distills the best YouTube podcast content into
 
 ## Articles
 
-**66 articles** across multiple domains:
+**70 articles** across multiple domains:
 
 | Domain | Examples |
 |--------|---------|
-| **AI Strategy & Agents** | Dario Amodei (3x), Andrej Karpathy, Harrison Chase, Bret Taylor, Joelle Pineau |
+| **AI Strategy & Agents** | Dario Amodei (3x), Andrej Karpathy, Harrison Chase, Bret Taylor, Joelle Pineau, Greg Brockman (OpenAI) |
 | **AI & Robotics** | Sergey Levine, Demis Hassabis, Brett Adcock, Figure AI |
 | **AI Markets & Compute** | a16z, SemiAnalysis, Coatue, Alfred Lin (Sequoia) |
 | **AI Society & Future** | Ben Horowitz, Marc Andreessen, Alex Karp, Yuval Harari |
-| **Investing & Finance** | Stanley Druckenmiller, Tom Lee, ARK Invest, Steve Keen (financial crash warning), Jeremy Allaire (Circle), Alan Waxman (Sixth Street) |
+| **AI Growth & Enterprise** | Yamini Rangan (HubSpot), Aaron Levie (Box) |
+| **Investing & Finance** | Stanley Druckenmiller, Tom Lee, ARK Invest, Steve Keen (financial crash warning), Jeremy Allaire (Circle), Alan Waxman (Sixth Street), Jeremy Grantham (GMO) |
 | **Defense & Military Tech** | Palantir, Anduril, military industrial complex |
+| **Hard Tech & Manufacturing** | Xiaomi (Alain Lam), SemiAnalysis (ChipBook), Applied Materials |
 | **Company Earnings** | Google Q4 2025, Micron Q2 2026 |
 | **Science & Health** | David Sinclair (aging), Dr. Arif Khan (child development), AI-designed life forms, Ben Lamm (synthetic biology) |
-| **Space & Frontier Tech** | Musk, NASA, Starcloud, Quantum Computing, Brain-Computer Interfaces, Michael Nielsen (alien tech trees) |
-| **Tech Leaders** | Satya Nadella, Demis Hassabis, Jensen Huang, Kurzweil, Elon Musk, Aaron Levie (Box) |
-| **Wisdom & Thinking** | Kevin Kelly (79 maxims), First principles thinking |
-| **Philosophy & Spirituality** | Swami Sarvapriyananda (consciousness & Vedanta) |
+| **Space & Frontier Tech** | Musk, NASA, Starcloud, Quantum Computing, Brain-Computer Interfaces, Michael Nielsen (alien tech trees), Peter Beck (Rocket Lab) |
+| **Tech Leaders** | Satya Nadella, Demis Hassabis, Jensen Huang, Kurzweil, Elon Musk |
+| **Wisdom & Thinking** | Kevin Kelly (79 maxims), First principles thinking, Eric Jorgenson (Musk methodology) |
+| **Philosophy & Spirituality** | Swami Sarvapriyananda (consciousness & Vedanta), Robert Pantano (self-awareness) |
 
 Browse all articles at [index.html](index.html)
 
@@ -70,7 +72,7 @@ All gradients, glows, shadows, and accent elements auto-inherit from these varia
 ```
 yt-podcast/
 ├── index.html                  # Homepage (article grid)
-├── articles/                   # 66 in-depth articles
+├── articles/                   # 70+ in-depth articles
 │   └── images/                 # Article hero images
 ├── design-system/
 │   ├── design-tokens.css       # Design tokens & color schemes
