@@ -1,6 +1,20 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/marc-andreessen-internet-media.html",
+        "card_class": "card-future",
+        "category": "媒体洞察",
+        "date": "2026-04-23",
+        "title": "马克·安德森：互联网如何重塑新闻、政治与愤怒",
+        "excerpt": "a16z 联合创始人深度解析互联网时代媒体运作机制：从 CNN 的『兰德蒙尼姆』到社交媒体的『当前事件』机制，揭示 2.5 天恐慌周期、全球村心理代价、虚拟战争的安全阀效应，以及第一届真正互联网选举的预测。",
+        "tags": [
+            "#MarcAndreessen",
+            "#a16z",
+            "#媒体生态",
+            "#注意力经济"
+        ]
+    },
+    {
         "url": "articles/growth-ai-age-hubspot.html",
         "card_class": "card-ai",
         "category": "AI · 增长",
