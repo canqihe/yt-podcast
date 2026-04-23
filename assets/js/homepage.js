@@ -1,6 +1,76 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/bitcoin-pompliano-douthat.html",
+        "card_class": "card-finance",
+        "category": "金融科技 · 比特币",
+        "date": "2026-04-23",
+        "title": "为什么我们都需要一点比特币",
+        "excerpt": "Ross Douthat 与 Anthony Pompliano 深度对话，揭示一个颠覆性的真相：传统意义上的「安全资产」实际上被设计来持续亏钱。真正的财富保护需要拥抱波动性，因为稳定是金融市场中最大的谎言。",
+        "tags": [
+            "#AnthonyPompliano",
+            "#比特币",
+            "#金融哲学",
+            "#财富保护"
+        ]
+    },
+    {
+        "url": "articles/sap-philipp-herzig.html",
+        "card_class": "card-finance",
+        "category": "企业软件 · AI转型",
+        "date": "2026-04-23",
+        "title": "SAP：将公司「操作系统」带入AI时代",
+        "excerpt": "50年历史的软件巨头如何穿越技术周期？SAP CTO Philipp Herzig深度对话：AI成果鸿沟、大语言模型的盲区、从席位收费到按成果收费的商业模式变革。技术应该「消失」，让客户只看到价值。",
+        "tags": [
+            "#PhilippHerzig",
+            "#SAP",
+            "#企业AI",
+            "#商业模式"
+        ]
+    },
+    {
+        "url": "articles/ai-tokens-dylan-patel.html",
+        "card_class": "card-tech",
+        "category": "AI · 半导体",
+        "date": "2026-04-23",
+        "title": "AI Token 的供需革命：一场正在重塑世界的静默风暴",
+        "excerpt": "SemiAnalysis 创始人 Dylan Patel 深度剖析：AI 支出从数万飙升至 700 万美元、Anthropic 收入达 350-400 亿美元、供应链全面告急。从幻影 GDP 到永久底层阶级风险，揭示算力竞赛背后的残酷真相。",
+        "tags": [
+            "#DylanPatel",
+            "#AI供需",
+            "#半导体",
+            "#SemiAnalysis"
+        ]
+    },
+    {
+        "url": "articles/ai-prediction-carissa-veliz.html",
+        "card_class": "card-ai",
+        "category": "AI · 哲学",
+        "date": "2026-04-23",
+        "title": "我们是否过于痴迷 AI 预测？",
+        "excerpt": "牛津哲学家 Carissa Véliz 深度对话——预测如何成为权力的武器。从自我实现的预言到卡夫卡式系统，从算法招聘陷阱到预测市场操纵，全面揭示我们对预测变得过于天真和痴迷，而这种痴迷正在被权力所利用。",
+        "tags": [
+            "#CarissaVéliz",
+            "#预测哲学",
+            "#AI伦理",
+            "#算法偏见"
+        ]
+    },
+    {
+        "url": "articles/ai-sandwich-kieran-klaassen.html",
+        "card_class": "card-ai",
+        "category": "AI · 工程方法论",
+        "date": "2026-04-23",
+        "title": "AI三明治：人类在AI世界中何处发光",
+        "excerpt": "Every公司AI工程负责人Kieran Klaassen揭秘人类与AI协作的「三明治模型」——在开始设定框架，在结束注入美感，中间让AI自由发挥。从复合工程的四步框架到工作光谱模型，全面揭示AI时代人类的核心价值。",
+        "tags": [
+            "#KieranKlaassen",
+            "#Every",
+            "#复合工程",
+            "#AI协作"
+        ]
+    },
+    {
         "url": "articles/marc-andreessen-internet-media.html",
         "card_class": "card-future",
         "category": "媒体洞察",
