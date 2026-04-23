@@ -29,20 +29,6 @@ const articlesData = [
         ]
     },
     {
-        "url": "articles/xiaomi-alain-lam-cfo.html",
-        "card_class": "card-tech",
-        "category": "硬科技 · 造车新势力",
-        "date": "2026-04-22",
-        "title": "小米CFO深度对话：从手机到汽车，重新定义人车家生态",
-        "excerpt": "从决定造车到首款车型上市仅用不到三年时间，小米SU7用30分钟售出5万辆的奇迹背后，是完善的基础设施、浓厚的创新氛围和供应链本土化优势。智能电动车的本质是消费电子产品，传统车企的劣势不在于电动，而在于智能。",
-        "tags": [
-            "#小米",
-            "#AlainLam",
-            "#造车",
-            "#供应链"
-        ]
-    },
-    {
         "url": "articles/openai-greg-brockman.html",
         "card_class": "card-ai",
         "category": "AI · 深度学习",
