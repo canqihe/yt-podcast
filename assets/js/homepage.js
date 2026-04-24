@@ -1,20 +1,6 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
-        "url": "articles/consciousness-mattering-instinct.html",
-        "card_class": "card-future",
-        "category": "哲学 · 意识研究",
-        "date": "2026-04-24",
-        "title": "意识是宇宙的基本构成单元吗？",
-        "excerpt": "哲学家 Rebecca Newberger Goldstein 提出『重要性本能』全新框架，探讨人类最深层的渴望。我们是物质生物，却拼命否认自己仅仅是物质——这种渴望既催生了最伟大的成就，也导致了最深刻的痛苦和冲突。从『证明人』假设到死亡与无意义的较量，全面揭示理解人性的新透镜。",
-        "tags": [
-            "#RebeccaGoldstein",
-            "#重要性本能",
-            "#意识哲学",
-            "#人性"
-        ]
-    },
-    {
         "url": "articles/anthropic-product-speed-cat-wu.html",
         "card_class": "card-ai",
         "category": "AI · 产品管理",
@@ -1233,14 +1219,16 @@ const articlesData = [
     {
         "url": "articles/ai-revolution-future-warning.html",
         "card_class": "card-ai",
-        "category": "AI 革命",
-        "date": "2026-03-10",
-        "title": "\"白领大屠杀\"：Dylan Patton 冷酷警示",
-        "excerpt": "SemiAnalysis 首席分析师深度访谈：AI 迭代速度已超越人类社会的适应能力。从初级开发者终局到 Vibe Coding 兴起，从小团队效率套利到传统媒体消亡，揭示大多数人尚未察觉的真相。",
+        "category": "AI · 战争与未来",
+        "date": "2026-04-25",
+        "title": "Dylan Patel：AI战争、工作已凉、微软的cope和超级智能",
+        "excerpt": "SemiAnalysis 创始人 Dylan Patel 深度解析: 从美国政府黑名单到中国 AI 蒸馏攻击, 从白领工作大屠杀到软件行业崩溃. AI 发展速度一日千里, 我们正站在历史性转折点的边缘, 人类工作方式的彻底重构已经开始.",
         "tags": [
-            "#AI革命",
+            "#DylanPatel",
             "#SemiAnalysis",
-            "#DylanPatel"
+            "#AI战争",
+            "#白领危机",
+            "#中国AI"
         ]
     },
     {
