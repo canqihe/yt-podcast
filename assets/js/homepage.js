@@ -1,6 +1,48 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/consciousness-mattering-instinct.html",
+        "card_class": "card-future",
+        "category": "哲学 · 意识研究",
+        "date": "2026-04-24",
+        "title": "意识是宇宙的基本构成单元吗？",
+        "excerpt": "哲学家 Rebecca Newberger Goldstein 提出『重要性本能』全新框架，探讨人类最深层的渴望。我们是物质生物，却拼命否认自己仅仅是物质——这种渴望既催生了最伟大的成就，也导致了最深刻的痛苦和冲突。从『证明人』假设到死亡与无意义的较量，全面揭示理解人性的新透镜。",
+        "tags": [
+            "#RebeccaGoldstein",
+            "#重要性本能",
+            "#意识哲学",
+            "#人性"
+        ]
+    },
+    {
+        "url": "articles/anthropic-product-speed-cat-wu.html",
+        "card_class": "card-ai",
+        "category": "AI · 产品管理",
+        "date": "2026-04-24",
+        "title": "速度革命：Anthropic 产品团队如何从月到天",
+        "excerpt": "Anthropic Claude Code 和 Cowork 产品负责人 Cat Wu 深度分享：从 6 个月到 1 周再到 1 天的发布革命。角色融合、产品品味、统一使命——揭示 Anthropic 如何在保持安全 AGI 使命的同时，实现产品发布速度的惊人跃迁。从『模型会早餐吃掉你的线束』到『Just Do Things』的文化哲学。",
+        "tags": [
+            "#CatWu",
+            "#Anthropic",
+            "#产品管理",
+            "#ClaudeCode"
+        ]
+    },
+    {
+        "url": "articles/elon-600b-cursor-claude-saas.html",
+        "card_class": "card-ai",
+        "category": "AI · 科技",
+        "date": "2026-04-24",
+        "title": "埃隆的600亿美元Cursor赌注、Claude摧毁SaaS、OpenAI大规模离职潮",
+        "excerpt": "Anthropic发布Claude Design仅用一项更新就让Figma和Adobe股价暴跌，揭示前沿AI实验室正在『解锁』模型潜在能力。SpaceX以600亿美元收购Cursor，代码生成成为通往AGI的关键路径。数据中心资本支出超越历史上所有政府项目，私人企业在AI基础设施上的投入正在重塑全球经济版图。",
+        "tags": [
+            "#埃隆马斯克",
+            "#Claude",
+            "#OpenAI",
+            "#代码生成"
+        ]
+    },
+    {
         "url": "articles/bitcoin-pompliano-douthat.html",
         "card_class": "card-finance",
         "category": "金融科技 · 比特币",
