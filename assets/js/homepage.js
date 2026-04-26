@@ -1,20 +1,6 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
-        "url": "articles/arthur-brooks-happiness.html",
-        "card_class": "card-future",
-        "category": "心理学 · 哲学",
-        "date": "2026-04-26",
-        "title": "人生苦短，美好生活秘诀何在",
-        "excerpt": "哈佛幸福学专家 Arthur Brooks 结合塞内卡古老智慧与现代科学，揭示真正充实人生的道路。奋斗者与躺平者的双重陷阱、快乐与享受的区别、痛苦作为生命的特性而非错误，以及幸福的核心——爱与被爱。",
-        "tags": [
-            "#ArthurBrooks",
-            "#幸福科学",
-            "#塞内卡",
-            "#人生哲学"
-        ]
-    },
-    {
         "url": "articles/google-cloud-thomas-kurian.html",
         "card_class": "card-tech",
         "category": "AI · 基础设施",
