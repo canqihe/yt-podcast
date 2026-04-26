@@ -19,7 +19,7 @@ const articlesData = [
         "card_class": "card-tech",
         "category": "AI · 基础设施",
         "date": "2026-04-26",
-        "title": "Google Cloud CEO：TPU 优势、Anthropic 合作与智能体时代",
+        "title": "Google Cloud CEO 深度访谈：TPU、Anthropic 合作与智能体时代",
         "excerpt": "当整个 AI 行业都在为算力短缺而焦虑时，Google 却展现出一种令人惊叹的从容。Google Cloud CEO Thomas Kurian 揭示了这家科技巨头如何在 AI 浪潮中保持竞争优势的秘密——长达 11 年的芯片布局、极致的协同设计哲学，以及作为平台公司的独特定位。",
         "tags": [
             "#ThomasKurian",
