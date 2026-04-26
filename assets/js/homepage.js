@@ -1,12 +1,26 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/replit-future-company.html",
+        "card_class": "card-ai",
+        "category": "AI · 创业",
+        "date": "2026-04-26",
+        "title": "未来公司仅剩的两个职位",
+        "excerpt": "当 AI 将编程的门槛降到几乎为零时，软件开发的未来会变成什么样？Replit CEO 揭示了一个正在发生的变革——未来的公司只剩下两个核心角色：构建者和销售者。这不是科幻畅想，而是 Replit 已经在内部实践的组织模式。",
+        "tags": [
+            "#AmjadMasad",
+            "#Replit",
+            "#AI创业",
+            "#公司形态"
+        ]
+    },
+    {
         "url": "articles/google-cloud-thomas-kurian.html",
         "card_class": "card-tech",
         "category": "AI · 基础设施",
-        "date": "2026-04-25",
-        "title": "Google Cloud CEO：Thomas Kurian 谈 AI 基础设施、TPU 优势与 Anthropic 合作",
-        "excerpt": "当OpenAI、Anthropic抱怨算力受限时，Google为何拥有充足的AI算力？Google Cloud CEO Thomas Kurian揭示长达11年的前瞻性布局如何构建竞争优势。TPU系统优势、平台公司的友敌关系、代理革命对芯片设计的影响，以及让CEO睡不着觉的三重挑战。",
+        "date": "2026-04-26",
+        "title": "Google Cloud CEO 谈 AI 算力优势：TPU、Anthropic 合作与智能体时代",
+        "excerpt": "当整个 AI 行业都在为算力短缺而焦虑时，Google 却展现出一种令人惊叹的从容。Google Cloud CEO Thomas Kurian 揭示了这家科技巨头如何在 AI 浪潮中保持竞争优势的秘密——长达 11 年的芯片布局、极致的协同设计哲学，以及作为平台公司的独特定位。",
         "tags": [
             "#ThomasKurian",
             "#GoogleCloud",
