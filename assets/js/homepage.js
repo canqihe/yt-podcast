@@ -1,6 +1,21 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/box-ceo-ai-enterprise.html",
+        "card_class": "card-ai",
+        "category": "AI · 企业转型",
+        "date": "2026-04-28",
+        "title": "Box CEO：为什么大公司在 AI 上落后了",
+        "excerpt": "硅谷看到的 AI 效率革命为何无法在企业中复制？MIT 数据显示 95% 的大企业 AI 倡议以失败告终。从集成墙到智能体入职，深入探讨企业 AI 转型的真实障碍——数据分散在几十年遗留的 IT 堆栈中，AI 无法魔法般消除这个障碍。Salesforce 无头化转型是风向标，为智能体设计的 API 将催生全新架构模式。",
+        "tags": [
+            "#AaronLevie",
+            "#Box",
+            "#企业AI",
+            "#a16z",
+            "#集成墙"
+        ]
+    },
+    {
         "url": "articles/replit-future-company.html",
         "card_class": "card-ai",
         "category": "AI · 创业",
