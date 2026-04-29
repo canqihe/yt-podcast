@@ -1,6 +1,48 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/andrej-karpathy-agentic-engineering.html",
+        "card_class": "card-ai",
+        "category": "AI · 编程范式",
+        "date": "2026-04-30",
+        "title": "Andrej Karpathy：从 Vibe Coding 到 Agentic Engineering",
+        "excerpt": "即便 AI 领域先驱也坦言：『我从未感觉自己如此落后。』这场对话揭示了编程范式的根本转移——2023年12月成为转折点，AI 编程从『需要修正』跃升到『可信执行』。Software 3.0、可验证性原理、幽灵比喻、理解 vs 思考——全面解析 Agentic Engineering 的新学科。",
+        "tags": [
+            "#AndrejKarpathy",
+            "#SequoiaCapital",
+            "#AI编程",
+            "#AgenticEngineering"
+        ]
+    },
+    {
+        "url": "articles/samsung-design-love.html",
+        "card_class": "card-future",
+        "category": "设计哲学 · AI伦理",
+        "date": "2026-04-30",
+        "title": "技术应该「让你从技术中解放出来」——三星设计总监",
+        "excerpt": "三星首席设计官Mauro Porcini在米兰设计周深度对话：提出「设计是一种爱的行为」核心理念。从形式追随功能到形式与功能追随意义，从技术奴役论到技术解放论，从数字孪生伦理到无工作时代的幸福设计——全面揭示AI时代设计哲学的温暖转向。",
+        "tags": [
+            "#MauroPorcini",
+            "#三星",
+            "#设计哲学",
+            "#AI伦理"
+        ]
+    },
+    {
+        "url": "articles/anduril-100-years-military-history.html",
+        "card_class": "card-tech",
+        "category": "国防科技 · 军事历史",
+        "date": "2026-04-30",
+        "title": "100年的军事历史解释了关于Anduril的一切",
+        "excerpt": "Kyle Harrison花费两年撰写300页《Anduril论文》，揭开美国军事工业体系百年兴衰——从二战黄金时代到McNamara改革，从成本加成合同到固定成本革命，从傲慢的单极时刻到乌克兰战场的警钟。1:70000的作战效率、每天10万亿美元的海底光缆威胁、从『有毒资产』到600亿估值的逆袭之路。",
+        "tags": [
+            "#Anduril",
+            "#KyleHarrison",
+            "#国防科技",
+            "#军事历史"
+        ]
+    },
+    {
         "url": "articles/demis-hassabis-agi.html",
         "card_class": "card-ai",
         "category": "AI · 创业",

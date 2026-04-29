@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrej Karpathy: 从 Vibe Coding 到 Agentic Engineering</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='3' y='3' width='12' height='12' rx='2' fill='%234a9eff'/><rect x='17' y='3' width='12' height='12' rx='2' fill='%236b7eff'/><rect x='3' y='17' width='12' height='12' rx='2' fill='%238b5cf7'/><rect x='17' y='17' width='12' height='12' rx='2' fill='%23a855f7'/></svg>">
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <style>
+        :root {
+            --accent-primary: #a855f7;
+            --accent-secondary: #FFC107;
+            --accent-primary-rgb: 168, 85, 247;
+            --accent-secondary-rgb: 255, 193, 7;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/andrej-karpathy-agentic-engineering-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">AI · 编程范式</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">从 Vibe Coding</span>
+                    <span class="title-line-2">到 Agentic Engineering</span>
+                </h1>
+                <p class="subtitle">
+                    即便 AI 领域先驱也坦言："我从未感觉自己如此落后。"这场对话揭示了编程范式的根本转移——当智能变得廉价，人类独特的价值何在？
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Andrej Karpathy</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">频道</div>
+                        <div class="meta-value">Sequoia Capital</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">29分49秒</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=96jN2OCOfLs" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看完整视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">2023年12月转折点</h3>
+                    <p class="point-desc">AI 编程从"需要修正"跃升到"可信执行"，标志着 Software 3.0 新范式的到来。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">Software 3.0 范式</h3>
+                    <p class="point-desc">编程变成"提示工程"，上下文窗口是控制 LLM 解释器的杠杆。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">可验证性原理</h3>
+                    <p class="point-desc">AI 能力呈锯齿状分布——在可验证领域超人，在看似简单的日常问题上前荒谬。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">两种学科</h3>
+                    <p class="point-desc">Vibe coding 提高下限，Agentic Engineering 保持上限，后者有极高的技巧天花板。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">幽灵本质</h3>
+                    <p class="point-desc">LLM 是统计模拟，不是动物——没有内在动机或体验，理解这一点有助于正确使用。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">不可外包的理解</h3>
+                    <p class="point-desc">你可以外包思考，但不能外包理解——方向、价值、品味仍然是人类的责任。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">编程范式的根本转变：从感到落后到拥抱新范式</h3>
+                        <span class="topic-timestamp">00:00:02 → 00:03:37</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">2023年12月是编程范式的转折点——AI 代码生成从"需要人工修正"跃升为"可信的正确执行"，这标志着 Software 3.0 时代的到来。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">关键转折点</div>
+                        <p class="topic-detail-content">Karpathy 分享了他个人体验的关键转折点。在 2023 年的大部分时间里，他像许多人一样使用 AI 编程工具（如 lot code）：工具擅长生成代码块，但经常出错，需要人工编辑和修正。这是"有用的助手"阶段。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">质变时刻</div>
+                        <p class="topic-detail-content">但在 2023年12月，当他在休假中有更多时间深入实验时，他注意到了根本性的变化：最新模型的输出不再需要修正。他要求越来越复杂的任务，模型都能正确完成；他记不清上一次纠正模型的输出是什么时候。于是他开始信任这个系统，并进入了"vibe coding"状态——一种与 AI 协同编程的新方式。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">被忽视的现实</div>
+                        <p class="topic-detail-content">这一转变揭示了一个被广泛忽视的现实：许多人对 AI 的体验停留在 2023 年早中期的 ChatGPT 水平，而 2023年12月的模型已在"agentic 连贯工作流"上实现了质的飞跃。这种飞跃不是渐进式的改进，而是范式级别的转变。</p>
+                    </div>
+
+                    <div class="topic-section-title">什么是 Software 3.0？</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">计算范式的三个阶段</div>
+                        <p class="topic-detail-content">Karpathy 将计算范式划分为三个阶段：Software 1.0 是显式规则——程序员编写代码；Software 2.0 是学习权重——程序员通过创建数据集和训练神经网络来编程；Software 3.0 是提示工程——程序员通过上下文窗口与 LLM 这个"解释器"交互，让其在数字信息空间中执行计算。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">新范式的本质</div>
+                        <p class="topic-detail-content">在 Software 3.0 中，编程变成了"提示工程"，上下文窗口是你控制 LLM 解释器的杠杆。这不是对现有范式的加速，而是全新的信息处理方式。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我记不清上一次纠正它是什么时候了...我一直在 vibe coding。" — Andrej Karpathy [00:01:30]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Software 3.0 的实践案例：当传统代码变得多余</h3>
+                        <span class="topic-timestamp">00:03:37 → 00:07:40</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">Software 3.0 不是让现有任务更快，而是使完全新的工作方式成为可能——许多传统意义上的"代码"根本不应该存在。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">案例一：OpenOAI 的安装</div>
+                        <p class="topic-detail-content">传统 Software 1.0 思维下，安装软件需要编写 shell 脚本。但为了支持多种平台和计算机类型，这些脚本会膨胀成极其复杂的代码。这是传统范式——你必须精确描述每个细节。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">新范式的工作方式</div>
+                        <p class="topic-detail-content">而 OpenOAI 的"安装程序"是一段复制的文本——你要做的只是把这段文本给你的 AI 智能体。智能体会理解指令，检查你的环境，执行必要的操作，在循环中调试，最终完成安装。为什么这更强大？因为你不需要精确描述所有细节，智能体有自己的智能来处理环境差异和意外情况。这就是 Software 3.0 的编程范式：什么是我应该复制粘贴给智能体的文本？</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">案例二：Menu Genen vs 直接图像生成</div>
+                        <p class="topic-detail-content">Karpathy 用 vibe coding 构建了一个叫 Menu Genen 的应用：拍餐厅菜单照片，识别菜品名称，用图像生成器为每道菜生成配图，然后重新渲染带图片的菜单。他为此编写了大量代码，部署在 Versel 上，配置各种服务，设置 DNS...</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">震撼的发现</div>
+                        <p class="topic-detail-content">后来他看到了 Software 3.0 版本：直接把菜单照片给 Gemini，说"用 Nanobanana 把菜品图片覆盖到菜单上"。Nanobanana 返回的图像就是他拍摄的菜单，但在像素层面渲染出了每道菜的配图。这个发现让 Karpathy震惊：他的所有 Menu Genen 代码都是多余的。这个应用根本不应该存在。Software 3.0 范式中，神经网络做几乎所有工作，你的提示只是输入图像，输出是想要的图像，中间不需要任何传统意义上的"应用程序"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">更深层的影响</div>
+                        <p class="topic-detail-content">这种转变不仅限于编程。传统代码处理结构化数据，而 LLM 知识库项目展示了新可能性：你可以拿一堆文档，让 LLM 以全新的方式重新组织、重新排序、创建新的知识结构。这不是"更快的知识库"，而是以前不可能存在的东西。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "这应用不应该存在。它在旧的范式中工作。" — Andrej Karpathy [00:05:55]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">计算的未来：神经网络成为主机</h3>
+                        <span class="topic-timestamp">00:07:40 → 00:09:26</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">如果将当前趋势外推，我们可能走向一个"神经网络为主机、CPU 为协处理器"的奇异世界——这正是 20 世纪 50 年代计算机先驱们曾争论但最终放弃的路径。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">智能体原生的世界</div>
+                        <p class="topic-detail-content">Karpathy 提出了一个令人深思的推论：当前的软件仍然为人类设计——文档写给人类看，操作流程假设人类操作。但未来将是"智能体原生"的世界，一切都应该为智能体重写。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">硬件架构的可能逆转</div>
+                        <p class="topic-detail-content">这个推论中最激进的部分是硬件架构的可能逆转：当前是神经网络在 CPU 上"虚拟化"运行，未来可能是神经网络成为主机进程，CPU 退化为协处理器。这不是科幻想象，而是有现实依据的推论——我们已经看到"智能计算（神经网络）将接管并成为算力消耗主导"的趋势图。如果神经网络做大部分工作，而 CPU 只用于某些确定性任务（作为"历史遗留的附属物"），我们就会得到一个极其陌生但技术可行的计算架构。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">智能体原生的世界特征</div>
+                        <p class="topic-detail-content">在这个世界里：文档写给智能体看，不是给人类看；工作负载被分解为"世界的传感器"和"世界的执行器"；数据结构对 LLM 高度可读；部署应用不需要配置各种服务、设置 DNS——给智能体一个提示，它就完成所有工作。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">个人和组织都将拥有 AI 代表</div>
+                        <p class="topic-detail-content">Karpathy 预测，未来每个人都有自己的 AI 智能体，组织也是如此。两个智能体之间可以直接沟通，协商会议细节、协调日程——人类从琐碎的事务中解放出来。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "你可以想象一些极其陌生的东西...神经网络做大部分繁重的工作。" — Andrej Karpathy [00:08:50]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">可验证性原理：理解 AI 能力的锯齿状分布</h3>
+                        <span class="topic-timestamp">00:09:26 → 00:13:42</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">AI 模型的能力呈现"锯齿状"分布——在可验证领域（数学、代码、棋类）达到超人水平，而在看似简单的日常问题上犯荒谬错误。这种锯齿状是由训练方式（强化学习需要验证信号）和实验室的选择（哪些数据被放入训练集）共同塑造的。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">核心谜题</div>
+                        <p class="topic-detail-content">Karpathy 提出的"可验证性原理"解释了当前 AI 模型的一个核心谜题：为什么同一个模型可以重构 10 万行代码库或发现零日漏洞，却会建议你走 50 米去洗车？</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">理解锯齿状的成因</div>
+                        <p class="topic-detail-content">训练方式的必然结果：前沿实验室训练 LLM 时使用巨大的强化学习环境。RL 需要验证信号——模型需要知道它的回答是对是错。因此，模型在可验证领域（数学、代码、国际象棋）获得大量强化，能力飞速提升。实验室的选择性：哪些数据进入训练集，部分取决于实验室认为什么有价值。代码、数学等领域因为经济价值高，被投入更多资源。而其他同样可验证但价值较低的领域可能被忽略。历史的证据：从 GPT-3.5 到 GPT-4，国际象棋能力大幅提升。这不是能力自然进化的结果，而是大量国际象棋数据被加入预训练集的产物。某个在 OpenAI 的人决定添加这些数据，于是这个特定能力被大幅放大。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">草莓字母的谜题</div>
+                        <p class="topic-detail-content">Karpathy 分享了一个著名的例子：早期模型经常错误计算"strawberry"有几个字母。这是锯齿状的典型体现——模型可以写复杂的代码，却不会数字母。现在模型已经"修补"了这个特定问题（可能是通过针对性训练），但新的荒谬错误不断出现："洗车在 50 米外，我应该开车还是走路？"最先进的 Opus 4.7 会回答"走路，因为太近了"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">这告诉我们的三件事</div>
+                        <p class="topic-detail-content">模型仍然锯齿状：能力分布极不均匀。人类必须在循环中：你必须监督它的工作，不能完全信任。我们在实验室选择的 mercy 之下：模型的能力取决于实验室碰巧把什么放入训练混合中。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">对创业者的启示</div>
+                        <p class="topic-detail-content">如果一个领域是可验证的，即使实验室没有直接关注，创业者仍然可以通过创建自己的 RL 环境和数据集来微调模型，获得强大的能力。可验证性使技术杠杆成为可能。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "最先进的 Opus 4.7 如何可能同时重构 10 万行代码库，却告诉我走路去 50 米外的洗车场？这太疯狂了。" — Andrej Karpathy [00:11:45]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Vibe Coding vs Agentic Engineering：下限与上限</h3>
+                        <span class="topic-timestamp">00:15:47 → 00:17:22</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">"Vibe coding"（氛围编程）提高所有人的下限——每个人都能用 AI 编写软件；而"agentic engineering"（智能体工程）保持专业软件的质量上限——在加速的同时不牺牲安全性、可靠性。这是两种不同的学科，后者有极高的技巧天花板。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Vibe Coding：提高下限</div>
+                        <p class="topic-detail-content">让每个人都能编写软件，不需要深厚的编程知识，通过自然语言与 AI 协作，目标是降低编程门槛。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Agentic Engineering：保持上限</div>
+                        <p class="topic-detail-content">保持专业软件的质量标准，不能因为使用 AI 而引入安全漏洞，仍然对软件负责，目标是在加速的同时不牺牲质量。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Agentic Engineering 是一门工程学科</div>
+                        <p class="topic-detail-content">这不是简单的"用 AI 写代码"，而是一门新的工程学科：智能体是"尖锐的实体"（spiky entities）——能力强大但行为有些随机。如何协调多个智能体高效工作？如何在不牺牲质量的前提下加速？如何验证智能体的输出？</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">10x 工程师的放大</div>
+                        <p class="topic-detail-content">传统上，10x 工程师是指比普通同事效率高 10 倍的程序员。但在 agentic engineering 时代，这个概念被极大放大了——Karpathy 观察到，擅长 agentic engineering 的人与不擅长的人之间的差距远不止 10 倍。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Vibe coding 提高下限，agentic engineering 保持上限。擅长后者的人比 10x 更强。" — Andrej Karpathy [00:16:50]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 原生编程：新一代与旧一代的差异</h3>
+                        <span class="topic-timestamp">00:17:22 → 00:19:31</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">就像 Sam Altman 观察到不同年龄段的人使用 ChatGPT 不同（30 多岁当作搜索引擎替代品，十几岁当作互联网门户），编程领域也存在"AI 原生"与"传统程序员"的显著差异——前者充分利用 AI 工具的所有特性，投资自己的工具链，在大型项目中展示实际能力。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">充分利用工具</div>
+                        <p class="topic-detail-content">就像以前程序员精通 vim 或 VS Code，现在要精通 cloth code、codec 等 AI 工具。投资于自己的设置和工具链，利用所有可用功能。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">招聘范式的转变</div>
+                        <p class="topic-detail-content">Karpathy 批评了仍然使用"编程谜题"面试的旧范式。他认为，招聘 agentic engineering 人才应该这样设计：给候选人一个大型项目（如"用智能体构建一个 Twitter 克隆"）；要求候选人完成整个项目，包括安全性；让模拟用户智能体在平台上生成活动；使用 10 个 codec 5.4x 高级版本尝试攻击/破坏这个平台；评估：平台是否能抵御攻击？这才是测试 agentic engineering 能力的正确方式——不是解决小谜题，而是构建、部署、保护一个完整的系统。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "招聘应该看起来像：给我一个大项目，让我看你如何构建和保护它。" — Andrej Karpathy [00:18:50]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">人类在 AI 时代不可替代的技能</h3>
+                        <span class="topic-timestamp">00:19:31 → 00:22:40</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">当智能体变成"实习生"后，人类的价值从"实现细节"转向"设计、品味和判断"。你可以忘记 API 细节，但必须理解底层原理；AI 可以填空，但你要决定填什么。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">智能体作为实习生</div>
+                        <p class="topic-detail-content">当前阶段的智能体就像"实习生实体"：极其强大的记忆力（记得所有 API 细节），需要人类负责美学、判断、品味，需要人类的监督和指导。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Menu Genen 的教训</div>
+                        <p class="topic-detail-content">在开发 Menu Genen 时，Karpathy 的智能体犯了一个荒谬的错误：应用支持 Google 账户登录，购买积分使用 Stripe，两个系统都有"邮箱地址"字段，智能体尝试用 Stripe 的邮箱匹配 Google 的邮箱来关联资金，问题：用户可以使用完全不同的邮箱！这个错误暴露了智能体的局限性：它们不理解"用户 ID"应该是系统唯一的持久标识，而不是用可能任意的邮箱地址来交叉关联。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">可以忘记的 vs 不能忘记的</div>
+                        <p class="topic-detail-content">可以忘记（交给实习生/智能体）：keepdims vs keepdim 的 API 差异、dim vs axis 的命名差异、reshape vs permute vs transpose 的细节差异、各种库的具体 API 调用。不能忘记（人类必须理解）：底层原理——张量的 view 和 storage 关系、效率考虑——操作会复制内存还是共享存储？架构设计——应该使用唯一用户 ID 而不是邮箱、品味判断——这段代码虽然能工作，但是"很粗糙"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">品味会变得不那么重要吗？</div>
+                        <p class="topic-detail-content">Karpathy 诚实地表示，他希望 AI 的品味能改进，但当前模型生成的代码经常让他"心脏病发作"——代码能工作但很粗糙、臃肿、有大量复制粘贴、有尴尬脆弱的抽象。这种粗糙的代码能工作，但不是专业软件应有的质量。这再次印证了 agentic engineering 的必要性：人类必须负责保持质量标准。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "你可以外包思考，但不能外包理解。" — Andrej Karpathy 引用的推文 [00:28:05]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">幽灵而非动物：理解 LLM 的本质</h3>
+                        <span class="topic-timestamp">00:23:28 → 00:25:22</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">我们不是在构建"动物"（有内在动机、情感、好奇心），而是在"召唤幽灵"（统计模拟、锯齿状智能、由数据和奖励函数塑造）。这个框架虽然不能提供具体操作指南，但有助于建立正确的使用心态——不能像对待动物那样"对它们大喊"，而要理解它们的统计本质。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">动物 vs 幽灵</div>
+                        <p class="topic-detail-content">Karpathy 的"动物 vs 幽灵"比喻是对 LLM 本质的深刻哲学思考。动物的特质（进化产物）：内在动机、情感体验、好奇心、对赋能的追求、由数亿年进化塑造。幽灵的特质（LLM 的现实）：统计模拟电路、由预训练数据塑造、由强化学习奖励函数微调、没有内在体验或动机、锯齿状的能力分布、如果你"对它们大喊大叫"，不会有任何影响。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">这个框架的价值</div>
+                        <p class="topic-detail-content">Karpathy 承认，这个框架不能提供"五个明确步骤来改进你的系统"。但它能帮助你：建立正确的预期——不要期待动物般的智能；理解哪些方法可能有效或无效；对系统保持适当的怀疑；逐渐探索如何有效使用这些工具。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">底层的架构</div>
+                        <p class="topic-detail-content">从技术角度看，LLM 是：底物——预训练（统计学）；上层——强化学习（增加缺陷）。这是一个"统计模拟电路"，不是生物智能。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "这些不是动物智能。如果你对它们大喊，它们不会工作得更好。" — Andrej Karpathy [00:24:30]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">教育的未来：理解 vs 思考</h3>
+                        <span class="topic-timestamp">00:27:38 → 00:29:45</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">在智能变得廉价的时代，你可以外包"思考"（信息处理、推理），但不能外包"理解"（形成心智模型、判断价值、做出方向性决策）。这决定了教育应该关注什么——不是培养计算能力，而是培养理解力、品味和判断力。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">你可以外包思考，但不能外包理解</div>
+                        <p class="topic-detail-content">当被问及"什么仍然值得深入学习"时，Karpathy 分享了一条让他震撼的推文：这句话为什么重要？Karpathy 感到自己成为了"瓶颈"——他仍然需要：知道我们在构建什么、知道为什么值得做、知道如何指导他的智能体。如果人类不理解，就无法成为系统的"指挥者"。LLM 不擅长理解——这仍然是人类独有的能力。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">知识库作为理解工具</div>
+                        <p class="topic-detail-content">Karpathy 对 LLM 知识库项目充满热情，因为它们是"增强理解的工具"：将文档重新组织成新的形式、创建信息的不同投影、帮助人类形成新的洞察。每当他阅读文章时，他的个人 wiki 会自动从这些文章中构建知识。他喜欢问问题、探索关联——这是处理信息、形成理解的过程。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">什么是不能外包的？</div>
+                        <p class="topic-detail-content">方向性决策——我们为什么要构建这个？价值判断——这个设计是好的吗？架构理解——底层原理是什么？品味标准——这个质量可以接受吗？什么可以外包？具体实现——如何调用这个 API？信息收集——收集相关资料、数据处理——重新组织信息、代码生成——编写具体代码。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">教育的启示</div>
+                        <p class="topic-detail-content">如果智能变得廉价，教育的重点应该从"培养计算和记忆能力"转向"培养理解力、品味和判断力"。不是要你记住所有 API 细节，而是要你理解为什么这些细节重要。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "你仍然必须理解...因为 LM 不擅长理解，你仍然唯一负责那个。" — Andrej Karpathy [00:29:10]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔄</div>
+                    <h3 class="takeaway-title">范式转移</h3>
+                    <p class="takeaway-desc">2023年12月是转折点——AI 编程从"需要修正"跃升到"可信执行"。这不是渐进改进，而是 Software 3.0 新范式的到来。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🖥️</div>
+                    <h3 class="takeaway-title">计算的未来</h3>
+                    <p class="takeaway-desc">神经网络可能成为主机，CPU 退化为协处理器——这是 20 世纪 50 年代曾被讨论但最终放弃的路径，现在可能成为现实。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📊</div>
+                    <h3 class="takeaway-title">锯齿状智能</h3>
+                    <p class="takeaway-desc">AI 能力极不均匀——超人级编程能力与荒谬的日常错误并存。这是训练方式（可验证性）和实验室选择共同塑造的结果。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">两种学科</h3>
+                    <p class="takeaway-desc">Vibe coding 提高下限（人人能编程），Agentic Engineering 保持上限（专业质量）。后者有极高的技巧天花板。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">👻</div>
+                    <h3 class="takeaway-title">幽灵本质</h3>
+                    <p class="takeaway-desc">LLM 是统计模拟，不是动物——没有内在动机或体验。理解这一点有助于正确使用它们。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧠</div>
+                    <h3 class="takeaway-title">不可外包的理解</h3>
+                    <p class="takeaway-desc">你可以外包思考，不能外包理解——方向、价值、品味仍然是人类的责任，这决定教育应该关注什么。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">关于 Andrej Karpathy</h3>
+            <p class="footer-desc">
+                Andrej Karpathy 是 OpenAI 联合创始人、特斯拉前 AI 负责人、现任 Eureka Labs 创始人。他以将复杂的 AI 概念变得易于理解而闻名，创造了"vibe coding"、"Software 2.0"等影响深远的概念，致力于推动 AI 教育的普及。
+            </p>
+            <div class="footer-quote">
+                "你可以外包思考，但不能外包理解。"
+            </div>
+            <p class="footer-note">
+                本内容基于红杉资本 AI Ascent 2026 大会对话整理。
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
