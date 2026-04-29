@@ -1,6 +1,20 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/demis-hassabis-agi.html",
+        "card_class": "card-ai",
+        "category": "AI · 创业",
+        "date": "2026-04-30",
+        "title": "如何构建未来：Demis Hassabis 深度对话",
+        "excerpt": "在通往 AGI 的道路上，DeepMind 创始人揭示技术路径、创业选择与未来图景。Hassabis 预测 AGI 可能在 2030 年左右到来——从持续学习到虚拟细胞，从智能体革命到深科技创业机会，全面解析 AGI 时代前的战略思考。",
+        "tags": [
+            "#DemisHassabis",
+            "#DeepMind",
+            "#AGI",
+            "#创业"
+        ]
+    },
+    {
         "url": "articles/paul-tudor-jones-ai-bubbles.html",
         "card_class": "card-finance",
         "category": "金融 · 交易哲学",
