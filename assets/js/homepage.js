@@ -1,6 +1,48 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/paul-tudor-jones-ai-bubbles.html",
+        "card_class": "card-finance",
+        "category": "金融 · 交易哲学",
+        "date": "2026-04-29",
+        "title": "传奇交易员保罗·都铎·琼斯：50年市场智慧与AI风险警告",
+        "excerpt": "传奇交易员50年智慧精华：从向巴菲特道歉到AI生存风险的严厉警告。深度剖析交易与投资的本质差异、泡沫识别指标（市值占GDP达252%）、1987股灾教训、主成分分析决策框架，以及『以善制恶』的人生哲学。",
+        "tags": [
+            "#PaulTudorJones",
+            "#交易哲学",
+            "#AI风险",
+            "#投资智慧"
+        ]
+    },
+    {
+        "url": "articles/sam-altman-elon-texas-ranch.html",
+        "card_class": "card-future",
+        "category": "科技·未来",
+        "date": "2026-04-29",
+        "title": "Sam Altman、埃隆·马斯克和德州农场如何预示美国的未来",
+        "excerpt": "OpenAI 内部权力回归、执行器战争无人察觉、洛杉矶制造业堡垒、德州硬件『邪教』—这是关于美国制造能力的生死之战。埃隆几乎一个人在与中国竞争，而苹果在 AI 时代迷失了方向。",
+        "tags": [
+            "#SamAltman",
+            "#ElonMusk",
+            "#制造业",
+            "#德州"
+        ]
+    },
+    {
+        "url": "articles/openai-math-ai.html",
+        "card_class": "card-ai",
+        "category": "AI · 数学研究",
+        "date": "2026-04-29",
+        "title": "OpenAI研究员：现在的AI已经擅长数学了",
+        "excerpt": "从『几秒钟的思考』到『几天的思考』，AI数学能力的进化速度令人震惊。两位从数学领域转型到AI研究的前沿学者分享：用ChatGPT解决42年未解问题、AGI时间概念、为什么数学是通用智能的关键试金石，以及专家为何比以往任何时候都更有价值。",
+        "tags": [
+            "#OpenAI",
+            "#数学AI",
+            "#AGI",
+            "#研究方法"
+        ]
+    },
+    {
         "url": "articles/box-ceo-ai-enterprise.html",
         "card_class": "card-ai",
         "category": "AI · 企业转型",
