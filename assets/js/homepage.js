@@ -1,6 +1,34 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/gpt5-claude-gemini-trained-served.html",
+        "card_class": "card-ai",
+        "category": "AI · 深度技术",
+        "date": "2026-04-30",
+        "title": "GPT-5、Claude 和 Gemini 如何真正被训练和提供",
+        "excerpt": "通过黑板讲座，从底层数学原理揭示大模型训练和推理的工程真相。当你真正理解了集群中的训练和推理是如何工作的，整个AI领域的很多看似神秘的现象都会豁然开朗。批量处理是推理经济的核心杠杆——从1到2000的批量可以降低1000倍成本；20毫秒的HBM读取时间决定了推理的最小延迟；Ilya的『流水线不明智』评论反映了对效率的极致追求。",
+        "tags": [
+            "#ReinerPope",
+            "#大模型训练",
+            "#推理优化",
+            "#工程架构"
+        ]
+    },
+    {
+        "url": "articles/sam-altman-patrick-collison-stripe.html",
+        "card_class": "card-ai",
+        "category": "AI · 行业对话",
+        "date": "2026-04-30",
+        "title": "Sam Altman 与 Patrick Collison：AI起飞时刻的深度对话",
+        "excerpt": "两位相识19年的科技领袖在Stripe Sessions畅谈AI的抛物线增长、OpenAI三阶段转型与「智能公共事业」愿景。从编程革命的临界点到GPT-5.5为自己设计发布会的诡异故事，从管理精英人才的「痛苦秘诀」到推动AI民主化的核心信念——全面揭示OpenAI掌舵人对AI未来的思考。",
+        "tags": [
+            "#SamAltman",
+            "#OpenAI",
+            "#Stripe",
+            "#AI战略"
+        ]
+    },
+    {
         "url": "articles/andrej-karpathy-agentic-engineering.html",
         "card_class": "card-ai",
         "category": "AI · 编程范式",
