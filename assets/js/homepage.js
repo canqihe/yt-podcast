@@ -1,6 +1,20 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/jim-simons.html",
+        "card_class": "card-finance",
+        "category": "金融 · 数学",
+        "date": "2026-05-01",
+        "title": "Jim Simons：从数学天才到量化交易传奇的跨界人生",
+        "excerpt": "他被称为世界上最聪明的亿万富翁，却从未以赚钱为人生目标。从微分几何到陈-西蒙斯理论，从密码学破译到量化交易革命，再到科学慈善家。Simons 的故事证明了：最有价值的发现往往来自纯粹的求知欲，而非功利的目标。",
+        "tags": [
+            "#JimSimons",
+            "#量化交易",
+            "#数学",
+            "#文艺复兴科技"
+        ]
+    },
+    {
         "url": "articles/ai-singularity-day-120.html",
         "card_class": "card-ai",
         "category": "AI · 未来科技",
