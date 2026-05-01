@@ -1,6 +1,49 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/ai-singularity-day-120.html",
+        "card_class": "card-ai",
+        "category": "AI · 未来科技",
+        "date": "2026-05-01",
+        "title": "奇点第 120 天：Stripe Sessions 2027 深度对话",
+        "excerpt": "我们正处于奇点最缓慢的时期——当 AI 能够自我改进时，一切将永远改变。Stripe Sessions 2027 上，Meta AI 负责人 Nat Friedman、Daniel Gross 与 Stripe 创始人探讨技术革命如何重塑全球经济、社会结构以及我们对「美」和「价值」的理解。从智能体监控喝水到重导航汽车，从企业预算新范式到数据中心美学，全面揭示奇点时代的真实体验。",
+        "tags": [
+            "#NatFriedman",
+            "#DanielGross",
+            "#Stripe",
+            "#奇点"
+        ]
+    },
+    {
+        "url": "articles/stripe-sessions-2026.html",
+        "card_class": "card-finance",
+        "category": "商业 · 经济",
+        "date": "2026-05-01",
+        "title": "Stripe Sessions 2026：经济重塑",
+        "excerpt": "Stripe联合创始人John Collison通过处理全球近2%GDP的独特视角，揭示AI时代支付和全球贸易的未来趋势。从盈利能力回归到单人创业者崛起，从智能体商业到互补品价值重估，全面解析经济如何在AI时代重塑自己。",
+        "tags": [
+            "#JohnCollison",
+            "#Stripe",
+            "#经济重塑",
+            "#AI商业"
+        ]
+    },
+
+    {
+        "url": "articles/openai-greg-brockman-attention.html",
+        "card_class": "card-ai",
+        "category": "AI · 战略洞察",
+        "date": "2026-05-01",
+        "title": "OpenAI 联合创始人 Greg Brockman：为什么人类注意力成为新的瓶颈",
+        "excerpt": "在 2026 年 AI Ascent 大会上，Greg Brockman 揭示了正在发生的深层变革——人类注意力的稀缺正成为 AI 时代新的核心瓶颈。智能体编码工具从编写 20% 代码跃升至 80%，标志着执行已不再是瓶颈，真正稀缺的是人类的判断力、价值观和战略注意力。Brockman 坦言 OpenAI 已经完成了实现 AGI 80% 的路程，并探讨了团队结构变革、算力无极限、科学文艺复兴等话题。",
+        "tags": [
+            "#GregBrockman",
+            "#OpenAI",
+            "#人类注意力",
+            "#AGI"
+        ]
+    },
+    {
         "url": "articles/gpt5-claude-gemini-trained-served.html",
         "card_class": "card-ai",
         "category": "AI · 深度技术",
