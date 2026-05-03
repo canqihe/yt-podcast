@@ -1,6 +1,20 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/codex-claude-ai-superapp.html",
+        "card_class": "card-ai",
+        "category": "AI · 编程范式",
+        "date": "2026-05-03",
+        "title": "Codex 取代了 Claude……原因如下",
+        "excerpt": "2026年AI智能体领域爆发前所未有的竞争——OpenAI、Anthropic、Cursor三家公司同时冲刺超级应用目标。这场战役导致Mac Mini全球缺货，背后是技术范式的根本转变：优秀编码模型正在成为最好的通用智能模型。当AI不仅能写代码还能操作计算机时，知识工作的边界将被彻底重新定义。",
+        "tags": [
+            "#RileyBrown",
+            "#Codex",
+            "#AI超级应用",
+            "#智能体"
+        ]
+    },
+    {
         "url": "articles/jim-simons.html",
         "card_class": "card-finance",
         "category": "金融 · 数学",
