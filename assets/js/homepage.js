@@ -1,6 +1,48 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/howard-marks-investing.html",
+        "card_class": "card-finance",
+        "category": "投资 · 金融智慧",
+        "date": "2026-05-05",
+        "title": "Howard Marks：AI、债务与股权及未来40年的投资",
+        "excerpt": "橡树资本联合创始人深度对话：从无常哲学到市场周期，从垃圾债券革命到AI时代的人类投资者价值。标普500平均回报10%但几乎从未在8-12%之间——这揭示了市场的本质。",
+        "tags": [
+            "#HowardMarks",
+            "#橡树资本",
+            "#投资哲学",
+            "#AI"
+        ]
+    },
+    {
+        "url": "articles/boris-cheny-coding-is-solved.html",
+        "card_class": "card-ai",
+        "category": "AI · 编程革命",
+        "date": "2026-05-05",
+        "title": "编程已解决，接下来会发生什么",
+        "excerpt": "Claude Code 创造者 Boris Cherny 揭示了一个令人震撼的观点：他在 2026 年没有写过一行代码，却能每天从手机发出几十个 PR。从 Loop 命令到并行智能体，从跨学科通才到七种力量重洗牌，全面解析 AI 如何让编程经历堪比印刷机革命的民主化浪潮。",
+        "tags": [
+            "#BorisCherny",
+            "#ClaudeCode",
+            "#编程革命",
+            "#AI智能体"
+        ]
+    },
+    {
+        "url": "articles/jensen-huang-ai-age.html",
+        "card_class": "card-ai",
+        "category": "AI · 科技领袖",
+        "date": "2026-05-05",
+        "title": "AI时代的领导力：与英伟达CEO黄仁勋的深度对话",
+        "excerpt": "从生成式AI到智能体AI，计算需求增长1000倍。黄仁勋揭示AI的五层生态系统，阐述为什么AI创造而非摧毁就业，反对末日论主张务实安全观，并建议无论你过去的雄心有多大，现在都需要提高100倍。",
+        "tags": [
+            "#JensenHuang",
+            "#英伟达",
+            "#AI生态",
+            "#智能体AI"
+        ]
+    },
+    {
         "url": "articles/scott-galloway-ai.html",
         "card_class": "card-ai",
         "category": "AI · 社会洞察",
