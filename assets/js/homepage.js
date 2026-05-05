@@ -1,6 +1,20 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/scott-galloway-ai.html",
+        "card_class": "card-ai",
+        "category": "AI · 社会洞察",
+        "date": "2026-05-04",
+        "title": "AI 不是为你而建，富人不再需要你了！",
+        "excerpt": "纽约大学教授 Scott Galloway 揭示 AI 炒作背后的真相——CEO 们的危言耸听只是为了筹集数十亿美元。从品牌危机到资本游戏，从就业真相到科技领袖的虚无主义，全面剖析 AI 如何让富人更富，而普通人的真正危险不是失业而是孤独。",
+        "tags": [
+            "#ScottGalloway",
+            "#AI品牌危机",
+            "#就业真相",
+            "#科技领袖"
+        ]
+    },
+    {
         "url": "articles/codex-claude-ai-superapp.html",
         "card_class": "card-ai",
         "category": "AI · 编程范式",
