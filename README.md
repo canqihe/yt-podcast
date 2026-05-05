@@ -17,15 +17,15 @@ A curated knowledge platform that distills the best YouTube podcast content into
 
 ## Articles
 
-**119 articles** across multiple domains:
+**137 articles** across multiple domains:
 
 | Domain | Examples |
 |--------|---------|
-| **AI Strategy & Leaders** | OpenAI (Sam Altman, Greg Brockman, Brad Lightcap), Anthropic (Dario Amodei 3x, Cat Wu, Felix Rieseberg), Google AI (Sundar Pichai, Demis Hassabis 4x), NVIDIA (Jensen Huang), xAI (Elon Musk) |
-| **AI Agents & Platforms** | Harrison Chase (LangChain), AI Agent Swarms, Claude Code, Claude Cowork, OpenClaw, ChatGPT Images 2.0, AI Sandwich model |
+| **AI Strategy & Leaders** | OpenAI (Sam Altman, Greg Brockman, Brad Lightcap), Anthropic (Dario Amodei 3x, Cat Wu, Felix Rieseberg), Google AI (Sundar Pichai, Demis Hassabis 4x), NVIDIA (Jensen Huang 3x), xAI (Elon Musk), Boris Cherny (Claude Code) |
+| **AI Agents & Platforms** | Harrison Chase (LangChain), AI Agent Swarms, Claude Code, Claude Cowork, OpenClaw, ChatGPT Images 2.0, AI Sandwich model, SEO to Agent-Led Growth |
 | **Markets & Compute** | a16z (David George, Aaron Levie, Ben Horowitz), Coatue (Thomas Laffont, Lucas Swisher), SemiAnalysis (Dylan Patel 2x), ARK Invest (Big Ideas 2026) |
 | **Robotics & Physical AI** | Figure AI (Brett Adcock), Sergey Levine, Anduril, Palantir, Uber (Dara Khosrowshahi on Robotaxi), Atoms (Travis Kalanick), AI in Physical World |
-| **Finance & Investing** | Stanley Druckenmiller, Jeremy Grantham, Tom Lee, Blackstone (private credit), Public, Robinhood, Lloyd Blankfein, Jake Paul, Alfred Lin (Sequoia), Hormuz blockade |
+| **Finance & Investing** | Stanley Druckenmiller, Jeremy Grantham, Tom Lee, Blackstone (private credit), Public, Robinhood, Lloyd Blankfein, Jake Paul, Alfred Lin (Sequoia), Hormuz blockade, Howard Marks (Oaktree), Jim Simons |
 | **Defense & Military** | Palantir, Anduril, Pentagon AI plan, military industrial complex, Ukraine war impact |
 | **Space & Frontier Tech** | SpaceX, NASA (Jared Isaacman), Rocket Lab (Peter Beck), Starcloud, Quantum Computing (D-Wave, NVIDIA Ising), Brain-Computer Interfaces (World/Merge Labs), nuclear propulsion |
 | **Tech Companies & Earnings** | Alphabet Q4 2026, Micron Q2 2026, Google Cloud (Thomas Kurian), Tesla, Roblox (David Baszucki), Canva, Replit, SAP, Asana |
@@ -74,7 +74,7 @@ All gradients, glows, shadows, and accent elements auto-inherit from these varia
 ```
 yt-podcast/
 ├── index.html                  # Homepage (article grid)
-├── articles/                   # 119 in-depth articles
+├── articles/                   # 137 in-depth articles
 │   └── images/                 # Article hero images
 ├── assets/
 │   ├── css/                    # Stylesheets
