@@ -1,6 +1,62 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/ibm-arvind-krishna.html",
+        "card_class": "card-tech",
+        "category": "科技 · 企业转型",
+        "date": "2026-05-06",
+        "title": "IBM的百年重生：AI押注与量子计算野心",
+        "excerpt": "从连续六年下滑到持续增长，IBM CEO阿尔温德·克里希纳如何重塑这家科技巨头？他在2019年就坚定押注AI，斥资340亿美元收购Red Hat，倡导『以被解雇为乐』的领导哲学。对AI泡沫的冷静判断、量子计算的2029蓝图，以及大型机的意外复兴。",
+        "tags": [
+            "#ArvindKrishna",
+            "#IBM",
+            "#企业转型",
+            "#量子计算"
+        ]
+    },
+    {
+        "url": "articles/joe-rogan-chamath-attention.html",
+        "card_class": "card-future",
+        "category": "深度对话 · 哲学思考",
+        "date": "2026-05-06",
+        "title": "注意力：驱动世界的隐形力量",
+        "excerpt": "从Google到Facebook再到AI，『注意力』是过去30年每次技术革命的核心关键词。Chamath Palihapitiya揭示这个驱动现代世界的隐形力量，以及它如何塑造我们的经济、政治和人类进化。税收制度如何加剧不平等？AI会取代我们的工作吗？我们是否正在制造数字茧？",
+        "tags": [
+            "#ChamathPalihapitiya",
+            "#注意力经济",
+            "#AI",
+            "#社会契约"
+        ]
+    },
+    {
+        "url": "articles/ken-griffin-stanford-leadership.html",
+        "card_class": "card-finance",
+        "category": "领导力 · 金融",
+        "date": "2026-05-06",
+        "title": "肯·格里芬：不确定性时代的领导力",
+        "excerpt": "城堡投资创始人从2008年金融危机起死回生的第一手经验，以及对领导力、市场竞争、AI和教育危机的深刻见解。在不确定中前行，亲市场与亲商的本质区别，以及AI正在自动化高技能工作——一场关于如何在变革时代保持方向感的深度对话。",
+        "tags": [
+            "#KenGriffin",
+            "#城堡投资",
+            "#领导力",
+            "#金融危机"
+        ]
+    },
+    {
+        "url": "articles/gpt-55-claude-47.html",
+        "card_class": "card-ai",
+        "category": "AI · 模型对决",
+        "date": "2026-05-06",
+        "title": "GPT 5.5 vs Claude 4.7：OpenAI 从边缘绝地反击",
+        "excerpt": "2024年初OpenAI陷入前所未有的危机，Claude Opus 4.5引发开发者集体出走，Anthropic收入直逼OpenAI。GPT 5.5的发布能否扭转局势？深入分析模型战争：从代币经济学到基准测试失灵，从算力天花板到CLI与App之争，揭示AI产业的真实格局。",
+        "tags": [
+            "#OpenAI",
+            "#Claude",
+            "#AI模型",
+            "#算力"
+        ]
+    },
+    {
         "url": "articles/howard-marks-investing.html",
         "card_class": "card-finance",
         "category": "投资 · 金融智慧",
