@@ -1,6 +1,34 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/shane-legg-agi.html",
+        "card_class": "card-ai",
+        "category": "AI · 未来展望",
+        "date": "2026-05-06",
+        "title": "AGI 的到来：Shane Legg 的十五年预言",
+        "excerpt": "DeepMind 联合创始人十五年来坚持同一预测：2028 年有 50/50 概率实现最小 AGI。从技术定义到社会影响，Shane Legg 深度解析 AGI 层次结构、系统二安全框架，以及远程认知工作为何首当其冲。人类智能并非上限——计算系统在能耗、空间、带宽、速度四个维度均比人脑高 6-8 个数量级。",
+        "tags": [
+            "#ShaneLegg",
+            "#DeepMind",
+            "#AGI",
+            "#超级智能"
+        ]
+    },
+    {
+        "url": "articles/tony-james-blackstone.html",
+        "card_class": "card-finance",
+        "category": "投资智慧 · 机构建设",
+        "date": "2026-05-06",
+        "title": "好市多、星巴克和黑石背后的投资者",
+        "excerpt": "从 140 亿到近 1 万亿资产管理规模，Tony James 揭示如何在华尔街 50 年建立持久投资机构。与查理·芒格共事 30 年学到专注与长期主义，在巅峰时主动退让的罕见智慧，以及什么是真正的『公司 vs 基金』思维。",
+        "tags": [
+            "#TonyJames",
+            "#黑石集团",
+            "#投资哲学",
+            "#长期主义"
+        ]
+    },
+    {
         "url": "articles/ibm-arvind-krishna.html",
         "card_class": "card-tech",
         "category": "科技 · 企业转型",
