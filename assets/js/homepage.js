@@ -1,5 +1,77 @@
 // ===== 文章数据 =====
 const articlesData = [
+  
+    {
+        "url": "articles/agi-robot.html",
+        "card_class": "card-ai",
+        "category": "AI · 太空科技",
+        "date": "2026-05-08",
+        "title": "Demis Hassabis 论 AGI、机器人规模化生产以及埃隆的一万亿美元火星竞赛奖励",
+        "excerpt": "DeepMind 创始人 Demis Hassabis 深度对话：从 AlphaGo 到 AGI 的实现路径，机器人将像汽车一样大规模生产。埃隆·马斯克的一万亿美元火星竞赛奖励背后，人类如何在 AI 与太空探索中定义自己的价值。",
+        "tags": [
+            "#DemisHassabis",
+            "#DeepMind",
+            "#AGI",
+            "#机器人",
+            "#太空探索"
+        ]
+    },
+    {
+        "url": "articles/zico-kolter-frontier-ai.html",
+        "card_class": "card-ai",
+        "category": "AI 安全 · 模型治理",
+        "date": "2026-05-08",
+        "title": "OpenAI 董事会成员 Zico Kolter 谈前沿 AI 的真实风险",
+        "excerpt": "当我们在2026年谈论AI安全时，已经不再是科幻小说中的场景，而是每天都在发生的现实。OpenAI董事会的安全委员会拥有什么权力来阻止一个强大模型的发布？这次对话揭示了OpenAI内部安全审查的真实运作方式，以及AI安全领域最前沿的洞察。",
+        "tags": [
+            "#ZicoKolter",
+            "#OpenAI",
+            "#AI安全",
+            "#模型治理"
+        ]
+    },
+    {
+        "url": "articles/ai-agents-perplexity.html",
+        "card_class": "card-ai",
+        "category": "AI · 商业哲学",
+        "date": "2026-05-08",
+        "title": "AI智能体：幻象还是真实革命？",
+        "excerpt": "Perplexity CEO Dmitry Shevelenko 深度解析 AI Agent 的商业落地。从信息检索到任务执行，从单点工具到生态整合，AI Agent 究竟是营销噱头还是真正的生产力革命？深入剖析技术边界与商业价值的交汇点。",
+        "tags": [
+            "#DmitryShevelenko",
+            "#Perplexity",
+            "#AIAgent",
+            "#商业哲学"
+        ]
+    },
+    {
+        "url": "articles/chamath-ai-era.html",
+        "card_class": "card-future",
+        "category": "AI · 智能体",
+        "date": "2026-05-08",
+        "title": "斯坦福AI俱乐部：Chamath谈如何在AI时代获胜",
+        "excerpt": "在一个AI投资热潮与幻灭低谷并存的时刻，Chamath Palihapitiya分享了他从有限游戏到无限游戏的人生转变，揭示了AI真正的瓶颈不是算力而是'符号空间'，并提出了一种正和博弈的AI未来观。",
+        "tags": [
+            "#ChamathPalihapitiya",
+            "#StanfordAIClub",
+            "#AI投资",
+            "#符号空间"
+        ]
+    },
+    {
+        "url": "articles/gpt-realtime-agent-memory.html",
+        "card_class": "card-ai",
+        "category": "AI · 智能体记忆",
+        "date": "2026-05-08",
+        "title": "GPT-Realtime-2：Directionally Bad and Agent Memory",
+        "excerpt": "OpenAI 发布 GPT-4o 实时语音功能后的深度分析：从 'Directionally Bad' 现象到智能体记忆架构。为什么实时语音的延迟容忍度比文本更严格？Agent Memory 如何解决上下文窗口的局限性？",
+        "tags": [
+            "#OpenAI",
+            "#GPT4o",
+            "#Realtime",
+            "#AgentMemory"
+        ]
+    },
     {
         "url": "articles/shane-legg-agi.html",
         "card_class": "card-ai",
