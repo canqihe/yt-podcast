@@ -1,6 +1,20 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/anthropic-spacex-deal.html",
+        "card_class": "card-ai",
+        "category": "AI · 竞争格局",
+        "date": "2026-05-09",
+        "title": "Elon 与 Anthropic 的历史性合作与 AI 垄断之争",
+        "excerpt": "当 Anthropic 在四个月内将年收入从 100 亿美元推升至 440 亿美元，硅谷开始重新审视这个行业的未来。SpaceX 与 Anthropic 的重磅合作揭示了 AI 时代的新现实：计算资源和电力供应已成为最稀缺的资产。David Sacks 警告，如果这种增长轨迹持续 18 个月，Anthropic 可能成为人类历史上最大的垄断。",
+        "tags": [
+            "#Anthropic",
+            "#SpaceX",
+            "#AI垄断",
+            "#ElonMusk"
+        ]
+    },
+    {
         "url": "articles/richard-sutton-reinforcement-learning.html",
         "card_class": "card-ai",
         "category": "AI · 深度学习",
