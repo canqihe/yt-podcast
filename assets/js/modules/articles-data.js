@@ -1,6 +1,20 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/ben-horowitz-ai-future.html",
+        "card_class": "card-finance",
+        "category": "AI · 地缘政治 · 风险投资",
+        "date": "2026-05-09",
+        "title": "Ben Horowitz：美国活力与 AI 的未来",
+        "excerpt": "当中国超过 70% 的人对 AI 持乐观态度，而美国乐观者却不到 30%。a16z 联合创始人 Ben Horowitz 深度解析美国技术领导权的哲学根基——从《独立宣言》的「不言而喻的真理」到硅谷与华盛顿的权力博弈，揭示为何世界需要美国赢得技术竞赛。",
+        "tags": [
+            "#BenHorowitz",
+            "#a16z",
+            "#美国活力",
+            "#AI地缘政治"
+        ]
+    },
+    {
         "url": "articles/anthropic-spacex-deal.html",
         "card_class": "card-ai",
         "category": "AI · 竞争格局",
