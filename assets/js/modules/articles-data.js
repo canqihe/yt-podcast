@@ -1,6 +1,20 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/richard-sutton-reinforcement-learning.html",
+        "card_class": "card-ai",
+        "category": "AI · 深度学习",
+        "date": "2026-05-09",
+        "title": "Richard Sutton：强化学习之父的「显而易见」",
+        "excerpt": "2024年ACM A.M.图灵奖得主深度访谈：最深刻的洞见往往是最显而易见的真理——智能系统必须能够从经验中学习。从童年质疑到发现AI缺失的奖励学习机制，再到「惨痛的教训」，揭示强化学习的核心思想。",
+        "tags": [
+            "#RichardSutton",
+            "#强化学习",
+            "#图灵奖",
+            "#AI研究"
+        ]
+    },
+    {
         "url": "articles/agi-robot.html",
         "card_class": "card-ai",
         "category": "AI · 太空科技",
