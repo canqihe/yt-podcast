@@ -1,6 +1,34 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/daniela-amodei-anthropic.html",
+        "card_class": "card-ai",
+        "category": "AI · 创业 · 价值观",
+        "date": "2026-05-10",
+        "title": "Daniela Amodei：以正确的方式构建 AI",
+        "excerpt": "在一个文学毕业生如何成为全球顶尖 AI 公司联合创始人的故事背后，隐藏着关于职业选择、技术创新和人类未来的深刻洞察。当整个行业都在竞相追求「更大、更快、更强」的模型时，Anthropic 选择了一条不同的道路——将安全与责任置于增长之上。",
+        "tags": [
+            "#DanielaAmodei",
+            "#Anthropic",
+            "#AI创业",
+            "#价值观驱动"
+        ]
+    },
+    {
+        "url": "articles/cliff-weitzman-speechify.html",
+        "card_class": "card-ai",
+        "category": "AI · 创业 · 增长",
+        "date": "2026-05-10",
+        "title": "从100位CEO学到的 & Token超过工资",
+        "excerpt": "Speechify创始人Cliff Weitzman深度分享：从申请26所大学到会见100位顶级CEO，工作量哲学如何改变命运。为什么QA是AI世界最有价值的技能？为什么公司需要增肌和减脂周期？每天测试1300个广告背后的增长策略。",
+        "tags": [
+            "#CliffWeitzman",
+            "#Speechify",
+            "#AI创业",
+            "#增长策略"
+        ]
+    },
+    {
         "url": "articles/ben-horowitz-ai-future.html",
         "card_class": "card-finance",
         "category": "AI · 地缘政治 · 风险投资",
