@@ -1,6 +1,20 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/demis-hassabis-ai-future.html",
+        "card_class": "card-ai",
+        "category": "AI · 深度学习",
+        "date": "2026-05-10",
+        "title": "Demis Hassabis：AI 的未来、模拟现实、物理和电子游戏",
+        "excerpt": "Google DeepMind CEO、诺贝尔奖得主深度对话：从 AlphaGo 到 AGI 的实现路径，探索宇宙作为信息系统的本质。Veo 3 如何从视频中学习物理规律？AI 何时能实现通用智能？人类的独特价值是什么？谨慎乐观是面对巨大不确定性和巨大赌注的唯一理性方法。",
+        "tags": [
+            "#DemisHassabis",
+            "#DeepMind",
+            "#AGI",
+            "#信息宇宙"
+        ]
+    },
+    {
         "url": "articles/daniela-amodei-anthropic.html",
         "card_class": "card-ai",
         "category": "AI · 创业 · 价值观",
