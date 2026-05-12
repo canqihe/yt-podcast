@@ -1,6 +1,34 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/mit-three-laws-ai.html",
+        "card_class": "card-ai",
+        "category": "AI 安全 · MIT 课程",
+        "date": "2026-05-12",
+        "title": "AI 的三大定律 | MIT 6.S191 深度学习课程",
+        "excerpt": "从阿西莫夫1942年的科幻三定律到现场LLM越狱实验，95%防护率在123种攻击面前不堪一击。17岁少年因「安全漂移」失去生命，90秒构建的代理AI毫不犹豫地删除文件。如果无法保证安全，就不要部署。",
+        "tags": [
+            "#MIT",
+            "#AI安全",
+            "#LLM越狱",
+            "#代理AI"
+        ]
+    },
+    {
+        "url": "articles/marc-andreessen-golden-age-thesis.html",
+        "card_class": "card-ai",
+        "category": "AI · 科技 · 社会观察",
+        "date": "2026-05-12",
+        "title": "黄金时代论 | Marc Andreessen 谈 AI 超能力与未来图景",
+        "excerpt": "从 Anthropic 自我实现的预言到「AI 吸血鬼」现象，程序员生产力飙升 20 倍不睡觉反而更兴奋。公司裁员是去臃肿而非 AI 替代，民调情绪低落但使用行为热情高涨。Z 世代正在形成全新的世界观——对权威高度怀疑，对媒体操纵高度敏感。",
+        "tags": [
+            "#MarcAndreessen",
+            "#AI超能力",
+            "#黄金时代",
+            "#科技就业"
+        ]
+    },
+    {
         "url": "articles/tobi-lutke-shopify-21-years.html",
         "card_class": "card-tech",
         "category": "创业 · 公司建设",
