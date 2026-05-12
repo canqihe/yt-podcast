@@ -1,6 +1,20 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/tobi-lutke-shopify-21-years.html",
+        "card_class": "card-tech",
+        "category": "创业 · 公司建设",
+        "date": "2026-05-12",
+        "title": "Tobi Lütke：Shopify 的 21 年建设之路",
+        "excerpt": "从妻子儿时卧室起步到市值 2000 亿美元，一个德国程序员如何用 SAT 求解器设计组织架构、用自我肯定克服恐惧、用星际争霸训练商业思维。COVID 如何拯救了 Shopify？为什么「即使更差也要做得不同」？",
+        "tags": [
+            "#TobiLütke",
+            "#Shopify",
+            "#创业哲学",
+            "#公司建设"
+        ]
+    },
+    {
         "url": "articles/demis-hassabis-ai-future.html",
         "card_class": "card-ai",
         "category": "AI · 深度学习",
