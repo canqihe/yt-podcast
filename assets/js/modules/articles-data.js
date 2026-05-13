@@ -1,6 +1,32 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/harvey-ceo-winston-weinberg.html",
+        "card_class": "card-ai",
+        "category": "AI · 创业 · 法律",
+        "date": "2026-05-13",
+        "title": "Harvey CEO：31岁如何运营一家110亿美元公司 | Winston Weinberg",
+        "excerpt": "一封发给 Sam Altman 的冷邮件，一个 Reddit 法律测试，100题中86题三位律师一致认可。从 GPT-3 公共 API 到估值110亿美元的法律AI公司——压力即疫苗、99.9%是双向门、产品是唯一可规模化的东西。",
+        "tags": [
+            "#WinstonWeinberg",
+            "#法律AI",
+            "#创业哲学"
+        ]
+    },
+    {
+        "url": "articles/goldman-sachs-lloyd-blankfein.html",
+        "card_class": "card-finance",
+        "category": "金融 · 领导力",
+        "date": "2026-05-13",
+        "title": "高盛董事长谈 AI 与金融未来 | Lloyd Blankfein",
+        "excerpt": "从纽约公共住房到华尔街权力巅峰，高盛前 CEO 分享 40 年风险管理哲学：应急计划优于预测、犯错不等于愚蠢、合伙人文化的精妙机制、逐日盯市即风险系统。AI 最大风险不是它比我们聪明，而是我们无法验证它是否正确。",
+        "tags": [
+            "#LloydBlankfein",
+            "#风险管理",
+            "#高盛文化"
+        ]
+    },
+    {
         "url": "articles/mit-three-laws-ai.html",
         "card_class": "card-ai",
         "category": "AI 安全 · MIT 课程",
@@ -10,8 +36,7 @@ const articlesData = [
         "tags": [
             "#MIT",
             "#AI安全",
-            "#LLM越狱",
-            "#代理AI"
+            "#LLM越狱"
         ]
     },
     {
@@ -24,8 +49,7 @@ const articlesData = [
         "tags": [
             "#MarcAndreessen",
             "#AI超能力",
-            "#黄金时代",
-            "#科技就业"
+            "#黄金时代"
         ]
     },
     {
@@ -38,8 +62,7 @@ const articlesData = [
         "tags": [
             "#TobiLütke",
             "#Shopify",
-            "#创业哲学",
-            "#公司建设"
+            "#创业哲学"
         ]
     },
     {
@@ -52,8 +75,7 @@ const articlesData = [
         "tags": [
             "#DemisHassabis",
             "#DeepMind",
-            "#AGI",
-            "#信息宇宙"
+            "#AGI"
         ]
     },
     {
@@ -66,8 +88,7 @@ const articlesData = [
         "tags": [
             "#DanielaAmodei",
             "#Anthropic",
-            "#AI创业",
-            "#价值观驱动"
+            "#AI创业"
         ]
     },
     {
@@ -80,8 +101,7 @@ const articlesData = [
         "tags": [
             "#CliffWeitzman",
             "#Speechify",
-            "#AI创业",
-            "#增长策略"
+            "#AI创业"
         ]
     },
     {
@@ -94,8 +114,7 @@ const articlesData = [
         "tags": [
             "#BenHorowitz",
             "#a16z",
-            "#美国活力",
-            "#AI地缘政治"
+            "#美国活力"
         ]
     },
     {
@@ -108,8 +127,7 @@ const articlesData = [
         "tags": [
             "#Anthropic",
             "#SpaceX",
-            "#AI垄断",
-            "#ElonMusk"
+            "#AI垄断"
         ]
     },
     {
@@ -122,8 +140,7 @@ const articlesData = [
         "tags": [
             "#RichardSutton",
             "#强化学习",
-            "#图灵奖",
-            "#AI研究"
+            "#图灵奖"
         ]
     },
     {
@@ -136,9 +153,7 @@ const articlesData = [
         "tags": [
             "#DemisHassabis",
             "#DeepMind",
-            "#AGI",
-            "#机器人",
-            "#太空探索"
+            "#AGI"
         ]
     },
     {
@@ -151,8 +166,7 @@ const articlesData = [
         "tags": [
             "#ZicoKolter",
             "#OpenAI",
-            "#AI安全",
-            "#模型治理"
+            "#AI安全"
         ]
     },
     {
@@ -165,8 +179,7 @@ const articlesData = [
         "tags": [
             "#DmitryShevelenko",
             "#Perplexity",
-            "#AIAgent",
-            "#商业哲学"
+            "#AIAgent"
         ]
     },
     {
@@ -179,8 +192,7 @@ const articlesData = [
         "tags": [
             "#ChamathPalihapitiya",
             "#StanfordAIClub",
-            "#AI投资",
-            "#符号空间"
+            "#AI投资"
         ]
     },
     {
@@ -193,8 +205,7 @@ const articlesData = [
         "tags": [
             "#OpenAI",
             "#GPT4o",
-            "#Realtime",
-            "#AgentMemory"
+            "#Realtime"
         ]
     },
     {
@@ -207,8 +218,7 @@ const articlesData = [
         "tags": [
             "#ShaneLegg",
             "#DeepMind",
-            "#AGI",
-            "#超级智能"
+            "#AGI"
         ]
     },
     {
@@ -221,8 +231,7 @@ const articlesData = [
         "tags": [
             "#TonyJames",
             "#黑石集团",
-            "#投资哲学",
-            "#长期主义"
+            "#投资哲学"
         ]
     },
     {
@@ -235,8 +244,7 @@ const articlesData = [
         "tags": [
             "#ArvindKrishna",
             "#IBM",
-            "#企业转型",
-            "#量子计算"
+            "#企业转型"
         ]
     },
     {
@@ -249,8 +257,7 @@ const articlesData = [
         "tags": [
             "#ChamathPalihapitiya",
             "#注意力经济",
-            "#AI",
-            "#社会契约"
+            "#AI"
         ]
     },
     {
@@ -263,8 +270,7 @@ const articlesData = [
         "tags": [
             "#KenGriffin",
             "#城堡投资",
-            "#领导力",
-            "#金融危机"
+            "#领导力"
         ]
     },
     {
@@ -277,8 +283,7 @@ const articlesData = [
         "tags": [
             "#OpenAI",
             "#Claude",
-            "#AI模型",
-            "#算力"
+            "#AI模型"
         ]
     },
     {
@@ -291,8 +296,7 @@ const articlesData = [
         "tags": [
             "#HowardMarks",
             "#橡树资本",
-            "#投资哲学",
-            "#AI"
+            "#投资哲学"
         ]
     },
     {
@@ -305,8 +309,7 @@ const articlesData = [
         "tags": [
             "#BorisCherny",
             "#ClaudeCode",
-            "#编程革命",
-            "#AI智能体"
+            "#编程革命"
         ]
     },
     {
@@ -319,8 +322,7 @@ const articlesData = [
         "tags": [
             "#JensenHuang",
             "#英伟达",
-            "#AI生态",
-            "#智能体AI"
+            "#AI生态"
         ]
     },
     {
@@ -333,8 +335,7 @@ const articlesData = [
         "tags": [
             "#ScottGalloway",
             "#AI品牌危机",
-            "#就业真相",
-            "#科技领袖"
+            "#就业真相"
         ]
     },
     {
@@ -347,8 +348,7 @@ const articlesData = [
         "tags": [
             "#RileyBrown",
             "#Codex",
-            "#AI超级应用",
-            "#智能体"
+            "#AI超级应用"
         ]
     },
     {
@@ -361,8 +361,7 @@ const articlesData = [
         "tags": [
             "#JimSimons",
             "#量化交易",
-            "#数学",
-            "#文艺复兴科技"
+            "#数学"
         ]
     },
     {
@@ -375,8 +374,7 @@ const articlesData = [
         "tags": [
             "#NatFriedman",
             "#DanielGross",
-            "#Stripe",
-            "#奇点"
+            "#Stripe"
         ]
     },
     {
@@ -389,8 +387,7 @@ const articlesData = [
         "tags": [
             "#JohnCollison",
             "#Stripe",
-            "#经济重塑",
-            "#AI商业"
+            "#经济重塑"
         ]
     },
     {
@@ -403,8 +400,7 @@ const articlesData = [
         "tags": [
             "#GregBrockman",
             "#OpenAI",
-            "#人类注意力",
-            "#AGI"
+            "#人类注意力"
         ]
     },
     {
@@ -417,8 +413,7 @@ const articlesData = [
         "tags": [
             "#ReinerPope",
             "#大模型训练",
-            "#推理优化",
-            "#工程架构"
+            "#推理优化"
         ]
     },
     {
@@ -431,8 +426,7 @@ const articlesData = [
         "tags": [
             "#SamAltman",
             "#OpenAI",
-            "#Stripe",
-            "#AI战略"
+            "#Stripe"
         ]
     },
     {
@@ -445,8 +439,7 @@ const articlesData = [
         "tags": [
             "#AndrejKarpathy",
             "#SequoiaCapital",
-            "#AI编程",
-            "#AgenticEngineering"
+            "#AI编程"
         ]
     },
     {
@@ -459,8 +452,7 @@ const articlesData = [
         "tags": [
             "#MauroPorcini",
             "#三星",
-            "#设计哲学",
-            "#AI伦理"
+            "#设计哲学"
         ]
     },
     {
@@ -473,8 +465,7 @@ const articlesData = [
         "tags": [
             "#Anduril",
             "#KyleHarrison",
-            "#国防科技",
-            "#军事历史"
+            "#国防科技"
         ]
     },
     {
@@ -487,8 +478,7 @@ const articlesData = [
         "tags": [
             "#DemisHassabis",
             "#DeepMind",
-            "#AGI",
-            "#创业"
+            "#AGI"
         ]
     },
     {
@@ -501,8 +491,7 @@ const articlesData = [
         "tags": [
             "#PaulTudorJones",
             "#交易哲学",
-            "#AI风险",
-            "#投资智慧"
+            "#AI风险"
         ]
     },
     {
@@ -515,8 +504,7 @@ const articlesData = [
         "tags": [
             "#SamAltman",
             "#ElonMusk",
-            "#制造业",
-            "#德州"
+            "#制造业"
         ]
     },
     {
@@ -529,8 +517,7 @@ const articlesData = [
         "tags": [
             "#OpenAI",
             "#数学AI",
-            "#AGI",
-            "#研究方法"
+            "#AGI"
         ]
     },
     {
@@ -543,9 +530,7 @@ const articlesData = [
         "tags": [
             "#AaronLevie",
             "#Box",
-            "#企业AI",
-            "#a16z",
-            "#集成墙"
+            "#企业AI"
         ]
     },
     {
@@ -558,8 +543,7 @@ const articlesData = [
         "tags": [
             "#AmjadMasad",
             "#Replit",
-            "#AI创业",
-            "#公司形态"
+            "#AI创业"
         ]
     },
     {
@@ -572,8 +556,7 @@ const articlesData = [
         "tags": [
             "#ThomasKurian",
             "#GoogleCloud",
-            "#TPU",
-            "#AI基础设施"
+            "#TPU"
         ]
     },
     {
@@ -586,8 +569,7 @@ const articlesData = [
         "tags": [
             "#CatWu",
             "#Anthropic",
-            "#产品管理",
-            "#ClaudeCode"
+            "#产品管理"
         ]
     },
     {
@@ -600,8 +582,7 @@ const articlesData = [
         "tags": [
             "#埃隆马斯克",
             "#Claude",
-            "#OpenAI",
-            "#代码生成"
+            "#OpenAI"
         ]
     },
     {
@@ -614,8 +595,7 @@ const articlesData = [
         "tags": [
             "#AnthonyPompliano",
             "#比特币",
-            "#金融哲学",
-            "#财富保护"
+            "#金融哲学"
         ]
     },
     {
@@ -628,8 +608,7 @@ const articlesData = [
         "tags": [
             "#PhilippHerzig",
             "#SAP",
-            "#企业AI",
-            "#商业模式"
+            "#企业AI"
         ]
     },
     {
@@ -642,8 +621,7 @@ const articlesData = [
         "tags": [
             "#DylanPatel",
             "#AI供需",
-            "#半导体",
-            "#SemiAnalysis"
+            "#半导体"
         ]
     },
     {
@@ -656,8 +634,7 @@ const articlesData = [
         "tags": [
             "#CarissaVéliz",
             "#预测哲学",
-            "#AI伦理",
-            "#算法偏见"
+            "#AI伦理"
         ]
     },
     {
@@ -670,8 +647,7 @@ const articlesData = [
         "tags": [
             "#KieranKlaassen",
             "#Every",
-            "#复合工程",
-            "#AI协作"
+            "#复合工程"
         ]
     },
     {
@@ -684,8 +660,7 @@ const articlesData = [
         "tags": [
             "#MarcAndreessen",
             "#a16z",
-            "#媒体生态",
-            "#注意力经济"
+            "#媒体生态"
         ]
     },
     {
@@ -698,8 +673,7 @@ const articlesData = [
         "tags": [
             "#HubSpot",
             "#YaminiRangan",
-            "#AI增长",
-            "#组织变革"
+            "#AI增长"
         ]
     },
     {
@@ -712,8 +686,7 @@ const articlesData = [
         "tags": [
             "#GregBrockman",
             "#OpenAI",
-            "#AI竞赛",
-            "#SamAltman"
+            "#AI竞赛"
         ]
     },
     {
@@ -726,8 +699,7 @@ const articlesData = [
         "tags": [
             "#SamAltman",
             "#GregBrockman",
-            "#OpenAI",
-            "#个人AGI"
+            "#OpenAI"
         ]
     },
     {
@@ -740,8 +712,7 @@ const articlesData = [
         "tags": [
             "#OpenAI",
             "#图像生成",
-            "#IMAGen2",
-            "#多语言"
+            "#IMAGen2"
         ]
     },
     {
@@ -754,8 +725,7 @@ const articlesData = [
         "tags": [
             "#不确定性",
             "#经济政策",
-            "#实物期权",
-            "#决策策略"
+            "#实物期权"
         ]
     },
     {
@@ -768,8 +738,7 @@ const articlesData = [
         "tags": [
             "#霍尔木兹海峡",
             "#关税政策",
-            "#地缘政治",
-            "#CSIS"
+            "#地缘政治"
         ]
     },
     {
@@ -782,8 +751,7 @@ const articlesData = [
         "tags": [
             "#AaronLevie",
             "#Box",
-            "#AI就业",
-            "#企业AI"
+            "#AI就业"
         ]
     },
     {
@@ -796,8 +764,7 @@ const articlesData = [
         "tags": [
             "#JeremyGrantham",
             "#价值投资",
-            "#投资哲学",
-            "#GMO"
+            "#投资哲学"
         ]
     },
     {
@@ -810,8 +777,7 @@ const articlesData = [
         "tags": [
             "#JakePaul",
             "#风投",
-            "#创作者经济",
-            "#注意力经济"
+            "#创作者经济"
         ]
     },
     {
@@ -824,8 +790,7 @@ const articlesData = [
         "tags": [
             "#LeifAbraham",
             "#Public",
-            "#金融科技",
-            "#AI"
+            "#金融科技"
         ]
     },
     {
@@ -838,8 +803,7 @@ const articlesData = [
         "tags": [
             "#StanDruckenmiller",
             "#投资哲学",
-            "#宏观策略",
-            "#索罗斯"
+            "#宏观策略"
         ]
     },
     {
@@ -852,8 +816,7 @@ const articlesData = [
         "tags": [
             "#SemiAnalysis",
             "#ChipBook",
-            "#半导体投资",
-            "#开源数据"
+            "#半导体投资"
         ]
     },
     {
@@ -866,8 +829,7 @@ const articlesData = [
         "tags": [
             "#ElonMusk",
             "#EricJorgenson",
-            "#领导力",
-            "#方法论"
+            "#领导力"
         ]
     },
     {
@@ -880,8 +842,7 @@ const articlesData = [
         "tags": [
             "#PeterBeck",
             "#RocketLab",
-            "#商业航天",
-            "#太空探索"
+            "#商业航天"
         ]
     },
     {
@@ -894,8 +855,7 @@ const articlesData = [
         "tags": [
             "#Blackstone",
             "#私募信贷",
-            "#金融投资",
-            "#机构投资者"
+            "#金融投资"
         ]
     },
     {
@@ -908,8 +868,7 @@ const articlesData = [
         "tags": [
             "#SallyKornbluth",
             "#MIT",
-            "#危机领导力",
-            "#AI教育"
+            "#危机领导力"
         ]
     },
     {
@@ -922,8 +881,7 @@ const articlesData = [
         "tags": [
             "#80000Hours",
             "#AI安全",
-            "#权力seeking",
-            "#对齐问题"
+            "#权力seeking"
         ]
     },
     {
@@ -936,8 +894,7 @@ const articlesData = [
         "tags": [
             "#MelaniePerkins",
             "#Canva",
-            "#AI设计",
-            "#品牌系统"
+            "#AI设计"
         ]
     },
     {
@@ -950,8 +907,7 @@ const articlesData = [
         "tags": [
             "#EmilMichael",
             "#五角大楼",
-            "#Anthropic",
-            "#AI战略"
+            "#Anthropic"
         ]
     },
     {
@@ -964,8 +920,7 @@ const articlesData = [
         "tags": [
             "#JensenHuang",
             "#NVIDIA",
-            "#TPU竞争",
-            "#供应链管理"
+            "#TPU竞争"
         ]
     },
     {
@@ -978,8 +933,7 @@ const articlesData = [
         "tags": [
             "#JamesCadwallader",
             "#Profound",
-            "#AI营销",
-            "#代理增长"
+            "#AI营销"
         ]
     },
     {
@@ -992,8 +946,7 @@ const articlesData = [
         "tags": [
             "#NVIDIA",
             "#量子计算",
-            "#Ising",
-            "#AI"
+            "#Ising"
         ]
     },
     {
@@ -1006,8 +959,7 @@ const articlesData = [
         "tags": [
             "#BenHorowitz",
             "#a16z",
-            "#AI焦虑",
-            "#基础设施"
+            "#AI焦虑"
         ]
     },
     {
@@ -1020,8 +972,7 @@ const articlesData = [
         "tags": [
             "#机器人",
             "#世界模型",
-            "#材料科学",
-            "#创业"
+            "#材料科学"
         ]
     },
     {
@@ -1034,8 +985,7 @@ const articlesData = [
         "tags": [
             "#ElonMusk",
             "#SamAltman",
-            "#OpenAI",
-            "#xAI"
+            "#OpenAI"
         ]
     },
     {
@@ -1048,8 +998,7 @@ const articlesData = [
         "tags": [
             "#DavidFriedberg",
             "#未来科技",
-            "#AI民主化",
-            "#核聚变"
+            "#AI民主化"
         ]
     },
     {
@@ -1062,8 +1011,7 @@ const articlesData = [
         "tags": [
             "#Anthropic",
             "#Mythos",
-            "#AI安全",
-            "#公众信任"
+            "#AI安全"
         ]
     },
     {
@@ -1076,8 +1024,7 @@ const articlesData = [
         "tags": [
             "#智能体",
             "#AGNTCY",
-            "#多智能体系统",
-            "#Cisco"
+            "#多智能体系统"
         ]
     },
     {
@@ -1090,8 +1037,7 @@ const articlesData = [
         "tags": [
             "#基础设施",
             "#地缘政治",
-            "#公私合作",
-            "#苏比克湾"
+            "#公私合作"
         ]
     },
     {
@@ -1104,8 +1050,7 @@ const articlesData = [
         "tags": [
             "#ThomasLaffont",
             "#Coatue",
-            "#投资哲学",
-            "#CAA"
+            "#投资哲学"
         ]
     },
     {
@@ -1118,8 +1063,7 @@ const articlesData = [
         "tags": [
             "#MarcAndreessen",
             "#a16z",
-            "#Netscape",
-            "#JimClark"
+            "#Netscape"
         ]
     },
     {
@@ -1132,8 +1076,7 @@ const articlesData = [
         "tags": [
             "#MichaelDell",
             "#DellTechnologies",
-            "#创业思维",
-            "#供应链"
+            "#创业思维"
         ]
     },
     {
@@ -1146,8 +1089,7 @@ const articlesData = [
         "tags": [
             "#FelixRieseberg",
             "#Anthropic",
-            "#ClaudeCowork",
-            "#Mythos"
+            "#ClaudeCowork"
         ]
     },
     {
@@ -1160,8 +1102,7 @@ const articlesData = [
         "tags": [
             "#意识",
             "#吠檀多",
-            "#AI哲学",
-            "#灵性修行"
+            "#AI哲学"
         ]
     },
     {
@@ -1174,8 +1115,7 @@ const articlesData = [
         "tags": [
             "#AaronLevie",
             "#Box",
-            "#OpenAI",
-            "#Anthropic"
+            "#OpenAI"
         ]
     },
     {
@@ -1188,8 +1128,7 @@ const articlesData = [
         "tags": [
             "#JeremyAllaire",
             "#Circle",
-            "#稳定币",
-            "#智能体经济"
+            "#稳定币"
         ]
     },
     {
@@ -1202,8 +1141,7 @@ const articlesData = [
         "tags": [
             "#MichaelNielsen",
             "#科技树",
-            "#科学哲学",
-            "#外星文明"
+            "#科学哲学"
         ]
     },
     {
@@ -1216,8 +1154,7 @@ const articlesData = [
         "tags": [
             "#AlanWaxman",
             "#SixthStreet",
-            "#金融史",
-            "#私人信贷"
+            "#金融史"
         ]
     },
     {
@@ -1230,8 +1167,7 @@ const articlesData = [
         "tags": [
             "#AaronLevie",
             "#Box",
-            "#a16z",
-            "#AI代理"
+            "#a16z"
         ]
     },
     {
@@ -1244,8 +1180,7 @@ const articlesData = [
         "tags": [
             "#BenLamm",
             "#Colossal",
-            "#合成生物学",
-            "#AI驱动"
+            "#合成生物学"
         ]
     },
     {
@@ -1258,8 +1193,7 @@ const articlesData = [
         "tags": [
             "#BalajiSrinivasan",
             "#a16z",
-            "#AI经济",
-            "#工作未来"
+            "#AI经济"
         ]
     },
     {
@@ -1272,8 +1206,7 @@ const articlesData = [
         "tags": [
             "#DemisHassabis",
             "#DeepMind",
-            "#AGI",
-            "#ScalingLaws"
+            "#AGI"
         ]
     },
     {
@@ -1286,8 +1219,7 @@ const articlesData = [
         "tags": [
             "#ArnabBose",
             "#Asana",
-            "#AI战略",
-            "#工作图谱"
+            "#AI战略"
         ]
     },
     {
@@ -1300,8 +1232,7 @@ const articlesData = [
         "tags": [
             "#SundarPichai",
             "#Google",
-            "#AI战略",
-            "#Transformer"
+            "#AI战略"
         ]
     },
     {
@@ -1314,8 +1245,7 @@ const articlesData = [
         "tags": [
             "#DemisHassabis",
             "#AlphaFold",
-            "#DeepMind",
-            "#科学革命"
+            "#DeepMind"
         ]
     },
     {
@@ -1328,8 +1258,7 @@ const articlesData = [
         "tags": [
             "#AI Agent",
             "#OpenClaw",
-            "#Claude Code",
-            "#编程工具"
+            "#Claude Code"
         ]
     },
     {
@@ -1342,8 +1271,7 @@ const articlesData = [
         "tags": [
             "#国防科技",
             "#Palantir",
-            "#Anduril",
-            "#制造业空心化"
+            "#Anduril"
         ]
     },
     {
@@ -1356,8 +1284,7 @@ const articlesData = [
         "tags": [
             "#金融危机",
             "#伊朗战争",
-            "#经济系统",
-            "#AI就业"
+            "#经济系统"
         ]
     },
     {
@@ -1370,8 +1297,7 @@ const articlesData = [
         "tags": [
             "#自我意识",
             "#哲学",
-            "#心理学",
-            "#存在主义"
+            "#心理学"
         ]
     },
     {
@@ -1384,8 +1310,7 @@ const articlesData = [
         "tags": [
             "#SpaceX",
             "#IPO",
-            "#太空经济",
-            "#量子计算"
+            "#太空经济"
         ]
     },
     {
@@ -1398,8 +1323,7 @@ const articlesData = [
         "tags": [
             "#DemisHassabis",
             "#DeepMind",
-            "#AGI",
-            "#世界模型"
+            "#AGI"
         ]
     },
     {
@@ -1802,9 +1726,7 @@ const articlesData = [
         "tags": [
             "#DylanPatel",
             "#SemiAnalysis",
-            "#AI战争",
-            "#白领危机",
-            "#中国AI"
+            "#AI战争"
         ]
     },
     {
