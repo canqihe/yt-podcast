@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>为什么每个智能体都需要自己的电脑 | Ivan Burazin (Daytona)</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='3' y='3' width='12' height='12' rx='2' fill='%234a9eff'/><rect x='17' y='3' width='12' height='12' rx='2' fill='%236b7eff'/><rect x='3' y='17' width='12' height='12' rx='2' fill='%238b5cf7'/><rect x='17' y='17' width='12' height='12' rx='2' fill='%23a855f7'/></svg>">
+
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <style>
+        :root {
+            --accent-primary: #14b8a6;
+            --accent-secondary: #a78bfa;
+            --accent-primary-rgb: 20, 184, 166;
+            --accent-secondary-rgb: 167, 139, 250;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/ai-agent-sandbox-ivan-burazin-daytona-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">AI · 智能体基础设施</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">为什么每个智能体</span>
+                    <span class="title-line-2">都需要自己的电脑</span>
+                </h1>
+                <p class="subtitle">
+                    Daytona CEO Ivan Burazin 完整拆解智能体基础设施栈——从沙箱的本质到自研调度器，从 Firecracker 技术选型到全球 CPU 短缺预测，以及 16 年创业老兵的 GTM 实战经验。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Matt Turck</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Ivan Burazin</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 65 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=kMXJrzAa5fM" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">沙箱即刚需</h3>
+                    <p class="point-desc">智能体是数字知识工作者，需要独立、安全、有状态的计算环境。不只是运行代码，更是安全隔离和权限管控的基石。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">状态是分水岭</h3>
+                    <p class="point-desc">传统云为无状态应用设计，智能体需要长时间运行的有状态环境。两者架构根本不同——卡车和跑车的区别。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">技术三明治架构</h3>
+                    <p class="point-desc">沙箱 = 基础设施（60ms 启动、70 秒 5 万并发）+ 原语（Firecracker/QEMU/容器）+ 工具（辅助 + 护栏），统一接口交付。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">自建是陷阱</h3>
+                    <p class="point-desc">启动一个 Firecracker 很简单，启动一百万个、加功能、保吞吐量和安全性——每一步都是数量级的复杂度跳跃。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">GPU 之后是 CPU</h3>
+                    <p class="point-desc">强化学习崛起和智能体规模化，正在制造一个被忽视的 CPU 短缺危机。GPU 越强大，需要「喂养」它的 CPU 沙箱越多。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">支持即增长</h3>
+                    <p class="point-desc">Daytona 零销售人员，通过极致客户支持构建增长引擎：快速首次响应 + 明确承诺 + 主动更新。是纪律，不是技术。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">智能体为什么需要自己的电脑？</h3>
+                        <span class="topic-timestamp">00:00 - 03:20</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        智能体就是「数字知识工作者」——正如人类知识工作者需要电脑来完成复杂工作，智能体同样需要自己的计算环境，而沙箱就是它们的办公电脑。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">安全底线</div>
+                        <p class="topic-detail-content">Ivan 分享了一个亲身经历：在准备董事会报告时，他让 Claude 去获取银行数据。Claude 的回复是「你登录一下，给我权限就行了」。这个瞬间让他意识到：让智能体直接访问主计算环境，从根本上就是不安全的。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">数字员工方案</div>
+                        <p class="topic-detail-content">他的解决方案是给智能体一个独立的 Daytona 沙箱账户、一个独立的手机号（用于银行双重验证）、严格限制的账户权限（只能查看银行数据，不能转账），以及一张日限额 100 美元的信用卡。这样即使智能体「失控」，最坏也只是数据泄露而非资金损失。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Open Claw 的类比</div>
+                        <p class="topic-detail-content">Open Claw 的 Mac Mini 实验让很多人第一次理解了沙箱的概念——Mac Mini 就是那个沙箱，只不过 Daytona 把它做成了云端可扩展的基础设施。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「我把智能体看作数字知识工作者。我的观点是，每个智能体至少需要一个沙箱，有时需要更多。」— Ivan Burazin [00:00:00]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">传统云为什么不适合智能体？</h3>
+                        <span class="topic-timestamp">05:17 - 07:04</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        超大规模云服务商（AWS、Azure、GCP）是为无状态应用部署而设计的，而智能体需要的是有状态、长时间运行的计算环境——两者在架构上根本不同。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">卡车 vs 跑车</div>
+                        <p class="topic-detail-content">传统云像卡车——重量大、底盘稳、为缓慢但安全地运输货物而设计。你部署一个应用（如 eBay 页面更新），不希望它被动态修改。整个云架构围绕「无状态」设计。智能体沙箱像跑车——同样有引擎和轮子，但追求极致速度、弹性和动态变化。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">localhost 的终结</div>
+                        <p class="topic-detail-content">CodeSandbox 十年前就使用了微虚拟机、快照、分叉等技术，但那时给人类开发者的价值不够大。开发者说了 20 年「你只能从我冰冷的手中夺走我的 localhost」。直到智能体出现才真正推动了从本地到云端的迁移——因为智能体需要并发能力、不间断运行和远程访问。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「你可以用卡车和跑车都做很多事情，但它们在根本上是不同的东西。」— Ivan Burazin [00:06:55]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">智能体栈全景：六大核心组件</h3>
+                        <span class="topic-timestamp">14:10 - 16:32</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Ivan 将智能体栈拆解为模型（大脑）、工具（手脚）、记忆（经验）、编排（管理）、可观测性（监督）和沙箱（工作台）六大组件——大部分并非全新发明，而是现实工作方式的数字化映射。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">六大组件</div>
+                        <p class="topic-detail-content">模型=大脑（理解、推理、生成），工具=手脚（MCP、工具调用、沙箱），记忆=经验（目前最好的方案是 Markdown 文件），编排=管理（管理智能体与管理人类并无太大不同），可观测性=监督（验证工作质量），沙箱=工作台（完整计算环境）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">模型不会学习</div>
+                        <p class="topic-detail-content">Ivan 指出了最令人困扰的挑战：当前模型实际上不会「在工作中学习」。即使解决了记忆问题——模型有上下文、有历史——它仍然不会从昨天的经验中变得更聪明。你做同一件事五次，它第六次可能还是犯错。这是否需要持续的强化学习后训练？还是需要模型架构的根本改变？目前没有明确答案。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「和一个不会变聪明的『同事』工作，感觉很奇怪。你做某件事五次，它第六次还是会搞砸。」— Ivan Burazin [00:18:20]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Anthropic vs OpenAI：两种智能体策略</h3>
+                        <span class="topic-timestamp">21:35 - 23:06</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Anthropic 提供全栈托管（模型+框架+沙箱一体），OpenAI 提供框架开放（可对接任何沙箱提供商）。两种策略代表了「一体化」与「开放生态」的分歧。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Anthropic 托管智能体</div>
+                        <p class="topic-detail-content">一个托管服务，将模型、框架和沙箱全部打包在一起。用户不需要关心底层细节，整个技术栈由 Anthropic 管理。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">OpenAI 智能体 SDK</div>
+                        <p class="topic-detail-content">只是一个框架层。你可以将它连接到任何沙箱提供商——Daytona、自建方案、或者任何你想运行的机器上。可以根据许可协议连接不同的模型提供商。Daytona 作为 OpenAI 智能体 SDK 的合作伙伴，站在了开放生态的一侧。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「一个是框架，另一个是模型+框架+沙箱的组合。」— Ivan Burazin [00:22:40]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">从 CodeAnywhere 到 Daytona：16 年创业的教训</h3>
+                        <span class="topic-timestamp">23:06 - 27:01</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Ivan 的创业历程跨越了云端 IDE 的整个演变史。关键教训是：时机、用户与客户的区别、以及从应用层转向基础设施的战略选择。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三次关键教训</div>
+                        <p class="topic-detail-content">第一，时机错了 15-20 年——他们太早了。第二，不知道「用户」和「客户」的区别——CodeAnywhere 只有个人用户价值，个人开发者不想付费；而 Daytona 的用户在公司里工作，用公司的卡付费。第三，没有企业用例——CodeAnywhere 无法进入企业市场。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">战略转变</div>
+                        <p class="topic-detail-content">Daytona V1 是为大型企业的人类工程师管理基础设施的产品。V2（沙箱）面向「新云」形态，专注 CPU。关键决策是不做应用层，只做基础设施——受 Heroku 启发，底层编排能力的价值远超应用层。V1 中学到的企业级需求（本地部署、多云管理、可观测性、审计日志）都预埋到了 V2 中。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「我的第一次创业教会了我在 Daytona 绝对不该做的事。」— Ivan Burazin [00:24:58]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">GTM 大师课：技术创始人如何做分发</h3>
+                        <span class="topic-timestamp">26:59 - 35:41</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Daytona 零销售人员，却通过社区活动、Twitter 和极致的客户支持构建了强大的品牌认知。Ivan 的哲学：即使产品只是同等的，也要通过品牌、体验和认知超越竞争对手。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">GTM 三层框架</div>
+                        <p class="topic-detail-content">借鉴 Sentry 的 David：认知（他们知道你存在吗？）、偏好（定价、品牌、功能——他们更偏好你吗？）、确定性优势（你有没有别人没有的东西？如 FedRAMP 认证）。Ivan 的分工：CTO 确保产品最好，他确保即使产品同等也能赢。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从舞台恐惧到社区大师</div>
+                        <p class="topic-detail-content">Ivan 描述了自己严重的舞台恐惧症——上台前去洗手间十次。转折点是被迫在一个克罗地亚 250 人会议上临时担任主持人整整两天。之后他开始理解会议的本质——首先是娱乐。理解了演讲者、观众、赞助商的激励结构后，从晚宴、聚会、黑客马拉松一路做到旧金山大通中心 4000 人的大型会议。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Twitter 的意外发现</div>
+                        <p class="topic-detail-content">Ivan 发了一条「如果你这个假期在休息，你就是 NGMI」的推文，引起巨大争议。但他发现了一个反直觉的现象：即使完全不同意你观点的人，最终也可能成为客户——因为这一切本质上都是认知建设。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">客户支持的极致方法论</h3>
+                        <span class="topic-timestamp">33:48 - 40:53</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Daytona 的客户支持方法论极其简单但极其有效：快速首次响应 + 明确的时间承诺 + 在承诺到期前主动更新。这不是复杂的技术，而是一种纪律。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三步法</div>
+                        <p class="topic-detail-content">第一步，首次响应必须非常快——人们知道自己已经把问题交给了别人且有人确认了，就安心了。第二步，承诺一个明确的时间。第三步（关键纪律）：要么在承诺时间内解决问题，要么在承诺到期前主动联系客户告知新时间。Ivan 说「没有更多的了，就这样」。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">品牌即体验</div>
+                        <p class="topic-detail-content">Ivan 把品牌定义为「感知」——就像去一家实体店，气味、音乐、员工态度、微笑加在一起就是品牌。产品也一样：网站、登录体验、SDK 的人体工程学、支持的响应速度，全部构成品牌体验。客户支持本身就是 GTM。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「关键是在你向客户承诺的时间到期之前，先于客户想到这件事。」— Ivan Burazin [00:40:22]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">沙箱的技术三明治：基础设施 + 原语 + 工具</h3>
+                        <span class="topic-timestamp">40:50 - 46:09</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Daytona 将沙箱拆解为三层架构——基础设施（启动速度、并发能力、规模）、原语（隔离形态）、工具（辅助+护栏）——并通过统一接口提供给用户。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">基础设施层</div>
+                        <p class="topic-detail-content">单个沙箱启动时间 60 毫秒。70 秒内启动 5 万个。有客户每天运行数十亿个。为什么速度关键？对于 RL 训练，GPU 是最贵的资源，必须保持 100% 利用率。沙箱（CPU 机器）按批次启动执行任务，启动越快 GPU 空转时间越短。有客户要求 500 万并发。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">原语层</div>
+                        <p class="topic-detail-content">Daytona 是目前唯一支持多种隔离形态的沙箱提供商：Firecracker（快速精简，但不能 GPU）、QEMU/Cloud Hypervisor（近乎完整虚拟机，可支持 GPU 和 Android 模拟）、Docker+Sysbox（高密度加固）。用户不需要知道底层用了什么——「我需要 Windows」就启动对应形态。还能运行中动态调整规格——智能体用满资源时系统自动扩展而非崩溃。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">工具层</div>
+                        <p class="topic-detail-content">辅助工具（无头终端、文件操作——用更少 token 更快完成工作）和安全护栏（密钥管理器、防火墙——防止智能体做蠢事）。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「我们对沙箱的看法是——计算资源消费的人体工程学。」— Ivan Burazin [00:41:05]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">快照与分叉：让智能体走多条路</h3>
+                        <span class="topic-timestamp">49:58 - 51:42</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        沙箱快照和分叉能力解决了两个核心问题：成本优化（暂停空闲沙箱释放 CPU）和智能体探索（同时尝试多条路径）。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">成本优化</div>
+                        <p class="topic-detail-content">1000 万用户可能有 1000 万沙箱。CPU 时间是最昂贵的资源。当智能体等待人类回复时沙箱在空转。快照能力让你暂停沙箱——保存完整状态并释放 CPU 资源。回复到来时恢复，用户感受不到中断。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">状态分叉</div>
+                        <p class="topic-detail-content">更令人兴奋的是探索能力。智能体可以在决策点拍快照，然后继续走一条路（失败就回滚），或者复制沙箱同时尝试多条路径。这是人类无法做到的事——我们只能在一条时间线上前进，但智能体可以「分身」。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「智能体可以复制沙箱，同时尝试两条路径。显然可以更多。」— Ivan Burazin [00:51:20]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">为什么 Daytona 从零重写调度器</h3>
+                        <span class="topic-timestamp">51:40 - 55:25</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Kubernetes、Nomad 等现成调度器不是为「超快启动+有状态+长时间运行」的工作负载设计的。Daytona 从零构建的自定义调度器不仅带来性能优势，还赋予了多云灵活性和多隔离形态支持。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三个原因</div>
+                        <p class="topic-detail-content">第一，Kubernetes 不是为毫秒级启动、秒级扩展到数万、频繁创建销毁的场景设计的。第二，沙箱不应该默认短暂——就像你的笔记本电脑，你想让它一直工作到任务完成。第三，有状态沙箱需要实时迁移——底层服务器也需要维护（重启、打补丁），你必须能在服务器之间迁移沙箱不让用户感知中断。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">额外收益</div>
+                        <p class="topic-detail-content">多云灵活性：调度器可连接任何 CPU 机器，让它成为 Daytona 云的一部分。类似 Base10 和 Fireworks，在多个计算提供商上运行避免锁定。多形态支持：自动根据用例选择 Firecracker、Cloud Hypervisor 或容器。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「我们非常天真地发现这些东西不好用。没有一个是为超快、有状态、长时间运行的机器设计的。」— Ivan Burazin [00:53:17]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 11 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">11</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">长时间运行沙箱的隐藏挑战</h3>
+                        <span class="topic-timestamp">55:24 - 58:12</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        让沙箱长时间运行不只是性能问题，而是系统管理难题——你必须解决实时迁移，否则永远无法维护底层服务器。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">问题的根源</div>
+                        <p class="topic-detail-content">云计算的「弹性」只是消费端体验。总得有人实际把服务器拧在一起、开机、确保它能工作。如果沙箱默认短暂（Lambda 函数运行 5-10 分钟），底层维护很简单——设个「不可调度」标志，等沙箱自然结束再维护。但如果沙箱需要运行几天甚至几周，就必须能在不中断的情况下维护底层服务器。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">商业数据</div>
+                        <p class="topic-detail-content">只有 2.5% 的沙箱运行超过 24 小时，但贡献了 20% 的收入——长时间运行意味着持续计费。有些用户反而要求短暂——运行完毕后所有数据彻底销毁，适用于高安全场景。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「即使技术消费者也会觉得『所有计算都是弹性的』——是的，你从 AWS 消费是弹性的，但总得有人实际把服务器拧在一起。」— Ivan Burazin [00:57:00]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 12 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">12</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">自建沙箱的陷阱</h3>
+                        <span class="topic-timestamp">58:10 - 01:01:06</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        「我可以在一台机器上启动一个 Firecracker」——是的。但启动一百万个、添加所有功能、保证吞吐量和安全性——那完全是另一个量级的问题。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">本地硬盘 vs 网络存储</div>
+                        <p class="topic-detail-content">Daytona 最重要的技术决策之一是使用本地硬盘而非网络存储。行业常规是 CPU+内存用本地的，硬盘用网络驱动器（管理简单，服务器死了数据还在共享驱动器上）。但 IOPS 差距是数量级的：网络驱动器几十万，本地驱动器几千万——100 倍差距。当智能体需要高速磁盘操作时，这是「能用」和「不能用」的分界线。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">自建演进陷阱</div>
+                        <p class="topic-detail-content">典型路径：阶段一「只需要运行代码」——Docker 就行；阶段二规模增长——管理大量沙箱碰壁；阶段三性能需求出现——需要高速磁盘操作；阶段四回头找 Daytona——「实际上我们现在做不了 X 和 Y 了」。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「你可以启动一个 Firecracker，但启动一百万个就是问题了。」— Ivan Burazin [00:58:41]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 13 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">13</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">CPU 短缺：下一个全球计算危机？</h3>
+                        <span class="topic-timestamp">01:01:03 - 01:02:49</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        SemiAnalysis 报告指出 CPU 可能即将耗尽。原因：强化学习是模型进步的最大引擎需要大量 CPU 机器，GPU 越强大需要越多 CPU「喂养」，而智能体规模化意味着数百万 CPU 实例。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三个被忽视的驱动因素</div>
+                        <p class="topic-detail-content">第一，过去 18-20 个月模型能力的最大提升来自 RL 训练，而 RL 需要大量 CPU 沙箱作为环境。第二，新一代 GPU 可以并行处理更多任务，每个 GPU 需要更多 CPU 沙箱——需求不是此消彼长而是同步增长。第三，如果每个智能体至少需要一个沙箱，数百万智能体就意味着数百万 CPU 实例。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Daytona 的应对</div>
+                        <p class="topic-detail-content">Daytona 也感受到了压力——有客户要求 500 万并发 CPU 沙箱。通过自定义调度器的多云灵活性来应对，可以连接任何计算提供商来扩展容量。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「GPU 更强大了，它们可以并行处理更多 CPU 机器。然后你看看 Intel 的股价就知道了。」— Ivan Burazin [01:01:50]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 14 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">14</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">智能体栈的未来：Transformer 不是终点</h3>
+                        <span class="topic-timestamp">01:02:46 - 01:04:52</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Ivan 的最大担忧不是某个组件的缺失，而是整个技术范式可能发生根本性变化——如果未来出现了完全不同的模型架构，当前智能体栈的所有组件都可能需要重新设计。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">前沿方向</div>
+                        <p class="topic-detail-content">湿件计算（用模拟的生物神经网络运行 AI，已有人用它学会了玩 Doom）、生物大脑模拟（苍蝇大脑被完整复制到计算机中并正常运行）。问题是：能否复制通用人类大脑，从而实现真正的 AGI？</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">范式风险</div>
+                        <p class="topic-detail-content">如果 Transformer 继续主导，当前演进方向是清晰的。但如果出现范式转换——「我们所有的赌注，你的和我们的，都会非常不同」。这不是断言会立即发生，而是强调一个被忽视的风险。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「人们认为我们现有的模型架构就是终极形态。我真的不这么认为。」— Ivan Burazin [01:03:12]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">sandbox</div>
+                    <h3 class="takeaway-title">沙箱即刚需</h3>
+                    <p class="takeaway-desc">智能体不是聊天机器人——当它需要执行任何实际操作，就需要独立的计算环境。沙箱不是可选配件，而是基础设施。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">state</div>
+                    <h3 class="takeaway-title">状态是分水岭</h3>
+                    <p class="takeaway-desc">传统云为无状态应用设计，智能体需要有状态、长时间运行的环境。这个架构差异决定了你不能简单地在 AWS 上跑智能体。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">cpu</div>
+                    <h3 class="takeaway-title">GPU 之后是 CPU</h3>
+                    <p class="takeaway-desc">强化学习的崛起和智能体规模化需求，正在制造一个被忽视的 CPU 短缺危机。GPU 越强大，需要喂养它的 CPU 沙箱越多。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">support</div>
+                    <h3 class="takeaway-title">支持即增长</h3>
+                    <p class="takeaway-desc">Daytona 零销售人员的秘诀：快速首次响应 + 明确承诺 + 主动更新。这是一套纪律，不是技术，但效果惊人。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">trap</div>
+                    <h3 class="takeaway-title">自建是陷阱</h3>
+                    <p class="takeaway-desc">从一个 Firecracker 到一百万个，从简单代码执行到高性能磁盘操作，从短暂运行到有状态保持——每一步都是数量级的复杂度跳跃。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">paradigm</div>
+                    <h3 class="takeaway-title">范式风险</h3>
+                    <p class="takeaway-desc">当前智能体栈的所有设计都建立在 Transformer 之上。如果出现根本性的模型架构变革，整个基础设施层可能需要重新设计。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">Daytona：智能体基础设施的先行者</h3>
+            <p class="footer-desc">
+                从 2009 年开创云端 IDE 到今天构建智能体沙箱基础设施，Ivan Burazin 和他的团队走过了 16 年的创业之路。他们的核心洞察是：智能体需要的不是传统云的一小部分，而是一种全新的计算范式——有状态、可扩展、安全隔离的「可组合计算机」。
+            </p>
+            <div class="footer-quote">
+                「60 毫秒启动一个沙箱，70 秒启动 5 万个，每天运行数十亿个——这不是未来，这是现在正在发生的事。」
+            </div>
+            <p class="footer-note">
+                来源：The MAD Podcast with Matt Turck | 2026 年 5 月
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

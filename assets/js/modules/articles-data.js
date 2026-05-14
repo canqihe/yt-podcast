@@ -1,6 +1,32 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/anthropic-labs-mike-krieger.html",
+        "card_class": "card-ai",
+        "category": "AI · 前沿实验室",
+        "date": "2026-05-14",
+        "title": "Anthropic Labs 负责人谈 Claude Code 之后 | Mike Krieger",
+        "excerpt": "Instagram 联合创始人放弃 CPO 回到一线，披露 Labs 两周生死评审机制、健康科技蓝海、MCP 新型应用商店，以及「AI 越强人类创造力越重要」的核心信念。",
+        "tags": [
+            "#Anthropic",
+            "#Labs",
+            "#AI产品"
+        ]
+    },
+    {
+        "url": "articles/ai-agent-sandbox-ivan-burazin-daytona.html",
+        "card_class": "card-ai",
+        "category": "AI · 智能体基础设施",
+        "date": "2026-05-14",
+        "title": "为什么每个智能体都需要自己的电脑 | Ivan Burazin (Daytona)",
+        "excerpt": "60 毫秒启动沙箱、70 秒启动 5 万个、每天运行数十亿个——Daytona CEO 完整拆解智能体基础设施栈，从沙箱本质到自研调度器，从 Firecracker 到 CPU 短缺预测，以及零销售团队的 GTM 实战经验。",
+        "tags": [
+            "#AI智能体",
+            "#沙箱基础设施",
+            "#Daytona"
+        ]
+    },
+    {
         "url": "articles/anthropic-cfo-krishna-rao-compute.html",
         "card_class": "card-ai",
         "category": "AI · 前沿实验室",
