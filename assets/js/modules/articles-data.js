@@ -1,6 +1,19 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/anthropic-cfo-krishna-rao-compute.html",
+        "card_class": "card-ai",
+        "category": "AI · 前沿实验室",
+        "date": "2026-05-14",
+        "title": "Anthropic CFO：千亿美元算力承诺背后的故事 | Krishna Rao",
+        "excerpt": "从 2.5 亿到 300 亿年化收入的指数跃迁，90% 代码由 AI 编写的递归飞轮，三大芯片平台的灵活调度——Anthropic CFO 首次深度揭示千亿美元算力采购背后的战略思考。",
+        "tags": [
+            "#Anthropic",
+            "#算力战略",
+            "#AI前沿"
+        ]
+    },
+    {
         "url": "articles/harvey-ceo-winston-weinberg.html",
         "card_class": "card-ai",
         "category": "AI · 创业 · 法律",
