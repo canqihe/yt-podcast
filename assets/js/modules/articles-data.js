@@ -1,6 +1,19 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/coatue-jaimin-rangwalla-ai-market.html",
+        "card_class": "card-finance",
+        "category": "投资 · AI 基础设施",
+        "date": "2026-05-15",
+        "title": "Coatue CIO 深度解读：AI 公共市场更新",
+        "excerpt": "OpenAI 估值超8000亿美元、Anthropic 每周新增25亿美元ARR——Coatue CIO Jaimin Rangwalla 解析20年职业生涯中最非凡的技术周期，从「跟踪千兆瓦」投资框架到智能体生成智能体，从CPU-GPU比例翻转到数字人口膨胀。",
+        "tags": [
+            "#Coatue",
+            "#AI投资",
+            "#半导体"
+        ]
+    },
+    {
         "url": "articles/cerebras-ipo-wafer-scale-engine.html",
         "card_class": "card-tech",
         "category": "半导体 · AI 基础设施",
