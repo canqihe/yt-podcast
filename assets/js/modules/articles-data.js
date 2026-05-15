@@ -1,11 +1,24 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/cerebras-ipo-wafer-scale-engine.html",
+        "card_class": "card-tech",
+        "category": "半导体 · AI 基础设施",
+        "date": "2026-05-15",
+        "title": "Cerebras IPO 深度拆解：晶圆级芯片与快速令牌经济学",
+        "excerpt": "90万核心、25千瓦功耗、每秒1100个令牌——Cerebras 用革命性拼接技术将一整片晶圆做成一颗芯片，OpenAI 签下750兆瓦令牌即服务协议。深度拆解晶圆级引擎架构、SRAM 与 GPU 的算术强度之争，以及快速令牌定价的上限在哪里。",
+        "tags": [
+            "#Cerebras",
+            "#晶圆级芯片",
+            "#AI推理"
+        ]
+    },
+    {
         "url": "articles/anthropic-labs-mike-krieger.html",
         "card_class": "card-ai",
         "category": "AI · 前沿实验室",
         "date": "2026-05-14",
-        "title": "Anthropic Labs 负责人谈 Claude Code 之后 | Mike Krieger",
+        "title": "Anthropic Labs 负责人谈 Claude Code 之后",
         "excerpt": "Instagram 联合创始人放弃 CPO 回到一线，披露 Labs 两周生死评审机制、健康科技蓝海、MCP 新型应用商店，以及「AI 越强人类创造力越重要」的核心信念。",
         "tags": [
             "#Anthropic",
@@ -18,7 +31,7 @@ const articlesData = [
         "card_class": "card-ai",
         "category": "AI · 智能体基础设施",
         "date": "2026-05-14",
-        "title": "为什么每个智能体都需要自己的电脑 | Ivan Burazin (Daytona)",
+        "title": "为什么每个智能体都需要自己的电脑",
         "excerpt": "60 毫秒启动沙箱、70 秒启动 5 万个、每天运行数十亿个——Daytona CEO 完整拆解智能体基础设施栈，从沙箱本质到自研调度器，从 Firecracker 到 CPU 短缺预测，以及零销售团队的 GTM 实战经验。",
         "tags": [
             "#AI智能体",
@@ -31,7 +44,7 @@ const articlesData = [
         "card_class": "card-ai",
         "category": "AI · 前沿实验室",
         "date": "2026-05-14",
-        "title": "Anthropic CFO：千亿美元算力承诺背后的故事 | Krishna Rao",
+        "title": "Anthropic CFO：千亿美元算力承诺背后的故事",
         "excerpt": "从 2.5 亿到 300 亿年化收入的指数跃迁，90% 代码由 AI 编写的递归飞轮，三大芯片平台的灵活调度——Anthropic CFO 首次深度揭示千亿美元算力采购背后的战略思考。",
         "tags": [
             "#Anthropic",
@@ -44,7 +57,7 @@ const articlesData = [
         "card_class": "card-ai",
         "category": "AI · 创业 · 法律",
         "date": "2026-05-13",
-        "title": "Harvey CEO：31岁如何运营一家110亿美元公司 | Winston Weinberg",
+        "title": "Harvey CEO：31岁如何运营一家110亿美元公司",
         "excerpt": "一封发给 Sam Altman 的冷邮件，一个 Reddit 法律测试，100题中86题三位律师一致认可。从 GPT-3 公共 API 到估值110亿美元的法律AI公司——压力即疫苗、99.9%是双向门、产品是唯一可规模化的东西。",
         "tags": [
             "#WinstonWeinberg",
@@ -57,7 +70,7 @@ const articlesData = [
         "card_class": "card-finance",
         "category": "金融 · 领导力",
         "date": "2026-05-13",
-        "title": "高盛董事长谈 AI 与金融未来 | Lloyd Blankfein",
+        "title": "高盛董事长Lloyd Blankfein谈 AI 与金融未来",
         "excerpt": "从纽约公共住房到华尔街权力巅峰，高盛前 CEO 分享 40 年风险管理哲学：应急计划优于预测、犯错不等于愚蠢、合伙人文化的精妙机制、逐日盯市即风险系统。AI 最大风险不是它比我们聪明，而是我们无法验证它是否正确。",
         "tags": [
             "#LloydBlankfein",
