@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黄仁勋斯坦福CS153：智能背后的计算</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='3' y='3' width='12' height='12' rx='2' fill='%234a9eff'/><rect x='17' y='3' width='12' height='12' rx='2' fill='%236b7eff'/><rect x='3' y='17' width='12' height='12' rx='2' fill='%238b5cf7'/><rect x='17' y='17' width='12' height='12' rx='2' fill='%23a855f7'/></svg>">
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <style>
+        :root {
+            --accent-primary: #ff6b35;
+            --accent-secondary: #00d4ff;
+            --accent-primary-rgb: 255, 107, 53;
+            --accent-secondary-rgb: 0, 212, 255;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/jensen-huang-stanford-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">芯片 · AI 基础设施</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">黄仁勋斯坦福CS153：</span>
+                    <span class="title-line-2">智能背后的计算</span>
+                </h1>
+                <p class="subtitle">
+                    计算正在经历64年来最彻底的重塑——从预录到生成，从按需到持续。NVIDIA CEO 完整拆解芯片四代演进逻辑、100万倍协同设计飞跃、开源模型的战略意图，以及为什么「拥抱煎熬」是他最重要的职业建议。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">课程</div>
+                        <div class="meta-value">Stanford CS153</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Jensen Huang</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 68 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=tsQB0n0YV3k" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">计算的64年重塑</h3>
+                    <p class="point-desc">自IBM System/360以来，计算模型首次被根本性重写。软件从「预录播放」转向「实时生成」，计算机从按需响应走向持续运行。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">协同设计 = 100万倍</h3>
+                    <p class="point-desc">NVIDIA通过跨芯片、编译器、网络、系统的极端协同设计，10年内实现100万倍算力提升，而纯靠摩尔定律只能做到100倍。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">芯片四代路线图</h3>
+                    <p class="point-desc">Hopper（预训练）→ Grace Blackwell NVLink72（推理/解码）→ Vera Rubin（智能体）→ Feynman（智能体群），每一代瞄准下一个计算范式。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">开源 = AI安全</h3>
+                    <p class="point-desc">开源Nemotron、BioNeMo、Alpamayo不仅是为了扩展AI到语言资源不足的社会和科学前沿，更是因为「你无法防御一个黑箱」。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">MFU是错误指标</h3>
+                    <p class="point-desc">模型FLOPS利用率（MFU）是误导性指标。真正重要的是token每瓦特和真实评估。黄仁勋说他想要低MFU——因为系统应该超额配置。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">拥抱煎熬</h3>
+                    <p class="point-desc">CEO工作中只有10%是他真正想做的。他建议不要只追求快乐——也要追求痛苦和煎熬，因为「韧性是你必须锻炼的肌肉」。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">计算的64年来首次彻底重塑</h3>
+                        <span class="topic-timestamp">00:01:13 - 00:08:21</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        自IBM System/360以来持续64年的计算模型正在被根本性重写——软件从「预录」转向「实时生成」，计算机从「按需响应」转向「持续运行」。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从预录到生成</div>
+                        <p class="topic-detail-content">过去64年，计算模型基本没有改变。从PC到互联网、移动到云——虽然形态在变，但底层范式一致：你写好程序（预录），计算机按指令执行。分时计算机变成云计算，本质上都是「你问，我答」。但现在一切都变成了「生成」的——生成式AI在实时生成图像、文本、推理过程，且上下文相关。计算机不再只响应明确指令，而是能理解你的意图。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从按需到持续</div>
+                        <p class="topic-detail-content">在智能体系统中，计算机不再按需启动，而是持续运行。这意味着从软件开发方法论、工具链、组织方式，到系统架构、网络、存储、云服务，再到应用形态——每一层都被重新定义。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">GPT的启示</div>
+                        <p class="topic-detail-content">黄仁勋回忆15年前看到深度学习早期工作时的推理过程：从第一性原理推导，得出的结论是一切都变了。他特别指出，当GPT出现时，很多人看到的是图像生成，而他看到的是「生成思想」的能力——生成你内部消费的token叫「思考」，生成你外部消费的token叫「工具使用」。从这个洞察出发，走到今天的智能体系统，几乎是必然的。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">协同设计与100万倍算力飞跃</h3>
+                        <span class="topic-timestamp">00:08:38 - 00:13:33</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        NVIDIA通过跨芯片、编译器、网络、系统的极端协同设计，在10年内实现了100万倍的算力提升，而纯靠摩尔定律只能做到100倍。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">RISC的遗产</div>
+                        <p class="topic-detail-content">黄仁勋从斯坦福学术传统讲起——John Hennessy的RISC架构之所以伟大，在于它让编译器和微处理器架构和谐地协同设计。一个更简单的、与编译器协同设计的机器，比两个各自优化的系统性能更好。NVIDIA把这个理念推向了极致——同时优化CPU、GPU、网络交换机、存储等所有层面。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">100万倍 vs 100倍</div>
+                        <p class="topic-detail-content">摩尔定律黄金时代10年能提升100倍（每5年10倍）。但Dennard缩放终结后，纯靠微处理器扩展10年可能只有10倍。而NVIDIA通过协同设计实现了100万倍。黄仁勋的比喻：如果你能以光速旅行，你选择住哪里就不重要了；如果你能从纽约到加州只需10分钟，社会的方方面面都会改变。同理，计算速度提升100万倍，让AI研究者可以说——「把整个互联网的数据都拿来」。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "We accelerated computing by so far that it created all this infinite abundance opportunity for everybody to think about the future." — 我们把计算加速到如此程度，为所有人创造了思考未来的无限丰富机会。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI时代的教育变革</h3>
+                        <span class="topic-timestamp">00:13:50 - 00:15:40</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI不仅是学习的对象，更是学习的工具。未来的教育必须是传统第一性原理与AI实时知识的融合。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">教科书的时代局限</div>
+                        <p class="topic-detail-content">黄仁勳回忆在斯坦福求学时，Hennessy教授还在手写教科书——每周写一章，几年后才汇集成第一版。传统教科书制作周期太长，无法跟上AI时代实时产生的知识。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI作为学习伙伴</div>
+                        <p class="topic-detail-content">他现在离不开AI做研究：让AI读论文 → 让AI读相关论文变成超级研究员 → 先总结后深入对话。他强调在总结文档的过程中，AI本身学到了大量东西——这不是简单摘要工具，而是能持续对话的知识伙伴。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第一性原理不可替代</div>
+                        <p class="topic-detail-content">他维护了传统教育的价值——第一性原理不会变。现代半导体设计的优化虽然已经穷尽，但了解「我们从哪里来」仍然重要。他当年同时在学校学第一性原理、在AMD做实际芯片设计，这种双重视角让他受益匪浅。今天的学生可以同时用AI和学第一性原理——获得同样的体验。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">为什么NVIDIA要做开源模型</h3>
+                        <span class="topic-timestamp">00:15:38 - 00:25:28</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        NVIDIA投入开源模型并非与闭源前沿竞争，而是为了扩展AI到语言资源不足的社会、科学前沿领域，以及从根本上保障AI安全。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">首先：NVIDIA是闭源模型的重度用户</div>
+                        <p class="topic-detail-content">NVIDIA是Anthropic和OpenAI的重度用户。100%的NVIDIA工程师都已配备智能体支持。黄仁勋强烈推荐所有人使用Claude Code和ChatGPT这样的前沿闭源产品——从GitHub下载的开源项目不可能达到同等效果。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">理由一：语言民主化</div>
+                        <p class="topic-detail-content">全球有数百种语言，但只有少数几种被商业公司优先对待。瑞典语、印度230多种方言中的大部分——如果没有人特别关心，这些语言的AI能力永远不会好。NVIDIA的Nemotron（接近前沿水平的开源大语言模型）让任何人都可以微调成自己的语言。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">理由二：激活科学前沿</div>
+                        <p class="topic-detail-content">化学、蛋白质、基因、物理系统、机器人——每种信息的结构不同、维度不同、训练方式也不同。科学家们没有规模和技术构建基础模型。NVIDIA在多个领域投入：Nemotron（语言）、BioNeMo（生物学）、Alpamayo（自动驾驶，语言模型+世界模型融合）、Groot（人形机器人）、气候科学（中尺度多物理场）。特别值得注意的是Alpamayo：将语言模型与世界模型融合，使自动驾驶模型能用人类先验知识推理，只需数百万英里而非数十亿英里就能成为最有效的系统之一。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">理由三：AI安全需要透明</div>
+                        <p class="topic-detail-content">这是最根本的理由。对抗超级智能体网络安全威胁的正确方式，不是军备竞赛（你出模型7.0，我出8.0），而是部署数百万、数十亿的廉价AI（如Nemotron Nano）形成系统性包围——像一个巨大的防护穹顶。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "If you care to have AI be safe and secure, it has to be open. You can't defend against a black box." — 如果你希望AI安全可靠，它就必须是开放的。你无法防御一个黑箱。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">MFU是一个误导性指标</h3>
+                        <span class="topic-timestamp">00:26:30 - 00:32:46</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        模型FLOPS利用率（MFU）是错误的方向。真正应该衡量的是token每瓦特和真实评估（evals），低MFU反而可能是好事。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">为什么想要低MFU？</div>
+                        <p class="topic-detail-content">在大型数据中心中，FLOPS、内存带宽、内存容量、网络容量——在任何给定时刻总有某个东西是瓶颈。你要超额配置一切来避免Amdahl定律。超额配置意味着大部分时间很多FLOPS闲置——MFU很低。但在关键峰值时刻，你有足够的余量。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">正确的指标</div>
+                        <p class="topic-detail-content">黄仁勋用汽车做比喻：过去问「多少马力」，现在谁还这样做？对于大语言模型推理（特别是解码），最重要的是token每瓦特。Grace Blackwell NVLink72在解码时通过聚合带宽实现极高的token每瓦特，而MFU极低——因为解码和预填充是解耦的。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">多领域平衡的艺术</div>
+                        <p class="topic-detail-content">他描述了核心矛盾：过度优化某个特定问题，那个市场可能不够大支撑研发；什么都好就变成了通用的、什么都不好。在多领域专精和不过度特化之间找平衡——「这是一种艺术。这是我的工作。」他每天回答：不应该做什么？加倍投入什么？10倍投入什么？</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "I would like to be at low MFU all the time... because I want to be so smart I'm overprovisioned." — 我一直想要低MFU……因为我想要足够聪明以至于系统超额配置。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">芯片四代演进：从预训练到智能体群</h3>
+                        <span class="topic-timestamp">00:33:14 - 00:38:11</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        NVIDIA每一代芯片都瞄准下一个计算范式：Hopper（预训练）→ Grace Blackwell（推理/解码）→ Vera Rubin（智能体）→ Feynman（智能体群）。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Hopper：为预训练而生</div>
+                        <p class="topic-detail-content">当世界最大超级计算机约3.5亿美元时，NVIDIA决定构建价值数十亿美元的系统——为精确零个客户。因为他们预判预训练将是如此巨大的问题领域。这个判断极为正确。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Grace Blackwell NVLink72：为推理设计</div>
+                        <p class="topic-detail-content">AI的目标不是训练，而是推理。解码阶段的token生成需要极高内存带宽，远超单芯片能力。解决方案：将72个GPU联合，发明新的交换和互连系统，创造世界首台机架级计算机。结果：两年内提升50倍，而摩尔定律只能做到2倍。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Vera Rubin：为智能体设计</div>
+                        <p class="topic-detail-content">目标不仅是思考，而是做事。智能体的计算模式需要长期记忆（直接连接到GPU网络的存储）和大量工具（专门设计了Vera CPU——为单线程代码优化，极低延迟）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Feynman：为智能体群设计</div>
+                        <p class="topic-detail-content">未来是智能体系统——智能体带子智能体，子智能体又带子智能体，形成智能体群。什么样的计算机架构能应对这种模式？这就是Feynman要回答的问题。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">能源瓶颈与可持续能源的历史性机遇</h3>
+                        <span class="topic-timestamp">00:38:43 - 00:41:30</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        计算所需的能源可能增长1000倍甚至更多。市场力量如此强大，现在是投资可持续能源和电网升级的最佳时机。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第一层：能效提升（可控）</div>
+                        <p class="topic-detail-content">通过协同设计架构，NVIDIA在token每瓦特上实现了50倍提升，并将持续以显著系数改进。这是复合增长。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第二层：教育生态系统</div>
+                        <p class="topic-detail-content">未来计算机将永远是生成式的、持续的。这种持续运行的生成式计算对比按需启动的预录检索式计算——能源需求的量级完全不同。他估计增长约1000倍，差了几个数量级也不会惊讶。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第三层：可持续能源的历史性窗口</div>
+                        <p class="topic-detail-content">过去需要政府补贴建太阳能农场和核电站，现在市场本身就会付钱让你去做。市场力量如此强大——这是升级老旧电网、添加各种可持续能源的最佳时机。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "This is the best time ever in the history of humanity to go and invest in sustainable energy." — 这是人类历史上投资可持续能源最好的时代。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">芯片出口管制与全球竞争</h3>
+                        <span class="topic-timestamp">00:47:19 - 00:53:26</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        将GPU比作原子弹是荒谬的类比；美国科技公司应该在全球市场竞争而非退缩；剥夺通用计算能力让一两家公司受益的政策毫无逻辑。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">反驳「GPU=原子弹」</div>
+                        <p class="topic-detail-content">NVIDIA GPU被全球十亿人使用——用于游戏、送酱油的机器人、全球每台CT设备。他向家人和孩子推荐GPU，但不会向任何人推荐原子弹。「如果你从那个错误的前提出发，你就不可能完成任何有意义的推理。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">反驳「反正会输」</div>
+                        <p class="topic-detail-content">「如果你用这种哲学——你为什么要起床？」他从不接受「注定会输」的预设。「如果你想让我输，你得亲手打败我。」竞争让公司更强大，而不是更弱。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">反驳「限制通用计算」</div>
+                        <p class="topic-detail-content">为了一两家公司的利益而限制通用计算——让整个美国科技产业受苦——逻辑上说不通。他举了电信产业的先例：同样的论调曾导致美国完全失去电信基础技术。「必须有人为此战斗。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">反驳AI末日论</div>
+                        <p class="topic-detail-content">关于「AI奇点会在某个周三7点突然降临、瞬间接管世界」的说法，他直言不讳：「我们不知道这些系统如何运作——不是真的。这些都是编造的。」他认为这种恐惧叙事伤害了计算机科学学生——他们希望毕业后人们关心计算机。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">大学如何获得计算资源</h3>
+                        <span class="topic-timestamp">00:53:26 - 00:57:14</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        大学计算资源匮乏的根本原因不是芯片供应不足，而是组织方式的问题——需要像建粒子加速器一样，全校区共享超级计算机。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">芯片供应不是问题</div>
+                        <p class="topic-detail-content">他不接受「NVIDIA不给芯片」的说法。「如果斯坦福的校长下订单，我保证会交付。」——他在课堂现场承诺。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">组织方式才是瓶颈</div>
+                        <p class="topic-detail-content">斯坦福所有研究部门分散在不同院系，各自筹集资金、拿资助，没有人分享。没有一个资助大到足以支撑足够的计算资源。世界从集中式计算环境转向每个人用笔记本电脑——没有一个大学有十亿美元的计算预算。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">解决方案</div>
+                        <p class="topic-detail-content">改变预算方式，聚合资源，建造全校区共享的超级计算机——就像斯坦福过去建造直线加速器（SLAC）一样。他半开玩笑地建议斯坦福拿出400亿美元捐赠基金中的10亿，作为云服务让每个学生和研究员使用AI超级计算机。如果你想买10亿美元的番茄，你不能跑去杂货店然后抱怨他们没有——你得做规划。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">CEO工作的痛苦与韧性</h3>
+                        <span class="topic-timestamp">00:42:24 - 00:45:21</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        不要只追求你热爱的工作——也要拥抱痛苦和煎熬，因为韧性是你必须锻炼的肌肉。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">质疑「追随激情」</div>
+                        <p class="topic-detail-content">「追随你的激情」的前提是你知道激情在哪里。但很多人不知道，因为「你怎么能知道你不知道的东西？」而且无论找到激情还是「这只是你的工作」，90%的工作都是艰难的。他回忆在Denny's餐厅和做清洁工的日子——那是他的工作，他尽最大努力做好。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">CEO的真实</div>
+                        <p class="topic-detail-content">他真正喜欢的工作只有10%，90%是艰难的，还是全力以赴地做，并且在其中煎熬。NVIDIA历史上四五次濒临破产——在燃烧最后的余烬时，尴尬、屈辱、艰难、不知道答案、在黑暗中、害怕——所有感受放大一千倍。作为上市公司CEO，做好了人们高兴，做不好马上告诉你。「这是一种高度脆弱的职业。」</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "I'm advising that you not seek for just joy, that you also seek for some pain, some suffering, because you're going to need it someday." — 我建议你不仅追求快乐，也要追求一些痛苦和煎熬，因为你总有一天会需要它。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 11 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">11</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">最大的战略错误：移动设备</h3>
+                        <span class="topic-timestamp">01:00:23 - 01:04:48</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        NVIDIA第一代产品技术选型全错了，但这教会了战略的重要性；真正的战略错误是进入移动设备市场——虽然长成了10亿美元业务，但在3G到4G过渡期被高通彻底封杀。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">技术错误 → 战略天才</div>
+                        <p class="topic-detail-content">第一代NVIDIA产品使用曲面而非三角形、没有Z缓冲、正向纹理映射、没有浮点运算——「把所有事都做错了。」但从完全错误的技术方向中存活并成为唯一幸存者，教会了他战略比技术更重要：如何看待世界、应对竞争、节约和配置资源。他在30出头通过那次濒死体验学到的东西，影响至今。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">真正的错误：移动设备</div>
+                        <p class="topic-detail-content">移动设备起飞时，他决定转移大量资源。业务长到10亿美元——这种正向反馈让他继续投入。但3G到4G过渡时，高通作为调制解调器领导者（手机最重要的部分）将NVIDIA 100%排除在外。「十亿归零。」如果再来一次，他会说：「这对几年来说可能是有趣的机会，但之后我们会被关在门外——有什么意义？」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">银色内衬</div>
+                        <p class="topic-detail-content">所有低功耗和能效方面的专业知识被转移到了一个当时不存在的领域——机器人。Thor芯片就是移动设备芯片的曾曾曾曾孙。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 12 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">12</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">如何在不确定性中做战略决策</h3>
+                        <span class="topic-timestamp">01:04:48 - 01:08:20</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        通过观察→第一性原理推理→构建未来心智模型→逆向推演来做决策；追求的是减少机会成本、增加可选项。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">五步决策法</div>
+                        <p class="topic-detail-content">1. 观察：AlexNet——两个工程师加一个Hinton，一举超越了几十年积累的计算机视觉能力。这是大事吗？ 2. 第一性原理推理：能走多远？还能解决什么？处理神经网络和处理浮点数有什么不同？ 3. 构建心智模型：模型会多大？计算机长什么样？ 4. 逆向推演：公司在未来中的位置是什么？然后倒推。 5. 概率化思考：「这些是可能发生的事，这些是肯定会发生的事，这些是可能发生的事。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">机会成本是真正的成本</div>
+                        <p class="topic-detail-content">追求一项策略的能量、时间和金钱是从别的地方拿来的。目标是让自己足够聪明，以减少机会成本、增加可选项（optionality）——「你试图让旅程本身为自己买单。」</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">算力非线性的力量</h3>
+                    <p class="takeaway-desc">100万倍的算力提升不是渐进改良，而是范式转换——让「把整个互联网数据拿来训练」从疯狂变成现实。计算速度的量变引发了AI能力的质变。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔗</div>
+                    <h3 class="takeaway-title">协同设计胜过单独优化</h3>
+                    <p class="takeaway-desc">跨芯片、编译器、网络、系统的协同设计比任何单层优化都强大。RISC的哲学被NVIDIA推向了极端——10年100万倍对比100倍。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">指标决定行为</h3>
+                    <p class="takeaway-desc">MFU是容易优化但错误方向的指标。真正重要的是token每瓦特和真实评估。选错指标就像用马力来评价现代汽车。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔓</div>
+                    <h3 class="takeaway-title">开源即安全</h3>
+                    <p class="takeaway-desc">AI安全不能靠黑箱——「你无法防御你看不见的东西」。透明开放系统让全球研究者都能审视、改进、部署防御。Nemotron Nano被用于部署万亿级网络安全传感器。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔮</div>
+                    <h3 class="takeaway-title">芯片设计的预测性</h3>
+                    <p class="takeaway-desc">每一代芯片瞄准下一个计算范式而非当前——Hopper预判了预训练、Grace Blackwell预判了推理爆炸、Vera Rubin预判了智能体。设计面向「精确零个客户」的数十亿美元系统需要勇气和远见。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💪</div>
+                    <h3 class="takeaway-title">拥抱煎熬</h3>
+                    <p class="takeaway-desc">90%的工作是艰难的——这不是失败，这是在锻炼韧性。「不要只追求快乐，也要追求一些痛苦。」当世界需要你坚强时，你不能没有那块肌肉。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">计算的未来，由设计者定义</h3>
+            <p class="footer-desc">
+                从IBM System/360到NVIDIA Feynman，计算的每一次范式跃迁都源于有人愿意为「精确零个客户」构建数十亿美元的系统。黄仁勋用15年的第一性原理推理和100万倍的协同设计证明——未来不是预测出来的，是构建出来的。
+            </p>
+            <div class="footer-quote">
+                "如果那么容易的话，我不会在这里。"
+            </div>
+            <p class="footer-note">
+                Stanford CS153 Frontier Systems · Jensen Huang · 2025
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

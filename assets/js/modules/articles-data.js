@@ -1,6 +1,32 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/ai-supply-chain-bottlenecks-bubbleboi.html",
+        "card_class": "card-tech",
+        "category": "半导体 · AI 供应链",
+        "date": "2026-05-16",
+        "title": "AI供应链瓶颈评级：与@bubbleboi深度对话",
+        "excerpt": "电气工程师逐项拆解AI供应链瓶颈——DRAM卡特尔联盟将16GB内存条从100美元炒到1000美元、闪存比DRAM便宜55倍催生谷歌内存加速器、英特尔封装技术碾压台积电如同法拉利vs半挂卡车，以及4.5kW以上冷却的物理极限。",
+        "tags": [
+            "#半导体",
+            "#AI供应链",
+            "#内存"
+        ]
+    },
+    {
+        "url": "articles/jensen-huang-stanford-cs153.html",
+        "card_class": "card-tech",
+        "category": "芯片 · AI 基础设施",
+        "date": "2026-05-16",
+        "title": "黄仁勋斯坦福CS153：智能背后的计算",
+        "excerpt": "计算正在经历64年来最彻底的重塑。NVIDIA CEO 完整拆解芯片四代演进逻辑——从Hopper预训练到Feynman智能体群，10年100万倍协同设计飞跃远超摩尔定律的100倍。开源模型是为了AI安全而非竞争，MFU是错误指标，以及为什么「拥抱煎熬」是他最重要的职业建议。",
+        "tags": [
+            "#NVIDIA",
+            "#芯片设计",
+            "#AI基础设施"
+        ]
+    },
+    {
         "url": "articles/coatue-jaimin-rangwalla-ai-market.html",
         "card_class": "card-finance",
         "category": "投资 · AI 基础设施",
