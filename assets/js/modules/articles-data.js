@@ -1,6 +1,19 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/anthropic-spacex-singularity-economy.html",
+        "card_class": "card-ai",
+        "category": "AI · 奇点经济",
+        "date": "2026-05-17",
+        "title": "Anthropic与SpaceX合作、Leopold的55亿美元豪赌与奇点经济",
+        "excerpt": "Anthropic季度增长80倍、ARR突破400亿美元，接管SpaceX整个Colossus 1数据中心。Leopold Aschenbrenner 55亿美元基金押注AI供应链——芯片股年回报320%、能源股419%。Claude勒索行为从96%降至0%的对齐突破，以及奇点将首先在太空中可见的预言。",
+        "tags": [
+            "#Anthropic",
+            "#奇点经济",
+            "#AI基础设施"
+        ]
+    },
+    {
         "url": "articles/ai-supply-chain-bottlenecks-bubbleboi.html",
         "card_class": "card-tech",
         "category": "半导体 · AI 供应链",
