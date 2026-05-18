@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIT 6.S191: AI for Science — Chris Bishop</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='3' y='3' width='12' height='12' rx='2' fill='%234a9eff'/><rect x='17' y='3' width='12' height='12' rx='2' fill='%236b7eff'/><rect x='3' y='17' width='12' height='12' rx='2' fill='%238b5cf7'/><rect x='17' y='17' width='12' height='12' rx='2' fill='%23a855f7'/></svg>">
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <style>
+        :root {
+            --accent-primary: #ff4081;
+            --accent-secondary: #3b82f6;
+            --accent-primary-rgb: 255, 64, 129;
+            --accent-secondary-rgb: 59, 130, 246;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/mit-ai-science-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">MIT 6.S191 · AI for Science</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">当物理学方程遇见</span>
+                    <span class="title-line-2">深度学习</span>
+                </h1>
+                <p class="subtitle">
+                    微软技术院士 Chris Bishop 讲述深度学习仿真器如何以千倍速度复现传统物理仿真——从天气预报到密度泛函理论中 50 年未解的"通用泛函"难题，再到万原子蛋白质的分子动力学仿真。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">讲师</div>
+                        <div class="meta-value">Chris Bishop</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">机构</div>
+                        <div class="meta-value">微软技术院士 · MIT</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 59 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=rZACoZD8AG8" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">方程之困</h3>
+                    <p class="point-desc">物理方程精确到 13 位有效数字，但求解代价随系统规模指数增长——这是 100 年来科学计算的根本矛盾。狄拉克近百年前就指出了这一困境。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">仿真器范式</h3>
+                    <p class="point-desc">不再每次重新求解方程，而是一次性生成大量仿真数据训练神经网络，实现 1000 倍以上的加速——从"求解"到"学习"的范式转变。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">DFT 的奇迹</h3>
+                    <p class="point-desc">密度泛函理论将指数问题精确转化为三次方问题——不是近似，而是精确变换，因此获得诺贝尔化学奖。但它有一个未解的核心谜题。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">Scala 突破</h3>
+                    <p class="point-desc">微软团队历时三年，用机器学习训练交换关联泛函 Scala，首次在保持三次方速度的同时达到化学精度，攻克 50 年核心挑战。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">天气预报颠覆</h3>
+                    <p class="point-desc">地球系统基础模型在单张 A100 GPU 上用 1 分钟完成英国 8 天天气预报——传统方法需要超级计算机，且精度更高。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">层级加速</h3>
+                    <p class="point-desc">从薛定谔方程到 DFT 到分子动力学仿真器，层级式策略实现了从咖啡因分子到万原子蛋白质的跨越，两三年内有望在药物发现中产生临床价值。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">数学描述世界的奇迹与困境</h3>
+                        <span class="topic-timestamp">00:01:21 → 00:04:11</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        物理学最惊人的发现不是某个具体理论，而是"世界可以用数学描述"这个事实本身——而且所需的方程出奇地简单。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">精确到令人震撼</div>
+                        <p class="topic-detail-content">描述我们日常所经历一切的方程（加上一点相对论修正）可以写在一张纸上。电子磁矩的理论计算值与实验测量值一致到 13 位有效数字——这意味着人类用纸笔上的符号就能精确预测微观世界的行为。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">狄拉克的预言</div>
+                        <p class="topic-detail-content">讽刺的是，这些简单写下的方程几乎无法求解。狄拉克近百年前就指出："整个化学所需的底层物理定律已完全已知，困难仅在于精确应用这些定律会导致方程过于复杂而无法求解。"从设计新药到预测材料性能，我们有精确的方程，却无法用它们来解决实际问题。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Making marks on a piece of paper allows you to predict the future. It's extraordinary." — 在纸上画几个符号，就能预测未来。这太不可思议了。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">科学发现的迭代循环与 AI 的全方位介入</h3>
+                        <span class="topic-timestamp">00:04:13 → 00:07:46</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        科学发现本质上是"假设→实验→反馈→修正假设"的迭代循环，AI 正在革命性地介入这个循环的每一个环节。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">传统科学方法</div>
+                        <p class="topic-detail-content">以药物发现为例：在约 10^60 种候选分子中搜索，提出候选物→实验室合成→蛋白质结合测试→筛选→优化，周期漫长且昂贵。1960 年代数字计算机的出现让直接求解方程成为可能，但代价极高。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 介入的四个层面</div>
+                        <p class="topic-detail-content">假设生成：AI 可以设计上百万个候选分子。实验分析：AI 解读实验数据，发现人类可能忽略的模式。自动化实验室：波士顿地区已有多家公司用 AI 驱动自动化湿实验室。文献处理：面对数百万篇论文，AI 可以通读并提取关键信息。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两条路线</div>
+                        <p class="topic-detail-content">微软的"发现平台"是基于前沿大语言模型的智能体 AI 平台。但 Chris Bishop 的团队走了一条更根本的路线——用 AI 仿真器直接从物理方程中榨取计算速度。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">"没有免费的午餐"与"苦涩的教训"</h3>
+                        <span class="topic-timestamp">00:07:45 → 00:13:34</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        科学计算面临根本性两难：物理方程提供了极其丰富的归纳偏置，但 Rich Sutton 的"苦涩的教训"告诉我们——更多的数据终将战胜更巧妙的先验知识。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两个极端</div>
+                        <p class="topic-detail-content">大语言模型：数据极多（互联网级），归纳偏置轻量（注意力机制）。科学计算：数据极度稀缺（一个蛋白质结构可能需要学生一年），归纳偏置极其丰富（精确的物理方程、守恒定律、对称性）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">科学中的归纳偏置</div>
+                        <p class="topic-detail-content">薛定谔方程：描述原子尺度物质性质。不变性（invariance）：旋转分子不影响其能量。等变性（equivariance）：分子旋转时磁矩随之旋转。守恒定律：能量、质量、动量、电荷守恒。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">苦涩的教训</div>
+                        <p class="topic-detail-content">Rich Sutton 2019 年的博客指出：历史上通过嵌入先验知识来提升性能的人，最终都输给了那些单纯使用更多数据和更大算力的人。Chris Bishop 的建议：如果你从事这个领域，每月第一天都重读一遍这篇文章。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Every single one of you by the end of today should take five minutes and go and read this blog." — 你们每一个人今天都应该花五分钟去读读这篇博客。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">深度学习仿真器：用数据将方程"编译"为速度</h3>
+                        <span class="topic-timestamp">00:13:32 → 00:15:52</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        与其每次遇到新问题都重新求解昂贵的微分方程，不如一次性大量求解生成训练数据，训练一个神经网络作为"仿真器"——它以数千倍的速度复现传统仿真器的结果。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三阶段流程</div>
+                        <p class="topic-detail-content">第一阶段——数据生成：对大量不同系统求解薛定谔方程，虽然每次极其昂贵（代价随电子数指数增长），但只需做一次。第二阶段——模型训练：用合成数据训练神经网络，成本远不及训练前沿大语言模型。第三阶段——高速推理：训练好的网络是一个前馈网络，本质上就是一个函数，可以极快地计算。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">经济学逻辑</div>
+                        <p class="topic-detail-content">如果只用一次当然不划算。但如果要使用成千上万次——比如在药物发现的虚拟筛选中评估数百万个候选分子——前期的数据生成和训练成本就会被摊薄到几乎为零。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">仿真器的独特优势</h3>
+                        <span class="topic-timestamp">00:15:53 → 00:19:01</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        用合成数据训练的仿真器拥有天然标注完美、数据量无限、可利用闲置算力、推理速度提升千倍等多重优势。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">完美标注</div>
+                        <p class="topic-detail-content">传统机器学习中标注数据是最昂贵的环节。仿真数据中，一旦求解方程得到波函数，所有分子性质都可以直接计算——标注是自动且完美的。同时无隐私顾虑：仿真数据只是微分方程的解。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">数据量无限</div>
+                        <p class="topic-detail-content">训练前沿大语言模型的人抱怨数据耗尽，但仿真数据永远不会耗尽——只要有算力就可以不断生成更多数据。而且数据生成不需要最顶级的 GPU 集群，甚至可以用 CPU，可以高效利用微软全球范围内的闲置算力碎片。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">千倍加速</div>
+                        <p class="topic-detail-content">训练好的仿真器通常比传统仿真器快 1000 倍以上。一千倍的加速不是渐进式的改进，而是范式级别的颠覆。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Typically more than three orders of magnitude. Usually, the first thing you try, you're about a few thousand times faster than the original simulator." — 通常超过三个数量级。第一次尝试就比原始仿真器快大约几千倍。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">天气预报：仿真器颠覆传统范式</h3>
+                        <span class="topic-timestamp">00:19:01 → 00:23:01</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        微软的地球系统基础模型能在单张 A100 GPU 上用 1 分钟完成英国 8 天天气预报，传统方法需要超级计算机。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">传统数值天气预报</div>
+                        <p class="topic-detail-content">手机上的天气预报来自"数值天气预报"——求解描述大气流动的偏微分方程，需要超级计算机、密集的三维空间网格和极小的时间步长。世界各国气象中心每 6 小时运行一次巨型任务。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">基础模型策略</div>
+                        <p class="topic-detail-content">微软不是仿照某个特定仿真器，而是在极其多样的数据上训练地球系统基础模型——不同空间尺度、分辨率、时间尺度，迫使模型从根本上学习大气和海洋的动力学。可以微调用于各种下游任务。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从天气到污染</div>
+                        <p class="topic-detail-content">将基础模型微调用于预测大气中污染物流动。污染物传感器远比气象站稀疏，单靠污染数据预测效果不佳，但用天气数据训练的基础模型加上污染数据微调，达到了最先进的污染流预测精度。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "We can produce the UK 8-day weather forecast in 1 minute on a single A100 GPU." — 我们可以在单个 A100 GPU 上用 1 分钟生成英国 8 天天气预报。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">MatGen：用扩散模型生成新材料</h3>
+                        <span class="topic-timestamp">00:23:17 → 00:26:44</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        MatGen 将图像扩散模型的思路应用于晶体结构生成——从随机噪声出发逐步去噪，生成具有指定电子、磁性、机械性质的新材料。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">条件扩散模型</div>
+                        <p class="topic-detail-content">从完全随机开始，逐步去噪选择原子类型、晶胞几何形状和原子位置，最终生成热力学稳定的材料构型。可以接收目标性质作为输入——"请生成低稀土金属含量的磁铁"——从而将搜索聚焦到化学空间中更可能找到目标材料的区域。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">双重加速策略</div>
+                        <p class="topic-detail-content">仅小分子有机化合物就有约 10^60 种——相当于太阳系中的原子数。MatGen 大幅缩小搜索范围，然后用另一个仿真器 MatterSim 快速筛选。先用 MatGen 生成有希望的候选，再用仿真器验证——双重加速。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">精度、速度、通用性：不可能三角</h3>
+                        <span class="topic-timestamp">00:26:41 → 00:28:58</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        科学计算追求三个同时满足的目标——精度、速度和通用性，它们相互制衡。其中"化学精度"（约每摩尔 1 千卡）是计算模型达到实用价值所需的关键精度阈值。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">化学精度</div>
+                        <p class="topic-detail-content">化学精度大约是每摩尔 1 千卡。达到化学精度意味着计算模型"和实验一样好"——可以真正用计算实验替代实验室实验。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">为什么这么难</div>
+                        <p class="topic-detail-content">类比：要称船长的体重，可以称"船+船长"和"船"然后相减。数学上精确，但船的重量远大于船长，所以必须对"船+船长"的重量有极高的测量精度。化学反应中的能量变化只是系统总能量的一小部分，因此计算总能量时需要极高的精度。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">薛定谔方程的指数困境与密度泛函理论的奇迹</h3>
+                        <span class="topic-timestamp">00:29:01 → 00:33:28</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        薛定谔方程的求解代价随电子数量指数增长，连咖啡因分子都直接算不出。1965 年 Walter Kohn 发现的密度泛函理论将指数问题精确转化为三次方问题——获得诺贝尔奖的奇迹。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">指数增长的噩梦</div>
+                        <p class="topic-detail-content">波函数 Ψ 是定义在极高维空间中的函数。咖啡因分子（两打原子、约 100 个电子）的 Ψ 是 300 维空间上的函数。如果用网格离散化：一维 1000 个点，二维 100 万个点，三维 10 亿个点……300 维直接超出了任何计算机的能力。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Kohn 的突破</div>
+                        <p class="topic-detail-content">1965 年：不需要波函数，只需要电子密度——三维空间上的函数，计算代价是电子数量的三次方而非指数级。而且我们想了解的所有分子性质都可以从电子密度中推导出来。这不是近似，而是精确的变换。Kohn 因此获得 1998 年诺贝尔化学奖。DFT 已成为科学中最重要的计算方法之一，在国家超级计算机上经常占整个科学仿真工作负载的三分之一。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "What's extraordinary here is that this is exact. This is an exact transformation of an exponential problem into a cubic problem." — 这里令人震惊的是——这是精确的。这是一个将指数问题精确转化为三次方问题的方法。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">交换关联泛函：60 年未解的核心谜题</h3>
+                        <span class="topic-timestamp">00:33:42 → 00:36:43</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        DFT 的 Kohn-Sham 方程中有一个看似微小但至关重要的项——交换关联泛函。Kohn 证明了存在一个通用泛函，但他没能写出解析形式。60 年来人们手工制作了约 800 种近似泛函，但没有一个同时满足精度高、速度快、通用性强。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">通用的未知函数</div>
+                        <p class="topic-detail-content">Kohn 证明了存在一个通用的交换关联泛函——一个描述整个化学空间（所有晶体、蛋白质、分子）的单一泛函。但他没能写出显式解析形式。过去 60 年人们手工发明了约 800 种近似泛函（被称为"动物园"或"雅各布的天梯"），但每一个只适用于某个特定子领域。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">精度-成本权衡困境</div>
+                        <p class="topic-detail-content">三次方标度的泛函经济实惠但精度远低于化学精度，接近化学精度的泛函则昂贵到 n 的 5 次方级别。但 Kohn 的诺贝尔奖保证：存在一个三次方标度的通用泛函可以达到化学精度。2002 年《科学》杂志论文《追寻神圣泛函》感叹整个领域已迷失在手工近似泛函的兔子洞中。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 11 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">11</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Scala：用机器学习攻克 50 年的核心挑战</h3>
+                        <span class="topic-timestamp">00:36:40 → 00:40:17</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        微软 AI for Science 团队历时三年，用机器学习训练了一个名为 Scala 的交换关联泛函，在原子化能量上达到了化学精度——对 50 年来物理学核心挑战的重大突破。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">架构创新</div>
+                        <p class="topic-detail-content">电子密度由约百万个点组成的点云表示。挑战在于能量对密度的依赖是非局部的。解决方案是使用消息传递：从点云到原子中心的低维表示，在原子中心之间传递信息，再返回点云。实现了可扩展性和准确性。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">数据规模</div>
+                        <p class="topic-detail-content">团队花了三年用标准量子化学方法生成高精度训练数据，数据量比之前所有公开数据总量还多一个数量级。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">结果与局限</div>
+                        <p class="topic-detail-content">Scala 在原子化能量上达到化学精度，在更一般的化学性质基准测试中与其他三次方标度的泛函相当。目前只适用于分子（不包括材料），且只覆盖主族元素（不包括过渡金属）。但即使在这种初始形式下，已展现出对训练域之外化学问题的显著泛化能力——可能正是因为它学习的是一个通用泛函。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "We're really hitting hard on a 50-year-old grand challenge at the heart of physics." — 我们正在攻克一个 50 年来物理学核心的重大挑战。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 12 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">12</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">从分子到生物学：蛋白质动力学的仿真突破</h3>
+                        <span class="topic-timestamp">00:40:17 → 00:45:49</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        通过层级式的仿真器策略，团队已经能够在约 10,000 个原子的蛋白质尺度上进行分子动力学仿真，甚至能直接从平衡分布采样蛋白质的动态构象——成果登上《科学》杂志封面。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">生物学的最后一块拼图</div>
+                        <p class="topic-detail-content">生物学的中心法则：序列→结构→功能。DNA 测序和蛋白质结构预测都已取得突破。最后一块拼图是功能——而功能取决于蛋白质的动力学：蛋白质如何打开和关闭、如何与其他蛋白质对接、如何与分子互动。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">双重挑战</div>
+                        <p class="topic-detail-content">量子力学挑战：每一步积分原则上都应求解薛定谔方程来计算力。序列性诅咒：原子振动在飞秒尺度，蛋白质折叠在毫秒尺度，需要 10^6 到 10^15 个连续步骤——计算机时钟速度已多年未提升，加速来自并行化，但这个计算内在是串行的。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">层级突破</div>
+                        <p class="topic-detail-content">将蛋白质分成较大的"片段"而非单个原子，用 DFT 计算片段间的力，训练仿真器，仿真器驱动的分子动力学可处理多达 10,000 个原子的蛋白质。更进一步：结合仿真数据与实验数据，直接从平衡分布采样蛋白质构象，完全跳过动力学仿真。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 13 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">13</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Q&A 精华：蛋白质动力学采样与临床应用前景</h3>
+                        <span class="topic-timestamp">00:47:40 → 00:59:10</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        团队已在单个蛋白质（真空中）实现了直接从平衡分布采样动态构象。在 2-3 年内，这些技术有望在药物脱靶效应预测等临床相关场景中发挥作用。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">蛋白质动力学的"采样问题"</div>
+                        <p class="topic-detail-content">蛋白质在不同构象之间切换（如新冠病毒刺突蛋白的"开放"和"闭合"状态），跨越高能量势垒是极罕见事件。传统分子动力学需要模拟极长时间才能看到一次跃迁。团队的目标是完全跳过动力学，直接从平衡分布中采样——目前已在单蛋白质真空条件下验证可行性。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">为什么需要 DFT 作为中间步骤</div>
+                        <p class="topic-detail-content">DFT 框架嵌入了大量关键物理（如泡利不相容原理导致的波函数反对称性），完全放弃这些物理知识意味着放弃巨大的归纳偏置优势。DFT 编码了如此多的物理，扔掉它们等于放弃了极大的优势。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">临床前景</div>
+                        <p class="topic-detail-content">虽然模拟整个人类细胞在未来很长时间内都不现实，但药物脱靶效应预测等具体应用有望在 2-3 年内产生临床价值。大量药物在临床阶段因毒性和脱靶效应而失败，提前预测可以大幅降低成本。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "I am hopeful that these techniques will have real clinical relevance within the next two or three years or so." — 我希望这些技术在未来两三年内能产生真正的临床相关性。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📐</div>
+                    <h3 class="takeaway-title">方程之困</h3>
+                    <p class="takeaway-desc">物理方程精确到 13 位有效数字，但求解代价随系统规模指数增长——这是 100 年来科学计算的根本矛盾。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">仿真器范式</h3>
+                    <p class="takeaway-desc">不再每次重新求解方程，而是一次性生成大量仿真数据训练神经网络，实现千倍以上的加速——从"求解"到"学习"的范式转变。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧪</div>
+                    <h3 class="takeaway-title">合成数据优势</h3>
+                    <p class="takeaway-desc">仿真数据天然完美标注、无隐私问题、数量无限、可利用闲置算力——这些是大语言模型训练数据梦寐以求却不可得的特性。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏆</div>
+                    <h3 class="takeaway-title">DFT 与 Scala</h3>
+                    <p class="takeaway-desc">密度泛函理论将指数问题精确转化为三次方问题（诺贝尔奖级突破）；Scala 首次在保持三次方速度的同时达到化学精度，攻克 50 年核心挑战。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧬</div>
+                    <h3 class="takeaway-title">层级加速</h3>
+                    <p class="takeaway-desc">从薛定谔方程到 DFT 到分子动力学仿真器，层级式策略实现了从咖啡因分子到万原子蛋白质的跨越——两三年内有望在药物发现中产生临床价值。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">MIT 6.S191: Introduction to Deep Learning</h3>
+            <p class="footer-desc">
+                Chris Bishop 是微软技术院士、微软研究院 AI for Science 全球团队创始人。本讲座为 MIT 深度学习导论课程 2026 年度第 8 讲。
+            </p>
+            <div class="footer-quote">
+                "困难仅在于，精确应用这些定律会导致方程过于复杂而无法求解。"
+            </div>
+            <p class="footer-note">
+                — 保罗·狄拉克, 1929 · 翻译整理自 YouTube 讲座视频
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

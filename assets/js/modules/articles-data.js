@@ -1,6 +1,19 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/mit-ai-science-chris-bishop.html",
+        "card_class": "card-ai",
+        "category": "AI · 科学计算",
+        "date": "2026-05-19",
+        "title": "当物理学方程遇见深度学习：AI仿真器如何颠覆科学发现",
+        "excerpt": "微软技术院士Chris Bishop在MIT深度课程讲述——用仿真数据训练神经网络实现千倍加速、密度泛函理论将指数问题精确转化为三次方的诺贝尔奖奇迹、Scala项目攻克50年未解的通用泛函难题，以及从咖啡因分子到万原子蛋白质的层级突破。",
+        "tags": [
+            "#AI科学",
+            "#深度学习",
+            "#分子仿真"
+        ]
+    },
+    {
         "url": "articles/ai-hardware-boom-caitlin-kalinowski.html",
         "card_class": "card-tech",
         "category": "硬件 · 机器人",
