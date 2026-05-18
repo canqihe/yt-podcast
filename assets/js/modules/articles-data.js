@@ -1,6 +1,19 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/ai-hardware-boom-caitlin-kalinowski.html",
+        "card_class": "card-tech",
+        "category": "硬件 · 机器人",
+        "date": "2026-05-18",
+        "title": "AI硬件繁荣的起点：Caitlin Kalinowski谈机器人、供应链与物理AI的未来",
+        "excerpt": "前Apple/Meta/OpenAI硬件主管完整拆解——VR技术如何成为机器人基础设施、硬件只能「编译」五次的残酷真相、AI数据中心吞噬内存供应链的预警、人形机器人的安全悖论，以及为什么未来两年战争中的技术变革可能比消费电子更大。",
+        "tags": [
+            "#硬件工程",
+            "#机器人",
+            "#供应链"
+        ]
+    },
+    {
         "url": "articles/anthropic-spacex-singularity-economy.html",
         "card_class": "card-ai",
         "category": "AI · 奇点经济",
