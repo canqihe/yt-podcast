@@ -1,6 +1,19 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/satya-nadella-openai-google-ai-monet-prank.html",
+        "card_class": "card-ai",
+        "category": "AI · 科技战略",
+        "date": "2026-05-19",
+        "title": "Satya Nadella的OpenAI困境、Google下一代AI模型与AI莫奈恶作剧",
+        "excerpt": "从马斯克诉奥特曼案泄露邮件看微软CEO如何坦承「只是Nvidia上的一层薄壳，IP在OpenAI手里、年亏40亿美元」——独家优势为何被浪费、Sam Altman的AI原生预言如何反噬微软、OpenAI与Apple联盟破裂的背后故事，以及一幅真莫奈被冒充AI后遭群嘲的启示。",
+        "tags": [
+            "#微软OpenAI",
+            "#AI战略",
+            "#Google"
+        ]
+    },
+    {
         "url": "articles/mit-ai-science-chris-bishop.html",
         "card_class": "card-ai",
         "category": "AI · 科学计算",
