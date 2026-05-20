@@ -1,6 +1,19 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/cerebras-tbpn-diet.html",
+        "card_class": "card-tech",
+        "category": "半导体 · AI 金融",
+        "date": "2026-05-20",
+        "title": "Cerebras 640亿IPO、Warsh接掌美联储与Musk诉OpenAI终局",
+        "excerpt": "晶圆级芯片公司首日市值飙至640亿远超预测市场、Semi Analysis将80%的AI预算花在6倍价格换2倍速度的快速模式、新一任美联储主席面临滞胀困局、以及Musk 1500亿美元诉讼的核心辩护——那份协议根本不存在。",
+        "tags": [
+            "#Cerebras",
+            "#AI芯片",
+            "#美联储"
+        ]
+    },
+    {
         "url": "articles/satya-nadella-openai-google-ai-monet-prank.html",
         "card_class": "card-ai",
         "category": "AI · 科技战略",
