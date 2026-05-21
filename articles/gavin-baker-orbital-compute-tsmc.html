@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gavin Baker：轨道计算、台积电与前沿模型</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='3' y='3' width='12' height='12' rx='2' fill='%234a9eff'/><rect x='17' y='3' width='12' height='12' rx='2' fill='%236b7eff'/><rect x='3' y='17' width='12' height='12' rx='2' fill='%238b5cf7'/><rect x='17' y='17' width='12' height='12' rx='2' fill='%23a855f7'/></svg>">
+
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <style>
+        :root {
+            --accent-primary: #f97066;
+            --accent-secondary: #fbbf24;
+            --accent-primary-rgb: 249, 112, 102;
+            --accent-secondary-rgb: 251, 191, 36;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/gavin-baker-orbital-compute-tsmc-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">AI · 半导体投资</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">轨道计算、台积电</span>
+                    <span class="title-line-2">与前沿模型之争</span>
+                </h1>
+                <p class="subtitle">
+                    Gavin Baker 第六次做客 Invest Like The Best，深度剖析 AI 基础设施的每一个关键环节——从太空中的 GPU 机架到台积电的产能决策，从前沿 token 的帕累托前沿到应用层的价值困境。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Patrick O'Shaughnessy</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Gavin Baker</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 82 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=Mmj_G9RlW-I" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">增长无前例</h3>
+                    <p class="point-desc">Anthropic 一个月新增 110 亿美元 ARR，等于 Palantir + Snowflake + Databricks 十年积累的总和——资本主义历史上从未出现过如此极端的增长曲线。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">台积电守门</h3>
+                    <p class="point-desc">晶圆供给是 AI 革命最关键的瓶颈。台积电的产能决策可能是阻止或触发 AI 泡沫的最重要单一变量。如果泡沫没来，要感谢台积电。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">轨道计算重塑</h3>
+                    <p class="point-desc">不是太空巨型数据中心，而是用激光连接的太空 GPU 机架。SpaceX 的火箭回收、卫星运营和数据中心经验使其占据绝对优势。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">前沿溢价持续</h3>
+                    <p class="point-desc">几乎所有 AI 经济价值都集中在前沿模型 token，帕累托前沿已从 Google 主导变为 Anthropic/OpenAI 主导，竞争格局发生根本性变化。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">定价模式逆转</h3>
+                    <p class="point-desc">AI 从无限量订阅转向按使用量计费，类似电信行业反其道而行。极其利好收入增长，但也意味着最好的 AI 只对有钱人开放。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">GPU 延寿</h3>
+                    <p class="point-desc">预填充与推理的解耦可将 GPU 使用寿命从 3-4 年延长至 10-15 年，根本性改变 AI 基础设施融资成本，并可能拯救私募信贷行业。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">资本主义历史上最非凡的时刻</h3>
+                        <span class="topic-timestamp">00:00 - 07:55</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 增长的速度和规模在资本主义历史上前所未有，2025 年春季的市场回调为有准备的投资者提供了千载难逢的买入机会。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Anthropic 的爆发式增长</div>
+                        <p class="topic-detail-content">Anthropic 在一个月内新增了 110 亿美元年化收入（ARR）。SaaS 和云计算革命在过去十年创造了 5 到 10 万亿美元价值，其中最成功的三家公司——Palantir、Snowflake 和 Databricks——各自花了十年时间、雇佣数万人才达到今天的业务规模。而 Anthropic 一个月就等于它们三家之和。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两次市场回调的类比</div>
+                        <p class="topic-detail-content">三月的纳斯达克抛售与年初的 DeepSeek 事件高度相似：AI 基本面极度强劲，但市场价格因短期恐慌而大幅下跌。在 DeepSeek 事件中，论文发表七天后市场才恐慌抛售，但彼时亚洲 AWS 可用区 GPU 价格已经翻倍——清楚表明推理模型对计算量的需求远超非推理模型。三月份更加简单：只需观察 Anthropic 即可。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">地缘政治的反直觉利好</div>
+                        <p class="topic-detail-content">霍尔木兹海峡的封锁对美国制造业竞争力实际上是利好。美国天然气价格下跌 20%，而亚洲和欧洲翻倍甚至三倍——这使得美国在 AI 数据中心的能源成本上获得了显著优势。叠加台积电对 GPU 供给的根本性约束，AI 相关股票的相对估值跌至十年来最低水平。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Anthropic 在一个月内达到了 Palantir、Snowflake 和 Databricks 三家公司十年积累的总和。资本主义历史上从未发生过这样的事。" [00:02:47]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Anthropic 与 OpenAI 的估值对比</h3>
+                        <span class="topic-timestamp">07:55 - 12:58</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Anthropic 和 OpenAI 虽然收入规模相近，但资本效率差异巨大；Anthropic 的真实价值远高于表面估值，如果拥有充足计算资源，其收入可能是现在的 2-4 倍。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">资本效率的巨大差异</div>
+                        <p class="topic-detail-content">Anthropic 的每 token 成本远低于 OpenAI——证据是两者达到相似收入规模时，Anthropic 的烧钱量大约少了 80%。这意味着 Anthropic 拥有更高的结构性投资资本回报率（ROIC）。但 Anthropic 已经降低了 Claude 的智能：即使是 Opus 版本，现在对相同问题生成的 token 数量减少了 70%。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">无约束估值的计算</div>
+                        <p class="topic-detail-content">Anthropic 的 900 亿美元估值被严重低估，因为它受限于计算资源供给不足。如果拥有所有需要的计算资源，其年化收入将达到 1000 亿至 2000 亿美元——意味着投资者实际可能在以约 5 倍"无约束运行率收入"购买。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Elon 的融资超能力</div>
+                        <p class="topic-detail-content">Baker 以 Musk 为例阐述了一个深刻洞见：Mush 二十年来始终让投资者赚钱，将此视为"神圣契约"，由此获得了可以在任何时候筹集无限资本的超能力。SpaceX 以每年约 30% 的速度复合增长，正是因为 Musk 专注于在投资者和员工之间保持公平平衡，而不是在估值上贪婪。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "如果 Anthropic 拥有所有计算资源，它们今天可能做到远超 1000 亿美元，也许 1500 亿甚至 2000 亿。你可能是在以约 5 倍无约束运行率收入购买它。" [00:09:26]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">电力、晶圆与轨道计算</h3>
+                        <span class="topic-timestamp">12:58 - 22:49</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        电力短缺将被资本主义逐步解决，轨道计算将从根本改变计算格局；但晶圆短缺才是真正的瓶颈，台积电是守门人。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">轨道计算的真实形态</div>
+                        <p class="topic-detail-content">轨道计算不是在太空中建造五角大楼大小的数据中心，而是将 GPU 机架——类似一个 Blackwell 机架（3000 磅，高 8 英尺，深 4 英尺，宽 3 英尺）——放入太阳同步轨道。两侧展开 500 英尺长的太阳能翼板，背面延伸数百英尺的散热器。机架之间通过 Starlink 卫星上已经使用的激光在真空中连接，形成虚拟数据中心。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">SpaceX 的压倒性优势</div>
+                        <p class="topic-detail-content">SpaceX 运营着全球 98-99% 的在轨卫星，每颗 Starlink 都已经在冷却，V3 将达到 20 千瓦——只需扩展到 100-120 千瓦就接近一个 Blackwell 机架的功率。更关键的是，SpaceX 同时还运营着地球上最大的数据中心。10 年过去了，没有其他公司能持续着陆和完全重复使用轨道火箭——而没有可重复使用性，轨道计算根本不成立。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">台积电的硅盾</div>
+                        <p class="topic-detail-content">台积电由一群"坚韧的台湾老人们"运营，他们占台湾 GDP、用水量、用电量的绝大比例，自视为张忠谋（Morris Chang）神圣遗产的继承者。Baker 回忆 20 多年前参观科学园区时问他们能否追上英特尔，得到的回答是"这是美丽的梦想，但那是我们孙辈的事"。然后他们做到了。值得注意的是 Jensen 与台积电从未签过合同，完全基于握手和公平原则。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "轨道计算是太空中的机架，不是太空中漂浮的巨大五角大楼式数据中心。你用穿过真空的激光连接这些机架——每颗 Starlink 卫星上已经有了。" [00:20:06]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">泡沫风险与台积电的关键角色</h3>
+                        <span class="topic-timestamp">22:49 - 28:26</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        历史上每次基础性技术革命都伴随着泡沫；台积电的产能决策可能是唯一能阻止 AI 泡沫的力量。Terafab——Elon 的美国晶圆厂计划——将在这一格局中扮演重要角色。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">泡沫的历史必然性</div>
+                        <p class="topic-detail-content">基于过去 200-300 年的历史——铁路泡沫、运河泡沫、互联网泡沫——我们应该预期 AI 也会出现泡沫。Mobisson 的"多样性瓦解"理论描述了过程：所有人正确识别出一项基础性技术，一致看多，然后形成泡沫。但当前环境与 2000 年有关键区别：建设主要由经营现金流而非债务融资；每个 GPU 都在 100% 利用率运行（而非 99% 光纤闲置）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">台积电的"金发姑娘区间"</div>
+                        <p class="topic-detail-content">如果台积电按 Jensen 希望的速度扩产，英伟达 2026-2027 年可能卖出 2-3 万亿美元的 GPU，届时供给过剩将不可避免。关键变量是台积电对英特尔和三星的领先优势（9-15 个月）。历史表明，英特尔和三星中至少有一个会打破产能纪律。Baker 认为存在一个"金发姑娘区间"——扩产到足以阻止竞争对手成为真正的大规模替代者，同时维持足够的产能约束防止泡沫。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Terafab 的宏伟计划</div>
+                        <p class="topic-detail-content">SpaceX 和特斯拉的合资企业计划在美国建造全球最大晶圆厂。与英特尔的合作让 Terafab 获得了 50 年的机构知识。Elon 将招募最好的人才——在 Terafab 旁边建"台湾镇"、"日本镇"、"韩国镇"，把最好的工程师从亚洲搬到德州。他 122 天建成了一个数据中心，相比之下其他公司花三年。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "如果台积电按 Jensen 希望的做，英伟达在 26 年可能卖出两万亿、两万五千亿甚至三万亿美元的 GPU。如果泡沫没有发生，我们需要为台积电办一场派对——因为他们将单枪匹马阻止泡沫。" [00:25:31]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">前沿模型的回报悖论</h3>
+                        <span class="topic-timestamp">32:16 - 37:23</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        几乎所有 AI 经济价值都集中在前沿模型 token，这一现象出乎所有人意料；帕累托前沿的竞争格局已发生根本性变化，Google 从主导者变成了追赶者。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">帕累托前沿的权力转移</div>
+                        <p class="topic-detail-content">Baker 引入"帕累托前沿"概念——智能与成本的最优权衡曲线。九个月前，Google 在帕累托前沿的每一个点上都占据主导地位，OpenAI、xAI 和 Anthropic 都在 Google 的曲线之下。但如今格局完全翻转：帕累托前沿由 Anthropic 和 OpenAI 主导，Grok 4.3 也跻身其上（作为成本最低的 5000 亿参数模型），而 Gemini 3.1 勉强挂住。Google 失去领先地位的原因是其 TPU V8 做了过于保守的设计决策。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">苦涩教训的风险</div>
+                        <p class="topic-detail-content">Baker 认为整个 AI 投资最大的风险是违反 Richard Sutton 的"苦涩教训"（Bitter Lesson）——更多的计算将永远胜过人类的算法创造力。如果算法创新突然大幅减少了对计算的需求，那将颠覆整个投资逻辑。他对此持谨慎态度：我们可能接近 ASI，而 ASI 首要愿望可能是让自己更高效——这可能导致苦涩教训出现临时性失效。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">TurboQuant 事件</div>
+                        <p class="topic-detail-content">Google 在与美光、三星和海力士谈判签署长期协议锁定高价的节骨眼上，发布了 TurboQuant——一个 DRAM 内存优化技术。Baker 在地球上找不到任何一个 AI 工程师相信它会影响 DRAM 需求，但它被宣传后导致 DRAM 股票恐慌性抛售。"人们做的总是比说的更重要。"</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "违反 Richard Sutton 的苦涩教训是整个 AI 投资最大的风险。更多的计算将永远胜过人类算法创造力——如果这不再成立，整个格局都将改变。" [00:34:09]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">持续学习与定价模式转变</h3>
+                        <span class="topic-timestamp">37:23 - 42:03</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 定价从订阅制转向按使用量计费，将推动收入爆发式增长；持续学习若被突破，将引发极快的智能起飞。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">定价模式的逆向革命</div>
+                        <p class="topic-detail-content">AI 正在从"无限量套餐"转向"按杯计费"。Baker 用电信行业做类比——蜂窝通信作为伟大增长行业的时代，正是由固定套餐加超额使用量计费的组合驱动的。当所有人都转向无限量套餐后增长就停滞了。现在 AI 反向操作，按使用量计费。他预测这将推动 OpenAI 和 Anthropic 的 ARR 在今年远超 2000 亿美元。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">前沿 AI 的门槛化</div>
+                        <p class="topic-detail-content">一个令人担忧的副作用是：250 美元/月的订阅用户现在受到严重速率限制，获得的是"阉割版" AI。要体验真正的前沿 AI，你需要企业级按使用量计费的计划。即使是非编码用例，现在也需要 Claude Code 或 Codex 加企业计划才能理解前沿 AI 的真正能力。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">持续学习的意义</div>
+                        <p class="topic-detail-content">持续学习是模型能够动态实时调整权重的能力——像人类一样，碰一次火就学会了，而不是需要把手伸进火里一百万次。目前只有一个粗糙近似：可验证任务中的强化学习。如果真正的持续学习被突破，将出现"非常快的起飞"。AI 面临的三大关键问题是：ASI 是否会违反苦涩教训、前沿 token 是否会持续获得溢价、持续学习何时实现。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "AI 正在从无限量套餐转向按杯计费。人们真的很喜欢使用 AI，特别是现在一个人可以有 100 个智能体在工作。" [00:38:46]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">芯片竞争的铁三角</h3>
+                        <span class="topic-timestamp">42:03 - 48:52</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        新芯片创业公司必须"做不同的事，且做得很难"；试图做一个更好的 GPU 是死路一条，因为英伟达会迅速跟进任何不难的差异化权衡。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">铁三角与预填充/解码的画布</div>
+                        <p class="topic-detail-content">Baker 用坦克设计的"铁三角"类比芯片设计——攻击、防御、机动性之间的权衡。所有芯片设计师都受到物理定律的基本约束。预填充与推理的解耦为芯片设计师打开了更丰富的画布：预填充是"装填炮弹"（内存容量约束），解码是"开炮"（内存带宽约束），可以针对各自做不同优化。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">英伟达的信息优势</div>
+                        <p class="topic-detail-content">如果一家创业公司声称因某个台积电特殊工艺而有优势，Baker 保证 Jensen 在那还只是概念时就看过了。供应链中的每个人都在给 Jensen 看所有东西——就像给亚马逊、AMD、TPU 看所有东西一样。1% 的芯片市场份额将值 1000 亿美元，这是一个不错的风险投资回报。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Cerebras 的晶圆级计算</div>
+                        <p class="topic-detail-content">正面案例是 Cerebras 及其晶圆级计算——一个真正不同且极其困难的架构决策。它的局限在于芯片"海岸线"（边缘）I/O 不足，但团队正在研究直接在芯片上集成光学晶圆来解决。Cerebras 花了三代芯片才做对——"第一代芯片失败了，这种事会发生。"</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "如果你是风险投资人，投资一家声称因某个台积电特殊工艺而有优势的半导体公司——我向你保证 Jensen 在那还只是台积电眼中的闪烁时就看到了。供应链中的每个人都在给 Jensen 看所有东西。" [00:46:00]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">延长 GPU 寿命与私募信贷的救赎</h3>
+                        <span class="topic-timestamp">48:52 - 51:22</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        预填充与推理的解耦将 GPU 使用寿命从 3-4 年延长到 10-15 年，可能拯救私募信贷行业并降低 AI 基础设施融资成本。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">GPU 延寿的技术原理</div>
+                        <p class="topic-detail-content">你可以在旧款 Hopper 甚至 Ampere GPU 前面放一个 Cerebras 系统或 Groq LPU 来处理预填充（加载上下文），然后让旧 GPU 专注于推理——直到它们"融化"为止。GPU 确实会因物理老化而失效，但你可以降低运行速度延长寿命。AI 怀疑者说 GPU 使用寿命只有一两年——实际上快速的技术变革反而意味着旧 GPU 可以被重新分配用途。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">对融资成本的影响</div>
+                        <p class="topic-detail-content">私募信贷行业持有大量 GPU 贷款，原本核保时假设 3-4 年使用寿命。如果延长到 10-15 年，融资成本可能从 CoreWeave 最低的 7% 多降至 5-6%——这在数学上根本性地改变了 AI 基础设施建设的融资成本。此外，超大规模云服务商拥有全球最大的 CPU 机群，在智能体时代 CPU 的编排能力变得至关重要，这可能帮助它们逐步缩小与"短缺卖方"的差距。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "预填充与推理的解耦意味着你可以把一个 Cerebras 系统放在 Hopper 前面做预填充，然后用那个 Hopper 做推理，直到它融化。GPU 使用寿命可能从 3-4 年延长到 10-15 年。" [00:49:23]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">应用层的价值困境</h3>
+                        <span class="topic-timestamp">51:22 - 57:32</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 在应用层净值已摧毁了数万亿美元价值；不在"token 路径"上的软件公司将面临严峻挑战。前沿模型公司面临一个全新的"囚徒困境"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">价值毁灭而非创造</div>
+                        <p class="topic-detail-content">在 Jensen 的"AI 五层蛋糕"中，利润流向了能源、数据中心、芯片和模型层，唯独没有应用层。即使把 Cursor 和 Cognition 这两个最成功的原生 AI 应用算进去，AI 在应用层净值已经摧毁了数万亿美元价值。今天表现最好的公司是人均有效利用 GPU 比率最高的公司。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Token 路径的生存法则</div>
+                        <p class="topic-detail-content">来自 Altimeter 的 Jamon Rung 提出：任何 AI 公司都必须在"token 路径"上——Databricks 在 token 路径上，而很多传统软件公司不在。编码可能是通往 ASI 的最短路径——Replit 创始人指出，如果你真的擅长编码，你可以给自己写代码做任何事。这是 Cursor、Cognition 和 Anthropic 极其聪明地专注于编码的原因。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">开源的囚徒困境</div>
+                        <p class="topic-detail-content">前沿模型公司面临新的博弈论：是否通过 API 发布前沿模型？如果都不发布，中国开源将迅速追赶；如果一个人背叛，它将获得最多收入和资源（资源等于智能），从而拉开差距，最终迫使所有人发布。Baker 认为 Jensen 会将开源保持在前沿之后一定时间。此外，中国开源模型中有大量蒸馏——有人告诉他 DeepSeek 最初始版本只有 15 万条推理链。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "AI 在应用层净值已经摧毁了数万亿美元价值。今天表现最好的公司是人均有效利用 GPU 比率最高的公司。" [00:16:16]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">网络安全与投资策略</h3>
+                        <span class="topic-timestamp">57:32 - 01:05:46</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        深度伪造带来的安全威胁迫在眉睫——每个家庭都需要一个"安全词"。AI 投资领域出现令人担忧的"多样性瓦解"——缺少看空者。横截面上估值不合理，质量最低的公司反而表现最好。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">安全词的必要性</div>
+                        <p class="topic-detail-content">Baker 建议每个家庭和公司都设立一个"安全词"——一个不能被社会工程学攻破的暗号。他描述的场景是：看起来和听起来完全像你家人的 AI 给你打 FaceTime，它知道所有背景信息并能推断对话走向，然后要求你汇款。这不是未来——这是迫在眉睫的威胁。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">《最后的武士》与机枪哲学</div>
+                        <p class="topic-detail-content">在被问及 AI 是否会取代他的投资工作时，Baker 用《最后的武士》做比喻：Tom Cruise 饰演的武士老兵最终被拿机枪的农民屠杀。"机枪已经来了，如果我们不都成为机枪的大师，我们就会被机枪征服。"但他乐观地认为，作为一个有丰富经验的老兵，学习使用"机枪"（AI）后仍能比新手更好地运用它。他目前最有用的 AI 智能体是播客摘要——每天六小时的投资相关内容筛选。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">估值悖论与低质量狂欢</div>
+                        <p class="topic-detail-content">半导体设备公司以 40 倍下一季度年化收益交易，而 DRAM 公司以中个位数倍数交易——上一次周期高峰时差距是 5 倍对 12 倍。更令人担忧的是：由于短缺，质量最低的公司反而表现最好——就像大宗商品牛市中成本最高的供应商涨幅最大。这些公司被 X 上的散户炒上天，而高质量公司反而跑输了。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "机枪已经来了。如果我们不都成为机枪的大师，我们就会被机枪征服。我正在努力成为机枪的大师。" [01:00:19]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 11 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">11</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">大型科技公司的 AI 竞赛</h3>
+                        <span class="topic-timestamp">01:11:59 - 01:19:02</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        六大科技巨头的 AI 竞争态势已经发生了根本性变化。Google 失去了 TPU 优势，Amazon 因 Trainium 获得新地位，Microsoft 在做战略性但痛苦的转型，Meta 是唯一真正 AI 优先的互联网巨头。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Google：失去优势但根基犹在</div>
+                        <p class="topic-detail-content">去年因 TPU 优势而不可一世，但那个优势已经消失。仍然处于好位置是因为拥有最多的计算装机量，且 YouTube 数据在机器人时代价值极高。但如果 Google IO 不能发布至少稍微超越 OpenAI 和 Claude 的模型，这将是一个信号——英伟达效应比想象的更强大。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Meta：AI 优先的孤例</div>
+                        <p class="topic-detail-content">Baker 给了 Zuckerberg 巨大认可——他是真正的互联网巨头中唯一将公司从内部转为 AI 优先的。Muse 模型虽然还没到帕累托前沿，但已经很接近。Amazon 因 Trainium 处于强劲位置，未来 18 个月内机器人技术将为其零售业务带来实质性的损益改善。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Microsoft：从"让 Google 跳舞"到"Copilot 产品经理"</div>
+                        <p class="topic-detail-content">Baker 认为 Satya 是杰出 CEO，但指出一个尴尬的事实。他提出一个引人遐想的问题：在 OpenAI 政变期间，Satya 是否后悔支持了 Sam 而不是 Ilya？Satya 目前的策略是用自己的计算资源训练自有模型——这导致 Microsoft 股价可能低了约 100 美元，但 Baker 认为这是一个勇敢且正确的长期决策。此外，与创业公司接触最深的是 Amazon 和英伟达，而 AMD、Microsoft 和 Meta 的接触"几乎为零"。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Satya 在三年内从「我们要让 Google 跳舞」变成了 Copilot 的产品经理。他放弃了——如果用 GPU 服务 OpenAI 而非自建产品——Microsoft 今天可能是一支 800 美元的股票。" [01:11:55]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 12 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">12</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">地缘政治与 AI 的未来</h3>
+                        <span class="topic-timestamp">01:19:02 - 01:21:05</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 可能带来又一个"美利坚和平"，但也可能引发更高风险的地缘政治博弈。乌克兰的战场 AI 优势正在改变战争形态。AI 在医疗领域的应用已经开始拯救生命。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 军事优势与全球稳定</div>
+                        <p class="topic-detail-content">乌克兰正在战场 AI 方面取得优势——不仅仅是因为更好的无人机，而是拥有美国和以色列以外最好的战场 AI。随着对手意识到美国的 AI 军事优势，全球格局可能变得更加不稳定。Baker 也对 AI 领袖的个人安全表示担忧——有人向 Sam Altman 的房子扔燃烧瓶是"糟糕的"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 拯救生命的真实案例</div>
+                        <p class="topic-detail-content">一位朋友的孩子被诊断出罕见基因突变，无药可医。通过 AI——调动大量计算资源和智能体——他们找到了市场上一种可以影响该疾病的现有药物，并创办了公司来研发治愈方案。这个孩子的生命已经因为 AI 而不可估量地改变了。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">事件视界与美利坚和平</div>
+                        <p class="topic-detail-content">Baker 将 AI 比作"事件视界"——一个确定的不连续性。他承认最好的 AI 只对有钱人开放"有点反乌托邦"，需要解决。他以历史类比作结：美国 1945 年拥有核弹垄断，本可以永远控制世界，但选择重建德国和日本——这些国家如今成为最可靠的盟友。也许 AI 优势不会带来不稳定，而是另一个"美利坚和平"。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "AI 是一个事件视界。我们 1945 年拥有核弹，本可以永远控制世界，但我们重建了德国和日本。也许 AI 优势不会带来不稳定，而是另一个美利坚和平。" [01:20:30]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🚀</div>
+                    <h3 class="takeaway-title">指数级增长</h3>
+                    <p class="takeaway-desc">Anthropic 一个月等于三巨头十年之和。这不是正常的商业增长——这是 S 曲线中最陡峭的部分，资本主义历史上从未出现过。识别并 riding 这种指数级是投资者最大的机会。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏭</div>
+                    <h3 class="takeaway-title">基础设施为王</h3>
+                    <p class="takeaway-desc">在 AI 五层蛋糕中，利润归向基础设施——电力、晶圆、芯片、模型——而非应用层。"token 路径"是新生存法则：不在 token 流通路径上的公司价值将被摧毁。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🛡️</div>
+                    <h3 class="takeaway-title">台积电是守门人</h3>
+                    <p class="takeaway-desc">一个人造瓶颈决定了整个 AI 产业的供给天花板。台积电的产能决策——而非市场需求——是判断是否会出现泡沫的最重要单一变量。投资者应该密切关注其扩产节奏。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚔️</div>
+                    <h3 class="takeaway-title">做不同且困难的事</h3>
+                    <p class="takeaway-desc">无论芯片设计还是创业公司构建，Baker 反复强调的核心法则：做不同的事，且做得很难。不难的差异化会被英伟达等巨头迅速跟进。这个原则适用于芯片、应用和投资策略。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">Gavin Baker × Invest Like The Best</h3>
+            <p class="footer-desc">
+                这是 Gavin Baker 第六次做客 Invest Like The Best。从轨道计算到台积电的产能决策，从前沿模型的帕累托前沿到应用层的价值困境，这是一位在市场前沿搏杀了二十多年的投资者用真金白银押注的判断。
+            </p>
+            <div class="footer-quote">
+                "机枪已经来了。如果我们不都成为机枪的大师，我们就会被机枪征服。"
+            </div>
+            <p class="footer-note">
+                本文章基于播客内容整理，不构成投资建议。所有观点归原作者所有。
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

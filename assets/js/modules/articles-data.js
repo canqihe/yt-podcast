@@ -1,6 +1,45 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/claude-code-boris-cherny.html",
+        "card_class": "card-ai",
+        "category": "AI · 智能体",
+        "date": "2026-05-21",
+        "title": "Boris Cherny：Claude Code 的爆发式增长与 AI 智能体的下一个前沿",
+        "excerpt": "Anthropic Claude Code 负责人首次深度对话：产品 100% 自我编写、工程师代码产出增长 250%、从「Claude 指挥 Claude」到并行运行上千个智能体、SaaS 护城河的重新洗牌、以及 AI 开始编写 AI 的临界点。",
+        "tags": [
+            "#ClaudeCode",
+            "#AI智能体",
+            "#Anthropic"
+        ]
+    },
+    {
+        "url": "articles/google-ceo-sundar-pichai-agi.html",
+        "card_class": "card-ai",
+        "category": "AI · 科技战略",
+        "date": "2026-05-21",
+        "title": "Sundar Pichai：智能体、开源困境与通往AGI的竞赛",
+        "excerpt": "Google CEO坦言AI需求远超算力供给、前沿模型不会开源、企业应使用Pro+Flash混合策略——大多数场景不需要解决数学奥林匹克问题，以及面对递归自我改进的可能性时行业必须比今天更加负责任。",
+        "tags": [
+            "#Google",
+            "#AI智能体",
+            "#AGI"
+        ]
+    },
+    {
+        "url": "articles/gavin-baker-orbital-compute-tsmc.html",
+        "card_class": "card-tech",
+        "category": "AI · 半导体投资",
+        "date": "2026-05-20",
+        "title": "Gavin Baker：轨道计算、台积电与前沿模型之争",
+        "excerpt": "Anthropic一个月新增110亿ARR等于三巨头十年之和、SpaceX用激光连接的太空GPU机架重塑计算格局、台积电产能决策是阻止AI泡沫的最关键变量、预填充与推理解耦将GPU寿命延至10-15年、以及前沿模型公司面临的全新囚徒困境。",
+        "tags": [
+            "#AI基础设施",
+            "#台积电",
+            "#轨道计算"
+        ]
+    },
+    {
         "url": "articles/cerebras-tbpn-diet.html",
         "card_class": "card-tech",
         "category": "半导体 · AI 金融",
