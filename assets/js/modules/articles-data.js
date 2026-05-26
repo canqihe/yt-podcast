@@ -1,6 +1,45 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/openai-anthropic-spacex-ipo.html",
+        "card_class": "card-ai",
+        "category": "AI · 科技战略",
+        "date": "2026-05-26",
+        "title": "OpenAI 准备好上市了吗？Anthropic 盈利悬念与 SpaceX 的 28.5 万亿神话",
+        "excerpt": "OpenAI 每赚1美元亏1.22美元却抢着 IPO——害怕 Anthropic 先上市夺取增长叙事；Anthropic Q2 预计收入翻倍到109亿并首次盈利，但 SpaceX S1 文件显示5月和6月「降低费率」与盈利季度完美重合；SpaceX 声称22.7万亿 AI 企业应用市场来支撑2万亿估值。",
+        "tags": [
+            "#AI上市",
+            "#OpenAI",
+            "#Anthropic"
+        ]
+    },
+    {
+        "url": "articles/ai-data-center-energy-chris-wright.html",
+        "card_class": "card-tech",
+        "category": "能源 · AI 基础设施",
+        "date": "2026-05-25",
+        "title": "AI 数据中心的电力革命：从天然气过渡到核能百倍增长",
+        "excerpt": "美国能源部长 Chris Wright 与 General Matter CEO 深度对话：未来 5 年天然气填补百吉瓦电力缺口、40 年来首批非轻水反应堆即将临界、铀浓缩产能可能需要 100 倍增长、数据中心建设的 110% 方案如何降低社区电价。",
+        "tags": [
+            "#AI基础设施",
+            "#核能",
+            "#能源政策"
+        ]
+    },
+    {
+        "url": "articles/dan-shipper-ai-paradox.html",
+        "card_class": "card-ai",
+        "category": "AI · 未来工作",
+        "date": "2026-05-25",
+        "title": "Dan Shipper：AI悖论——更多自动化，更多人类，更多工作",
+        "excerpt": "Every CEO 的13个大胆预测：公司级超级智能体是可行架构、Codex/Claude Code 成为通用工作操作系统、CLI 时代已死、SaaS 即将暴涨、自动化创造的工作比消灭的多、产品经理和设计师迎来黄金时代。",
+        "tags": [
+            "#AI智能体",
+            "#未来工作",
+            "#SaaS"
+        ]
+    },
+    {
         "url": "articles/claude-code-boris-cherny.html",
         "card_class": "card-ai",
         "category": "AI · 智能体",
