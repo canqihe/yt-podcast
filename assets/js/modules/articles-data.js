@@ -1,6 +1,19 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/joe-hudson-emotional-fluidity.html",
+        "card_class": "card-future",
+        "category": "个人成长 · 情绪智慧",
+        "date": "2026-05-26",
+        "title": "SpaceX、Google 和 OpenAI 的绩效教练：如何实现「不可能」的事",
+        "excerpt": "Joe Hudson 深度访谈：黄金算法揭示你回避的每个感受你正在以相同方式创造它；脏燃料与清洁燃料的区分——自我批评驱动成功不可持续，热爱才是清洁燃料；理解自己远比修复自己更高效，羞耻是把坏习惯锁住的锁。",
+        "tags": [
+            "#情绪流动性",
+            "#个人成长",
+            "#黄金算法"
+        ]
+    },
+    {
         "url": "articles/openai-anthropic-spacex-ipo.html",
         "card_class": "card-ai",
         "category": "AI · 科技战略",
