@@ -1,6 +1,58 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/cerebras-andrew-feldman.html",
+        "card_class": "card-tech",
+        "category": "硬科技 · 芯片",
+        "date": "2026-05-27",
+        "title": "Cerebras CEO 谈芯片未来、Token 成本与地缘博弈",
+        "excerpt": "半导体史上最大 IPO 背后：250 亿美元订单积压、AI 基础设施不是泡沫而是供应不足、慢速推理市场将为零、企业 AI 最大障碍是律师而非数据、不应向中国出售尖端芯片、18 个月每月烧 800 万美元的至暗时刻以及创造 800 个百万富翁的故事。",
+        "tags": [
+            "#芯片",
+            "#AI基础设施",
+            "#Cerebras"
+        ]
+    },
+    {
+        "url": "articles/organizational-singularity-ai-native.html",
+        "card_class": "card-ai",
+        "category": "AI · 组织变革",
+        "date": "2026-05-27",
+        "title": "组织奇点：AI 原生企业的 100 倍效能革命",
+        "excerpt": "ExO 联合作者 Salim Ismail 系统阐述「组织奇点」：Coase 企业理论在 AI 面前彻底失效、六层智能栈借鉴 OODA 循环实现企业级自我进化、边缘数字孪生是唯一有效的转型路径（250 家财富 500 强无例外）、Cognition Labs 的 ARR 已增长 73 倍、5-7 年窗口期内大多数公司要么完成 AI 原生转型要么被淘汰。",
+        "tags": [
+            "#组织奇点",
+            "#AI原生",
+            "#ExO模型"
+        ]
+    },
+    {
+        "url": "articles/ryan-petersen-global-trade-history.html",
+        "card_class": "card-finance",
+        "category": "全球贸易 · 地缘政治",
+        "date": "2026-05-27",
+        "title": "从巴勃罗·埃斯科巴到霍尔木兹海峡 — 全球贸易五千年",
+        "excerpt": "Flexport 创始人 Ryan Petersen 深度对话：1120亿美元关税欺诈漏洞、从香料1000倍加价到鸦片战争的贸易史、「矮子」古兹曼用国际贸易术语谈判毒品交易、犹太信用网络如何奠定资本主义基础、霍尔木兹海峡封锁20%全球石油供应正在动摇战后国际秩序。",
+        "tags": [
+            "#全球贸易",
+            "#地缘政治",
+            "#Flexport"
+        ]
+    },
+    {
+        "url": "articles/vaneck-semis-ai-investing.html",
+        "card_class": "card-finance",
+        "category": "金融 · 半导体投资",
+        "date": "2026-05-27",
+        "title": "记忆芯片是泡沫，但英伟达受护城河保护 – VanEck CEO 谈半导体与AI投资",
+        "excerpt": "管理2250亿美元资产的VanEck CEO Jan Van Eck全景式判断：SMH半导体ETF年化回报29%的秘诀、英伟达拥有代际护城河但记忆芯片存在局部泡沫、美国政府债务是最大系统性风险、黄金重新崛起为全球第一货币、印度是10年维度最具确定性的国家押注。",
+        "tags": [
+            "#半导体",
+            "#AI投资",
+            "#VanEck"
+        ]
+    },
+    {
         "url": "articles/joe-hudson-emotional-fluidity.html",
         "card_class": "card-future",
         "category": "个人成长 · 情绪智慧",

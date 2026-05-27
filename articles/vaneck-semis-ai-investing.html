@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            记忆芯片是泡沫但英伟达受护城河保护 – Jan Van Eck 谈半导体与AI投资
+        </title>
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='3' y='3' width='12' height='12' rx='2' fill='%234a9eff'/><rect x='17' y='3' width='12' height='12' rx='2' fill='%236b7eff'/><rect x='3' y='17' width='12' height='12' rx='2' fill='%238b5cf7'/><rect x='17' y='17' width='12' height='12' rx='2' fill='%23a855f7'/></svg>"
+        />
+
+        <link rel="stylesheet" href="../design-system/design-tokens.css" />
+        <link rel="stylesheet" href="../design-system/article-styles.css" />
+
+        <style>
+            :root {
+                --accent-primary: #a855f7;
+                --accent-secondary: #ffc107;
+                --accent-primary-rgb: 168, 85, 247;
+                --accent-secondary-rgb: 255, 193, 7;
+            }
+
+            .header::before {
+                background:
+                    linear-gradient(
+                        to left,
+                        rgba(10, 10, 11, 0.3) 0%,
+                        rgba(10, 10, 11, 0.85) 40%,
+                        rgba(10, 10, 11, 0.98) 70%
+                    ),
+                    url("images/vaneck-semis-ai-investing-cover.jpg") no-repeat
+                        right center / cover;
+                opacity: 0.6;
+            }
+
+            .header::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background:
+                    radial-gradient(
+                        ellipse at top right,
+                        rgba(var(--accent-primary-rgb), 0.15) 0%,
+                        transparent 50%
+                    ),
+                    radial-gradient(
+                        ellipse at bottom left,
+                        rgba(var(--accent-secondary-rgb), 0.12) 0%,
+                        transparent 50%
+                    );
+                pointer-events: none;
+                z-index: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="badge-wrapper">
+                        <span class="badge">金融 · 半导体投资</span>
+                    </div>
+                    <h1 class="title">
+                        <span class="title-line-1">内存泡沫与英伟达护城河</span>
+                        <span class="title-line-2"
+                            >VanEck CEO 谈半导体、黄金与AI投资</span
+                        >
+                    </h1>
+                    <p class="subtitle">
+                        管理2250亿美元资产的VanEck CEO Jan Van
+                        Eck全景式解析：AI基础设施投资是理性的，但记忆芯片存在局部泡沫；美国政府债务是金融市场最大系统性风险；黄金正在重新崛起为全球第一货币。
+                    </p>
+                    <div class="meta-grid">
+                        <div class="meta-item">
+                            <div class="meta-label">主持人</div>
+                            <div class="meta-value">Wilfred Frost</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">嘉宾</div>
+                            <div class="meta-value">Jan Van Eck</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">时长</div>
+                            <div class="meta-value">约 54 分钟</div>
+                        </div>
+                    </div>
+                    <a
+                        href="https://www.youtube.com/watch?v=OzG-uPbrlLc"
+                        class="cta-button"
+                        target="_blank"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+                            <path
+                                d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                            />
+                        </svg>
+                        观看原视频
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Core Points Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">核心要点</h2>
+                <div class="points-grid">
+                    <div class="point-card">
+                        <div class="point-number">01</div>
+                        <h3 class="point-title">SMH 年化回报 29%</h3>
+                        <p class="point-desc">
+                            VanEck
+                            半导体ETF自2011年以来年化回报29%，管理规模达650亿美元。只选前25只股票、允许最大持仓升至20%的策略使其跑赢同类。
+                        </p>
+                    </div>
+
+                    <div class="point-card">
+                        <div class="point-number">02</div>
+                        <h3 class="point-title">英伟达拥有代际护城河</h3>
+                        <p class="point-desc">
+                            英伟达已从GPU制造商蜕变为AI时代的「主机」，软件生态系统和芯片能效构成难以逾越的竞争壁垒，远期市盈率仅略高于20倍。
+                        </p>
+                    </div>
+
+                    <div class="point-card">
+                        <div class="point-number">03</div>
+                        <h3 class="point-title">记忆芯片存在局部泡沫</h3>
+                        <p class="point-desc">
+                            记忆芯片公司的利润暴增靠提价而非扩量，缺乏持久护城河意味着新进入者终将侵蚀定价权。VanEck已在主动基金中削减该领域敞口。
+                        </p>
+                    </div>
+
+                    <div class="point-card">
+                        <div class="point-number">04</div>
+                        <h3 class="point-title">美国政府债务是最大风险</h3>
+                        <p class="point-desc">
+                            预算赤字在5-6%高位徘徊（合理水平应低于3%），伊朗战争开支可能将其推至7%。债券市场信心一旦丧失，所有资产都将无处可藏。
+                        </p>
+                    </div>
+
+                    <div class="point-card">
+                        <div class="point-number">05</div>
+                        <h3 class="point-title">黄金重新崛起为全球第一货币</h3>
+                        <p class="point-desc">
+                            全球央行和投资者正在减少对美国国债的依赖。黄金矿业公司15年炼狱后现金泛滥，重建了资产负债表，在当前金价水平利润丰厚。
+                        </p>
+                    </div>
+
+                    <div class="point-card">
+                        <div class="point-number">06</div>
+                        <h3 class="point-title">加密寒冬将持续</h3>
+                        <p class="point-desc">
+                            2026年是「企业链之年」，传统金融机构吸收区块链精华。区块链和稳定币会留下，但绝大多数加密代币和项目将在5-10年后消失。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Topics Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">深度洞察</h2>
+
+                <!-- Topic 1 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">01</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                半导体ETF的传奇业绩与AI大叙事
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:02:55 - 00:05:30</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            VanEck的SMH半导体ETF凭借精巧的指数构建方法论和AI浪潮的东风，实现了惊人的29%年化回报，成为半导体投资的首选工具。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">惊人业绩数据</div>
+                            <p class="topic-detail-content">
+                                SMH如今管理着650亿美元资产，今年以来上涨58%，过去12个月上涨135%。自2011年成立以来年化回报29%——在复利基础上，这是一个极其罕见的成绩。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                10年宏观投资哲学
+                            </div>
+                            <p class="topic-detail-content">
+                                Jan Van
+                                Eck将成功归功于VanEck的「10年宏观」理念：站在2036年回望，哪些是影响世界和金融市场的最大趋势？VanEck识别出三大主题：AI、印度的崛起，以及发达国家过度财政支出。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">指数构建优势</div>
+                            <p class="topic-detail-content">
+                                SMH跑赢其他半导体ETF的关键在于只选前25只股票，允许最大持仓占比升至20%，充分捕捉英伟达的巨大涨幅。过去12个月价格上涨占绝大部分贡献，新增资金流入仅10-20%——由持仓增值驱动而非投机性资金涌入。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            "What I mean by 10-year macro is in 10 years looking
+                            back in 2036, we were going to look back and say
+                            what are the very biggest themes affecting the world
+                            and therefore financial markets." —
+                            "我的意思是，10年后回望2036年，我们会说什么是影响世界并因此影响金融市场的最大趋势。"
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 2 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">02</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">英伟达的代际护城河</h3>
+                            <span class="topic-timestamp"
+                                >00:05:30 - 00:07:10</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            英伟达已从周期性GPU制造商蜕变为AI时代的「主机」，其软件生态系统和成本效率构成了难以逾越的竞争壁垒。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">三层护城河论证</div>
+                            <p class="topic-detail-content">
+                                第一，英伟达不再只是芯片公司，它拥有完整的软件生态系统，从高度周期性的芯片商转变为平台型企业。第二，在成本效率上建立了实质性领先，每美元电力消耗产出更高的计算效率。第三，远期市盈率仅略高于20倍，以增长股标准来看并不昂贵。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">稳健而非追热</div>
+                            <p class="topic-detail-content">
+                                Jan承认英伟达在过去9个月并非SMH中最热门的股票，但这恰恰体现了其稳健性。一家公司不需要每个季度都是最热门的，关键是在10年维度上保持竞争地位。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 3 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">03</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                AI生态内部的局部泡沫：记忆芯片的警告
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:10:06 - 00:12:58</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            虽然AI基础设施建设本身是理性的，但生态系统内部存在明确的泡沫信号——尤其是记忆芯片股票，其利润增长主要由提价驱动而非销量扩张。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                记忆芯片泡沫的论证
+                            </div>
+                            <p class="topic-detail-content">
+                                利润暴增不是因为卖了更多产品（有产能限制），而是因为大幅提价。价格上涨会激励下游企业寻求替代方案。更关键的是，与英伟达不同，记忆芯片公司缺乏持久竞争护城河，新进入者会被高利润吸引涌入。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">泡沫分化的先例</div>
+                            <p class="topic-detail-content">
+                                去年年底，围绕OpenAI生态系统可持续性的质疑导致Oracle和CoreWeave各下跌50%。KOSPI指数18个月翻了三倍，某天单日上涨12%，主要由三星和SK海力士驱动。VanEck已在主动管理基金中削减记忆芯片敞口。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            "Most of the reason that their profits are exploding
+                            is not because they're selling a lot more. It's
+                            because they've increased their prices and that
+                            means that other companies that use that memory are
+                            going to be looking to economize on the use of it."
+                            —
+                            "它们利润暴增的大部分原因不是因为卖得更多，而是因为提价。这意味着使用这些记忆芯片的其他公司会寻求节约使用量。"
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 4 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">04</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                台积电与获利了结的投资纪律
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:12:58 - 00:16:30</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            台积电拥有制造能力、资本实力和行业前瞻视野的三重护城河。在强劲趋势中获利了结需要纪律——多元化持有、利用回调买入、让长期增值自然发挥作用。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                台积电的三重护城河
+                            </div>
+                            <p class="topic-detail-content">
+                                建造先进制程芯片工厂需数百亿美元投资，本身就是巨大进入壁垒。更深层优势在于：作为几乎所有主要芯片设计公司的代工厂，台积电能看到整个行业技术需求和方向，提前布局下一代制程。Jan断言：大多数人会同意台积电10年后仍然是幸存者。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                何时卖出的务实智慧
+                            </div>
+                            <p class="topic-detail-content">
+                                Jan强调从公司层面看多元化是正确方式。时机上，处于长期趋势中最好在回调时加仓而非新高时追入。SMH大部分资产来自多年前买入的长期持有者，这种「不追涨」的模式让Jan感到安心。同时VanEck虽然仍超配半导体，但正在考虑小幅获利了结。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 5 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">05</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                ETF行业的演进与集中度风险
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:16:30 - 00:25:22</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            ETF是规模游戏，但固定收益ETF的流动性风险和指数化投资带来的市场集中度是值得警惕的结构性问题。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                VanEck的ETF演进
+                            </div>
+                            <p class="topic-detail-content">
+                                公司1955年创立，2006年进入ETF领域，如今ETF占超过95%资产。Jan将ETF描述为规模游戏——与主动管理（产能受限）不同，资产管理规模越大服务能力越强。VanEck不与先锋集团在核心配置竞争，但在专业领域保持费用竞争力。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                主动与被动的模糊界限
+                            </div>
+                            <p class="topic-detail-content">
+                                持有专业ETF本身就是主动决策——选择半导体还是黄金、如何配置权重、何时进出。VanEck还推出了主动管理ETF：NOD（数字资产选股）和RAX（实物资产配置）。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">两个核心担忧</div>
+                            <p class="topic-detail-content">
+                                固定收益ETF中只有5-10%的债券在任何一天实际交易，市场危机中做市商风险偏好下降可能导致价差扩大。第二个担忧则触及他对金融市场最大的恐惧——发达国家政府过度支出。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 6 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">06</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                美国政府债务：金融市场最大的系统性风险
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:25:22 - 00:28:35</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            美国预算赤字本应降至3%以下却在5-6%高位徘徊，如果伊朗战争开支将赤字推回6.5-7%，债券市场信心的丧失将无处可藏。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                「10年图表」的分析框架
+                            </div>
+                            <p class="topic-detail-content">
+                                Jan坚持任何少于10年的图表都是「图表犯罪」。英国和日本30年期国债去年已创数十年收益率高点，趋势今年还在延续。政府债券市场是「世界上最奇怪、最低效的市场」，往往锁定在某种思维定式中脱离现实。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                赤字计算令人警醒
+                            </div>
+                            <p class="topic-detail-content">
+                                预算赤字两年前在6.5%见顶，由于关税收入下降Jan预测今年降到5%左右（仍远高于3%的合理水平）。但如果美国在伊朗战争上花费5000亿美元，赤字将突然飙升回6.5%甚至6.9%。即使美国不像英国或日本那样紧迫，全球债券市场的联动性使其难以独善其身。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            "Bond investors are requiring higher long-term
+                            yields for the UK and for Japan. I'm very nervous
+                            about the US, but timing is everything in life." —
+                            "债券投资者对英国和日本要求更高的长期收益率。我对美国非常紧张，但时机在人生中至关重要。"
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 7 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">07</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                如果收益率失控：无处可藏的市场
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:28:35 - 00:30:16</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            一场真正的美国政府信用危机不会放过任何资产类别——包括半导体和黄金，短期内「所有人涌向出口时没有人能朝其他方向跑」。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                系统性风险的残酷逻辑
+                            </div>
+                            <p class="topic-detail-content">
+                                如果真的出现对美国政府履行义务能力失去信心的情况，Jan不知道是否有任何地方可以躲藏。即使黄金在中长期是好对冲工具，恐慌性抛售中也很可能被抛售——投资者需要流动性。有人认为科技行业不依赖债务融资，但Jan认为当所有人涌向出口时没人能跑向其他方向——在真正的信用危机中，相关系数趋于1，分散化的保护作用会消失。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 8 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">08</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                黄金：重新崛起的全球第一货币
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:30:16 - 00:35:25</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            黄金正在重新确立其作为全球第一货币的地位——不是因为美国通胀，而是因为全球央行和投资者正在减少对美国国债的依赖，寻找独立的储备替代品。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                黄金矿业15年炼狱后的重生
+                            </div>
+                            <p class="topic-detail-content">
+                                2011年到2016年黄金股下跌了90%。矿业公司过度举债、成本失控。但如今它们已重建资产负债表、偿还大量债务，在当前金价水平利润丰厚，用Jan的话说正在「现金泛滥」。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                全球货币替代品的逻辑
+                            </div>
+                            <p class="topic-detail-content">
+                                如果你减少对美国国债的配置，替代品不是人民币（资本管制）也不是卢比（同样有资本管制），而是黄金。印度和中国文化上大量购买黄金进一步支撑需求。黄金不同时期展现不同「个性」——有时跟美元，有时跟通胀——但作为全球货币，全球性需求而非美国因素才是主驱动。伊朗冲突后黄金被抛售也合理——中东海湾国家需变现支付战争开支。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            "Gold is re-emerging as the number one global
+                            currency because if it's not the US, I don't think
+                            it's going to be China. I don't think it's going to
+                            be India." —
+                            "黄金正在重新崛起为全球第一货币，因为如果不是美国，我不认为会是中国，也不认为会是印度。"
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 9 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">09</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                核能ETF与印度：十年维度的确定性押注
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:35:25 - 00:40:03</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            核能ETF（NLR）五年内从2000万暴涨至47亿美元，背后是史无前例的全球核能政策转向。印度是Jan「拍桌子」推荐的长期国家押注——10年后将达到欧洲大陆的经济规模。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                核能：从无人问津到史诗级增长
+                            </div>
+                            <p class="topic-detail-content">
+                                NLR早在2007-2008年推出，五年前资产管理规模不到2000万美元。转折来自政策层面的戏剧性变化：在美国，拜登政府支持核能使它成为两党共识；国际上连日本都重新启动核能计划。Jan说「几乎从未见过这样的事」，增长主要由资金流入驱动。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                印度：越远越确定的趋势
+                            </div>
+                            <p class="topic-detail-content">
+                                Jan提出反直觉观点：有些趋势越往远处看越有信念。人口结构无法对抗。莫迪政府推行破产法、劳动法、大规模放松管制等系统性改革，「没有一个国家做了所有这些亲商改革而不以更高速度增长的」。预测印度10年后将达到欧洲大陆的经济规模。更重要的是，印度已建立支持股权文化的社会共识，GDP增长可以转化为股票回报。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            "There's just no country that does all these
+                            pro-business reforms regardless that doesn't grow at
+                            a higher rate." —
+                            "没有一个国家做了所有这些亲商改革而不以更高速度增长的。"
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 10 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">10</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">宽护城河ETF与加密寒冬</h3>
+                            <span class="topic-timestamp"
+                                >00:40:03 - 00:46:45</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            晨星研究显示只有约5%上市公司拥有真正竞争护城河。2026年是「企业链之年」，传统金融机构吸收区块链精华，但绝大多数加密代币将在5-10年后消失。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                宽护城河ETF的投资哲学
+                            </div>
+                            <p class="topic-detail-content">
+                                晨星将所有上市公司缩小到约5%拥有真正护城河的公司，然后筛选估值最低的进入ETF。这个方法前几年累计跑赢标普500，但近一两年因错过半导体爆发而落后——揭示了一个矛盾：拥有护城河的公司通常成熟稳定，而最强涨幅往往出现在高增长但护城河尚未确立的领域。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">加密大清洗</div>
+                            <p class="topic-detail-content">
+                                VanEck
+                                2017年率先申请比特币ETF，Jan最初视其为黄金竞争者。但2026年他称之为「企业链之年」：纽约银行、摩根大通等大机构创建企业链吸收区块链优势但保留控制。Jan判断：「加密寒冬」不会回来，多数项目5-10年后不会存活。区块链和稳定币会留下，比特币也会，但生态系统大部分将消失。比特币目标价基于黄金市值一半推算，意味着还有数倍上涨空间。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            "I just don't think a lot of those projects and
+                            softwares will be at all interesting or alive in
+                            five or 10 years from now." —
+                            "我只是认为很多那些项目和软件在5年或10年后不会有什么吸引力，也不会存活下来。"
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 11 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">11</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                SpaceX IPO与投资哲学终极回答
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:48:14 - 00:52:58</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            SpaceX
+                            IPO涉及累计数千亿美元的流动性浪潮，将短期利好经济增长。投资哲学的核心是问大问题——关注政治风险、国家亲商程度和资产配置，而非短期市场噪音。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                SpaceX IPO的结构性影响
+                            </div>
+                            <p class="topic-detail-content">
+                                初始上市流通量仅3-4%，随后逐步释放进入指数。Jan对结构表示认可——SpaceX不是没有收入的创业公司以万亿估值上市，而是非常成熟的企业。累计涉及金额可能达数千亿美元，而美国去年全年关税收入约3000亿。这种流动性浪潮短期刺激增长，但市场消化能力值得关注。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                70年投资哲学：问大问题
+                            </div>
+                            <p class="topic-detail-content">
+                                Jan将VanEck的思维方式追溯到荷兰和英国投资者400-500年前发展出的传统：关注政治风险，关注国家是否亲商、是否愿意奖励股权。他提出值得深思的问题：中国的崛起意味着配置应该多大？印度呢？AI交易参与了吗？黄金呢？VanEck不自称知识来源，重要的是通过讨论和市场交流来测试自己的假设。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Takeaways Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">精华收获</h2>
+                <div class="takeaways-grid">
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">🛡️</div>
+                        <h3 class="takeaway-title">护城河为王</h3>
+                        <p class="takeaway-desc">
+                            英伟达和台积电值得长期持有不是因为现在赚钱多，而是竞争壁垒10年后仍然有效。记忆芯片公司利润再高，缺乏护城河意味着新进入者终将侵蚀定价权。
+                        </p>
+                    </div>
+
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">⚠️</div>
+                        <h3 class="takeaway-title">警惕局部泡沫</h3>
+                        <p class="takeaway-desc">
+                            即使在AI大趋势中也存在明确泡沫信号。Oracle和CoreWeave各跌50%已证明这一点。记忆芯片利润增长靠提价而非扩量，不可持续。
+                        </p>
+                    </div>
+
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">💣</div>
+                        <h3 class="takeaway-title">政府债务是定时炸弹</h3>
+                        <p class="takeaway-desc">
+                            美国预算赤字在5-6%高位（合理水平应低于3%），伊朗战争开支可能推至7%。债券市场信心一旦丧失，所有资产包括黄金和半导体都将无处可藏。
+                        </p>
+                    </div>
+
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">🥇</div>
+                        <h3 class="takeaway-title">黄金是新货币</h3>
+                        <p class="takeaway-desc">
+                            黄金正在重新崛起为全球第一货币。这不是关于美国通胀，而是全球央行减少对美国国债依赖、寻找独立储备替代品的结构性转变。
+                        </p>
+                    </div>
+
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">🇮🇳</div>
+                        <h3 class="takeaway-title">印度的确定性</h3>
+                        <p class="takeaway-desc">
+                            印度是10年维度上最具确定性的国家选择。人口结构无法对抗，系统性亲商改革不会白做，加上社会对财富创造的包容，10年后将达到欧洲大陆的经济规模。
+                        </p>
+                    </div>
+
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">🧊</div>
+                        <h3 class="takeaway-title">加密大清洗</h3>
+                        <p class="takeaway-desc">
+                            区块链技术和稳定币会留下，比特币也会留下，但绝大多数加密代币和项目将在5-10年后消失。2026年是「企业链之年」——传统金融机构吸收精华，抛弃泡沫。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <h3 class="footer-title">Jan Van Eck 的投资智慧</h3>
+                <p class="footer-desc">
+                    从管理2250亿美元资产的高管视角，这场对话超越了日常市场噪音，展现了如何在10年维度上思考投资格局——识别真正的大趋势，区分可持续的竞争优势与短期泡沫，在恐慌中保持冷静。
+                </p>
+                <div class="footer-quote">
+                    "Ask the big questions. Take the macro big picture view." —
+                    "问大问题。采取宏观大图景的观点。"
+                </div>
+                <p class="footer-note">
+                    来源：The Master Investor Podcast with Wilfred Frost ·
+                    录制于 2026年5月26日
+                </p>
+            </div>
+        </footer>
+
+        <!-- Scroll Animation Script -->
+        <script>
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("animate-in");
+                        }
+                    });
+                },
+                { threshold: 0.1 },
+            );
+
+            document
+                .querySelectorAll(".point-card, .takeaway-card, .topic")
+                .forEach((el) => {
+                    observer.observe(el);
+                });
+        </script>
+    </body>
+</html>
