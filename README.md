@@ -17,23 +17,27 @@ A curated knowledge platform that distills the best YouTube podcast content into
 
 ## Articles
 
-**137 articles** across multiple domains:
+**190 articles** across multiple domains:
 
 | Domain | Examples |
 |--------|---------|
-| **AI Strategy & Leaders** | OpenAI (Sam Altman, Greg Brockman, Brad Lightcap), Anthropic (Dario Amodei 3x, Cat Wu, Felix Rieseberg), Google AI (Sundar Pichai, Demis Hassabis 4x), NVIDIA (Jensen Huang 3x), xAI (Elon Musk), Boris Cherny (Claude Code) |
-| **AI Agents & Platforms** | Harrison Chase (LangChain), AI Agent Swarms, Claude Code, Claude Cowork, OpenClaw, ChatGPT Images 2.0, AI Sandwich model, SEO to Agent-Led Growth |
-| **Markets & Compute** | a16z (David George, Aaron Levie, Ben Horowitz), Coatue (Thomas Laffont, Lucas Swisher), SemiAnalysis (Dylan Patel 2x), ARK Invest (Big Ideas 2026) |
-| **Robotics & Physical AI** | Figure AI (Brett Adcock), Sergey Levine, Anduril, Palantir, Uber (Dara Khosrowshahi on Robotaxi), Atoms (Travis Kalanick), AI in Physical World |
-| **Finance & Investing** | Stanley Druckenmiller, Jeremy Grantham, Tom Lee, Blackstone (private credit), Public, Robinhood, Lloyd Blankfein, Jake Paul, Alfred Lin (Sequoia), Hormuz blockade, Howard Marks (Oaktree), Jim Simons |
-| **Defense & Military** | Palantir, Anduril, Pentagon AI plan, military industrial complex, Ukraine war impact |
-| **Space & Frontier Tech** | SpaceX, NASA (Jared Isaacman), Rocket Lab (Peter Beck), Starcloud, Quantum Computing (D-Wave, NVIDIA Ising), Brain-Computer Interfaces (World/Merge Labs), nuclear propulsion |
-| **Tech Companies & Earnings** | Alphabet Q4 2026, Micron Q2 2026, Google Cloud (Thomas Kurian), Tesla, Roblox (David Baszucki), Canva, Replit, SAP, Asana |
+| **AI Strategy & Leaders** | OpenAI (Sam Altman, Greg Brockman, Brad Lightcap), Anthropic (Dario Amodei 3x, Daniela Amodei, Cat Wu, Felix Rieseberg, Krishna Rao), Google AI (Sundar Pichai, Demis Hassabis 5x), NVIDIA (Jensen Huang 3x), xAI (Elon Musk), Boris Cherny (Claude Code), Satya Nadella, Marc Andreessen 3x |
+| **AI Agents & Platforms** | Harrison Chase (LangChain), Andrej Karpathy (agentic engineering, code agents), AI Agent Swarms, Claude Code, Claude Cowork, OpenClaw, ChatGPT Images 2.0, AI Sandwich model, SEO to Agent-Led Growth, Harvey AI |
+| **AI Engineering & Research** | Shane Legg (AGI), Joelle Pineau (AI frontiers), Richard Sutton (reinforcement learning), Zico Kolter (frontier AI), Mostafa Dehghani, AI Math, MIT AI courses |
+| **Markets & Compute** | a16z (David George, Aaron Levie, Ben Horowitz), Coatue (Thomas Laffont, Lucas Swisher, Jaimin Rangwalla), SemiAnalysis (Dylan Patel 2x), ARK Invest (Big Ideas 2026), Gavin Baker (orbital compute) |
+| **Semiconductors** | Cerebras (Andrew Feldman, IPO, wafer-scale engine), TSMC, NVIDIA TPU competition, AI silicon shortage, VanEck semiconductor investing, Micron Q2 2026 |
+| **Robotics & Physical AI** | Figure AI (Brett Adcock), Sergey Levine, Seeed Studio (open-source robot), Anduril, Palantir, Uber (Dara Khosrowshahi on Robotaxi), Atoms (Travis Kalanick), AI in Physical World |
+| **Finance & Investing** | Stanley Druckenmiller, Jeremy Grantham, Tom Lee, Dan Loeb (Third Point strategy), Marc Rowan (Apollo private markets), Ken Griffin, Paul Tudor Jones, Blackstone (private credit, Tony James), Lloyd Blankfein 2x, Howard Marks (Oaktree), Jim Simons, Jake Paul, Alfred Lin (Sequoia) |
+| **Defense & Military** | Palantir (Alex Karp), Anduril (100 years military history), Pentagon AI plan, military industrial complex, Ukraine war impact |
+| **Space & Frontier Tech** | SpaceX IPO, NASA (Jared Isaacman), Rocket Lab (Peter Beck), Starcloud, Quantum Computing (D-Wave, NVIDIA Ising), Brain-Computer Interfaces (World/Merge Labs), nuclear propulsion |
+| **Tech Companies & Earnings** | Alphabet Q4 2026, Micron Q2 2026, Google Cloud (Thomas Kurian), Tesla, Roblox (David Baszucki), Canva, Replit, SAP, Asana, Shopify (Tobi Lütke), Stripe, Samsung, IBM (Arvind Krishna) |
 | **Philosophy & Society** | Yuval Harari (stories, power, truth), Carissa Véliz (AI ethics, prediction), Robert Pantano (self-awareness), Swami Sarvapriyananda (consciousness, Vedanta), Tristan Harris (AI safety) |
-| **Wisdom & Thinking** | Kevin Kelly (79 maxims for excellent living), Eric Jorgenson (Elon Musk methodology), Nick Bloom (navigating uncertainty), Ben Horowitz (managerial philosophy) |
-| **Health & Science** | David Sinclair (aging reversal), Ben Lamm (synthetic biology), AI-designed life forms, MIT President (Sally Kornbluth on AI education) |
+| **Wisdom & Thinking** | Kevin Kelly (79 maxims for excellent living), Eric Jorgenson (Elon Musk methodology), Nick Bloom (navigating uncertainty), Ben Horowitz (managerial philosophy), Joe Hudson (emotional fluidity) |
+| **Health & Science** | David Sinclair (aging reversal), Ben Lamm (synthetic biology), AI-designed life forms, MIT (Sally Kornbluth, Chris Bishop) |
 | **Crypto & Web3** | Worldcoin (Alex Blania), Circle (Jeremy Allaire), Anthony Pompliano (Bitcoin), stablecoins, agent economy |
-| **Organizational Transformation** | Jack Dorsey (Block reorg), Amjad Masad (Replit: only 2 roles remain), SEO to Agent-Led Growth, AI teammates (Arnab Bose) |
+| **Organizational Transformation** | Jack Dorsey (Block reorg), Amjad Masad (Replit: only 2 roles remain), SEO to Agent-Led Growth, AI teammates (Arnab Bose), forward-deployed engineering |
+| **Energy & Infrastructure** | Chris Wright (data center energy), global infrastructure partnerships, Hormuz blockade, trade policy |
+| **Global Trade & Geopolitics** | Ryan Petersen (global trade history), American finance 100 years, tech billionaires' AI plans, SpaceX/OpenAI/Anthropic IPO landscape |
 
 Browse all articles at [index.html](index.html)
 
@@ -74,7 +78,7 @@ All gradients, glows, shadows, and accent elements auto-inherit from these varia
 ```
 yt-podcast/
 ├── index.html                  # Homepage (article grid)
-├── articles/                   # 137 in-depth articles
+├── articles/                   # 190 in-depth articles
 │   └── images/                 # Article hero images
 ├── assets/
 │   ├── css/                    # Stylesheets
