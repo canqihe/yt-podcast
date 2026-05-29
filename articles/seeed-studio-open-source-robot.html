@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人人都能造机器人：Seeed Studio 的开源具身智能之路</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='3' y='3' width='12' height='12' rx='2' fill='%234a9eff'/><rect x='17' y='3' width='12' height='12' rx='2' fill='%236b7eff'/><rect x='3' y='17' width='12' height='12' rx='2' fill='%238b5cf7'/><rect x='17' y='17' width='12' height='12' rx='2' fill='%23a855f7'/></svg>">
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <style>
+        /* 方案 3: 绿黄 */
+        :root {
+            --accent-primary: #22c55e;
+            --accent-secondary: #eab308;
+            --accent-primary-rgb: 34, 197, 94;
+            --accent-secondary-rgb: 234, 179, 8;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/seeed-studio-open-source-robot-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">NVIDIA AI Podcast · 第300期</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">人人都能造机器人</span>
+                    <span class="title-line-2">Seeed Studio 开源具身智能</span>
+                </h1>
+                <p class="subtitle">
+                    200美元的开源机械臂、像训狗一样训练机器人、用自然语言指挥机械爪——开源硬件与智能体AI的融合，正在以前所未有的速度重塑物理世界。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Noah Kravitz</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Eric Pan / Elaine Wu</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 29 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=C3lcadfxTio" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">200美元的机器人革命</h3>
+                    <p class="point-desc">SO-ARM 与 Hugging Face 合作推出200美元开源机械臂，将机器人从工业级奢侈品变成消费级工具，打破行业价格底线。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">训狗式教学范式</h3>
+                    <p class="point-desc">从数月专业编程进化为"手把手示范→云端训练→本地部署"的直觉式流程，厨师和铁匠也能训练专属于自己的机器人学徒。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">OpenClaw 赋予AI物理身体</h3>
+                    <p class="point-desc">OpenClaw 集成 Qwen3.5 模型，实现用自然语言直接控制机械臂。AI智能体第一次拥有了真正能操作物理世界的能力。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">数字孪生闭环</h3>
+                    <p class="point-desc">NVIDIA Isaac Sim 提供精确的仿真到现实桥梁，开发者可在没有实体设备的情况下完成大部分开发和训练，加速迭代。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">模块化优于通用</h3>
+                    <p class="point-desc">拆解人形机器人为独立模块——头、手臂、轮子，让用户按需组合，比等待一个万能通用机器人更实际、更经济。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">开源驱动信任与普及</h3>
+                    <p class="point-desc">开源不仅是技术加速器，更是建立用户信任的基石——你不会把一个黑盒机器人放进自己家里。可控、可改、可定制才是机器人的未来。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">18年开源之路：从硬件模块到机器人大脑</h3>
+                        <span class="topic-timestamp">01:23 - 04:17</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Seeed Studio 从2008年起深耕开源硬件，18年间完成了从微控制器模块到全栈机器人解决方案的跨越，成为 NVIDIA 精英合作伙伴，定位为"最强大、最先进的机器人大脑"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从微控制器到机器人</div>
+                        <p class="topic-detail-content">Seeed 最初专注于开源硬件模块，让全球创客低门槛使用基础电子元件。随着创客运动发展，用户自然提出更高需求——这些硬件能不能用在工业上？能不能做真正的项目？这种需求升级推动了 Seeed 从模块供应商成长为完整的机器人解决方案平台。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">NVIDIA 精英合作伙伴</div>
+                        <p class="topic-detail-content">从 Jetson Nano 起步，逐步扩展到搭载 Jetson Orin 系列的高性能设备。Seeed 构建了完整的机器人产品线——从桌面级小型机械臂到高性能计算平台，同时拥有从感知到控制的全栈机器人组件。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">社区驱动的生物进化模式</div>
+                        <p class="topic-detail-content">Eric 描绘了类似生物进化的图景：不是一家公司造出终极机器人，而是成千上万的创造者各自探索不同方向，相互竞争、相互进化，最终每个领域都会涌现出最优秀的方案。未来的机器人将是专业化的，由开源模型驱动，覆盖特定领域。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "它不再只是一台机器，而是一台能跟你对话、能被分配任务的机器。这正在形成一个全新的机器人社会。" — Eric Pan
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">开源为何是机器人的必由之路</h3>
+                        <span class="topic-timestamp">04:17 - 08:09</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        开源在机器人领域不仅是技术发展的加速器，更是建立用户信任和推动大规模采用的基石——你不会把一个黑盒机器人放进自己家里。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">创新效率：生物多样性竞争</div>
+                        <p class="topic-detail-content">没人知道"终极机器人"长什么样。与其由一家公司闭门造车，不如开放出来让全球的创客、开发者、研究人员各自探索。这种多样性的竞争和协作，就像生物界的自然选择，能更快找到每个领域的最优解。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">信任与可控性</div>
+                        <p class="topic-detail-content">这是更深层的驱动力。想象你要在家庭、工厂或零售店部署一台智能体机器人——你希望它是可控的，你希望能查看和修改它的行为逻辑。一个闭源的、被锁死的系统，很难获得这种根本性的信任。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从创客到企业的渗透路径</div>
+                        <p class="topic-detail-content">Seeed 的数百万客户中，大多数自称"创客"——爱好者、学生、研究人员。他们从兴趣出发，理解技术后将其带入各自行业——成为企业员工、创业者或大公司创新项目的核心力量。中小企业是增长最快的群体，因为开源工具第一次让他们拥有了以前只有大企业才负担得起的自动化能力。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "代替销售人员的，是创客和开发者——他们带着天然的好奇心去探索新事物，然后将其整合到自己的业务中。" — Eric Pan
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">200美元革命：SO-ARM 与 Hugging Face</h3>
+                        <span class="topic-timestamp">08:09 - 10:02</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Seeed 与 Hugging Face 合作推出的 SO-ARM 以200美元的价格打破了机器人行业的价格底线，让"人人都能拥有一台机器人"从口号变为现实。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">价格颠覆</div>
+                        <p class="topic-detail-content">传统工业机器人需要专业机器人学家进行漫长的编程、调试和维护，成本极其高昂，只出现在医疗和汽车等高价值行业。SO-ARM 将这个门槛压缩到了消费级——相当于一台入门级智能手机的价格。小孩子都能用。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从玩具到商业基础</div>
+                        <p class="topic-detail-content">在去年举办的黑客松中，参与者用 SO-ARM 做了做饭、烤肉等各种项目。对专业人士来说它可能像玩具，但 Eric 强调要尊重背后的潜力——当人们认真思考如何用廉价机器人在街边开店、探索各种可能性时，这其实正在发生。SO-ARM 是更高端机器人方案的根基，大量用户通过它学习、开发，逐步升级到更专业的应用。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">训狗式教学：从数月编程到手把手示范</h3>
+                        <span class="topic-timestamp">10:02 - 12:58</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        机器人训练正在经历范式转变——从需要数月专业编程，变成像训狗一样的直觉式手把手教学，让厨师、铁匠等非技术人员也能直接训练自己的机器人。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">五步工作流</div>
+                        <p class="topic-detail-content">全新的训练流程：(1) 手把手教学——像教一个学徒一样，握住机械臂示范操作流程几次；(2) 云端训练——将采集的示范数据上传训练；(3) 本地部署——训练好的模型部署到 Jetson；(4) 扩散模型执行——Jetson 使用扩散模型配合摄像头自主规划路径；(5) 迭代优化——执行不正确就重新训练。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">增强而非替代</div>
+                        <p class="topic-detail-content">这个范式的意义远超技术层面。一个厨师、一个铁匠、一个小店主——不需要任何编程知识——就能训练一台专属于自己的机器人。Eric 精准地定义了这种关系：这是我的机器人，它是我的学徒，帮我做事情，但不会取代我。这不是"机器人替代人类"的叙事，而是"每个人都能拥有一个机器人助手"的新范式。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "这是我的机器人。它继承了我的技能，或者说它是我的学徒。帮我做事情，帮我的生意，但不会取代我。" — Eric Pan
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">OpenClaw：给 AI 一个物理身体</h3>
+                        <span class="topic-timestamp">12:58 - 18:35</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        OpenClaw 集成到 Jetson 后，实现了从"编程控制机器人"到"用自然语言对话控制机器人"的跨越——AI 智能体第一次真正拥有了一个可以操作物理世界的身体。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">自然语言控制</div>
+                        <p class="topic-detail-content">在 Jetson Thor 上本地安装 OpenClaw，调用 Qwen3.5 模型的本地 API。用户只需在聊天框输入文字指令——"把机械臂抬起来"、"放下去"、"用爪子夹住"——机械臂就会直接执行。传统的机器人编程需要从感知层到控制层逐层硬编码，现在这一切被自然语言交互完全取代。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">自主探索物理世界</div>
+                        <p class="topic-detail-content">大约两周前，Seeed 给了 OpenClaw 一个"野性"任务——让它自己去找库文件、读说明文档、把自己放到物理世界中。OpenClaw 自主完成了整个流程：搜索并组装库文件，理解"向上移动10厘米"这样的空间概念，规划执行路径。Seeed 实际上给了 OpenClaw 一个物理身体——不仅能理解世界，更能建造世界、移动物理世界中的物体。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">机器人社会的分层架构</div>
+                        <p class="topic-detail-content">OpenClaw 的"灵魂"配置允许定义机器人的角色、能力和职责范围。更远一点看，Eric 描绘了分层的机器人协作架构：协调器（中央助手）管理所有机器人，AI监控摄像头观察并纠正错误，自动导引车（AGV）负责送料，机械臂按标准操作流程执行任务。每个机器人还可以有自己的子智能体，形成一个全新的机器人社会。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我们实际上给了 OpenClaw 一个物理身体。不仅是帮你理解世界，而是帮你建造世界。" — Eric Pan
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Isaac Sim 与数字孪生：仿真到现实的桥梁</h3>
+                        <span class="topic-timestamp">18:35 - 25:16</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        NVIDIA Isaac Sim 提供的数字孪生能力，让开发者在没有实体机器人的情况下就能完成仿真训练——当仿真到现实的差距被弥合，机器人开发的速度将呈指数级提升。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">reBot Arm：1000美元的开源实用机器人</div>
+                        <p class="topic-detail-content">Seeed 最新发布的 reBot Arm（Redefine Robots）已在 GitHub 上获得超过1300个 Star。三个核心特点：(1) 开源——部分零件3D打印，所有设计文件公开发布；(2) 实用化——不是教学玩具，而是真正能做事情的工具；(3) 亲民价格——起步价1000美元，搭配 Jetson Nano 运行，所有计算在本地完成，不需要云端 API token。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">数字孪生与 Sim-to-Real</div>
+                        <p class="topic-detail-content">reBot 在 Isaac Sim 中的镜像效果——机器人实体的每一个位置变化、每一个执行器的运动都实时反映在仿真环境中。在还做不到"每人一台机器人"的当下，先让更多人通过网络和仿真参与。完整工作流：在 Isaac Sim 中训练视觉-语言-动作模型（VLA）→ 部署到实际机器人 → 物理世界数据反馈回仿真 → 模型持续优化。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">LeRobot 框架与五个月量产</div>
+                        <p class="topic-detail-content">Hugging Face 的 LeRobot 框架提供了完整的数据集、模型和策略，实现端到端学习。Seeed 与 Hugging Face 合作开发的 Reachy Mini——从设计到3000台量产发货，仅用了五个月，展现了惊人的制造执行力。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我们正在搭建更多的「仿真到现实」和「现实到仿真」的桥梁。随着越来越多廉价、亲民的机器人出现，仿真与现实的差距将非常容易弥合。" — Eric Pan
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">模块化哲学：拆解人形机器人</h3>
+                        <span class="topic-timestamp">25:16 - 29:00</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Seeed 选择了与"造人形机器人"截然相反的路径——不是造一个什么都能做的通用机器人，而是把机器人拆成头、手臂、轮子等模块，让人们根据需求自由组合。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">参考设计而非最终产品</div>
+                        <p class="topic-detail-content">作为开源公司，Seeed 不期望自己的设计被原封不动地使用。用户总会问"我能不能改改？"。所以 Seeed 提供的是"参考设计"——一个起点和框架，开发者在上面构建自己的方案，然后回来要求定制和改进。Seeed 的核心业务就是帮助这些人规模化。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">拆解人形机器人</div>
+                        <p class="topic-detail-content">Seeed 的产品线包括：机械臂、底盘、机械手、桌面机器人——全部兼容 LeRobot 框架。模块化方案的好处是：根据实际需求组合，不需要为用不到的功能买单；从最便宜的模块开始，逐步扩展；用户在实践中找到自己的"飞轮"——物理需求与硬件能力之间的正反馈循环。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">有机创造的未来</div>
+                        <p class="topic-detail-content">Eric 对未来一到三年的展望：我们不再等待别人来造一个人形机器人——也许不信任它，也许等不了，也许太贵了。但现在每个人都能为自己造一台机器人。如果他们有一群相似需求的人，就有人可以基于物理 AI 创立一门生意。这更加有机。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我们走了与做人形机器人相反的路。我们把人形机器人拆解了——我们造头部和躯干，造手臂，造轮子。人们可以根据自己的用途将它们组合起来。" — Eric Pan
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💰</div>
+                    <h3 class="takeaway-title">价格民主化</h3>
+                    <p class="takeaway-desc">200美元的 SO-ARM 和1000美元的 reBot 将机器人从工业级奢侈品变成消费级工具。价格门槛的突破是具身智能大规模普及的第一步。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🐕</div>
+                    <h3 class="takeaway-title">训狗范式</h3>
+                    <p class="takeaway-desc">机器人训练从"数月专业编程"进化为"手把手示范→云端训练→本地部署"的直觉式流程。非技术人员也能训练专属于自己的机器人学徒。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💬</div>
+                    <h3 class="takeaway-title">自然语言控制</h3>
+                    <p class="takeaway-desc">OpenClaw + Qwen3.5 模型实现了用文字或语音直接控制机械臂。编程门槛被彻底消除——不再是编程，而是聊天。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🤖</div>
+                    <h3 class="takeaway-title">物理身体的智能体</h3>
+                    <p class="takeaway-desc">OpenClaw 能够自主搜索库文件、阅读文档、理解空间概念并执行物理操作。AI 智能体第一次拥有了真正能操作物理世界的能力。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔄</div>
+                    <h3 class="takeaway-title">数字孪生闭环</h3>
+                    <p class="takeaway-desc">Isaac Sim 的仿真环境与实体机器人形成精确镜像。开发者可以在没有实体设备的情况下完成大部分开发和训练，大幅加速迭代速度。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧩</div>
+                    <h3 class="takeaway-title">模块化优于通用</h3>
+                    <p class="takeaway-desc">拆解人形机器人为独立模块，让用户按需组合。比等待一个万能通用机器人更实际、更经济、更快落地。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">开源机器人时代已经到来</h3>
+            <p class="footer-desc">
+                Seeed Studio 用18年的开源硬件经验证明：当价格足够低、门槛足够低、开放度足够高时，机器人不再是少数人的专属工具，而是每个人都能为自己创造的物理 AI。从200美元的 SO-ARM 到1000美元的 reBot，从手把手教学到自然语言控制——具身智能的民主化正在发生。
+            </p>
+            <div class="footer-quote">
+                "每个人都能为自己造一台机器人。如果他们有一群相似需求的人，就有人可以基于物理 AI 创立一门生意。"
+            </div>
+            <p class="footer-note">
+                来源：NVIDIA AI Podcast 第300期 · 嘉宾：Eric Pan（Seeed Studio CEO）、Elaine Wu（机器人负责人）
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

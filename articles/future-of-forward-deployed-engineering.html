@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>前向部署工程的未来 | OpenAI、Ramp、Nominal、Dataland</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='3' y='3' width='12' height='12' rx='2' fill='%234a9eff'/><rect x='17' y='3' width='12' height='12' rx='2' fill='%236b7eff'/><rect x='3' y='17' width='12' height='12' rx='2' fill='%238b5cf7'/><rect x='17' y='17' width='12' height='12' rx='2' fill='%23a855f7'/></svg>">
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <style>
+        :root {
+            --accent-primary: #ff6b35;
+            --accent-secondary: #00d4ff;
+            --accent-primary-rgb: 255, 107, 53;
+            --accent-secondary-rgb: 0, 212, 255;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/future-of-fde-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">圆桌讨论 · AI 工程</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">前向部署工程的未来</span>
+                    <span class="title-line-2">AI 时代最关键的角色</span>
+                </h1>
+                <p class="subtitle">
+                    OpenAI、Ramp、Nominal、Dataland 四位工程领导者深度探讨：为什么模型越强，前向部署工程师（FDE）的需求反而暴增 10 倍？FDE 如何避免咨询服务陷阱，成为未来创始人的最佳训练场？
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Finn · SPC</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Calvin · Jason · Howard · Colin</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 52 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=hWuoH-ODDNc" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">问题空间爆炸</h3>
+                    <p class="point-desc">AI 让 B2B 可触达的问题从「软件工作流」扩大到「全部劳动力支出」，FDE 是跨越业务知识壁垒的关键桥梁。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">从管道到价值</h3>
+                    <p class="point-desc">编程智能体让 FDE 从重复搭建基础设施中解放出来，专注于高层任务。OpenAI 半导体案例中底层 50% 已可交给 Codex。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">服务陷阱警醒</h3>
+                    <p class="point-desc">服务收入像毒品，客户可能比公司更上瘾于 FDE 人头。成功标准：撤走人后价值仍在持续交付。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">飞轮效应</h3>
+                    <p class="point-desc">OpenAI 的 FDE → 合成数据 → 后训练 → 模型提升飞轮，让不可能的任务在三个月后变得可行。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">创始人训练场</h3>
+                    <p class="point-desc">FDE 要求从零到一构建、掌握前沿 AI、赢得客户信任、穿越组织政治——创始能力最完整的综合训练。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">剑与盾平衡</h3>
+                    <p class="point-desc">FDE 既是赢下企业客户的「剑」，也是保护核心产品路线图的「盾」。秘诀是让工程师直接面对客户。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">什么是前向部署工程？四家公司的定义</h3>
+                        <span class="topic-timestamp">01:42 - 05:12</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        前向部署工程并非一个统一的角色定义——它在不同公司有着截然不同的使命和边界，但核心共性是「工程师直接面对客户，以结果为导向解决问题」。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Ramp：赢得企业客户</div>
+                        <p class="topic-detail-content">Calvin 描述 Ramp 的 FDE 使命是赢得企业客户（高端市场）。团队拥有极大自由度，不受任何限制，可以开发核心路线图功能，只要能赢得企业客户。这个定位最初并不宏大——只是为了不被企业客户的需求淹没。Ramp 是金融运营平台，替代传统的 Amex 加 Concur 组合。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Nominal：赋能硬件工程师</div>
+                        <p class="topic-detail-content">Jason 介绍 Nominal 为硬件工程师（卫星、核反应堆等）构建数据和 AI 平台。公司价值观「赋能他们的使命」直接定义了 FDE 的角色：帮助客户成功，同时了解产品的前沿在哪里，用户需要什么才能解锁工作流程，并将这些洞察反哺长期产品路线图。Jason 本人曾经历过 Palantir 的 FDE「黑暗时代」。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Dataland：企业劳动力外包 AI</div>
+                        <p class="topic-detail-content">Howard 解释 Dataland 涉足医疗、能源、消费电子、物流、废物管理等众多领域。FDE 是公司的「命脉」，因为他们为每家企业构建高度差异化的智能体，而非推销一个通用平台。根据不同的合作企业，他们构建完全不同的解决方案来满足特定企业需求。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">OpenAI：市场先锋</div>
+                        <p class="topic-detail-content">Colin 将 FDE 描述为 OpenAI 面向企业市场的先锋。两大使命：一是推动广泛的市场采用（寻找可复现的问题，嵌入客户环境构建解决方案，决定产品化还是集成到 Codex）；二是推动模型能力边界（与半导体、生命科学等最困难行业合作，用一切手段解决极限问题）。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "We're the tip of the spear for OpenAI with the enterprise." — 「我们是 OpenAI 面向企业市场的先锋。」[00:05:07]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">悖论：模型越强，FDE 越重要</h3>
+                        <span class="topic-timestamp">05:13 - 09:35</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 的进步没有消除对 FDE 的需求，反而因为两个原因使其更加关键：可解决问题的空间从软件扩大到全部劳动力支出，以及编程智能体让 FDE 从基础设施工作中解放出来、专注于更高价值的任务。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">经济学视角：劳动力支出远大于软件支出</div>
+                        <p class="topic-detail-content">Howard 从经济学角度解释悖论。过去你能构建一个 SaaS 平台解决某个工作流，但世界上这类标准化问题的数量有限。而全球花在劳动力上的资本，比花在软件上的大了好几个数量级。AI 让我们首次有能力触达这个更大的问题空间，但每个垂直领域的任务极其多元化，没有通用解法。因此你需要能深入理解具体用例的工程师——他们几乎需要能自己完成那份工作。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">编程智能体的类比</div>
+                        <p class="topic-detail-content">Howard 给出精妙类比：编程智能体之所以如此出色，恰恰是因为每个软件工程师天然就是编程领域的 FDE——我们每天都在写代码，深刻理解这个用例。但在能源、医疗等深水区，你需要真正懂行的 FDE 才能解锁 AI 的潜力。模型已经有能力做到这些了，但真正的关键瓶颈是对 FDE 的需求。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">OpenAI FDE 的实际变化</div>
+                        <p class="topic-detail-content">Colin 分享了 OpenAI FDE 团队在过去一年经历的实际变化。一年前构建第一版智能体 SDK 时，大部分时间花在编写基础管道代码和构建评估体系上——每解决一个问题需要构建五个不同的智能体和五套评估。从 2025 年初开始，更强大的编程模型改变了局面。以半导体公司为例：前 10 个月做软件工程加速，现在开始让智能体做芯片物理设计——底层 50% 的任务可信任 Codex 处理，团队得以专注于产生真正商业价值的高层任务。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Everyone is like, you know, every software engineer is naturally a forward deployed engineer in the coding space, right? Because like we all code every day." — 「每个软件工程师天然就是编程领域的前向部署工程师，因为我们每天都在写代码。」[00:07:00]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">避免咨询服务陷阱：FDE 与产品化的边界</h3>
+                        <span class="topic-timestamp">14:45 - 21:51</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        FDE 最大的风险不是技术失败，而是沦为咨询服务——服务收入像毒品一样令人上瘾，客户比公司更依赖 FDE，最终无法脱身。成功的 FDE 模式必须确保交付的是可复现的持续价值，而非按人头计费的定制服务。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Palantir 的黑暗时代</div>
+                        <p class="topic-detail-content">Jason 坦诚分享 Palantir 的教训：FDE 团队因核心产品无法满足客户需求而「叛变」，开始从头构建全新系统。这段经历深刻影响了 Nominal 的 FDE 策略——他把那些曾经是产品路线图「传话游戏」受害者的人，作为第一批 FDE 派出去，确保他们不会偏离成咨询。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Nominal 的可泛化架构案例</div>
+                        <p class="topic-detail-content">Nominal 的第一份大合同中，客户要求处理无人机飞行测试的数据管道。FDE 工程师 Ross 并没有简单定制，而是设计了一个通用化的容器架构——数据转换逻辑可以上传替换。为第一个客户解决了问题，同时成为后来卖给所有客户的核心组件。Jason 说：「这本来就在路线图上，我只是因为机会出现了而把它提前了。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">OpenAI 的产品策略演变</div>
+                        <p class="topic-detail-content">Colin 描述 OpenAI 最初计划做 50 个小产品建立生态系统。但 Codex 能力跃升后，对每个产品问的第一个问题变成「这能不能直接做成 Codex 的扩展？」这吞掉了 80% 的产品计划。剩下的两个——监管文件撰写和工作流自动化平台——只有在企业需要极高一致性的场景下才有独立存在的理由。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Dataland 的软件经济学</div>
+                        <p class="topic-detail-content">Howard 从金融视角给出判断框架：软件公司和咨询公司的本质区别，在于是否在固定成本基础上交付持续价值。他不再教条地认为必须找到一个核心产品卖给所有人，而是专注于从每个客户那里建立学习飞轮。Dataland 每个人头产出数百万美元的 ARR。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Is FDE a bug or a feature? And I think for Palantir wasn't sure for many years, but... the realization was FDE is a huge feature." — 「FDE 到底是 bug 还是 feature？Palantir 很多年都不确定……但最终的结论是，FDE 是一个巨大的 feature。」[00:21:01]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">FDE 与核心产品的张力：剑与盾</h3>
+                        <span class="topic-timestamp">21:52 - 25:12</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        企业客户的需求天然会打乱核心产品路线图。FDE 团队既是帮助企业赢得客户的「剑」，也是保护核心团队不被定制需求淹没的「盾」。关键在于让工程师直接面对客户，消除传话游戏中的信息损耗。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Ramp 的传话游戏终结</div>
+                        <p class="topic-detail-content">Calvin 分享 Ramp FDE 团队诞生的真实故事。经典的「传话游戏」——客户告诉客户经理、客户经理告诉产品经理、产品经理告诉工程师、工程师说「这不行」——导致严重的路线图延迟。Ramp 的解决方案很直接：让工程师直接和客户对话。不同于 Palantir 常驻现场的作风，Ramp 的 FDE 大部分时间通过 Zoom 沟通，每季度现场一次。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Ramp 的 ROI 计算</div>
+                        <p class="topic-detail-content">Calvin 的 ROI 计算方式极其简洁——企业客户收入除以 FDE 薪资。但更实质的衡量是：总是在努力将路线图功能直接构建给客户，而非做定制开发。Ramp FDE 在核心代码库中工作，与每个核心产品小组紧密合作，一个 FDE 同时服务五六个客户。这种模式下 ROI 自然非常吸引人。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">OpenAI 的服务收入「毒品」论</div>
+                        <p class="topic-detail-content">Colin 指出一个有趣发现：长期最赚钱的合作其实是那些基于产品的——只需 2-4 个 FDE，但能产生可持续的 ARR。他直言不讳地说，很多咨询公司做 FDE 做不好的原因就是服务收入像毒品——「他们戒不掉，不断卖更大的定制项目。而 OpenAI 的好处是，商业部门不是权力中心，产品和研究部门才是。」最大的合作（半导体公司）有 15 个 FDE，目标是改变整个价值链。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "I say it's a sword and a shield. We're trying to win the enterprise deals and we're trying to protect the core teams." — 「我称之为剑与盾。我们用剑赢下企业客户，用盾保护核心团队。」[00:12:25]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">OpenAI 的 FDE 飞轮：从客户嵌入到模型改进</h3>
+                        <span class="topic-timestamp">33:34 - 41:13</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        OpenAI 的 FDE 模式创造了一个独特的飞轮：FDE 嵌入客户环境，找到向模型表示任务的最佳方式，生成大量示例，后训练团队用这些数据改进模型——三个月后，新模型快照让之前不可能的任务变得轻而易举。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">幻灯片助手：从 50 种方案到麦肯锡的「眼泪」</div>
+                        <p class="topic-detail-content">一家有 2000 名销售人员的日本公司需要幻灯片生成工具。Colin 的团队首先探索如何格式化幻灯片让模型能生成好看的结果——从「六个固定框」（看起来很糟糕）到「生成 HTML」（看起来很好），尝试了 50 种方案后选定一种。然后生成大量示例，交给后训练团队。三个月后，新模型快照出炉，幻灯片质量大幅跃升。Colin 打趣说团队里的前麦肯锡员工「为前同事们流下了眼泪」——不过他也承认「幻灯片其实还不是很好，麦肯锡暂时还不会失业」。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">语音客服：从读不回电话号码到每天 7 万通</div>
+                        <p class="topic-detail-content">与一家大型电信公司合作做 AI 语音客服。刚接手时，实时模型连简单读回电话号码都做不好——10 次测试全部失败。经过六个月与后训练团队一起迭代改进模型，同时 FDE 还在顶部构建了平台——客户可以创建自己的评估体系、建立自我改进循环。最终上线后，每天处理约 7 万通电话，到目前为止没有发生重大越狱事件。更重要的是，客户在后续运行中不再需要 FDE——这才是理想状态。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">FDE 与解决方案工程的区分</div>
+                        <p class="topic-detail-content">Colin 描述 OpenAI 内部的角色划分：解决方案工程是规模化业务的售前，解决方案架构是规模化业务的售后，而 FDE 是独立业务单元，同一时间只做约 10 个深度合作项目。这也意味着他们必须比说 yes 更多地说 no——因为很多人有有趣的问题，但并非每个问题都能规模化到 ARR。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "We're now moving and doing things like making agents that can do physical designs of chips... we can trust that Codex is going to do the bottom 50% of tasks pretty well and so we can focus on the higher level tasks." — 「我们现在开始让智能体做芯片物理设计……我们可以信任 Codex 处理底层 50% 的任务，然后专注于更高层次的工作。」[00:09:10]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">什么样的人能成为优秀的 FDE？</h3>
+                        <span class="topic-timestamp">41:14 - 51:44</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        优秀 FDE 的核心特质不是某项具体技能，而是「对价值的不懈追求」——不在乎自己创造的东西的形式，只在乎用户是否真正在使用。FDE 是未来创始人的最佳训练场，因为你必须同时具备从零到一的构建能力、前沿 AI 技术的掌握、客户沟通和信任建立、以及组织政治的导航能力。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Colin（OpenAI）：对价值的不懈追求</div>
+                        <p class="topic-detail-content">最关键的特质是「relentless pursuit of value」。很多人开始爱上自己创造的东西的形式胜过功能——当用户不使用时，他们会说「但我们做了这个东西啊」。最优秀的 FDE 会说「推倒重来，做一个完全不同的」——因为那才是用户需要的。OpenAI 的 FDE 团队背景非常多元——有 BCG 麦肯锡出身的、有大量 Palantir 出身的、有前创始人——但共同点是都极其以结果为导向。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Calvin（Ramp）：想说 yes 的团队</div>
+                        <p class="topic-detail-content">Calvin 喜欢招聘前创始人和早期工程师。他有精辟概括：「FDE 团队是想说 yes 的团队，因为他们关心我们能否赢得客户。很多工程师其实想对客户说 no——他们想继续做自己正在构建的东西。」能与客户沟通是一个独立于技术能力的筛选维度——「这在普通工程师面试中不是硬性要求」。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Howard（Dataland）：极致所有权</div>
+                        <p class="topic-detail-content">Howard 认为 FDE 是「未来创始人最好的训练场」。从 Palantir Echo/Delta 模式出发，AI 正在让「极致所有权」成为可能——以前需要 Delta 写代码、Echo 维护客户关系，现在降低代码生产成本后，也许一个人就能持有所有上下文。Dataland 正在尝试找到具备这种全栈技能的人。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Jason（Nominal）：轮岗与客户上瘾</div>
+                        <p class="topic-detail-content">Jason 强调 FDE 与核心产品工程之间轮岗的重要性。他最开心的时刻之一是看到做产品的年轻工程师飞到欧洲现场使用产品，回来后说「天哪这太差了」然后变得极其有动力去修复。他还分享了关键洞察：有时客户比公司更上瘾于 FDE 本人——当你试图撤走 FDE 时，客户直接解雇你。解决方法是让每个客户只拥有 FDE 的一小部分注意力。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "The relentless pursuit of value... so much of the time people love the form of what they've created more than the function. The best forward deployed engineers are like, right, we'll just tear it up and make something completely different." — 「对价值的不懈追求……很多时候人们爱上自己创造的形式胜过功能。最优秀的 FDE 会说：推倒重来，做一个完全不同的。」[00:38:49]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💡</div>
+                    <h3 class="takeaway-title">问题空间爆炸</h3>
+                    <p class="takeaway-desc">AI 让 B2B 可触达的问题从「软件工作流」扩大到「全部劳动力支出」，FDE 是跨越业务知识壁垒的关键桥梁。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔧</div>
+                    <h3 class="takeaway-title">从管道到价值</h3>
+                    <p class="takeaway-desc">编程智能体让 FDE 从重复搭建基础设施中解放出来，专注于带来真正商业价值的高层任务——OpenAI 半导体案例中，底层 50% 的任务已可交给 Codex。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚠️</div>
+                    <h3 class="takeaway-title">服务陷阱警醒</h3>
+                    <p class="takeaway-desc">服务收入像毒品，客户可能比公司更上瘾于 FDE 人头。成功标准是：撤走人后价值仍在持续交付——这要求从第一天就构建可持续运行的系统。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔄</div>
+                    <h3 class="takeaway-title">飞轮效应</h3>
+                    <p class="takeaway-desc">OpenAI 的 FDE→合成数据→后训练→模型提升的飞轮，让不可能的任务在三个月后变得可行。语音客服从「读不回电话号码」到「每天处理 7 万通电话」。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🚀</div>
+                    <h3 class="takeaway-title">创始人训练场</h3>
+                    <p class="takeaway-desc">FDE 要求从零到一构建、掌握前沿 AI、赢得客户信任、穿越组织政治——这是创始能力最完整的综合训练。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚔️</div>
+                    <h3 class="takeaway-title">剑与盾平衡</h3>
+                    <p class="takeaway-desc">FDE 既是赢下企业客户的「剑」，也是保护核心产品路线图的「盾」。Ramp 的秘诀是让工程师直接面对客户，消除传话游戏。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">South Park Commons 圆桌讨论</h3>
+            <p class="footer-desc">
+                这场讨论揭示了 AI 时代一个反直觉的真相：当模型能力飞速提升时，理解业务场景的人类工程师反而变得更加不可或缺。前向部署工程不是一个过渡角色，而是一种将在更多行业和公司中扩散的核心职能——它是连接 AI 能力与真实世界问题的桥梁。
+            </p>
+            <div class="footer-quote">
+                "The relentless pursuit of value."
+            </div>
+            <p class="footer-note">
+                来源：South Park Commons NYC · 2026 · 嘉宾：Calvin（Ramp）、Jason（Nominal）、Howard（Dataland）、Colin Jarvis（OpenAI）
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

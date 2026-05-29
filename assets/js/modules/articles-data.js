@@ -1,6 +1,97 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/marc-rowan-apollo-private-markets.html",
+        "card_class": "card-finance",
+        "category": "金融 · 私人市场",
+        "date": "2026-05-29",
+        "title": "私人市场、软件重新定价与资本配置 — Marc Rowan 谈 Apollo",
+        "excerpt": "Apollo CEO Marc Rowan 深度对话：从Drexel倒闭时用纸箱装私人物品到管理万亿美元资产的蜕变、80%资产是投资级信贷而非私募股权的真相、标普500仅10只股票占近50%的集中度风险、过去十年30%投向企业软件的私募股权回报将灾难性、以及「做正确的事而非容易的事」的领导哲学。",
+        "tags": [
+            "#私人市场",
+            "#Apollo",
+            "#AI与信贷"
+        ]
+    },
+    {
+        "url": "articles/spacex-openai-anthropic-ipo-dick-costolo.html",
+        "card_class": "card-finance",
+        "category": "AI · IPO",
+        "date": "2026-05-29",
+        "title": "预测 SpaceX、OpenAI 和 Anthropic 的 IPO — Dick Costolo",
+        "excerpt": "Twitter前CEO Dick Costolo亲解三场万亿级IPO博弈：马斯克靠叙事能力撑住SpaceX 2万亿估值、Sam Altman面临万亿算力承诺与收入不匹配的拷问、Anthropic是三者中最稳健的选择——但真正的系统性风险是7成美国人反对建设数据中心，左右两派罕见团结，2028年暂停令可能登上选票。",
+        "tags": [
+            "#AI上市",
+            "#SpaceX",
+            "#IPO博弈"
+        ]
+    },
+    {
+        "url": "articles/seeed-studio-open-source-robot.html",
+        "card_class": "card-tech",
+        "category": "硬科技 · 机器人",
+        "date": "2026-05-29",
+        "title": "人人都能造机器人：Seeed Studio 的开源具身智能之路",
+        "excerpt": "200美元的开源机械臂、像训狗一样训练机器人、用自然语言指挥机械爪——Seeed Studio CEO Eric Pan 和机器人负责人 Elaine Wu 深度解析：OpenClaw 集成 Qwen3.5 实现文字控制机器人、NVIDIA Isaac Sim 数字孪生闭环、把人形机器人拆成模块的自由组合哲学，以及为什么开源是机器人普及的必由之路。",
+        "tags": [
+            "#开源机器人",
+            "#具身智能",
+            "#NVIDIA"
+        ]
+    },
+    {
+        "url": "articles/tech-billionaires-ai-plans.html",
+        "card_class": "card-ai",
+        "category": "AI · 科技批判",
+        "date": "2026-05-29",
+        "title": "科技亿万富翁正在公开宣布他们的计划",
+        "excerpt": "从卡辛斯基的三十年预言到AI巨头的帝国野心：Anthropic购买数百万本书籍撕碎扫描、你的401(k)退休金正在喂养AI数据中心、奥特曼构建「智能公用事业」垄断帝国——全美134起案件中律师引用了AI编造的虚假案例，而科技巨头必须撒谎，因为承认AI只是内容混合体将摧毁整个行业的版权基础。",
+        "tags": [
+            "#AI批判",
+            "#版权争议",
+            "#科技垄断"
+        ]
+    },
+    {
+        "url": "articles/aaron-levie-enterprise-ai-2026.html",
+        "card_class": "card-ai",
+        "category": "AI · 企业落地",
+        "date": "2026-05-29",
+        "title": "2026年企业AI现状：Aaron Levie谈Token成本、无头软件与职场生存",
+        "excerpt": "Box CEO Aaron Levie 与数百位财富500强CIO对话后的最新洞察：模型进步越快企业部署反而越慢的悖论、单个智能体任务消耗1000美元计算资源的Token成本爆炸、数据是永恒瓶颈而非模型能力、杰文斯悖论证明AI不会消灭工作、企业将使用半打以上模型的拼图策略，以及创业公司在「桥梁层」的巨大机会。",
+        "tags": [
+            "#企业AI",
+            "#Token成本",
+            "#无头软件"
+        ]
+    },
+    {
+        "url": "articles/future-of-forward-deployed-engineering.html",
+        "card_class": "card-ai",
+        "category": "AI · 工程",
+        "date": "2026-05-29",
+        "title": "前向部署工程的未来：AI 时代最关键的角色",
+        "excerpt": "OpenAI、Ramp、Nominal、Dataland 四位工程领导者圆桌讨论：为什么模型越强 FDE 需求反而暴增 10 倍？编程智能体让 FDE 从基础设施解放到高层价值创造、避免服务收入「毒品陷阱」的方法论、OpenAI 的 FDE→合成数据→模型改进飞轮，以及为什么 FDE 是未来创始人的最佳训练场。",
+        "tags": [
+            "#AI工程",
+            "#FDE",
+            "#创业"
+        ]
+    },
+    {
+        "url": "articles/dan-loeb-third-point-strategy.html",
+        "card_class": "card-finance",
+        "category": "投资 · 对冲基金",
+        "date": "2026-05-29",
+        "title": "Dan Loeb：从深度价值到全能资本配置者",
+        "excerpt": "Third Point 250亿美元掌舵人30年投资哲学的三次进化：从不良债务到质量投资、苏富比和索尼的激进投资幕后故事、AI不是泡沫的论证、丹纳赫运营体系的启示、FTX惨败的最痛教训、以及「唯一用钱买不到的是在你一无所有时相信你的朋友」。",
+        "tags": [
+            "#对冲基金",
+            "#激进投资",
+            "#AI投资"
+        ]
+    },
+    {
         "url": "articles/cerebras-andrew-feldman.html",
         "card_class": "card-tech",
         "category": "硬科技 · 芯片",
