@@ -1,6 +1,32 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/ai-silicon-shortage-supply-chain.html",
+        "card_class": "card-tech",
+        "category": "半导体 · AI 供应链",
+        "date": "2026-05-30",
+        "title": "AI 硅片短缺深度解析 — 晶圆产能、内存危机与光学互连",
+        "excerpt": "SemiAnalysis 四位分析师拆解 AI 硅片短缺：台积电 3nm 产能 2027 年 90% 被 AI 吞噬、HBM 每比特消耗标准 DRAM 3-4 倍晶圆产能、H100 租赁价格逆势飙升 15-20%、共封装光学（CPO）成为连接数十万 GPU 的下一代方案。消费电子面临 10-15% 出货量下降的至暗时刻。",
+        "tags": [
+            "#硅片短缺",
+            "#台积电",
+            "#光互连"
+        ]
+    },
+    {
+        "url": "articles/stanford-cs153-value-per-gigawatt.html",
+        "card_class": "card-tech",
+        "category": "AI · 基础设施",
+        "date": "2026-05-30",
+        "title": "每吉瓦的价值交付 — Google AI 基础设施背后的工程纪律",
+        "excerpt": "Google AI 基础设施负责人 Amin Vahdat 在 Stanford CS153 揭示：每吉瓦造价 400-500 亿美元，但行业衡量标准是错的——不是有多少吉瓦，而是每美元交付多少价值。136 面 MEMS 镜子实现秒级故障恢复、前沿实验室用可靠性换算力的范式转变、TPU 第八代首次推理/训练专门化、以及缺水地区接受 10% 能效损失的社区责任。",
+        "tags": [
+            "#AI基础设施",
+            "#TPU",
+            "#系统平衡"
+        ]
+    },
+    {
         "url": "articles/marc-rowan-apollo-private-markets.html",
         "card_class": "card-finance",
         "category": "金融 · 私人市场",
@@ -1935,19 +1961,6 @@ const articlesData = [
             "#LloydBlankfein",
             "#高盛",
             "#2008危机"
-        ]
-    },
-    {
-        "url": "articles/ai-silicon-shortage-tsmc-nvidia-cpo.html",
-        "card_class": "card-tech",
-        "category": "半导体",
-        "date": "2026-03-29",
-        "title": "AI 硅短缺危机：TSMC、Nvidia CPO 与内存瓶颈",
-        "excerpt": "SemiAnalysis 深度解析 AI 芯片供应链的三大瓶颈：TSMC CoWoS 产能极限、Nvidia CPO 封装革命、HBM 内存危机。从 ASML EUV 设备到美国对华芯片管制，全面剖析支撑 AGI 愿景的物理底座与 2026-2027 年供应缺口。",
-        "tags": [
-            "#TSMC",
-            "#Nvidia",
-            "#半导体"
         ]
     },
     {

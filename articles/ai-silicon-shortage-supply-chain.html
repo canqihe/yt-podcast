@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 硅片短缺深度解析 — 晶圆产能、内存危机与光学互连</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='3' y='3' width='12' height='12' rx='2' fill='%234a9eff'/><rect x='17' y='3' width='12' height='12' rx='2' fill='%236b7eff'/><rect x='3' y='17' width='12' height='12' rx='2' fill='%238b5cf7'/><rect x='17' y='17' width='12' height='12' rx='2' fill='%23a855f7'/></svg>">
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <style>
+        :root {
+            --accent-primary: #ff6b35;
+            --accent-secondary: #00d4ff;
+            --accent-primary-rgb: 255, 107, 53;
+            --accent-secondary-rgb: 0, 212, 255;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/ai-silicon-shortage-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">SemiAnalysis Weekly</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">AI Silicon Shortage</span>
+                    <span class="title-line-2">硅片短缺深度解析</span>
+                </h1>
+                <p class="subtitle">
+                    台积电 3 纳米产能 90% 被 AI 吞噬，H100 租赁价格逆势飙升，共封装光学成为下一代互连方案——四位半导体分析师拆解 AI 供应链危机。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Jordan Nanos</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Dan Nishball / Sravan / Ivan</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 58 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=kZ1jDqFUS3s" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">瓶颈已转移</h3>
+                    <p class="point-desc">AI 产业的最大瓶颈已从电力和封装转向晶圆代工厂的前端产能。这不是短期波动，而是结构性转变。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">90% 的吞噬</h3>
+                    <p class="point-desc">2027 年 3 纳米先进制程产能的 90% 将被 AI 加速器占据，智能手机和消费电子面临系统性挤压。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">采购即壁垒</h3>
+                    <p class="point-desc">能否同时锁定晶圆、内存和封装产能已成为新的竞争壁垒。台积电要求客户自证内存获取能力。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">价格是需求信号</h3>
+                    <p class="point-desc">H100 租赁价格不降反升，涨幅远超内存成本传导——AI 需求远超预期的最直接证据。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">光学即未来</h3>
+                    <p class="point-desc">共封装光学（CPO）是连接数十万 GPU 的下一代方案。英伟达 NVO 576 和 1152 标志着从铜线到光学的关键转折。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">周期终将回归</h3>
+                    <p class="point-desc">半导体每 3-4 年一个周期，重复下单正在积累虚假需求信号。长期趋势不可逆，但短期库存调整可能带来剧烈波动。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 硅片短缺：从 CoWoS 到晶圆厂的瓶颈迁移</h3>
+                        <span class="topic-timestamp">00:00 - 03:25</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 产业的瓶颈已经从先进封装和电力转向了前端晶圆制造产能，这是一场由 token 需求暴增驱动的结构性短缺。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三阶段瓶颈演变</div>
+                        <p class="topic-detail-content">Ivan 回溯了 AI 产业瓶颈的演变历程。2022 年底 ChatGPT 诞生后，AI 行业经历了三个阶段：2023 年的先进封装瓶颈（CoWoS 产能不足），2023-2025 年的数据中心电力瓶颈（电力和物理空间不足），以及 2025 年至今的硅片短缺时代——晶圆代工厂的前端产能成为最大约束。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Token 需求爆发</div>
+                        <p class="topic-detail-content">驱动短缺的核心力量来自两个方向：更好的模型推动更高的用户采用率，以及以 Claude Code 为代表的多步骤代理系统消耗的 token 量远超传统对话式交互。SemiAnalysis 自身每天在 token 上花费数千美元。Anthropic 仅在 2025 年 2 月单月就实现了 60 亿美元年化收入（ARR），主要由 Claude Code 驱动。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">价格信号</div>
+                        <p class="topic-detail-content">更引人注目的是，Hopper（H100）——一颗已经「两代之前」的芯片——的按需租赁价格仍在飙升，从侧面印证了需求的强劲程度。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "We are in this silicon shortage era where basically we are arguing that there's not enough wafer fab capacity. Power is no longer the biggest constraint." — "我们正处于硅片短缺时代，晶圆代工厂的产能不足。电力不再是最大约束。" [00:01:50]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">台积电：半导体产业的「造王者」</h3>
+                        <span class="topic-timestamp">03:25 - 06:24</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        英伟达在 2025 年超越苹果成为台积电最大客户。台积电通过精密的客户分配策略决定谁能获得稀缺的先进制程产能，扮演着半导体产业的「造王者」角色。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">客户结构根本性转变</div>
+                        <p class="topic-detail-content">从第一代 iPhone 到 2022 年，智能手机一直是台积电最先进制程的首要驱动力。但现在英伟达在 2025 年超越苹果成为最大客户，高性能计算（HPC）增长速度远超智能手机。2025 年底台积电 3 纳米月产能约 12 万片晶圆，其中智能手机和 PC 占约 7-8 万片（近三分之二），但英伟达和 AMD 的新芯片将接管大部分 N3 产能。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">审慎的客户选择</div>
+                        <p class="topic-detail-content">台积电关注谁能提供稳定可预测的需求。这种策略源于 2018 年加密货币客户的教训——需求在两三个季度内就蒸发了。苹果虽不再是最大客户，但仍占台积电总晶圆出货量的 10%、最先进制程需求的 25-30%。定价方面，台积电遵循「价值获取」逻辑，并不像外界想象的那样趁火打劫。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">引导制程迁移</div>
+                        <p class="topic-detail-content">台积电正在主动引导高端智能手机客户从 3 纳米迁移到 2 纳米，以释放 3 纳米产能给 AI 客户，并提供合理定价来促成这一迁移。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Nvidia recently overtook Apple as the largest TSMC customer in 2025. They always look at customer profile — who can give me proper stable demand." — "英伟达 2025 年超越苹果成为台积电最大客户。他们总是看谁能给稳定可靠的需求。" [00:04:07]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">内存短缺：消费电子的至暗时刻</h3>
+                        <span class="topic-timestamp">06:24 - 10:16</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 正在「吃掉」内存产能——HBM 每比特消耗的晶圆产能是标准 DRAM 的 3-4 倍，导致智能手机和 PC 出货量可能下降 10-15%。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">消费电子受冲击</div>
+                        <p class="topic-detail-content">预计智能手机出货量同比下降 10-15%，PC 同样下降 10-15%。内存物料成本占比从 20% 飙升到 25-30%。中国低端品牌（小米、OPPO、vivo）订单削减高达 30%。旗舰产品（iPhone 级别）相对安全，低端产品受到最严重打击。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">EUV 产能被 AI 吞噬</div>
+                        <p class="topic-detail-content">AI 占 EUV（极紫外光刻）产能的比例从 2025 年的 9%，跳升到 2026 年的 60%，再到 2027 年的 85-90%。几乎所有主要 AI 加速器都在 2026 年同时转向 EUV：英伟达 Rubin、AMD MI400、谷歌 TPU V7/V8、Trinium 等，造成空前的产能挤压。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">采购策略成为新壁垒</div>
+                        <p class="topic-detail-content">台积电现在要求一些客户自行解决内存分配问题，以此证明他们有能力利用分配到的晶圆产能。拥有良好采购策略正在成为一种新的竞争壁垒。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "AI as a percentage of EUV output in 2026 is 60% and then this goes to 85-90% in 2027. This really basically squeezes out smartphone and consumer electronics." — "2026 年 AI 占 EUV 产能 60%，2027 年上升到 85-90%，基本上把智能手机和消费电子挤出局了。" [00:10:19]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">短期应对之策：制程迁移与释放阀</h3>
+                        <span class="topic-timestamp">13:25 - 17:16</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        智能手机作为 AI 产能的「释放阀」效果有限——即使极端地重新分配 25% 的智能手机 EUV 晶圆，也只能多生产约 70 万颗 Rubin GPU，不足以显著改变局面。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">短期策略</div>
+                        <p class="topic-detail-content">高端智能手机（苹果、高通旗舰）从 3 纳米迁移到 2 纳米，台积电以合理定价鼓励迁移。中端产品继续使用 4 纳米。内存价格上涨导致消费电子需求走弱，间接缓解了晶圆需求——算是意外的好处。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">建模显示杯水车薪</div>
+                        <p class="topic-detail-content">重新分配 5% 智能手机 EUV 晶圆 → 仅够约 10 万颗 Rubin GPU 或 30 万颗 TPU V7。极端场景下重新分配 25% → 约 70 万颗 Rubin GPU 和 150 万颗 TPU V7。不足以显著改变局面。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">中长期展望</div>
+                        <p class="topic-detail-content">台积电 2025 年资本支出 520-540 亿美元，2027 年可能接近 700 亿美元。但新增产能从投资到上线需要 12-24 个月。三星 3 纳米良率仍不理想，无法成为有效替代方案。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Even in an extreme scenario, reallocating 25% of smartphone EUV wafers leads to only 700,000 Rubin GPUs. It's good, but really isn't enough to move the needle significantly." — "极端场景下重新分配 25% 也只能多生产约 70 万颗 Rubin GPU。有帮助，但不足以显著改变局面。" [00:16:38]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">HBM：持续紧张的结构性趋势</h3>
+                        <span class="topic-timestamp">17:16 - 19:35</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        HBM 市场将持续紧张至 2027 年下半年。英伟达对高引脚速度的苛刻要求让许多内存厂商难以达标，进一步加剧了供应紧张。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三重挤压因素</div>
+                        <p class="topic-detail-content">HBM 当前每比特消耗的晶圆产能是标准 DRAM 的 3 倍；到了 HBM4 和 4E，这个比例上升到 4 倍。每代芯片的 HBM 容量持续增加。英伟达要求高达 11 Gbps 的引脚速度，许多内存厂商达不到这一要求。三重因素叠加，即使 SK 海力士、三星、美光的新工厂在 2027 年开始投产，可能仍然不够。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">完美风暴</div>
+                        <p class="topic-detail-content">被压抑的智能手机需求届时会重新回来，与 AI 需求形成「完美风暴」。除非超大规模企业大幅削减资本支出——Sravan 明确表示这极不可能发生。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">GPU 租赁市场：三层结构与价格信号</h3>
+                        <span class="topic-timestamp">19:35 - 26:58</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        GPU 租赁市场呈现三层结构，H100 价格不降反升，表明 AI 需求远超预期——不仅是内存成本传导，更是纯粹的需求驱动。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三层市场结构</div>
+                        <p class="topic-detail-content">长端：4-5 年承购合同，OpenAI 和 Anthropic 签署，GB300 为主，数百兆瓦规模。中端：1-4 年合约市场，AI 原生企业和部分 AI 实验室找产能。短端：按需市场，最小部分，流动性最低。CoreWeave 去年底续签大量 H100 合同，把供应从市场上拿走。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">价格走势完全反转</div>
+                        <p class="topic-detail-content">团队原本预测 H100 租赁价格 2026 年下降 30%（因为 GB300 量产应拉低计算成本），但实际走势完全相反：2024 年 10 月从底部约 170 美元/GPU/小时开始反弹到约 180 美元，2025 年初几个月飙升 15-20%，3 月继续上涨约 10%。内存成本使服务器成本增加约 5-10%，但 GPU 租赁价格涨幅远超——核心驱动力是需求。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">H100 的「不死之身」</div>
+                        <p class="topic-detail-content">一家 Neocloud 将到期的 H100 合同续签了 4 年，一直到 2030 年。这意味着这些 GPU 的经济寿命可能达到 8 年，彻底改变了财务模型中的终端价值假设。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "One of the Neo Clouds had a long-term contract coming due for an H100 and they renewed it for a 4-year term. They're signing GPUs through to 2030. That's an 8-year life." — "一家 Neocloud 把到期的 H100 合同续签了 4 年到 2030 年。这是 8 年的寿命承诺。" [00:27:00]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">如何判断 AI 投资的顶部？</h3>
+                        <span class="topic-timestamp">29:09 - 33:26</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        供应容易观察，价格可以追踪，但需求是最难衡量的变量。四位分析师各自分享了判断 AI 周期顶部的信号框架。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Dan 的框架</div>
+                        <p class="topic-detail-content">三个信号：GB300 量产后 1-4 年合约市场是否松动（不松动说明需求仍远超供给）；AI 投资的 ROI 是否变得难以自圆其说；AI 代理在技术圈已是标配但 Fortune 500 企业才刚起步，渗透率极低。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Ivan 的信号</div>
+                        <p class="topic-detail-content">监控 Anthropic/OpenAI 的用户增长和收入增速；关注数据中心租约——微软曾在 2025 年退出一些非约束性数据中心合同，这类事件是早期预警。但他仍认为行业处于早期阶段。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Sravan 的警告：重复下单</div>
+                        <p class="topic-detail-content">半导体每 3-4 年一个周期，当前内存和 EUV 产能市场正在发生大量重复下单（Double Ordering）——终端客户从多个渠道同时下单，一旦满足需求就取消其他订单，造成虚假需求信号。CEO 们自己都说这个行业永远不会吸取教训。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "This time is different — those four words are usually the classic sign of the top." — "「这次不一样」——这四个字通常是顶部的经典信号。" [00:29:42]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Claude Code：AI 代理如何十倍提升分析师生产力</h3>
+                        <span class="topic-timestamp">36:19 - 39:05</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Sravan 分享了使用 Claude Code 的第一手体验，称 2026 年是其生产力最高的一年——AI 代理正从「理论上的效率提升」变成「日常工作的一部分」。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">分析师日常工作的变革</div>
+                        <p class="topic-detail-content">Sravan 的工作涉及筛选财报电话会议记录、SEC 文件、演示文稿，连接多家公司的信息点。比如追踪台积电需求，需要同时看台积电、高通、联发科、英伟达、AMD 的表述。Claude Code 能高效处理数百个 PDF 文件，快速扫描 5000-10000 字的长文，提取关键信息。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从 Excel 到仪表板</div>
+                        <p class="topic-detail-content">原来 40-50 个标签页的 Excel 信息，现在可以转化为可视化仪表板——直观看到什么在增长、什么在下降、什么在拐点。Sravan 评价：「我现在总是有两三个人在为我工作——那就是 Claude Code。生产力提升了差不多 10 倍。」</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "2026 is probably the best year for me. I'm always having two, three people working for me — it's Claude Code." — "2026 年可能是最好的一年。我总是有两三个人在为我工作——那就是 Claude Code。" [00:36:35]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">共封装光学（CPO）：AI 集群的下一次革命</h3>
+                        <span class="topic-timestamp">39:26 - 46:06</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        英伟达正在推动共封装光学（CPO）从概念走向产品——将光引擎直接封装在芯片旁边，省去传统可插拔模块，大幅提升带宽密度和能效。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">传统方案 vs CPO</div>
+                        <p class="topic-detail-content">传统方案：芯片 → 电走线 → 前面板 → 可插拔模块（电转光），信号距离长，需要 DSP 信号调理。CPO 方案：光引擎直接封装在芯片旁边，缩短电信号传输距离，可省去 DSP，大幅降低功耗。以英伟达 Kyber 机架为例，要从芯片输出 7.2Tbps 或 40.4Tbps 带宽，可插拔方案需要 6-12 个 1.6T 模块，物理空间根本不够。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两种应用场景</div>
+                        <p class="topic-detail-content">Scale Out：连接不同机架间的 GPU，数万到数十万颗 GPU 的互连，核心价值是节省功耗和降低成本。Scale Up：在同一域内以约 10 倍速度连接 GPU，当前铜线在 224G 速率下传输距离只有约 2 米，超出范围必须用光学。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">GTC 2026 关键公告</div>
+                        <p class="topic-detail-content">NVO 576（Ruben 架构）：用 Scale Up CPO 连接 8 个机架。NVO 1152（Feynman 架构）：用 CPO 连接 8 个 Kyber 机架。很多人原以为 Scale Up CPO 会率先落地，但英伟达先推动了 Scale Out CPO，因为 Neocloud 市场更接受端到端的一体化解决方案。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "What CPO does is you're taking the optical engine and putting it right next to the chip, co-packaging it into the substrate. This shortens the length the electrical signal has to travel and allows you to avoid using a DSP." — "CPO 把光引擎直接放在芯片旁边，共同封装到基板上。缩短电信号传输距离，可以不用 DSP。" [00:40:27]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">MSA 标准之争：光学互连的三国演义</h3>
+                        <span class="topic-timestamp">50:04 - 56:31</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        光学互连领域正在上演三足鼎立的标准之争——OCI MSA、Open CPX MSA 和 XPO MSA 代表不同的技术路线和商业利益，最终可能共存。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">OCI MSA：行业共识</div>
+                        <p class="topic-detail-content">参与者包括英伟达、博通、AMD、Meta、微软、OpenAI。核心规格：4 波长发射、4 波长接收，双向传输，50G NRZ 调制。标志着从 DR 光学（每根光纤一个波长）到 DWDM（密集波分复用，一根光纤承载多个光信号）的重大转变。简化调制、提高光纤利用率、更大的扩展空间。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Open CPX MSA：物理连接器</div>
+                        <p class="topic-detail-content">侧重物理连接器的形态因素，有意不规定调制方式。但隐含了使用环形调制器的假设（还有 MZI、EAM 等其他类型）。面向想保持可插拔灵活性的超大规模企业。即使最终是共封装铜（CPC），仍需串行链路从芯片到连接器。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">XPO MSA：延长可插拔寿命</div>
+                        <p class="topic-detail-content">Arista 主导，目标延长可插拔方案的寿命。特点：原生冷却、高密度、灵活（支持相干光学和线性可插拔光学 LPO）。配合 Tomahawk 7 交换芯片，通过共封装铜 + 飞越电缆实现。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">共存而非淘汰</div>
+                        <p class="topic-detail-content">Dan 的判断：三种标准将共存。各自有合理的技术路线和商业逻辑，只是「不同的游戏风格」。但短期内 OCI MSA 因为获得了所有主要芯片厂商的背书而最具影响力。底层技术趋势是从 DR 光学到 DWDM 的转变，将大幅提升光纤利用率。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "The big shift underway: from DR optics — one lambda per fiber — to DWDM, where you can carry multiple optical signals over one fiber. It allows you to simplify modulation, fit more traffic onto the same fibers, and eventually much more bandwidth escape." — "正在发生的大转变：从每根光纤一个波长到一根光纤承载多个光信号。简化调制，在相同光纤上承载更多流量。" [00:50:08]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">瓶颈已转移</h3>
+                    <p class="takeaway-desc">晶圆代工厂的前端产能已取代电力和封装，成为 AI 产业的最大瓶颈。这不是短期波动，而是结构性转变。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔥</div>
+                    <h3 class="takeaway-title">90% 的吞噬</h3>
+                    <p class="takeaway-desc">2027 年 3 纳米先进制程产能的 90% 将被 AI 加速器占据，智能手机和消费电子面临系统性挤压。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">采购即壁垒</h3>
+                    <p class="takeaway-desc">能否同时锁定晶圆、内存和封装产能已成为新的竞争壁垒。大公司越强，小公司越难。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📈</div>
+                    <h3 class="takeaway-title">价格是需求信号</h3>
+                    <p class="takeaway-desc">H100 租赁价格不降反升、涨幅远超内存成本传导——AI 需求远超预期的最直接证据。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💡</div>
+                    <h3 class="takeaway-title">光学即未来</h3>
+                    <p class="takeaway-desc">共封装光学（CPO）是连接数十万 GPU 的下一代互连方案，英伟达 NVO 576 和 1152 标志着从铜线到光学的关键转折。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔄</div>
+                    <h3 class="takeaway-title">周期终将回归</h3>
+                    <p class="takeaway-desc">半导体每 3-4 年一个周期，重复下单正在积累虚假需求信号。长期趋势不可逆，但短期库存调整可能带来剧烈波动。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">SemiAnalysis Weekly</h3>
+            <p class="footer-desc">
+                半导体行业最敏锐的分析团队，深入 AI 供应链的每一个环节——从晶圆代工到光互连标准之争。
+            </p>
+            <div class="footer-quote">
+                "This time is different — those four words are usually the classic sign of the top."
+            </div>
+            <p class="footer-note">
+                基于 SemiAnalysis Weekly Ep. 006 整理 · 内容版权归原作者所有
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
