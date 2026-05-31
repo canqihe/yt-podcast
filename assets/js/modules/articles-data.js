@@ -1,6 +1,33 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/benedict-evans-ai-future.html",
+        "card_class": "card-ai",
+        "category": "Lenny's Podcast · AI 趋势",
+        "date": "2026-05-31",
+        "title": "关于 AI 真正走向的理性对话 — Benedict Evans",
+        "excerpt": "前a16z分析师Benedict Evans：我们正处于AI的「1997年」，基础模型公司大概率走向电信运营商的命运——巨额投入、同质化竞争、被压缩的利润率。真正的价值将在应用层被捕获。就业末日论者忽略了杰文斯悖论和历史规律，面对不确定性最好的策略是深入实践而非恐惧。",
+        "tags": ["#AI趋势", "#平台转移", "#Benedict Evans"]
+    },
+    {
+        "url": "articles/60minutes-ai-reports.html",
+        "card_class": "card-ai",
+        "category": "CBS · AI 全景",
+        "date": "2026-05-31",
+        "title": "60 Minutes AI 全景报道 — 七大议题深度追踪",
+        "excerpt": "从 Anthropic 的安全透明到 Character AI 的儿童保护危机，从人形机器人走上工厂车间到激光以每发3美元击落无人机，从稀土供应链博弈到伦敦出租车司机对抗自动驾驶——CBS 60 Minutes 历时半年七段深度报道，追踪 AI 如何重塑战争、艺术、产业与日常生活。",
+        "tags": ["#AI全景", "#60Minutes", "#深度报道"]
+    },
+    {
+        "url": "articles/a16z-ai-winners.html",
+        "card_class": "card-finance",
+        "category": "VC · AI 投资",
+        "date": "2026-05-31",
+        "title": "筛选 AI 赢家的新规则 — Anthropic 与 OpenAI 如何重塑风投格局",
+        "excerpt": "a16z 合伙人 David George 与 VenCap CIO David Clark 深度对话：Anthropic 和 OpenAI 每月新增收入已超越 Meta、Google、微软，顶级 1% 退出门槛 24 个月从 100 亿暴涨至 320 亿美元，但 AI 50 强每年 40% 淘汰率让选赢家越来越难。当前不是泡沫——供给稀缺是需求真实性的最强证据。",
+        "tags": ["#AI投资", "#风投", "#Anthropic"]
+    },
+    {
         "url": "articles/ai-silicon-shortage-supply-chain.html",
         "card_class": "card-tech",
         "category": "半导体 · AI 供应链",
