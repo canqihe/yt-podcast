@@ -1,6 +1,15 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/robot-hardware-supply-chain.html",
+        "card_class": "card-tech",
+        "category": "硅谷101 · 机器人硬件",
+        "date": "2026-06-01",
+        "title": "拆解机器人「肉身」、量产与供应链 — 空翻之后它还要学会接住一片落叶",
+        "excerpt": "三位业内一线人士深度拆解人形机器人硬件全链路：执行器占总成本51%、减速器的「不可能三角」、能效3%与5%在极限动作时被放大到25倍发热量、80%零部件复用汽车供应链但系统整合才是护城河。下一个里程碑不是更炫的空翻，而是接住一片落叶。",
+        "tags": ["#机器人", "#硬件拆解", "#供应链"]
+    },
+    {
         "url": "articles/benedict-evans-ai-future.html",
         "card_class": "card-ai",
         "category": "Lenny's Podcast · AI 趋势",
