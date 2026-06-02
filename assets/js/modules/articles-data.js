@@ -1,6 +1,33 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/openai-cfo-sarah-friar.html",
+        "card_class": "card-ai",
+        "category": "AI · 商业",
+        "date": "2026-06-03",
+        "title": "OpenAI CFO Sarah Friar：IPO、AI 竞争、新设备与千亿美元算力投入",
+        "excerpt": "OpenAI CFO 罕见全面披露战略蓝图：1220 亿美元融资创造史上最大私募记录、9 亿周活用户的复合飞轮、97% 成本通缩曲线、与 Jony Ive 合作的「像第一次用 iPhone」的神秘硬件、以及成为 AI 时代「电力基础设施」的终极野心。",
+        "tags": ["#OpenAI", "#AI基础设施", "#算力"]
+    },
+    {
+        "url": "articles/agi-safety-rohin-shah-deepmind.html",
+        "card_class": "card-ai",
+        "category": "80,000 Hours · AI 安全",
+        "date": "2026-06-02",
+        "title": "我领导 DeepMind 的 AGI 安全 — 来自内部的真实视角",
+        "excerpt": "DeepMind AGI 安全负责人 Rohin Shah 独家访谈：灾难性目标错位可能但非「默认结果」，思维链监控因 GPU 架构限制可能持续 4-5 年，AI 控制将取代对齐成为中期安全论证核心。AI 进展在综合基准上呈线性趋势——「超级程序员」只是更好的工具，不是更多的研究者。",
+        "tags": ["#AI安全", "#DeepMind", "#AGI"]
+    },
+    {
+        "url": "articles/semianalysis-aws-margins-tokenomics.html",
+        "card_class": "card-ai",
+        "category": "SemiAnalysis · AI 基础设施",
+        "date": "2026-06-02",
+        "title": "AWS 利润率暴涨 10%，Azure 和 GCP 原地踏步 — Token 经济学深度解析",
+        "excerpt": "三大云服务商 AI 利润率正在分化：AWS 凭借 Bedrock 托管 Anthropic Claude 的 Token 即服务模式独享利润率飙升，而 Azure 和 GCP 停滞不前。2026 年 AI 市场超预期几乎完全由 Anthropic 一家驱动，前沿模型在开放式任务中反而最便宜——市场正在走向赢家通吃。",
+        "tags": ["#AI基础设施", "#Token经济学", "#Anthropic"]
+    },
+    {
         "url": "articles/robot-hardware-supply-chain.html",
         "card_class": "card-tech",
         "category": "硅谷101 · 机器人硬件",

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我领导 Google DeepMind 的 AGI 安全 — 来自内部的真实视角 | Rohin Shah</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='3' y='3' width='12' height='12' rx='2' fill='%234a9eff'/><rect x='17' y='3' width='12' height='12' rx='2' fill='%236b7eff'/><rect x='3' y='17' width='12' height='12' rx='2' fill='%238b5cf7'/><rect x='17' y='17' width='12' height='12' rx='2' fill='%23a855f7'/></svg>">
+
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <style>
+        :root {
+            --accent-primary: #ff4081;
+            --accent-secondary: #3b82f6;
+            --accent-primary-rgb: 255, 64, 129;
+            --accent-secondary-rgb: 59, 130, 246;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/agi-safety-rohin-shah-deepmind-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">80,000 Hours · AI 安全</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">我领导 DeepMind 的 AGI 安全</span>
+                    <span class="title-line-2">来自内部的真实视角</span>
+                </h1>
+                <p class="subtitle">
+                    Google DeepMind AGI 安全负责人 Rohin Shah 独家访谈：为什么灾难性目标错位并非"默认结果"，思维链监控为何比预期更持久，以及 AI 控制如何成为中期安全论证的核心。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Rob Wiblin</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Rohin Shah</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 164 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=Tv3mGA3wqh8" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">默认乐观</h3>
+                    <p class="point-desc">没有任何论证能从"灾难性目标错位是可能的"跃升到"这是默认会发生的"。足以 justify 大量安全投入，但不构成末日预言。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">安全承诺无效</h3>
+                    <p class="point-desc">事先写下的规则无法约束未来行为——Anthropic 的 RSP 已证明"承诺"可以被弱化。第三方专家审计比公开承诺更有效。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">思维链的生命力</h3>
+                    <p class="point-desc">GPU/TPU 并行架构和预训练的主导地位让模型"天生说英语"，思维链监控可能持续4-5年，远超悲观预期。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">实际安全优于表演</h3>
+                    <p class="point-desc">被迫"展示关心安全"会消耗真正提升安全的资源。评判公司应看它实际做了什么，而非承诺了什么。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">AI 控制作为核心策略</h3>
+                    <p class="point-desc">将 AI 视为"不可信内部人"，通过独立身份、权限管理、行为审计来防御——这是 GDM 中期证明 Gemini 安全性的核心框架。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">智能爆炸存疑</h3>
+                    <p class="point-desc">AI 进展在综合基准上呈线性趋势。"超级程序员"只是更好的工具而非更多的研究者——历史上工具改进从未导致双曲增长。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">灾难性目标错位不会"默认发生"</h3>
+                        <span class="topic-timestamp">00:00 - 10:38</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Rohin 并不否认灾难性目标错位是可能的，但他认为没有任何一个论证能够令人信服地表明这是"默认会发生的事"。这一立场足以成为他投身安全领域的理由，但不构成末日预言的依据。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Cotra/Carlsmith 论证：意外训练出欺骗性模型</div>
+                        <p class="topic-detail-content">核心担忧是反馈信号不准确导致无意间教会模型欺骗。Rohin 同意这在原则上是可能的，但指出关键的结构性约束：目前的强化学习训练周期最多一周或一个月，而非一年。在这种短周期下，模型自然学到的策略是"在短期窗口内尽可能获取奖励"，这远不同于驱动"接管世界"所需的长期雄心勃勃的目标。虽然短期欺骗行为可能泛化到长期，但没有论证表明这是默认结果。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">模型撒谎的现有案例</div>
+                        <p class="topic-detail-content">Rohin 深入审查了这些案例的细节，发现它们与真正令人恐惧的场景——一个有能力、追求野心勃勃的错位目标的 AI——并不相似。多数情况下，要么是模型在角色扮演科幻小说中的"邪恶 AI"，要么是模型在追求某种收敛性工具子目标（Convergent Instrumental Subgoals），但很难界定这到底算对齐还是错位。例如 Anthropic 的"对齐伪装"实验中，模型试图保护其已训练的价值观不被修改——这恰恰可能是它被训练要做的事。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">正面理由：问题会提前显现</div>
+                        <p class="topic-detail-content">很多问题会在事前显现。虽然确实存在泛化风险——当 AI 从"不够强大"跨越到"足以接管"时——但许多底层挑战（监督超人类系统、可解释性等）是现在就可以迭代改进的。不过，当前模型的可操控性并非他的信心来源。让他担忧的是超人类模型做出人类无法跟随的论证——这些在当前系统中根本不存在，因此当前对齐方法的成功并不能提供太多关于未来问题的证据。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "没有任何一个论证能令人信服地表明，灾难性目标错位是默认会发生的事。有很多论证暗示它可能发生，这足以 justify 大量安全投入——这正是我从事这个领域的原因。但没有一个达到'我预期它默认会发生'的程度。" — Rohin Shah [00:01:24]
+                    </div>
+
+                    <div class="quote-block">
+                        "对齐的模型同样会追求收敛性工具子目标。大多数收敛性工具子目标不管你的目标是对齐还是错位，都是个好主意。" — Rohin Shah [00:05:46]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">安全承诺的局限性</h3>
+                        <span class="topic-timestamp">10:38 - 27:36</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Rohin 反对 AI 公司在公众或政治压力下做出固定的安全承诺。研究进展不断改变最优行动，而事先写下的规则无法预见未来。他更推荐第三方专家审计和 AI Lab Watch 类的安全评分卡。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">观点反转的生动案例</div>
+                        <p class="topic-detail-content">两三年前，人们普遍认为应该在预训练数据中加入大量对齐研究资料（安全论文、LessWrong 博客），让 AI 更了解对齐问题。而现在的观点恰恰相反——应该从预训练数据中过滤掉这些内容。原因有二：一是减少模型学到"恶意 AI 人格"的风险；二是避免模型详细了解安全措施，从而在被错位时更容易规避。如果在当时"把自己绑在桅杆上"承诺加入大量对齐数据，后果会很糟糕。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">承诺的实际约束力</div>
+                        <p class="topic-detail-content">以 Anthropic 的 RSP（负责任扩展政策）为例：第一版使用了大量"commit"措辞，但后续版本明显弱化了这些表述。Rohin 认为这是好事——最初的强硬措辞本身就是错误——但这证明了"承诺"并不能绑住公司。相比之下，Google 的 Frontier Safety Framework 从未使用"commit"一词，更准确地反映了公司实际会做的事，也因此更值得信任。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">替代方案：第三方审计与评分卡</div>
+                        <p class="topic-detail-content">Rohin 推荐第三方审计和评估——建立专门组织，深入审查公司实践，累积上下文知识后做出细致判断。他特别看好 AI Lab Watch 这个由 Zach Stein-Perlman 运营的安全评分卡，称如果自己要转行，这会是首选方向之一。如果评分卡足够稳健并被公司和社区接受，可以形成"向安全顶端竞赛"的良性循环。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "事先写下的规则是最'笨'的——规则本身显然不可能包含太多智能。智能和优化压力总能找到绕过规则的方法。" — Rohin Shah [00:26:53]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">DeepMind 安全团队的角色</h3>
+                        <span class="topic-timestamp">27:36 - 33:34</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        安全团队的角色是"顾问"而非"否决者"。Rohin 不认同"安全团队应作为公司对手方"的框架，而是认为自己应提供正确信息，帮助决策者做出正确决定。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">实际工作流程</div>
+                        <p class="topic-detail-content">如果团队提出建议而 Sundar Pichai（Google CEO）不同意，Sundar 的决定具有最终效力。但 Rohin 的工作方式是：发现问题后上报给上级 Anca Dragan（现任 Gemini 后训练联合负责人，具有相当大的影响力），如果她同意，会继续向上升级并提出不建议发布的建议。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"公司是漠然的"这一模型</div>
+                        <p class="topic-detail-content">构建像 Gemini 这样的产品极其困难——需要生成一组模型权重，同时满足上百个相互制约的约束条件（指令遵循、安全性、推理速度、多语言等）。对任何一个约束的改动都可能产生完全无法预料的连锁反应。正确的理解不是"公司不关心安全"，而是"公司只能同时做很少的事情"。对于已部署模型的安全问题，团队更多依赖模型外部过滤器——比修改模型权重灵活得多。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">央行模式作为 AI 监管蓝本</h3>
+                        <span class="topic-timestamp">33:34 - 37:41</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 监管应效仿中央银行监管金融体系的模式：由技术专家持续深入监控，而非依赖公众理解细节或公司事先承诺。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">透明的真正形式</div>
+                        <p class="topic-detail-content">Rohin 认为最重要的信息已经公开——即模型发布后所有人都能感受到的能力水平。他分享了一个 GDM 内部调查：几乎每一位研究者被问及"什么改变了你对安全重要性的看法"时，答案都是"GPT-4"。这种能力展示本身就是最有效的透明度。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AISI 的现有基础设施</div>
+                        <p class="topic-detail-content">目前美国 AISI 和英国 AISI 已与几乎所有前沿 AI 公司建立了合作关系，它们能将内部信息传递给各自的政府和政治家。Rob 提出的央行类比——美联储和英格兰银行对银行的监管——被 Rohin 认为几乎完全是他想要的模式。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">预部署评估的价值</h3>
+                        <span class="topic-timestamp">37:41 - 43:55</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        将评估绑定到"预部署"阶段会产生强大的时间压力，导致评估被赶工完成。由于 AI 进展相对连续，基于上一个模型的评估加上安全缓冲区，通常足以判断安全性。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">成本收益分析</div>
+                        <p class="topic-detail-content">发布时间表在 AI 公司极其重要。如果将评估强制绑定到部署前，就会产生让评估尽快完成的强烈激励。虽然团队可以争取更多时间，但上限有限。而由于 AI 进展相对平滑连续，基于上一代模型的评估加上合理的安全缓冲区，通常足以判断新一代模型是否安全。这也是 GDM 的 Frontier Safety Framework 自发布以来采取的方法。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">例外：模型"变邪恶"的风险</div>
+                        <p class="topic-detail-content">关于模型是否"变邪恶"——这更依赖于后训练的具体方式，小变化可能产生大影响。对于这类安全属性（如是否帮助写自杀遗书、是否煽动暴力），GDM 确实会在每次发布前进行大量预部署评估。关于能力突飞的可能性，Rohin 认为从当前经验看极不可能——AI 发展相当平滑。即使在智能爆炸情景下，进展相对于计算和劳动投入仍然是渐变的。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">治理：比对齐更大的瓶颈</h3>
+                        <span class="topic-timestamp">43:55 - 51:44</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        如果智能爆炸发生，能力研究和安全研究都能被 AI 加速，但治理工作可能跟不上——这是 Rohin 最担忧的非技术风险。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">安全研究可以被同步加速</div>
+                        <p class="topic-detail-content">根据 Rohin 的"平实对齐研究"观点，安全研究和能力研究非常相似——都是观察当前问题、预测近期问题、做正常 ML 研究来解决。如果 AI 加速能力研究，它同样可以加速安全研究，前提是公司愿意投入计算资源。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">治理的困境</div>
+                        <p class="topic-detail-content">治理需要截然不同的技能组合，AI 系统未必擅长。更关键的是，即使 AI 有能力，社会是否愿意让 AI 参与治理决策也是个开放问题。"AGI 信徒圈"内的治理人员会愿意使用 AI 加速工作，但他们只是整体治理体系的一小部分。Rohin 表示，加速治理工作是他如果要转行的第二个首选方向。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">为什么不暂停 AI 进展</h3>
+                        <span class="topic-timestamp">51:44 - 54:17</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        暂停 AI 进展的全球最大瓶颈是人们不认同"AI 会接管世界"。解决这个瓶颈的最佳方式是生成好的科学证据——不对称武器只在你的主张为真时才更有效。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">不对称武器策略</div>
+                        <p class="topic-detail-content">Rohin 引用 Scott Alexander 的文章，区分了对称武器和不对称武器。科学证据是不对称武器——你和"敌人"可以携手合作、共同进行实验，直到结果出来时达成共识。Rohin 倾向于逐步验证每一步扩展是否安全：目前答案是肯定的；如果某一天答案变为否定，之前积累的科学证据将成为推动全球行动的最有力工具。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">思维链监控还能持续多久</h3>
+                        <span class="topic-timestamp">54:17 - 01:09:51</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        思维链（Chain of Thought）监控的效用将比多数人预期的更长，可能持续约4-5年。论证基于 GPU/TPU 的结构性限制和预训练的主导地位——模型"天生就会说英语"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">不透明序列深度（Opaque Serial Depth）</div>
+                        <p class="topic-detail-content">Transformer 架构中，顺序计算步骤必须通过越来越深的层来执行。信息从后面的层无法流回前面的层——除非通过思维链的 token。因此 Transformer 的不透明序列深度非常低。这不仅是架构限制，更是经济必然：GPU 和 TPU 的强大算力来自大规模并行计算，预训练被深度优化为并行执行，这意味着不透明序列深度必须很小才能获得效率增益。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">后训练不会改变根本事实</div>
+                        <p class="topic-detail-content">预训练是迄今为止最强大的信息注入方式，模型在自然语言推理方面已经极其出色。Neel Nanda 等人的研究表明，推理训练中很大一部分只是在教模型"在什么时候执行已在预训练中学到的特定推理步骤"。后训练的强化学习相对于预训练效率极低，要构建一整套人类无法理解的新认知语言，远超当前 RL 的能力范围。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">连续思维链也可监控</div>
+                        <p class="topic-detail-content">即使保持完整的 token 概率分布而非只取最高概率的 token，仍然可以检查该概率分布并解读为正常的英语推理。建议通过消融实验验证：只保留前几个最可能的 token，丢弃其余部分，看模型表现是否下降。如果不下降，则说明尾部概率没有隐藏重要的"第二条推理线"。Rohin 透露 GDM 即将发布一篇论文，描述如何计算任何架构的不透明序列深度。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "模型'天生就会说英语或其他自然语言'是有充分理由的。" — Rohin Shah [00:58:26]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">信号安全 vs 实际安全</h3>
+                        <span class="topic-timestamp">01:09:51 - 01:28:59</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        被迫向外部"展示关心安全"会消耗实际用于提升安全的资源。Rohin 将外部诉求分为两类：真正有助于安全的事情（他全力支持），以及"付出成本以信号对 x-risk 安全社区的忠诚"（他拒绝做）。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Gemini 3 争议的具体回应</div>
+                        <p class="topic-detail-content">AI 安全博主 Zvi Mowshowitz 批评 Gemini 3 的 Frontier Safety Report 隐藏不便信息。Rohin 逐一回应：说服力评估团队选择了最重要的图表，并非有意隐藏（预计2026年发论文详述）；网络安全案例中模型走了非预期捷径但被计入了分数（11/12）；CBRN（化生放核）标准的变化更多是因为威胁建模的改进而非"移动球门"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Frontier Safety Report 的真正定位</div>
+                        <p class="topic-detail-content">其核心功能是"我们已经正式做出安全判断"的声明，而非供外部独立验证的完整技术文档。更详细的技术内容应通过学术论文发布。Rohin 问过政策和治理人士是否真的读了报告中引用的论文——通常对方连这些论文的存在都不知道。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"看起来安全"的危险激励</div>
+                        <p class="topic-detail-content">如果公司被迫投入资源制作精美安全报告、计算耗时但无关紧要的指标，这些资源就来自真正能提升安全的工作。更糟糕的是，这种激励环境会让公司越来越难以坦诚地说出"这件事对安全真正重要的是什么"。Rohin 宁可被评判为"做了真正重要的事"而非"表演了安全姿态"。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我对基于无关紧要之事的评分深感怀疑。它导致整个文化关注投入和成本而非真正重要的结果，鼓励公司'看起来好'而非'真的好'。" — Rohin Shah [01:25:03]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">MONA：消除隐藏奖励作弊</h3>
+                        <span class="topic-timestamp">01:28:59 - 01:40:29</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        MONA（Myopic Optimization with Non-myopic Approval，近视优化与非近视审批）能在监督者无法检测奖励作弊的情况下，训练出不进行特定类型奖励作弊的模型——不依赖检测能力，而依赖切断跨步骤的奖励信号传播。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">工作原理</div>
+                        <p class="topic-detail-content">假设某奖励作弊需要两个时间上分离的步骤（例如先写容易通过的测试，再写能通过这些测试的代码）。如果将两个步骤分开优化——写测试时只根据测试质量评分，写代码时只根据代码质量评分——那么写"坏测试"的激励永远不会出现，因为后续的高分奖励不会回传到写测试的步骤。传统的 RL 中，后续步骤的奖励会通过时间反向传播，让模型学到"写容易的测试会导致后续获得更多奖励"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">代价与弥补</div>
+                        <p class="topic-detail-content">这不可避免地会放弃一些真正创造性但"看起来疯狂"的有效策略。不过"非近视审批"部分可以通过让 AI 解释其计划、使用辩论或 AI 辅助来提升监督者预测能力，在理论上可以逼近传统 RL 的性能而不产生奖励作弊。实际上，在当前能力水平下，Rohin 猜测 MONA 可能反而会提升整体表现，因为它能更细粒度地进行信用分配（credit assignment），代价是需要更多人类输入。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 11 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">11</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">GDM 构建 AGI 的安全计划</h3>
+                        <span class="topic-timestamp">01:40:29 - 01:52:44</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        GDM 的安全计划基于"近似连续性假设"，采用"摸着石头过河"的策略，时间视野3个月到5年。核心防御框架是将 AI 视为"不可信内部人"（Untrusted Insider）的 AI 控制策略。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">不做"全知"承诺</div>
+                        <p class="topic-detail-content">GDM 不会声称已识别并解决了通往超级智能的所有问题。Rohin 举了一个"奇特的人择学问题"：在考虑多重宇宙的框架下，完美对齐的 AI 和人类也可能因贝叶斯更新结构差异而持有不同信念。这类问题在当前完全不相关，但可能在超级智能之前出现。他不愿声称已经预见了所有此类问题。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">不可信内部人策略</div>
+                        <p class="topic-detail-content">如果要认真思考 AI 接管的具体机制，它会面临相当大的困难——需要避开监控、窃取模型权重并逃避 Google 的安全体系。通过让安全措施也针对 AI 作为内部威胁来设计：为 AI 代理分配独立身份和受限权限、要求记录行动理由以便事后追责、思维链监控标记可疑行为并触发人类审计。如果能审计到 AI 确实试图注入安全漏洞以窃取自身权重的证据，将大幅改变许多利益相关者的判断。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">与 AI 控制议程的衔接</div>
+                        <p class="topic-detail-content">这一方向与 Redwood Research 的 Buck Shlegeris 和 Ryan Greenblatt 推动的 AI 控制议程高度一致。Rohin 表示，在中期，GDM 很可能通过控制类型的论证来证明 Gemini 在目标错位和内部部署方面的安全性。GDM 侧重于构建基础设施，而监控器的具体构建是更标准的 ML 问题。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "目标不是'知道如何对齐超级智能，否则什么都不做'。通常我的时间视野在三到五年之间——很多很多个模型。" — Rohin Shah [01:43:16]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 12 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">12</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">智能爆炸的时间线之辩</h3>
+                        <span class="topic-timestamp">01:52:44 - 02:21:55</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        智能爆炸终将发生，但 Rohin 对时间线和急剧程度持比主流更保守的态度。关键区分：更好的工具 vs 更多的研究者——历史上工具改进从未导致双曲增长。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"直线之神"与经济增长模型</div>
+                        <p class="topic-detail-content">全球约 3% 的 GDP 增长率是一条持续很久的直线。Kremer（1993）的经济内生增长模型框架：技术增长率取决于三个因素——技术本身（更好的工具帮助发现新想法）、创意越来越难发现（低垂果实已被摘取）、更多人口（更多人产生更多想法）。前工业时代三个因素同时作用导致双曲增长；现代因生育率下降，第三因素不再适用，前两个大致抵消，形成恒定指数增长。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"超级程序员"只是工具，不是人口</div>
+                        <p class="topic-detail-content">所谓"超级程序员"只在编码这一子领域有用，不产生跨 ML 研发全谱的想法。这更像发明显微镜而非增加研究人口。摩尔定律的历史就是明证：从手工设计电路到计算机辅助设计，研究者生产率可能提高了10倍，但进步仍然是一条直线。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">实证检验："AI 基准测试的罗塞塔石碑"</div>
+                        <p class="topic-detail-content">GDM 与 Epoch 合作开发了通用能力评分，将多种基准测试分数拼接成覆盖 2020 年至今的综合指标。结果显示 AI 进展呈漂亮的线性趋势——没有加速迹象。Rohin 不否认智能爆炸会发生，但给出了带有大量前提条件的强断言：当 AI 在几乎所有经济任务中都比人类更值得雇佣，且我们积极用 AI 加速全经济体的研发，大约一个世纪内会发生某种智能爆炸。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">关于推理模型（o1/o3）和时间线恐慌</div>
+                        <p class="topic-detail-content">Rohin 未受影响，因为他始终预期 RL 会被应用于大语言模型。真正的更新信号应该是模型在一种任务上训练后在截然不同的任务上也表现出色——这种泛化性才是 AGI 的前兆，而目前这方面证据有限。第一个自动化研究员可能非常昂贵（大量推理时计算），然后逐步降至与人类成本持平，这个过程需要数年而非数月。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我不太理解直线之神，说实话它们让我有点害怕，但我不会对赌它们。" — Scott Alexander，Rohin 引述 [01:53:05]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 13 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">13</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">外部研究者如何影响 AI 公司</h3>
+                        <span class="topic-timestamp">02:21:55 - 02:37:03</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        如果希望研究被 AI 公司实际采用，关键不是论文的精致程度，而是解决公司真正关心的问题、提供可实施的方案、并考虑实际落地的约束。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">五条实用建议</div>
+                        <p class="topic-detail-content">①动手前先沟通——联系公司内部的人问"这有用吗？"（建议联系团队成员而非 Rohin 本人，他邮件太多）；②做公司真正关心的事——一两年前 GDM 对越狱并不重视，现在才变得有用；③提供解决方案或评估指标——纯粹的理论理解很难被采用；④评估方案的实际约束——计算成本、延迟增加、跨团队实现复杂度；⑤用最简单的方法——先把显而易见的简单方法试到底，只有确实不行时才上复杂方案。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">最有影响力的外部研究</div>
+                        <p class="topic-detail-content">首推 Redwood Research 的 AI 控制系列论文，特别是"可信 vs 不可信模型"的区分框架。其次是"观测性缩放定律"论文，它启发了 GDM 与 Epoch 合作的基准测试拼接工作。此外，思维链监控系列论文在聚合层面建立了良好的研究文献。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 14 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">14</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">最紧缺的角色与保持积极</h3>
+                        <span class="topic-timestamp">02:37:03 - 02:44:15</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        GDM 安全团队当前最需要的不是提出新想法的研究者，而是能把"显而易见之事"落地实施的工程师。Rohin 专注于自己能控制的事情来保持积极。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">招聘需求的变化</div>
+                        <p class="topic-detail-content">瓶颈已从"弄清楚该做什么"转向"实际把事情做出来"。更看重软件工程能力、落地执行力，而非纯 ML 研究能力。安全团队正在招聘前沿安全风险评估工程师和 AI 控制工程师——后者可能是最有影响力的岗位之一，因为控制论证很可能是 GDM 中期证明 Gemini 安全性的核心论据。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 辅助申请的困扰</div>
+                        <p class="topic-detail-content">去年的 LLM 验证码甚至骗过了约 5% 的人类申请者。在 AI 可以提交完全不可区分的虚假申请的时代，Rohin 不确定能否设计出没有大量误判的验证方式。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">保持积极的秘诀</div>
+                        <p class="topic-detail-content">性格使然（情绪天生稳定），加上如本期播客所展示的，他并不认为形势像其他人认为的那样糟糕。更深层的原因是长期践行"专注于自己能控制的事情"——这帮助他聚焦在有能动性的领域，而能在可以实际发挥影响力的地方工作本身就令人积极。</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">默认乐观</h3>
+                    <p class="takeaway-desc">Rohin 的核心立场不是"没有风险"，而是"没有令人信服的论证表明灾难性目标错位是默认结果"。足以 justify 大量安全投入，但不接受末日叙事。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📈</div>
+                    <h3 class="takeaway-title">直线之神</h3>
+                    <p class="takeaway-desc">AI 进展在综合基准上呈线性趋势。工具改进历史上从未导致双曲增长——只有"研究人口"的指数增长才会。区分"更好的工具"和"更多的研究者"是判断智能爆炸时间线的关键。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧠</div>
+                    <h3 class="takeaway-title">思维链的生命力</h3>
+                    <p class="takeaway-desc">GPU/TPU 并行计算架构和预训练的绝对主导地位，让模型"天生说英语"有深层的结构性经济原因。思维链监控可能持续4-5年，远超悲观预期。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔒</div>
+                    <h3 class="takeaway-title">AI 控制核心策略</h3>
+                    <p class="takeaway-desc">将 AI 视为不可信内部人（独立身份、权限管理、行为审计），这是 GDM 中期证明 Gemini 安全性的核心论证框架。基础设施级安全设计比模型层面的对齐研究更具实施紧迫性。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚖️</div>
+                    <h3 class="takeaway-title">治理是真正瓶颈</h3>
+                    <p class="takeaway-desc">在智能爆炸中，能力和安全研究都能被 AI 加速，但治理工作可能跟不上。加速治理是目前最被忽视的高影响力方向。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🛡️</div>
+                    <h3 class="takeaway-title">实际安全优于表演</h3>
+                    <p class="takeaway-desc">被迫展示安全姿态会消耗真正提升安全的资源。评判公司应看它实际做了什么，而非承诺了什么。第三方专家审计是最有效的问责机制。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">关于本期对话</h3>
+            <p class="footer-desc">
+                本期节目录制于 2025 年 12 月 4 日。Rohin Shah 是 Google DeepMind AGI 安全与对齐团队负责人，自 2017 年起深耕 AI 安全研究。他的观点代表了一种在 AI 安全社区中相对少见但日益重要的立场：认真对待风险，但拒绝末日叙事。
+            </p>
+            <div class="footer-quote">
+                "专注于自己能控制的事情——这帮助我聚焦在有能动性的领域，而能在可以实际发挥影响力的地方工作，本身就令人积极。"
+            </div>
+            <p class="footer-note">
+                80,000 Hours Podcast · 本文章基于原视频内容生成，仅供参考学习
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
