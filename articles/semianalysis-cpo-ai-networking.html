@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>为什么下一代 AI Scale-up 需要 CPO — SemiAnalysis</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='3' y='3' width='12' height='12' rx='2' fill='%234a9eff'/><rect x='17' y='3' width='12' height='12' rx='2' fill='%236b7eff'/><rect x='3' y='17' width='12' height='12' rx='2' fill='%238b5cf7'/><rect x='17' y='17' width='12' height='12' rx='2' fill='%23a855f7'/></svg>">
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <style>
+        :root {
+            --accent-primary: #ff6b35;
+            --accent-secondary: #00d4ff;
+            --accent-primary-rgb: 255, 107, 53;
+            --accent-secondary-rgb: 0, 212, 255;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/semianalysis-cpo-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">SemiAnalysis · 芯片互联</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">为什么下一代 AI Scale-up</span>
+                    <span class="title-line-2">需要共封装光学（CPO）</span>
+                </h1>
+                <p class="subtitle">
+                    铜互连的物理极限正在逼近——从 NVLink 72 的 2 米到下一代 448G 的距离缩减，共封装光学能否成为突破 AI 计算规模天花板的关键？
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">频道</div>
+                        <div class="meta-value">SemiAnalysis</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 24 分钟</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">发布日期</div>
+                        <div class="meta-value">2026-06-03</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=-HppUFVl-Ak" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">铜的 2 米极限</h3>
+                    <p class="point-desc">铜互连在 200 Gbps 速率下最大传输距离仅 2 米。下一代 448G 速率将迫使采用更高级别的 PAM 调制，进一步压缩传输距离。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">DSP 是光互连的瓶颈</h3>
+                    <p class="point-desc">可插拔光模块中 60% 的功耗和 90% 的延迟来自数字信号处理器。CPO 的核心目标就是通过缩短距离消除 DSP。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">三层网络架构</h3>
+                    <p class="point-desc">AI 数据中心依赖前端网络、Scale-up（机架内铜互连）和 Scale-out（机架间光互连）三层网络，Scale-up 带宽是 Scale-out 的 10 倍。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">CPO 三级演进</h3>
+                    <p class="point-desc">从封装级（去 DSP）到中介层级（去 SERDES）再到 GPU 级共封装，每一步代表维度提升。终极目标是将光引擎与 GPU 共封装。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">供应商锁定困境</h3>
+                    <p class="point-desc">CPO 意味着买谁的硬件就得买谁的光方案。超大规模客户看重供应商多样性，新兴云服务商更愿意接受交钥匙方案。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">Scale-up 域规模是终极竞争</h3>
+                    <p class="point-desc">Vera Rubin Ultra NVL 576 用混合铜光方案连接 576 个 GPU，下一代 Kyber NVL 1,152 已在规划中。更大的 Scale-up 域直接等同于更强的 AI 计算能力。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">铜互连：半导体的命脉与极限</h3>
+                        <span class="topic-timestamp">00:00 - 01:23</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        铜是半导体世界的基础互连材料，从晶体管级到机架级无处不在，但在高速长距传输上有不可逾越的物理极限。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">铜的无处不在</div>
+                        <p class="topic-detail-content">半导体的整个信号传输链路都建立在铜之上：芯片内部最微小的金属层连接单个晶体管，主板上的走线传输信号，Nvidia NVLink 72 机架中 72 个 GPU 之间的「巨大脊线」同样是铜。没有铜，微芯片就无法运作。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">2 米的硬限制</div>
+                        <p class="topic-detail-content">对于高速信号而言，铜的有效传输距离大约只有 2 米。原因在于一个基本物理规律：数据通过铜通道传输的速度越快，能够到达的距离就越短。当每通道速率达到 200 Gbps（当前最新 AI 芯片的通信速度）时，铜的传输距离就被压缩到了 2 米以内。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "能用铜就用铜，必须用光才用光"（use copper when you can and optical when you must）——这是行业经验总结出的核心原则。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 数据中心的三层网络架构</h3>
+                        <span class="topic-timestamp">01:21 - 04:00</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        现代 AI 数据中心依赖三层网络——前端网络、Scale-up 网络和 Scale-out 网络——各有不同的带宽需求和传输距离要求。Scale-up 的带宽是 Scale-out 的 10 倍。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">前端网络</div>
+                        <p class="topic-detail-content">每台服务器都有的传统网络，用于加载数据、SSH 访问和用户请求。它早在 AI 时代之前就已存在，带宽需求最低。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Scale-up 网络（扩展上行）</div>
+                        <p class="topic-detail-content">连接单个机架内的所有计算和网络托盘，本质是机架内部通信。目标是让多个 GPU 表现得像一个 GPU 一样——需要极高带宽和极低延迟。Nvidia 的 NVLink 是最著名的 Scale-up 方案。由于范围限于单个机架（2 米以内），铜互连完全可以胜任。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Scale-out 网络（扩展外行）</div>
+                        <p class="topic-detail-content">处理机架之间的通信，覆盖整个数据中心。带宽和延迟要求不如 Scale-up 极端，但传输距离远超铜的能力，必须使用光互连。带宽需求是前端的 8-10 倍，Scale-up 又是 Scale-out 的 10 倍。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">可插拔光模块：当前标准与隐藏的代价</h3>
+                        <span class="topic-timestamp">04:00 - 06:58</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        可插拔光模块是当前数据中心光互连的主流方案（OSFP / QSFP-DD 标准），但其核心组件 DSP 消耗了 60% 以上的功耗和 90% 以上的延迟。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">四大核心组件</div>
+                        <p class="topic-detail-content">标准化物理连接器（电气接口）、DSP（数字信号处理器，增强和清理信号）、TOSA（发射光学组件，含激光器和调制功能）、ROSA（接收光学组件，捕捉入射光信号）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">令人意外的功耗分布</div>
+                        <p class="topic-detail-content">大多数人直觉认为激光器最耗电——但 DSP 独占约 60% 功耗，激光器仅约 15%。延迟的情况更加极端：可插拔光模块从电信号转换为光信号需要 150-200 纳秒，其中超过 90% 由 DSP 造成。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "数字信号处理器占了总能耗的 60% 以上，以及总延迟的 90% 以上。" — 这就是 CPO 技术诞生的根本动因。 [00:06:49]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">DSP 的困境与 CPO 的诞生逻辑</h3>
+                        <span class="topic-timestamp">06:58 - 08:34</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        可插拔光模块需要 DSP 的根本原因是信号经过 30 厘米铜走线后严重衰减，而 CPO 的核心理念就是把光引擎放得足够近，让 DSP 变得多余。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">30 厘米的衰减链路</div>
+                        <p class="topic-detail-content">信号从 GPU 或交换芯片发出后，要经过硅片的金属层、封装基板、主板走线，最终到达插在托盘末端的收发器——总距离可达 30 厘米。在 200 Gbps 的高速下，30 厘米铜走线足以让信号严重退化。将电信号转换为光信号需要极其干净的输入信号，因此 DSP 必须先增强和清理信号——这就是功耗和延迟的根源。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">CPO 的解决方案与过渡方案</div>
+                        <p class="topic-detail-content">CPO 的逻辑：把光引擎移到足够靠近信号源的位置，信号还没来得及退化就已经被转换为光信号。过渡方案包括：LPO（线性可插拔光学）——去掉 DSP 但传输距离大幅缩短；OBO（板载光学）——方向正确但两头不讨好；NPO（近封装光学）——用高性能基板把光收发器放在 ASIC 附近，目前正在实际部署。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">CPO 的三个技术层级</h3>
+                        <span class="topic-timestamp">10:29 - 12:30</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        CPO 分为三个层级——封装级、中介层级和终极形态，逐步消除 DSP 和 SERDES。最终目标是与 GPU 而非交换芯片共封装，这是一个维度的跨越。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第一级：封装级（On-Package）</div>
+                        <p class="topic-detail-content">光引擎与交换芯片放在同一个封装上，通过共享封装基板上的铜走线连接。足够近以完全消除 DSP，但 ASIC 和光引擎之间仍需要 SERDES 进行信号格式转换。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第二级：中介层级（Interposer）</div>
+                        <p class="topic-detail-content">引入硅基或有机中介层，ASIC 和光引擎都坐落在同一个中介层上。互连密度远高于封装基板，不再需要 SERDES——通过宽总线实现完全并行集成。更先进的技术如混合键合可实现 3D 或 2.5D 堆叠（如 TSMC 的 SOIC-MH）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">终极目标：GPU 级 CPO</div>
+                        <p class="topic-detail-content">当前 CPO 主要用于网络交换芯片（如 Nvidia 的 Quantum 和 Spectrum X），但最终目标不是交换芯片——而是 GPU 或 AI ASIC。将光引擎与 GPU 共封装不是一个层级差异，而是维度的跨越。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "将光引擎与 GPU 而不是交换芯片共封装，这不是不同的层级，而是完全不同的维度。" [00:12:20]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Scale-out：CPO 的第一个战场</h3>
+                        <span class="topic-timestamp">12:28 - 17:13</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        CPO 首先瞄准 Scale-out 网络替代可插拔光模块，但超大规模客户因供应商锁定顾虑而态度谨慎，新兴云服务商则更积极拥抱。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">可插拔光模块的三大优势</div>
+                        <p class="topic-detail-content">可更换性——坏了直接拔出来换一个，任何数据中心技术人员几分钟搞定；熟悉度——经过多年验证，每个数据中心都了解其工作方式和缺陷；供应商多样性——标准化产品、众多供应商，不存在供应瓶颈或价格垄断。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">CPO 的锁定风险</div>
+                        <p class="topic-detail-content">CPO 意味着光收发器「焊死」在硬件中——买 Nvidia 硬件就得买 Nvidia CPO 方案。如果某个光接口故障，只能更换整个交换芯片。这导致行业分化：超大规模客户谨慎观望，甚至推动 NPO + 可插拔混合方案；新兴云服务商更青睐 CPO 交钥匙方案。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两大核心痛点推动变革</div>
+                        <p class="topic-detail-content">AI 数据中心最关注的是能源消耗和系统利用率。投入数十亿美元的 AI 硬件不能闲置，非计算部分的能耗必须压到最低。CPO 在这两个方面都有明显优势——更低延迟、更低功耗。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Scale-up：铜互连的最后堡垒与物理极限</h3>
+                        <span class="topic-timestamp">17:11 - 20:26</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Scale-up 网络目前由铜互连主导，因为它零翻译、极低延迟（约 10 纳秒），但随着速率从 224G 向 448G 升级，铜的传输距离正在被急剧压缩。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">铜的母语优势</div>
+                        <p class="topic-detail-content">铜使用电信号——芯片的「母语」——无需任何信号翻译。铜的延迟约每米 5 纳秒，2 米以内仅约 10 纳秒。相比之下，可插拔光模块的 DSP 单独就增加 150-200 纳秒。即使用 CPO 消除了 DSP，电光转换本身仍比纯铜互连多消耗能量和时间。因此 Scale-up 领域的性能排序为：Copper > CPO > Pluggable。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">448G 时代的逼近</div>
+                        <p class="topic-detail-content">当前 224G 铜互连使用 PAM4（四电平脉冲幅度调制），通过不同电压电平一次传输 2 个数据位，还能撑到 2 米。下一代 448G 面临两条路：更高级别的 PAM（PAM6 甚至 PAM8）——但更多电平意味着更不稳定的信号；或者翻倍波特率——但同样缩短传输距离。无论走哪条路，2 米可能很快就不行了。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Scale-up 网络采用 CPO 的理由实际上不是 CPO 本身，而是铜互连的极限。这意味着只要铜还能支撑机架内部通信，铜仍然是首选方案。" [00:19:59]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">CPO 的终极价值：解锁大规模 Scale-up 域</h3>
+                        <span class="topic-timestamp">20:26 - 23:15</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        CPO 的真正革命不在于替代可插拔光模块，而在于当它被集成到 GPU 层面时，能将 Scale-up 域从几百个 GPU 扩展到数千个，彻底改变 AI 计算的规模上限。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">NVLink 72 的启示</div>
+                        <p class="topic-detail-content">Nvidia Blackwell 一代的真正突破不是 GPU 架构本身，而是 NVLink 72 机架。在 Blackwell 之前，Scale-up 域仅限 8 个 GPU；NVLink 72 将其扩展到 72 个——72 个 GPU 可以像一个 GPU 一样协同工作。这个 9 倍的 Scale-up 扩展才是 Blackwell 性能飞跃的核心。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">混合铜光方案的未来</div>
+                        <p class="topic-detail-content">Jensen 在 GTC 2026 上宣布的混合方案：Vera Rubin Ultra NVL 576 包含 8 个 NVL 72 机架，机架内部仍用铜互连 Scale-up，但机架之间通过光互连扩展 Scale-up 域（8 x 72 = 576）。下一代 Kyber NVL 1,152 已在规划中。到这个规模，CPO 增加的微小延迟和额外能耗已经完全不重要——Scale-up 域的绝对规模将主导一切。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "一旦铜互连达到它的物理极限，CPO 将在眨眼间接管 Scale-up。因为没有人能打败一个连接更多 GPU 的更大 Scale-up 世界规模。" [00:23:01]
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">行业原则的演变</div>
+                        从「能用铜就用铜，必须用光才用光」到「尽可能久地使用铜，因为那堵墙正在快速逼近」。CPO 不是万能药，但铜的扩展空间即将耗尽。对于 Scale-out 网络，CPO 优势已清晰可见；对于 Scale-up，铜还有最后几招，但终点在望。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">铜的母语优势</h3>
+                    <p class="takeaway-desc">铜使用电信号——芯片的「母语」——无需任何翻译，延迟仅约 5 纳秒/米，比任何光方案都快。这就是为什么铜仍然是 Scale-up 的首选。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔥</div>
+                    <h3 class="takeaway-title">DSP 是光互连核心瓶颈</h3>
+                    <p class="takeaway-desc">可插拔光模块中 60% 的功耗和 90% 的延迟来自数字信号处理器。CPO 的根本目标就是通过缩短距离来消除 DSP。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏗️</div>
+                    <h3 class="takeaway-title">CPO 三级演进路径</h3>
+                    <p class="takeaway-desc">从封装级（去 DSP）到中介层级（去 SERDES）再到 GPU 级共封装，每一步都代表维度的提升而非简单的量变。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔒</div>
+                    <h3 class="takeaway-title">供应商锁定 vs 技术优势</h3>
+                    <p class="takeaway-desc">CPO 意味着「买谁的硬件就得买谁的光方案」，这让超大规模客户犹豫不决，但新兴云服务商更愿意接受交钥匙方案。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📏</div>
+                    <h3 class="takeaway-title">448G 是铜的临界点</h3>
+                    <p class="takeaway-desc">下一代 448G 互连无论是用更高级别的 PAM 还是翻倍波特率，都会大幅压缩铜的传输距离。铜的扩展空间即将耗尽。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🚀</div>
+                    <h3 class="takeaway-title">Scale-up 域规模是终极竞争</h3>
+                    <p class="takeaway-desc">NVL 576 用混合铜光方案连接 576 个 GPU，下一代 Kyber NVL 1,152 已在规划中。更大的 Scale-up 域直接等同于更强的 AI 计算能力——这是 CPO 不可阻挡的终极理由。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">铜的时代不会终结，但光的时代即将开启</h3>
+            <p class="footer-desc">
+                共封装光学不是万能药，但它代表了 AI 基础设施从「能用铜就用铜」到「铜光融合」的关键转变。当 Vera Rubin Ultra NVL 576 将 576 个 GPU 连成一体时，我们看到的不仅仅是一个产品——而是 AI 计算规模扩展的下一个范式。
+            </p>
+            <div class="footer-quote">
+                "没有人能打败一个连接更多 GPU 的更大 Scale-up 世界规模。"
+            </div>
+            <p class="footer-note">
+                内容基于 SemiAnalysis YouTube 频道视频整理，完整 CPO 深度分析请参阅 SemiAnalysis Newsletter。
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

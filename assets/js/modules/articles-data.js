@@ -1,6 +1,15 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/semianalysis-cpo-ai-networking.html",
+        "card_class": "card-tech",
+        "category": "SemiAnalysis · 芯片互联",
+        "date": "2026-06-03",
+        "title": "为什么下一代 AI Scale-up 需要共封装光学（CPO）",
+        "excerpt": "铜互连的物理极限正在逼近：可插拔光模块中 60% 功耗和 90% 延迟来自 DSP，CPO 的核心目标就是消除它。从 224G 到 448G，铜的传输距离正在被急剧压缩。Vera Rubin Ultra NVL 576 用混合铜光方案连接 576 个 GPU——Scale-up 域规模正在成为 AI 计算的终极竞争维度。",
+        "tags": ["#CPO", "#AI网络", "#英伟达"]
+    },
+    {
         "url": "articles/openai-cfo-sarah-friar.html",
         "card_class": "card-ai",
         "category": "AI · 商业",
