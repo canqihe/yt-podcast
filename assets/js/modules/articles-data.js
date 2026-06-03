@@ -1,6 +1,15 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/demis-hassabis-deepmind-stanford.html",
+        "card_class": "card-ai",
+        "category": "Stanford GSB · AI 前沿对话",
+        "date": "2026-06-03",
+        "title": "Demis Hassabis：奇点的山脚 — AGI 距我们只有几年之遥",
+        "excerpt": "Google DeepMind 掌门人与斯坦福校长深度对谈：AGI 可能在2030年前后实现，AI 影响力相当于「工业革命的100倍」。从 AlphaGo 到 AlphaFold，从 Pong 的颤抖球拍到2亿蛋白质结构免费公开——30年不变的北极星使命。",
+        "tags": ["#DeepMind", "#AGI", "#AlphaFold"]
+    },
+    {
         "url": "articles/semianalysis-cpo-ai-networking.html",
         "card_class": "card-tech",
         "category": "SemiAnalysis · 芯片互联",
