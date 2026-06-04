@@ -1,6 +1,15 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/qualcomm-physical-ai-6g.html",
+        "card_class": "card-tech",
+        "category": "硅谷101 · 端侧AI",
+        "date": "2026-06-04",
+        "title": "对话高通：智能体爆发、6G与Physical AI背后的大赢家",
+        "excerpt": "高通全球副总裁徐晧深度访谈：AI从云端走向终端的百亿市场、Agent Phone与SuperApp两条路线之争、6G的AI原生设计与通感一体化、汽车中央集算架构，以及分离式渲染如何破解智能眼镜的端侧AI困局。",
+        "tags": ["#高通", "#PhysicalAI", "#6G"]
+    },
+    {
         "url": "articles/demis-hassabis-deepmind-stanford.html",
         "card_class": "card-ai",
         "category": "Stanford GSB · AI 前沿对话",
