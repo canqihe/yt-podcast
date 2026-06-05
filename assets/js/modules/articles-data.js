@@ -1,6 +1,24 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/josh-duhamel-survival-off-grid.html",
+        "card_class": "card-future",
+        "category": "Shawn Ryan Show · 生存与信仰",
+        "date": "2026-06-05",
+        "title": "Josh Duhamel：好莱坞巨星15年秘密建造离网避难所",
+        "excerpt": "一个因《变形金刚》走红的演员放弃镁光灯，花15年在明尼苏达深林里亲手拓荒——从12英亩空地到55英亩自给自足基地，从对AI机器人的深层恐惧到信仰回归，一个父亲在混乱时代为家人寻找安顿之道的坦诚告白。",
+        "tags": ["#离网生存", "#备灾", "#信仰"]
+    },
+    {
+        "url": "articles/coatue-4t-ai-ipo-wave.html",
+        "card_class": "card-finance",
+        "category": "All-In Podcast · AI投资",
+        "date": "2026-06-05",
+        "title": "Thomas Laffont：4万亿美元AI IPO浪潮来袭，前所未见的独角兽经济变局",
+        "excerpt": "Coatue联合创始人Thomas Laffont亮相All-In峰会：独角兽经济暴涨70%，「壮丽8」指数逼近4万亿美元碾压科技七巨头，SpaceX和Anthropic即将IPO释放超过十年总和的流动性，百角兽再涨10倍概率高达31%。",
+        "tags": ["#AI投资", "#IPO", "#独角兽经济"]
+    },
+    {
         "url": "articles/qualcomm-physical-ai-6g.html",
         "card_class": "card-tech",
         "category": "硅谷101 · 端侧AI",
