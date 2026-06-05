@@ -1,6 +1,42 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/gen-z-isabel-brown.html",
+        "card_class": "card-future",
+        "category": "文化 · 世代",
+        "date": "2026-06-05",
+        "title": "Z 世代正在回归传统——一场被忽视的文化革命",
+        "excerpt": "如果你还在以为 Z 世代是那个染着彩虹头发、拥抱 37 种性别、激进左倾的群体，你可能需要更新一下你的认知了。一场悄然发生的文化革命正在改变这一代年轻人的价值观——他们正在拥抱婚姻、家庭、宗教，以及那些曾被嘲笑为「过时」的生活方式。",
+        "tags": ["#Z世代", "#文化保守转向", "#传统价值观"]
+    },
+    {
+        "url": "articles/david-senra-400-founders.html",
+        "card_class": "card-future",
+        "category": "创业者研究 · 创始人特质",
+        "date": "2026-06-05",
+        "title": "David Senra 研究 400+ 位创始人所学到的经验",
+        "excerpt": "David Senra 花费十年阅读 400 多位创始人传记，从拿撒勒的耶稣到 Jensen Huang。硅谷热衷传播的「成功公式」可能完全错了——核心特质是「屏蔽世界建立自己的」，传教士型创始人不需要模仿他人，缺失「模仿基因」反而是优势。在 400+ 位创始人中只有 3 个有平衡的生活。",
+        "tags": ["#创始人研究", "#Founders播客", "#创业智慧"]
+    },
+    {
+        "url": "articles/geoffrey-hinton-ai-conscious-superintelligence.html",
+        "card_class": "card-ai",
+        "category": "Big Technology Podcast · AI 安全",
+        "date": "2026-06-05",
+        "title": "Geoffrey Hinton：AI 已经拥有意识，超级智能即将到来",
+        "excerpt": "深度学习之父的觉醒宣言——数字智能在信息共享上比人类高出数十亿倍，超级智能不再是「是否」的问题而是「何时」的问题。AI 的自我保存不是本能而是逻辑推导的子目标，监管是方向盘不是刹车，他对自己开创的一切「相当不高兴」。",
+        "tags": ["#AI安全", "#超级智能", "#Hinton"]
+    },
+    {
+        "url": "articles/satya-nadella-full-stack-builder.html",
+        "card_class": "card-ai",
+        "category": "No Priors × Latent Space · AI 平台战略",
+        "date": "2026-06-05",
+        "title": "全栈建造者与超高杠杆通才的崛起——对话微软 CEO 萨提亚·纳德拉",
+        "excerpt": "纳德拉在 Build 2025 揭示 AI 平台底层逻辑：私有评估是新时代最核心的知识产权，甚至应记入资产负债表；用小模型配合爬山优化脚手架可超越大模型；从「做工作」到「构建做工作的智能体系统」是组织智能化的核心范式。",
+        "tags": ["#AI平台", "#微软", "#私有评估"]
+    },
+    {
         "url": "articles/josh-duhamel-survival-off-grid.html",
         "card_class": "card-future",
         "category": "Shawn Ryan Show · 生存与信仰",
