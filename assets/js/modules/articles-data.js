@@ -1,6 +1,15 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/ron-baron-spacex.html",
+        "card_class": "card-finance",
+        "category": "金融 · 投资",
+        "date": "2026-06-07",
+        "title": "Ron Baron on SpaceX：为何这是「一生只有一次」的投资机会",
+        "excerpt": "当一家公司的估值已经达到 1.25 万亿美元时，大多数人会认为投资时机已过。但 83 岁的 Ron Baron 却有着截然不同的观点——这位管理着 630 亿美元资产的资深投资人，将 SpaceX 视为「一生只有一次」的投资机会。Starlink 10-15 年内估值 14 万亿，太空数据中心被市场严重低估，垂直整合护城河难以复制。",
+        "tags": ["#SpaceX", "#长期投资", "#BaronCapital"]
+    },
+    {
         "url": "articles/gen-z-isabel-brown.html",
         "card_class": "card-future",
         "category": "文化 · 世代",
