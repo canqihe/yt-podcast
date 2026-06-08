@@ -1,6 +1,24 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/uber-ceo-dara-khosrowshahi.html",
+        "card_class": "card-finance",
+        "category": "商业 · AI战略",
+        "date": "2026-06-08",
+        "title": "Uber CEO 达拉·科斯罗沙西：AI、自动驾驶与交通的未来",
+        "excerpt": "自动驾驶将解锁万亿美元市场，核心价值在于成本降低带来的需求释放。Uber 采用供给导向战略，成为自动驾驶车辆的终极需求聚合平台，网络效率提升30%。从危机管理工程学到：将复杂局面分解为独立维度逐个解决。Uber One 会员计划先亏后赚，穿越亚马逊式的绝望之谷。",
+        "tags": ["#Uber", "#自动驾驶", "#供给导向"]
+    },
+    {
+        "url": "articles/secondary-markets-eating-ipo.html",
+        "card_class": "card-finance",
+        "category": "金融 · 二级市场",
+        "date": "2026-06-08",
+        "title": "为什么二级市场正在吞噬 IPO",
+        "excerpt": "二级市场交易量已是 2021 年峰值的两倍，正取代 IPO 和并购成为私募股权退出的第三条路径。Forge 与嘉信理财携 4600 万散户入场，纯多头共同基金上市后将释放数千亿美元新需求。Brad Gerstner 警告：持久力是散户最重要的品质。",
+        "tags": ["#二级市场", "#私募股权", "#All-In"]
+    },
+    {
         "url": "articles/ron-baron-spacex.html",
         "card_class": "card-finance",
         "category": "金融 · 投资",
