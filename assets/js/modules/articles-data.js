@@ -1,6 +1,24 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/nebius-roman-chernin-ai-infrastructure.html",
+        "card_class": "card-ai",
+        "category": "AI · 基础设施",
+        "date": "2026-06-09",
+        "title": "Nebius 联合创始人谈 AI 基础设施：泡沫、算力与鲨鱼哲学",
+        "excerpt": "从 25 亿美元资本支出到 660 亿美元市值，Nebius 联合创始人 Roman Chernin 用务实视角拆解 AI 基础设施行业的真实面貌。DeepSeek 发布当周股价暴跌 40% 却创下销售历史新高，杰文斯悖论在算力市场的真实演绎。四层架构模型揭示从裸机到智能体的价值跃迁——做好你的狗屁工作是唯一可靠的长期策略。",
+        "tags": ["#AI基础设施", "#Nebius", "#算力经济"]
+    },
+    {
+        "url": "articles/benedict-evans-ai-coding.html",
+        "card_class": "card-ai",
+        "category": "AI · 平台转移",
+        "date": "2026-06-09",
+        "title": "为什么编程是第一个毋庸置疑的 AI 应用场景",
+        "excerpt": "编程成为 AI 第一个突破口的历史必然性：软件开发人员既是工具创造者也是第一批用户。但核心论点在于基础模型可能沦为基础设施——移动网络万亿资本支出的利润被应用层捕获的历史正在重演。当前定价失衡只是暂时的，杰文斯悖论揭示更便宜会带来更多需求，20 年后 AI 将像魔法一样「理所当然」。",
+        "tags": ["#编程", "#基础设施", "#定价机制"]
+    },
+    {
         "url": "articles/uber-ceo-dara-khosrowshahi.html",
         "card_class": "card-finance",
         "category": "商业 · AI战略",

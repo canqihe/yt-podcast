@@ -1,0 +1,973 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Nebius 联合创始人谈 AI 基础设施：泡沫、算力与鲨鱼哲学</title>
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='3' y='3' width='12' height='12' rx='2' fill='%234a9eff'/><rect x='17' y='3' width='12' height='12' rx='2' fill='%236b7eff'/><rect x='3' y='17' width='12' height='12' rx='2' fill='%238b5cf7'/><rect x='17' y='17' width='12' height='12' rx='2' fill='%23a855f7'/></svg>"
+        />
+
+        <!-- 引用设计系统样式 -->
+        <link rel="stylesheet" href="../design-system/design-tokens.css" />
+        <link rel="stylesheet" href="../design-system/article-styles.css" />
+
+        <style>
+            :root {
+                --accent-primary: #ff6b35;
+                --accent-secondary: #00d4ff;
+                --accent-primary-rgb: 255, 107, 53;
+                --accent-secondary-rgb: 0, 212, 255;
+            }
+
+            .header::before {
+                background:
+                    linear-gradient(
+                        to left,
+                        rgba(10, 10, 11, 0.3) 0%,
+                        rgba(10, 10, 11, 0.85) 40%,
+                        rgba(10, 10, 11, 0.98) 70%
+                    ),
+                    url("images/nebius-roman-chernin-cover.jpg") no-repeat right
+                        center / cover;
+                opacity: 0.6;
+            }
+
+            .header::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background:
+                    radial-gradient(
+                        ellipse at top right,
+                        rgba(var(--accent-primary-rgb), 0.15) 0%,
+                        transparent 50%
+                    ),
+                    radial-gradient(
+                        ellipse at bottom left,
+                        rgba(var(--accent-secondary-rgb), 0.12) 0%,
+                        transparent 50%
+                    );
+                pointer-events: none;
+                z-index: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="badge-wrapper">
+                        <span class="badge">20VC · AI 基础设施</span>
+                    </div>
+                    <h1 class="title">
+                        <span class="title-line-1">Nebius 创始人谈</span>
+                        <span class="title-line-2"
+                            >AI 基础设施的泡沫与算力经济</span
+                        >
+                    </h1>
+                    <p class="subtitle">
+                        从 25 亿美元资本支出到 660 亿美元市值，Roman Chernin
+                        用务实视角拆解 AI
+                        基础设施行业的真实面貌——为什么这不是泡沫、开源是催化剂而非威胁，以及为什么做好你的工作是唯一可靠的长期策略。
+                    </p>
+                    <div class="meta-grid">
+                        <div class="meta-item">
+                            <div class="meta-label">主持人</div>
+                            <div class="meta-value">Harry Stebbings</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">嘉宾</div>
+                            <div class="meta-value">Roman Chernin</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">时长</div>
+                            <div class="meta-value">约 74 分钟</div>
+                        </div>
+                    </div>
+                    <a
+                        href="https://www.youtube.com/watch?v=aXAH3bdJ2cg"
+                        class="cta-button"
+                        target="_blank"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+                            <path
+                                d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                            />
+                        </svg>
+                        观看原视频
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Core Points Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">核心要点</h2>
+                <div class="points-grid">
+                    <!-- Point Card 1 -->
+                    <div class="point-card">
+                        <div class="point-number">01</div>
+                        <h3 class="point-title">不是泡沫，是起点</h3>
+                        <p class="point-desc">
+                            全球企业 AI
+                            采用率仅处于「第一个百分点的用量和第一个百分点的场景」，真正跑通的大规模应用场景只有编码。
+                        </p>
+                    </div>
+
+                    <!-- Point Card 2 -->
+                    <div class="point-card">
+                        <div class="point-number">02</div>
+                        <h3 class="point-title">开源是催化剂</h3>
+                        <p class="point-desc">
+                            DeepSeek 发布当周 Nebius 股价暴跌
+                            40%，却创下销售历史新高——智能变便宜创造更多需求，而非减少。
+                        </p>
+                    </div>
+
+                    <!-- Point Card 3 -->
+                    <div class="point-card">
+                        <div class="point-number">03</div>
+                        <h3 class="point-title">杰文斯悖论</h3>
+                        <p class="point-desc">
+                            效率提升不会减少资源消耗，反而创造新需求。需求无限但物理世界供给有限——6
+                            个月内资本帮不了你。
+                        </p>
+                    </div>
+
+                    <!-- Point Card 4 -->
+                    <div class="point-card">
+                        <div class="point-number">04</div>
+                        <h3 class="point-title">四层架构模型</h3>
+                        <p class="point-desc">
+                            裸机→多云→推理→智能体，每向上走一层客户基数增长一个数量级，从「十几个」扩展到「数万个」。
+                        </p>
+                    </div>
+
+                    <!-- Point Card 5 -->
+                    <div class="point-card">
+                        <div class="point-number">05</div>
+                        <h3 class="point-title">资本的时间维度</h3>
+                        <p class="point-desc">
+                            6 个月帮不了——物理瓶颈不可突破；12 个月可以加速；24
+                            个月才能解锁。有钱不等于能快。
+                        </p>
+                    </div>
+
+                    <!-- Point Card 6 -->
+                    <div class="point-card">
+                        <div class="point-number">06</div>
+                        <h3 class="point-title">最大威胁是整合</h3>
+                        <p class="point-desc">
+                            世界越多元化、越民主化，Nebius
+                            就越被需要。如果被三五个超级企业统治，独立基础设施公司将失去存在意义。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Topics Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">深度洞察</h2>
+
+                <!-- Topic 1 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">01</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                为什么 AI 基础设施不是泡沫
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:01:24 - 00:04:11</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            AI
+                            基础设施不仅不是泡沫，我们甚至还在最开始的起点——全球企业的
+                            AI
+                            采用率仅处于「第一个百分点的用量和第一个百分点的场景」。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <p class="topic-detail-content">
+                                Roman
+                                对「泡沫」论的反驳建立在一个简单但有力的事实上：全球企业的
+                                AI
+                                采用率仍然接近于零。他提醒听众，真正跑通的大规模
+                                AI
+                                应用场景其实只有一个——编码，而即使是编码的大规模有效应用也才发生不过几个月。放眼全球，即便是技术最先进的大型企业，它们对
+                                AI 的使用也远未达到实质性的深度。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <p class="topic-detail-content">
+                                他区分了两种叙事：一种是 Musk
+                                式的「未来所有事情都将在太空完成」的宏大愿景；另一种是从企业采用角度的务实观察。后者的信号非常明确——我们甚至还在起跑线上。对于
+                                Roman
+                                来说，这种判断不只是信念，更是他所在行业的商业逻辑：如果他不相信
+                                AI
+                                需要数十倍甚至数百倍的基础设施投入，他就不会从事这一行。这种「自我选择偏差」反而让他的判断值得倾听——他知道自己为什么必须相信，也愿意接受被证伪的风险。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            "I think that we are just at the beginning of this
+                            amazing moment when Jensen calls it like useful AI"
+                            — "我认为我们正处于 Jensen 所说的「有用
+                            AI」的起点，真正大规模应用的序幕才刚刚拉开。"
+                            [01:54]
+                        </div>
+                        <div class="quote-block">
+                            "if you take any company in the world today and you
+                            will see we'll look at the AI adoption there you
+                            will actually see that they start using AI in a
+                            first percent of the volume in the first percent of
+                            the use cases" — "如果你观察全球任意一家公司的 AI
+                            采用情况，你会发现它们只在第一个百分点的用量和第一个百分点的场景中使用了
+                            AI。" [03:10]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 2 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">02</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                开源对 OpenAI 和 Anthropic 的真实影响
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:04:11 - 00:11:03</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            开源模型不是对 Frontier Model
+                            公司的威胁，而是在持续推高整个行业的天花板——每次智能变得更便宜，不是减少消费，而是创造更多消费。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <p class="topic-detail-content">
+                                Roman 提出了一个在 AI
+                                行业被低估的框架：构建者应该从前沿的封闭模型（Frontier
+                                Closed
+                                Models）起步，因为它们在开发阶段提供最好的能力；但当应用跑通、开始规模化后，自然要转向开源和专门化模型来优化经济性和针对性。这不是「二选一」，而是一条自然的演进路径。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <p class="topic-detail-content">
+                                值得注意的是，他不认为这会对 Anthropic 和 OpenAI
+                                构成致命威胁。原因是：<strong>未解决问题的存量远远大于已解决问题的增量</strong>。每一次行业找到高效解决某个任务的方法，不是标志着这个任务的终结，而是释放了原来用于解决该任务的资源来攻克更复杂的问题。这形成了一个持续的循环——Frontier
+                                模型不断向上探索，开源和专门化模型不断蚕食已经解决的问题空间，两侧都在增长。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">DeepSeek 时刻</div>
+                            <p class="topic-detail-content">
+                                最有力的例证来自 DeepSeek 时刻。2025 年 2
+                                月，DeepSeek 发布后引发市场恐慌，Nebius
+                                股价一周内暴跌 40%。但同一周，Nebius
+                                迎来了公司历史上销售业绩最好的一周。原因很简单：DeepSeek
+                                让大量团队意识到他们终于可以在经济上可行地运行推理工作负载了。同时，Cursor
+                                等产品成为最早从调优编码模型中受益的公司。智能变便宜并没有减少算力需求，反而释放了之前被经济性抑制的需求。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            "We never had the best commercial week we were
+                            pretty early in our story but that was the best
+                            commercial week in the history of the company" —
+                            "我们当时还很早期，但我们从未有过这么好的商业周——那是公司历史上销售最好的一个星期。"（DeepSeek
+                            发布当周）[09:30]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 3 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">03</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                杰文斯悖论：为什么更便宜反而带来更多需求
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:11:03 - 00:13:06</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            Roman 明确引用杰文斯悖论来解释 AI
+                            基础设施的经济学——效率提升不会减少资源消耗，反而会创造新的需求，因为他最想加速的「方方面面」都受限于真实世界的物理瓶颈。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <p class="topic-detail-content">
+                                当 Harry
+                                问到「你在哪些方面认为自己移动得不够快」时，Roman
+                                的回答直击了 AI
+                                基础设施的核心矛盾：需求无限，但物理世界供给有限。他用「四个维度」来定义公司建设——容量、产品、客户、资本——其中容量层面的瓶颈最为真实。不是钱不够，而是「供应链、监管、审批，以及火灾和水灾」让一切快不起来。数据中心建设是一个串行过程：锁定电力→拿到土地→建设设施→安装
+                                GPU，每一步都需要前置投入和面对不确定性。即使有无限的资金，6
+                                个月内的瓶颈依然无法突破——这是物理世界的铁律。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            "If you're not large enough, nobody needs us to
+                            exist" — "如果你不够大，没有人需要你存在。" [11:30]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 4 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">04</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">AI 基础设施的四层架构</h3>
+                            <span class="topic-timestamp"
+                                >00:13:06 - 00:18:49</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            Roman 将 AI
+                            基础设施从底层到顶层划分为四个层次——裸机、多云云、托管推理、智能体平台——每向上走一层，客户基数增长一个数量级，创造的价值也指数级放大。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <p class="topic-detail-content">
+                                这是本期对话中最具分析框架价值的段落。Roman
+                                构建了一个从「瓦特」到「任务」的完整抽象层级：
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                第一层：裸机基础设施（Bare Metal）
+                            </div>
+                            <p class="topic-detail-content">
+                                以兆瓦为计量单位，客户是全球个位数的大型企业（Meta、微软、OpenAI）。它们自带完整软件栈，只需要物理空间和电力。Nebius
+                                能提供的增值空间极小，但执行门槛极高——在数万 GPU
+                                的规模上保证稳定运行绝非「商品化」业务。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                第二层：多云云（Multi-tenant Cloud）
+                            </div>
+                            <p class="topic-detail-content">
+                                以 GPU
+                                小时为计价单位，客户是数百个研究密集团队。这一层提供存储、计算、网络、API、可观测性、安全等完整的云体验，客户可以快速获取集群开始工作，而无需管理物理设备。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                第三层：托管推理（Managed Inference）
+                            </div>
+                            <p class="topic-detail-content">
+                                以 Token 为计价单位，客户是数千个「垂直 AI
+                                公司」和企业。用户不需要关心 GPU
+                                型号，不需要自己部署推理引擎，只需要消费 Token
+                                来运行应用。Nebius 的 Token Factory
+                                产品就落在这个层面。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                第四层：智能体平台（Agentic Platform）
+                            </div>
+                            <p class="topic-detail-content">
+                                以「任务」为计价单位，客户是数万个开发者。这是正在构建中的未来层：开发者不需要选择模型、不需要估算
+                                Token
+                                数量，只需要描述任务目标，平台会自动决定使用哪个模型、多轮还是单轮调用、是否需要搜索，以及如何优化成本和质量。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <p class="topic-detail-content">
+                                Roman 特别强调了一个战略洞察：Nebius
+                                一直在有意地从低层向高层延伸。不是因为他们不能赚钱，而是因为向上走意味着客户基数从「十几个」扩展到「数万个」，也意味着业务从「容量供应商」转型为「价值创造者」。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            "This is the next layer when developer would maybe
+                            not even think in terms of particular you know types
+                            of the tokens but thinks in terms of end to end
+                            execution of their task" —
+                            "到了下一层，开发者甚至不会思考 Token
+                            的类型，而是思考任务的端到端执行。" [16:32]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 5 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">05</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                如果 Nebius 明天拥有 10 倍算力
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:18:49 - 00:28:51</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            资本的帮助受制于时间维度：6 个月帮不了，12
+                            个月可以加速，24
+                            个月才能解锁。需求的真实弹性远比「GPU
+                            小时价格」复杂——平台优化和 TCO 才是真正的变量。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">客户集中度风险</div>
+                            <p class="topic-detail-content">
+                                Roman 坦诚地承认这是「我们业务的核心问题」。不是
+                                Nebius 特有的问题，而是整个产品类别的问题。服务
+                                Meta
+                                和微软这样的客户可以带来巨额收入，但也意味着极高的依赖性和极低的差异化价值。Nebius
+                                应对这一风险的策略不是放弃大型客户，而是有意识地建立多元化的客户组合，并通过构建上层软件栈来服务更广泛的客户群体。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">价格弹性</div>
+                            <p class="topic-detail-content">
+                                Roman
+                                给出了一个反直觉的回答——「我们几个月前刚涨了价，需求压力仍然很大。」但他马上加了一个重要的限定条件：这主要适用于训练场景（一次性成本）；在推理场景（持续成本）中，存在一个客户经济模型无法承担的临界点。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                TCO 才是真正的变量
+                            </div>
+                            <p class="topic-detail-content">
+                                更重要的是，他批评了行业对「GPU
+                                小时价格」的过度关注。他认为真正的变量是
+                                TCO（总拥有成本）——GPU 宕机时间、有效 Token
+                                产出率、平台稳定性等综合因素。你可以把 GPU 定价
+                                $3 还是
+                                $5，但只要平台质量不同，对客户的实际成本效果可能相差一个数量级。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            "In the next 6 months, the capital cannot help. 6
+                            months is too short time. You have what you have,
+                            you need to deliver." — "在接下来的 6
+                            个月内，资本帮不上忙。6
+                            个月太短了，你有什么就得用什么，必须交付。" [00:22]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 6 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">06</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                从训练到推理和智能体的转变
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:28:51 - 00:37:18</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            「从训练转向推理」这个宏观标签掩盖了一个更深层的变革：构建的壁垒正在降低，这意味着整个客户群体的结构和需求正在发生根本性变化。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <p class="topic-detail-content">
+                                Roman
+                                认为行业过度简化了「训练→推理」的叙事。这不是简单的「同样
+                                GPU
+                                换了用途」，而是带来了全新的产品需求。推理场景中，客户需要的不再是「算力」，而是一个完整的生命周期支持：模型来源管理、数据收集与观察、模型改进与迭代。这是一个飞轮：你运行推理→生成数据→观察数据→改进模型→提高质量→继续运行推理。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <p class="topic-detail-content">
+                                更重要的是，技术栈正在向上游移动。以前使用 AI
+                                需要具备模型研究能力或推理工程知识，但现在越来越多的开发者——他们不一定是
+                                AI 研究员——正在进入市场。Nebius
+                                的核心价值主张由此确立：「降低构建 AI
+                                应用的门槛」——把基础设施的复杂性藏起来，甚至把部分
+                                AI
+                                的复杂性（模型调优、推理优化）也藏起来，让人们聚焦于产品和客户。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">全栈集成战略</div>
+                            <p class="topic-detail-content">
+                                在差异化问题上，Roman 用「全栈集成」来概括
+                                Nebius
+                                的战略。向下全栈——自建数据中心、自建机架和服务器、自建平台，从而获得成本和控制力上的优势；向上全栈——构建从裸机到推理到智能体的完整产品栈，服务从少数超大规模客户到数万开发者的广泛群体。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            "The value that companies like Nebius can create is
+                            actually to lower the barrier to build AI enabled
+                            products and AI enabled applications that really
+                            work" — "Nebius
+                            这类公司能创造的价值，是降低构建真正可用的 AI
+                            应用的门槛。" [31:30]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 7 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">07</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                Token Factory 如何降低 70% AI 成本
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:37:18 - 00:50:34</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            Token Factory 的核心能力不是「更便宜的
+                            GPU」，而是通过系统级的优化将推理成本降低一个数量级——蒸馏、投机解码、缓存优化，以及持续跟踪快速变化的模型生态。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">系统级优化手段</div>
+                            <p class="topic-detail-content">
+                                Roman 详细解释了 Token
+                                降成本的「非魔法」手段。首先是对基线模型做系统级优化：蒸馏（用更小的模型实现同样质量）、投机解码（让轻量模型做初步预测、大模型做验证）、缓存优化（复用已计算的中间结果）。这些手段的组合可以在不牺牲质量的前提下将推理成本降低
+                                70%。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                模型生态的变化速度
+                            </div>
+                            <p class="topic-detail-content">
+                                但更重要的是，他揭示了平台型服务的独特价值——模型每周甚至每天都在变化，跟踪、评估、切换的成本对单个企业来说极高。Token
+                                Factory
+                                的价值在于：当新模型出现时，平台已经完成集成和优化，客户可以一键测试和切换，持续保持在前沿状态。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                企业采用的真实动态：Revolut 案例
+                            </div>
+                            <p class="topic-detail-content">
+                                关于企业采用的真实动态，Roman 用 Revolut
+                                的案例做了生动说明。一开始 Revolut 99%
+                                的推理预算在 OpenAI
+                                上，很多场景经济性不成立，它们在传统供应商成本压力下无法规模化。转向开源模型后，前进步伐却因为缺乏内部的评估体系和工程能力而受阻。Roman
+                                指出，企业往往低估了建立「AI
+                                评估基础设施」的重要性——你需要指标、验证机制和
+                                AI 开发的 CI/CD
+                                流程。这个问题不是一夜能解决的，但一旦解决，AI
+                                消费就会进入指数级增长的轨道。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                开源与封闭模型的共存
+                            </div>
+                            <p class="topic-detail-content">
+                                Roman
+                                也在一处对话中回应了一个普遍争议：开源模型是否威胁到大型封闭模型的生存。他的答案是开放的生态共存——不是谁替代谁，而是各有位置。封闭模型不断探索更复杂的前沿智力任务；开源模型填补已经被理解的应用场景；专业领域模型（网络安全、医疗、机器人等）形成一个全新的模型星系。在这个框架下，「你对某个场景的需求」决定了你应该用哪个模型——而不是意识形态上选择开源或闭源。
+                            </p>
+                        </div>
+
+                        <div class="thought-block">
+                            <div class="thought-label">关于第四层的未来</div>
+                            Roman
+                            提出了一个大胆的设想：在未来，开发者甚至不需要选择模型——智能体平台会自动根据任务性质做出路由决策。就像一个搜索引擎的后台不需要用户决定用哪个索引算法一样。
+                        </div>
+
+                        <div class="quote-block">
+                            "The models are changing every week, every month" —
+                            "模型每周、每月都在变化。" [38:40]
+                        </div>
+                        <div class="quote-block">
+                            "When they solved these foundational problems, they
+                            start growing exponentially" —
+                            "当它们解决了这些基础问题后，就开始指数级增长。"
+                            [44:20]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 8 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">08</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                主权 AI、欧洲与模型构建的未来
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:50:34 - 00:53:52</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            欧洲的主权 AI
+                            讨论过多关注了「兆瓦」而忽视了「构建者」——基础设施会随着需求而来，而需求来自有能力构建产品的创业者。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <p class="topic-detail-content">
+                                Roman 以一种务实但不消极的态度看待欧洲在 AI
+                                竞赛中的落后。他不认为「建更多数据中心」能解决主权
+                                AI
+                                的问题——尽管他本人就是建数据中心的。他认为关键在于：生态系统中是否有足够多的优秀构建者，比如
+                                Mistral、Black Forest Labs、Lovable
+                                等等。当有好的产品团队创造出真正满足市场需求的应用时，算力需求自然会拉动基础设施的建设。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <p class="topic-detail-content">
+                                当 Harry
+                                给出「基础设施、横向模型、垂直模型、应用层」四个投资选项时，Roman
+                                毫不犹豫地选择了「应用层」——尽管他自己的公司做的是基础设施。他把做应用的人称为「AI
+                                旅程中的英雄」，因为他们冒着真正的市场风险——「人们到底需要什么？」——这才是推动整个行业增长的根本力量。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            "I think the most amazing people in this industry
+                            are those who take a risk to go and build end user
+                            products" —
+                            "我认为这个行业最了不起的人是那些冒险去构建端到端用户产品的人。"
+                            [53:00]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 9 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">09</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                与资本多 10 倍的超大规模企业竞争
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:53:52 - 01:08:47</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            与 Nvidia
+                            的关系取决于工程实力而非商业谈判；与超大规模厂商的竞争受限于资本，但更受限于真实世界的物理瓶颈；太空数据中心不是玩笑——太多聪明人正在为之努力。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">Nvidia 关系</div>
+                            <p class="topic-detail-content">
+                                Roman
+                                的观点富有「工程师文化」特色——不用谈判技巧去定义合作关系，而是用工程能力赢得尊重。Nvidia
+                                是一家工程师驱动的公司，它尊重的是同样强大的工程能力。Nebius
+                                的策略是在硬件层、软件层、推理平台层建立工程师对工程师的直接联系——「Nvidia
+                                的工程师越认可你，你们的关系就越牢固。」
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">资本的角色</div>
+                            <p class="topic-detail-content">
+                                Roman 反复强调资本的时间维度——6
+                                个月帮不了你，因为瓶颈在物理建设（拿地、审批、施工），而非购买力。Gavin
+                                Baker 的观点被提及：如果现在就能建 10
+                                倍的数据中心，反而会造成供应过剩。Roman
+                                的回应是务实的——数据中心建设是一个串行过程，但可以通过并行和前置投资来加速周期，而资本在这方面在
+                                18-24 个月的时间尺度上确实能发挥作用。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">公众抵触与监管</div>
+                            <p class="topic-detail-content">
+                                40% 的数据中心在规划和审批阶段受阻，Roman
+                                对此的态度是「这是我们必须面对的现实」。他不抗拒，而是将这个问题视为项目组合管理的风险因子——「超额认购」多个项目节点，确保某个延误不会影响整体交付承诺。同时他也承认，行业需要在社区沟通上做得更好，类比
+                                Uber
+                                早期在各地遭遇的抵制到最终融入城市生活的过程。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">太空数据中心</div>
+                            <p class="topic-detail-content">
+                                Roman
+                                没有使用常见的「不可能」或「太疯狂」的措辞。他只是说：「这么多聪明人正致力于实现它，为什么我不相信它会成功？」然后用了一个漂亮的对比——3
+                                年前，谁能相信我们会建多吉瓦级的数据中心和全球互联的超大规模算力集群？但现在，这已经是常规操作了。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                给女儿的职场建议
+                            </div>
+                            <p class="topic-detail-content">
+                                这一段可能是整期节目中最温暖也最有深度的部分。Roman
+                                放弃了 10
+                                年前坚持的「数学和工程学最重要」的观念，转而相信「同理心沟通」和「创造力」是
+                                10 年后最有竞争力的能力。这个转变本身就是 AI
+                                时代价值重构的一个隐喻——当智能可以被廉价调用时，人类独有的同理心和创造力变得前所未有地珍贵。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            "If engineers in Nvidia respect your engineers you
+                            will have the right foundation for relations" —
+                            "如果 Nvidia
+                            的工程师尊重你的工程师，你们的关系就有了正确的基础。"
+                            [55:10]
+                        </div>
+                        <div class="quote-block">
+                            "Just do your f***ing job" — "做好你的狗屁工作。"
+                            [56:20]
+                        </div>
+                        <div class="quote-block">
+                            "The main bottleneck again it's all it's it's it's
+                            everything but if you you need to look at this from
+                            the time time span perspective" —
+                            "主要瓶颈？它是所有因素。但你需要从时间跨度的角度来看这个问题。"
+                            [59:00]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 10 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">10</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                Nebius 最大的威胁不是竞争
+                            </h3>
+                            <span class="topic-timestamp"
+                                >01:08:46 - 01:14:22</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            Nebius
+                            的最大威胁不是竞争对手，而是行业整合——当世界被三五家超级企业控制时，像
+                            Nebius 这样的独立基础设施公司将失去存在意义。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <p class="topic-detail-content">
+                                Roman
+                                的最后一句话清晰有力：「整合是我们的主要威胁。世界越多元化、越民主化，我们就越被需要。」
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <p class="topic-detail-content">
+                                他的逻辑是：Nebius 的商业模式依赖于一个多元化的
+                                AI
+                                生态系统——不同的模型提供商、不同的应用开发团队、不同的企业客户。如果这个生态最终被少数几个超级企业统治，这些超级企业只需要裸机基础设施，不需要
+                                Nebius 的软件栈、平台服务或增值产品。Nebius
+                                会从「战略伙伴」被压缩为「容量供应商」。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <p class="topic-detail-content">
+                                Harry
+                                指出了令人不安的趋势：我们现在看到的是价值的加速集中——资金、人才、客户都在向少数玩家聚合。Roman
+                                承认这个风险，但选择保持乐观——因为「有太多人想要独立地构建一些东西」。他的乐观不是基于数据，而是基于对人类创造欲的信念。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <p class="topic-detail-content">
+                                在谈到 Leo Ashen Brener 的大额投资时，Roman
+                                展现了贯穿整期节目的务实风格：「每次有人投资我们、每次有人签单，他们给我们的都是信任和交付的机会。然后你应该回到工作中去交付。」这种「没有什么是有保障的」的态度，加上「鲨鱼只有游动才能活着」的断言，给整场对话画上了一个克制而有力量的句号。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            "The main threat for Nebius as a business is the
+                            world will be too much consolidated" — "Nebius
+                            作为一家企业最大的威胁，是这个世界变得过度集中。"
+                            [01:09:00]
+                        </div>
+                        <div class="quote-block">
+                            "It's like a shark. You're alive when you move. So
+                            we have to move." —
+                            "就像鲨鱼。你只有游动才能活着。所以我们得一直前进。"
+                            [01:14:00]
+                        </div>
+                        <div class="quote-block">
+                            "We could celebrate a little bit more but we just
+                            don't have time" —
+                            "我们可以多庆祝一些，只是真的没有时间。" [01:13:30]
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Takeaways Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">精华收获</h2>
+                <div class="takeaways-grid">
+                    <!-- Takeaway Card 1 -->
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">🏗️</div>
+                        <h3 class="takeaway-title">四层架构</h3>
+                        <p class="takeaway-desc">
+                            Roman 提出的 AI
+                            基础设施四层模型（裸机→多云→推理→智能体）是一个强大的分析框架，可以用于定位任何
+                            AI
+                            基础设施公司的战略位置。每向上走一层，客户基数增加一个数量级，差异化能力也指数级上升。
+                        </p>
+                    </div>
+
+                    <!-- Takeaway Card 2 -->
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">⏳</div>
+                        <h3 class="takeaway-title">时间维度</h3>
+                        <p class="takeaway-desc">
+                            资本不是万能的。6
+                            个月内，物理瓶颈（建设周期）不可突破；12
+                            个月可以加速；24
+                            个月才能解锁。这一框架适用于任何基础设施类投资的预期管理——它打破了「有钱就能快」的幻觉。
+                        </p>
+                    </div>
+
+                    <!-- Takeaway Card 3 -->
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">📈</div>
+                        <h3 class="takeaway-title">杰文斯悖论</h3>
+                        <p class="takeaway-desc">
+                            AI 中杰文斯悖论的现实例证：DeepSeek 导致 Nebius
+                            股价暴跌
+                            40%，同周却创造了销售新高。智能变得更便宜不会减少总需求，反而会释放被经济性抑制的消费。这对理解「开源模型是否伤害基础设施提供商」至关重要。
+                        </p>
+                    </div>
+
+                    <!-- Takeaway Card 4 -->
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">🚀</div>
+                        <h3 class="takeaway-title">冷启动到爆发</h3>
+                        <p class="takeaway-desc">
+                            企业 AI
+                            采用不是线性曲线。前期需要大量基础投资（评估体系、CI/CD、安全集成）才能开始高效交付，但一旦跨越这个「冷启动」门槛，AI
+                            消费会进入指数级增长——Revolut
+                            的案例清晰展示了这一点。
+                        </p>
+                    </div>
+
+                    <!-- Takeaway Card 5 -->
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">💡</div>
+                        <h3 class="takeaway-title">同理心与创造力</h3>
+                        <p class="takeaway-desc">
+                            Roman
+                            给女儿的建议——放弃「数学和工程学最重要」的旧观念，转而投资「同理心沟通」和「创造力」——是对
+                            AI
+                            时代人类竞争力的最佳注脚。当智能可以廉价获取时，人类独有的软技能变得前所未有地稀缺。
+                        </p>
+                    </div>
+
+                    <!-- Takeaway Card 6 -->
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">🦈</div>
+                        <h3 class="takeaway-title">做好你的工作</h3>
+                        <p class="takeaway-desc">
+                            贯穿全场的「just do your f***ing
+                            job」不是粗鲁，而是一种深刻的管理哲学——在资本狂热、技术加速、竞争激烈的环境中，回归到交付本身才是唯一可靠的长期策略。不庆祝不是因为不想，而是因为「鲨鱼只有游动才能活着」。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <h3 class="footer-title">鲨鱼只有游动才能活着</h3>
+                <p class="footer-desc">
+                    在这场关于 AI 基础设施行业的深度对话中，Roman Chernin
+                    没有给出任何华丽的承诺。他用工程师的冷峻和创业者的务实，描绘了一个远比舆论场更加复杂但也更加真实的行业图景——需求远未满足，供给受制于物理，资本的魔力有时间窗口，而最终决定成败的，是持续交付的能力。
+                </p>
+                <div class="footer-quote">
+                    "这就像鲨鱼一样。只有移动才能活下去。所以我们必须移动。"
+                </div>
+                <p class="footer-note">
+                    20VC with Harry Stebbings · Roman Chernin（Nebius
+                    联合创始人兼首席商务官）· 2025
+                </p>
+            </div>
+        </footer>
+
+        <!-- Scroll Animation Script -->
+        <script>
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("animate-in");
+                        }
+                    });
+                },
+                { threshold: 0.1 },
+            );
+
+            document
+                .querySelectorAll(".point-card, .takeaway-card, .topic")
+                .forEach((el) => {
+                    observer.observe(el);
+                });
+        </script>
+    </body>
+</html>
