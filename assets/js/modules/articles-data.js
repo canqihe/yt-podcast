@@ -1,6 +1,24 @@
 // ===== 文章数据 =====
 const articlesData = [
     {
+        "url": "articles/why-the-ai-boom-is-just-getting-started.html",
+        "card_class": "card-ai",
+        "category": "Invest Like The Best · AI 投资",
+        "date": "2026-06-10",
+        "title": "Why the AI Boom Is Just Getting Started — Alex Sacerdote",
+        "excerpt": "Whale Rock Capital 创始人用二十年 S 曲线框架解剖 AI 热潮：企业级 AI 渗透率不到 1% 造就「L 曲线」、编码成为第一块 5000 亿美元市场、为何几乎清仓所有软件股、以及硬件行业正在经历怎样的去商品化复兴。NVIDIA 4 倍 PE 时建仓的投资者告诉你 AI 才刚刚开始。",
+        "tags": ["#AI投资", "#S曲线", "#WhaleRock"]
+    },
+    {
+        "url": "articles/spacex-ipo-special.html",
+        "card_class": "card-finance",
+        "category": "金融 · IPO",
+        "date": "2026-06-10",
+        "title": "SpaceX IPO：史上最大上市交易的全面剖析",
+        "excerpt": "SpaceX 以 1.8 万亿美元估值上市——史上最大 IPO。CNBC Morgan Brennan、Wedbush Dan Ives、Morningstar Nicolas Owens、Bear Traps Larry McDonald 四组嘉宾全面剖析。AI 占 28.5 万亿 TAM 的 26 万亿，你买的是火箭，还是 AI 的未来？",
+        "tags": ["#SpaceX", "#IPO", "#太空经济"]
+    },
+    {
         "url": "articles/nebius-roman-chernin-ai-infrastructure.html",
         "card_class": "card-ai",
         "category": "AI · 基础设施",
