@@ -1,6 +1,66 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/factory-matan-grinberg-ai-token-reckoning.html",
+    card_class: "card-ai",
+    category: "20VC · AI 投资",
+    date: "2026-06-14",
+    title: "OpenAI vs Anthropic vs 开源：Token 宿醉与 ROI 清算",
+    excerpt:
+      "凯易砸 5 亿美元自建 AI、Uber 设 1500 美元人均 token 上限、Salesforce 每年给 Anthropic 3 亿美元——Factory 创始人 Matan Grinberg 给出一份冷静诊断：企业 AI 采购正从恐慌走向纵欲，最终撞上 ROI 宿醉之墙。从「模型与应用必须分离」的激励逻辑，到「四家均衡是人类的胜利」，再到痛批 Dario 反复强调「AI 会抢走你的工作」本质是为融巨额资金的算计——一位估值 15 亿美元的 AI 公司创始人的锋利思考。",
+    tags: ["#Factory", "#AI投资", "#20VC"],
+  },
+  {
+    url: "articles/80000-hours-ai-existential-risks.html",
+    card_class: "card-ai",
+    category: "80,000 Hours · AI风险",
+    date: "2026-06-12",
+    title: "我们错了：为什么先进AI与其他技术截然不同",
+    excerpt:
+      "AI可能在十年内彻底重塑世界。从智能爆炸的递归加速机制到五大存在性风险，从160年忧虑史到全球仅几千人的应对力量——80,000 Hours 系统论证为什么AGI风险是当今最被忽视的全球优先议题，以及为什么即使只有10%的最坏情况概率也值得全人类认真准备。",
+    tags: ["#AI风险", "#AGI", "#80KHours"],
+  },
+  {
+    url: "articles/spacex-ipo-fable5-ai-capex-update.html",
+    card_class: "card-finance",
+    category: "AI · 投资 · 市场分析",
+    date: "2026-06-12",
+    title: "SpaceX IPO、Fable 5 与 AI 资本支出更新 — 四位硅谷顶级投资者的深度对话",
+    excerpt:
+      "人类史上最大 IPO 的真正驱动力不是火箭而是 AI 计算。SpaceX 30 天内从零跃升全球第四大超大规模云，轨道数据中心每吉瓦成本仅 50 亿美元是地面 1/8，Fable 5 宣告快照基准测试已死，1.5 万亿资本支出在 60-70% 毛利率下数学成立——创造的速度正在指数级加速。",
+    tags: ["#SpaceX", "#AI投资", "#Fable5"],
+  },
+  {
+    url: "articles/allin-best-ideas-pitch.html",
+    card_class: "card-finance",
+    category: "All-In Podcast · 投资大赛",
+    date: "2026-06-12",
+    title: "All-In 首届最佳投资理念大赛：四位顶级基金经理的最强选股",
+    excerpt:
+      "MGM 的三重期权翻三倍潜力、Talen Energy 以低于重置成本交易、Aktis 放射药物的微型无人机、GEODNET 去中心化卫星网络——四场截然不同的投资博弈揭示专业投资人如何思考风险与价值。观众选 Talen，Besties 选 MGM，两套评判标准背后是宏大叙事与风险回报结构的对决。",
+    tags: ["#投资", "#All-In", "#最佳理念"],
+  },
+  {
+    url: "articles/ai-pcb-materials.html",
+    card_class: "card-tech",
+    category: "硬科技 · PCB材料",
+    date: "2026-06-11",
+    title: "AI重塑PCB：底层材料的价值跃迁与财富逻辑",
+    excerpt:
+      "从特种树脂、玻璃纤维布到电子铜箔，从覆铜板到ABF载板再到玻璃基板——完整拆解AI算力底层材料供应链。松下M8配方统治、日本味之素ABF膜垄断、三井金属铜箔霸权，中国企业如何实现从「被卡脖子」到「反向突破」的历史性跨越。",
+    tags: ["#PCB", "#AI算力", "#硬科技"],
+  },
+  {
+    url: "articles/jensen-huang-vision-risk-gpu.html",
+    card_class: "card-tech",
+    category: "Hoover Institution · 创始人故事",
+    date: "2026-06-11",
+    title: "黄仁勋：从洗碗工到AI帝国——一个只在美国才可能发生的故事",
+    excerpt:
+      "前美国国务卿赖斯在英伟达总部与黄仁勋深度对话：九岁独闯美国、肯塔基寄宿学校、「看我的作业」追到妻子、一个不可能融资的商业计划、从图形学到深度学习的第一性原理进化、AI五层蛋糕竞争格局，以及为什么「我就是美国梦的化身」。",
+    tags: ["#黄仁勋", "#NVIDIA", "#美国梦"],
+  },
+  {
     url: "articles/bill-gurley-mental-models.html",
     card_class: "card-finance",
     category: "The Knowledge Project · 思维模型",
