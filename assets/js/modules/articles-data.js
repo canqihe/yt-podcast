@@ -1,6 +1,66 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/ed-catmull-pixar-creativity.html",
+    card_class: "card-future",
+    category: "商业 · 管理 · 创意",
+    date: "2026-06-15",
+    title: "打造皮克斯：Ed Catmull × David Senra 深度对话",
+    excerpt:
+      "皮克斯联合创始人 Ed Catmull 用 26 年时间与 Steve Jobs 并肩工作，揭示了智囊团机制的本质——不是反馈，而是安全；Steve Jobs 被禁止参加智囊团的真实原因；Bob Iger 用一句「我手上是一副烂牌」赢得终身信任的谈判智慧；以及成功之后那段几乎无人知晓的存在主义危机。从「质量是最好的商业计划」到「信号比制度重要」——创意组织的底层管理逻辑。",
+    tags: ["#Pixar", "#管理哲学", "#创造力"],
+  },
+  {
+    url: "articles/ray-kurzweil-ai-2030.html",
+    card_class: "card-future",
+    category: "未来科技 · AGI · 托尼·罗宾斯",
+    date: "2026-06-15",
+    title: "雷·库兹韦尔预言：AI将在2030年彻底改变人类",
+    excerpt:
+      "从16岁的指数增长洞察到AI智能体的自我觉醒——雷·库兹韦尔与托尼·罗宾斯展开跨越60年的深度对话。1999年预测AGI在2029年实现时被专家嘲笑「需要100年」，如今连他自己也认为过于保守。2032年长寿逃逸速度、纳米机器人人脑融合、量子计算的争议、智能体自主交易NFT追问存在意义——这场58分钟的对话揭示了库兹韦尔147项预测中86%准确率背后的思维框架。",
+    tags: ["#RayKurzweil", "#AGI", "#长寿逃逸速度"],
+  },
+  {
+    url: "articles/spacex-ipo-market-wsj.html",
+    card_class: "card-finance",
+    category: "金融 · IPO 与市场",
+    date: "2026-06-15",
+    title: "SpaceX 的 IPO 真正告诉我们什么 | WSJ 本周观点",
+    excerpt:
+      "当一家尚未盈利、流通量不到 5% 的太空公司涌入公开市场——这是企业创新的胜利，还是市场过热的危险信号？WSJ 本周观点特邀金融学者 Owen Lamont，从流通量加权、等待期、IPO 平均表现以及「泡沫启示录的第三骑士」等角度，拆解 SpaceX 史上最大 IPO 背后的市场逻辑。",
+    tags: ["#SpaceX", "#IPO", "#市场泡沫"],
+  },
+  {
+    url: "articles/spacex-ipo-inside-137-ventures.html",
+    card_class: "card-finance",
+    category: "金融 · 风投",
+    date: "2026-06-15",
+    title: "SpaceX IPO：对话持股 1% 的幕后基金",
+    excerpt:
+      "137 Ventures 联合创始人 Justin Fishner-Wolfson 拆解 16 年持续投资 SpaceX 的完整历程。从 JOBS 法案如何改变投资格局到 SpaceX 从「成本加成」到「固定价格」的商业模式革命，从「公司 vs 类别」的投资哲学到「发射和学习」胜过完美规划的工程文化——一位持有 SpaceX 1% 的深度投资者的独特视角。",
+    tags: ["#SpaceX", "#风投", "#二级市场"],
+  },
+  {
+    url: "articles/the-ai-agent-iceberg-damien-tampling.html",
+    card_class: "card-ai",
+    category: "SuperAI 2026 · AI 智能体",
+    date: "2026-06-15",
+    title: "AI 智能体冰山 水面之下的真实战场",
+    excerpt:
+      "Sierra 策略智能体团队负责人 Damien Tampling 用「AI 智能体冰山」揭示了水面之下 90% 被绝大多数人忽略的真实战况：从 Taglish 语言镜像到 40% 单次通过率，从按成果付费的商业模式到「为失败模式设计」的设计哲学。Sierra——由 OpenAI 董事长 Bret Taylor 与前 Google 高管 Clay Bavor 联合创立——每天处理数千万到数亿次客户交互，这篇演讲是企业级 AI 部署最务实的一线观察。",
+    tags: ["#AI智能体", "#Sierra", "#SuperAI"],
+  },
+  {
+    url: "articles/hybrid-agentic-embedded-finance-bo-bai.html",
+    card_class: "card-finance",
+    category: "SuperAI Singapore 2026 · 智能体金融",
+    date: "2026-06-15",
+    title: "混合智能体嵌入式金融：AI、稳定币与RWA的三重交汇",
+    excerpt:
+      "当AI智能体开始自主执行支付、投资和资产管理时，金融服务会发生什么变化？新加坡持牌金融机构 MetaComp 的 Bo Bai 在 SuperAI 2026 上给出了他的答案——三个正在交汇的技术浪潮（稳定币、RWA 代币化和 AI 智能体）将从根本上重塑金融服务的每一个环节。但他指出比技术更重要的是：KYC 必须进化为 KYA（了解你的智能体）。从混合支付网络到智能体反洗钱，从持牌智能体基础设施到 A2A 三元生态——这场 15 分钟的演讲揭示了智能体金融时代的完整图景。",
+    tags: ["#智能体金融", "#RWA", "#稳定币"],
+  },
+  {
     url: "articles/factory-matan-grinberg-ai-token-reckoning.html",
     card_class: "card-ai",
     category: "20VC · AI 投资",
@@ -25,7 +85,8 @@ const articlesData = [
     card_class: "card-finance",
     category: "AI · 投资 · 市场分析",
     date: "2026-06-12",
-    title: "SpaceX IPO、Fable 5 与 AI 资本支出更新 — 四位硅谷顶级投资者的深度对话",
+    title:
+      "SpaceX IPO、Fable 5 与 AI 资本支出更新 — 四位硅谷顶级投资者的深度对话",
     excerpt:
       "人类史上最大 IPO 的真正驱动力不是火箭而是 AI 计算。SpaceX 30 天内从零跃升全球第四大超大规模云，轨道数据中心每吉瓦成本仅 50 亿美元是地面 1/8，Fable 5 宣告快照基准测试已死，1.5 万亿资本支出在 60-70% 毛利率下数学成立——创造的速度正在指数级加速。",
     tags: ["#SpaceX", "#AI投资", "#Fable5"],
