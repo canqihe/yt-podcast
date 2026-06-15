@@ -1,6 +1,16 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/perplexity-aravind.html",
+    card_class: "card-ai",
+    category: "20VC · AI · 创业",
+    date: "2025-06-15",
+    title: "出口管制帮助而非伤害中国 & 电力是AI的瓶颈 | Perplexity CEO",
+    excerpt:
+      "从印度中下层阶级到200亿美元估值仅用3年，Perplexity创始人Aravind Srinivas揭示AI产业真相：模型不是产品，编排者才是未来；电力而非模型能力是真正瓶颈；出口管制可能意外培养更强大的竞争对手；AI智能体收入将超越Google广告帝国；以及「模型不是产品」这一正在颠覆行业格局的核心洞见。",
+    tags: ["#Perplexity", "#AI创业", "#20VC"],
+  },
+  {
     url: "articles/ed-catmull-pixar-creativity.html",
     card_class: "card-future",
     category: "商业 · 管理 · 创意",
