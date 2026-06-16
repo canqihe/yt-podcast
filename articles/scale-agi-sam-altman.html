@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>规模、AGI 与万物的未来 — Sam Altman 重返斯坦福 CS153</title>
+        <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+        <!-- 引用设计系统样式 -->
+        <link rel="stylesheet" href="../design-system/design-tokens.css" />
+        <link rel="stylesheet" href="../design-system/article-styles.css" />
+
+        <!-- 配色方案：紫黄 -->
+        <style>
+            :root {
+                --accent-primary: #a855f7;
+                --accent-secondary: #ffc107;
+                --accent-primary-rgb: 168, 85, 247;
+                --accent-secondary-rgb: 255, 193, 7;
+            }
+
+            .header::before {
+                background:
+                    linear-gradient(
+                        to left,
+                        rgba(10, 10, 11, 0.3) 0%,
+                        rgba(10, 10, 11, 0.85) 40%,
+                        rgba(10, 10, 11, 0.98) 70%
+                    ),
+                    url("images/scale-agi-sam-altman-cover.jpg") no-repeat right
+                        center / cover;
+                opacity: 0.6;
+            }
+
+            .header::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background:
+                    radial-gradient(
+                        ellipse at top right,
+                        rgba(var(--accent-primary-rgb), 0.15) 0%,
+                        transparent 50%
+                    ),
+                    radial-gradient(
+                        ellipse at bottom left,
+                        rgba(var(--accent-secondary-rgb), 0.12) 0%,
+                        transparent 50%
+                    );
+                pointer-events: none;
+                z-index: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="badge-wrapper">
+                        <span class="badge">Stanford Online · CS153</span>
+                    </div>
+                    <h1 class="title">
+                        <span class="title-line-1">规模、AGI 与万物的未来</span>
+                        <span class="title-line-2">Sam Altman 重返斯坦福</span>
+                    </h1>
+                    <p class="subtitle">
+                        2014 年他在斯坦福开过现象级课程
+                        CS183《如何创办一家创业公司》；十多年后重返校园，他抛出一个判断——那套创业剧本已经基本作废。这场约
+                        41
+                        分钟的前沿系统对谈，系统拆解了「规模」作为一种被严重低估的押注，还原了
+                        ChatGPT
+                        五天引爆「好的紧急情况」的完整经过，并预言：当前的预训练/后训练/强化学习流水线终将被重写，而设计者将是
+                        AI 本身。
+                    </p>
+                    <div class="meta-grid">
+                        <div class="meta-item">
+                            <div class="meta-label">课程</div>
+                            <div class="meta-value">Stanford CS153</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">嘉宾</div>
+                            <div class="meta-value">Sam Altman</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">时长</div>
+                            <div class="meta-value">约 41 分钟</div>
+                        </div>
+                    </div>
+                    <a
+                        href="https://www.youtube.com/watch?v=F_7M4Hc-usM"
+                        class="cta-button"
+                        target="_blank"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+                            <path
+                                d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                            />
+                        </svg>
+                        观看原视频
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- 核心要点 Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">核心要点</h2>
+                <div class="points-grid">
+                    <div class="point-card">
+                        <div class="point-number">01</div>
+                        <h3 class="point-title">创业剧本已被改写</h3>
+                        <p class="point-desc">
+                            AI
+                            之前的创业规则已经失效——如今一个创始人用买得起的一点
+                            token，就能完成过去需要 100
+                            人顶尖工程团队才能完成的事。能承接的问题、野心的上限、推进的速度、并行的工作量，全都进入完全不同的量级。
+                        </p>
+                    </div>
+
+                    <div class="point-card">
+                        <div class="point-number">02</div>
+                        <h3 class="point-title">规模是一种信仰</h3>
+                        <p class="point-desc">
+                            奥特曼职业经历中所有最有趣的事，都与规模带来的涌现属性有关：把一个已在小规模跑通的东西推到别人没试过的规模，大多数情况下是好主意——而绝大多数人做得远远不够。
+                        </p>
+                    </div>
+
+                    <div class="point-card">
+                        <div class="point-number">03</div>
+                        <h3 class="point-title">ChatGPT 五天引爆</h3>
+                        <p class="point-desc">
+                            它原本只是为了让别人为 API
+                            付费的研究演示，却在五天内反复冲高、证伪「炒作周期」，迫使
+                            OpenAI
+                            同时建立一家公司和一个产品——一场「好的紧急情况」。
+                        </p>
+                    </div>
+
+                    <div class="point-card">
+                        <div class="point-number">04</div>
+                        <h3 class="point-title">流水线终将被 AI 重写</h3>
+                        <p class="point-desc">
+                            当前的预训练/中期训练/后训练/强化学习流水线「感觉并非最优解」，终将被重写——而设计者将是
+                            AI 自己。目标：2028 年 3 月拥有一个能发现全新架构的
+                            AI 研究员。
+                        </p>
+                    </div>
+
+                    <div class="point-card">
+                        <div class="point-number">05</div>
+                        <h3 class="point-title">智能是新公用事业</h3>
+                        <p class="point-desc">
+                            智能正成为继电、互联网之后的新公用事业，但人类至今没找到向世界解释它的方式——就像当年电力公司最终选择卖「夜晚的光」而不是「电」。OpenAI
+                            还在找自己的那个答案。
+                        </p>
+                    </div>
+
+                    <div class="point-card">
+                        <div class="point-number">06</div>
+                        <h3 class="point-title">算力短缺将永远存在</h3>
+                        <p class="point-desc">
+                            只要模型足够聪明、成本足够低，需求就封顶不了。奥特曼警告：只要
+                            AI
+                            持续进步，算力短缺就会「永远存在」——这是他眼中一场被严重低估的、鲜活的危机。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- 深度洞察 Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">深度洞察</h2>
+
+                <!-- Topic 01 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">01</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                重返斯坦福：AI 时代的创业剧本已被彻底改写
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:00:09 - 00:03:49</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            奥特曼重回校园的第一感受不是怀旧，而是「该有人把那门课重讲一次了」——因为
+                            AI
+                            之前的创业规则已经失效：如今一个创始人用买得起的一点
+                            token，就能完成过去需要 100 人工程团队才能完成的事。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">颠倒的创业路径</div>
+                            <p class="topic-detail-content">
+                                奥特曼称 OpenAI
+                                是过去几十年硅谷最奇怪的一家创业公司——它先是一个研究实验室，后来才不得不把一家创业公司嫁接上去，完全颠倒了正常的演进顺序（通常是先做产品公司、增长放缓后再成立研究实验室）。他直言「不太推荐这种做法」。但更深层的错位是：即便创立时，团队仍在遵循
+                                AI 之前的创业规则，因为当时的 AI 还不存在。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">杠杆的量级变化</div>
+                            <p class="topic-detail-content">
+                                最直接的变化是杠杆的量级：用一笔买得起的 token
+                                开销，就能做到过去一支 100
+                                人顶尖工程团队才能做到的事。这意味着能承接的问题、野心的上限、推进的速度、同时并行的工作量，全都进入了完全不同的量级——「这在过去是完全不可能的，它根本不在创业公司的选项集里」。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                不要让老师布置题目
+                            </div>
+                            <p class="topic-detail-content">
+                                正因如此，他反对由老师布置创业题目。逻辑很干净：如果一个点子足够明显、连他自己都能想到，那它对很多人来说都太明显了。真正值得找的，是那种在自动化编程时代之前根本不可能存在、今天完全不引人注目、却即将成为数万亿美元市场、全世界只有四家公司在做的事。他坦承自己不知道那是什么——恰恰是课堂里的学生更有可能知道。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            「只要花一笔买得起的 token 开销，你就能做到过去一支
+                            100
+                            人顶尖工程团队作为创业公司才能做到的事，而这在过去是完全不可能的。」—
+                            Sam Altman [00:02:24]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 02 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">02</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                「规模」是一种信仰：涌现属性远超共识预期
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:04:03 - 00:08:24</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            奥特曼职业经历中「所有最有趣的事」，几乎都与一件事有关：规模带来的涌现属性，以及规模持续提供远超共识预期的回报。他无法解释这为什么成立，但坚持认为——把一个已在小规模跑通的东西推到别人没试过的规模，大多数情况下是好主意。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                无理论但有强经验
+                            </div>
+                            <p class="topic-detail-content">
+                                奥特曼极为坦诚地声明：他给不出任何让他满意的解释理论。正是这种「无理论但有强经验」的状态让他略感不安，但仍要讲，因为「从实证上看它似乎确实成立」。他的判断标准是：所有最有趣的现象，都与涌现属性（emergent
+                                properties）有关，或与规模持续带来远超共识预期的回报有关——不仅体现在
+                                AI 模型的 scaling loss
+                                上，也体现在把更多聪明人聚到一起的研究场景、以及公司的规模经济上。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">YC 的网络效应</div>
+                            <p class="topic-detail-content">
+                                他讲了一个亲身经历：YC
+                                做大之后，大量聪明人主张「它太大了、应该收缩、每批少投点」。这种主张很诱人，因为它意味着工作量大幅减少，理论也听起来合理——「最好的公司总是显而易见的，剩下的投了也没用」。但奥特曼指出，人们忽略了让
+                                YC
+                                真正运转起来的魔力：每批批次内部的网络效应。这是一种规模上的涌现属性，在
+                                1/10、1/100 的规模下根本不存在。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                可操作的经验法则
+                            </div>
+                            <p class="topic-detail-content">
+                                由此他提炼出一条经验法则：当你找到一个时机，能把某个已经「以某种有趣方式跑通」的东西，推到一个别人没试过的规模——大多数情况下是好主意，而这是绝大多数人做得不够的事。他把这套信念套回「要不要把
+                                AI
+                                模型做大」时，当时领域里几乎所有的天才都在泼冷水：「这不算什么科学结果，它能随规模变好有什么意思。」而他的潜台词是：正因为它「看起来已被证明过」、共识才认为没有继续的意义，恰恰是规模红利藏身的地方。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            「我给不出『为什么』的解释，但从实证上看……大多数情况下，这看起来是个好主意，而这也是大多数人做得远远不够的事。」—
+                            Sam Altman [00:06:57]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 03 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">03</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                把规模拆成系统问题：算力、资本、文化与指数级的盲点
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:08:18 - 00:11:48</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            人们之所以不做规模，是因为东西会以加速且不可预测的方式坏掉。破解之道是把规模当作系统设计问题，逐层拆解每一个「不该做」的理由——技术可行性、资金需求、文化阻力——然后一个一个解决；而在组织人这一最难的一环上，靠的是清晰的目标、清晰的路径，以及帮助人们跨越「人类不擅长想象指数级」的认知障碍。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">三层独立难题</div>
+                            <p class="topic-detail-content">
+                                奥特曼把「把 AI
+                                模型做大」拆成几层独立的难题：一是技术可行性——在
+                                1 万甚至 10 万张 GPU
+                                上跑一个训练任务，是从来没人想过的事，需要「一摞一摞的工程人才」；二是资金需求——要做到这一点需要什么、怎么才可能有一门生意、你怎么敢冒这个险；三是文化阻力——研究员们会说「既然我们有这么多算力，为什么不把它分给所有项目」，这种「把资源切分」的本能几乎在每个领域都会出现。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">组织人的三件套</div>
+                            <p class="topic-detail-content">
+                                在「组织人」这个最难的维度上，他给出的答案是三件套：一个清晰的目标、一个通往目标的清晰计划、以及对「一路上怎么做决策」的清晰回答。以「押注把深度学习做大」为例，一旦公开宣告「错了我们就失败，但我们就要这么做」，并讲清楚「为什么这么做、相信做到之后世界会变成什么样」，这种清晰本身就「非常有力量」。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">指数盲点</div>
+                            <p class="topic-detail-content">
+                                更深层的人类弱点在于：人类没有进化出擅长思考指数级（exponentials）的能力。人们很难想象规模定律会持续指数级延续、收入会指数级增长、组织能承担指数级增长的复杂度。奥特曼的经验是，要和人一起从第一性原理出发真正想清楚「为什么这可能发生」，需要花大量时间——这也是为什么清晰的目标和反复推理如此关键。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            「出于某种原因，我们人类并没有进化出擅长思考指数级变化的能力。」—
+                            Sam Altman [00:11:03]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 04 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">04</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                ChatGPT
+                                诞生记：一个研究演示引爆的「好的紧急情况」
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:12:00 - 00:16:30</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            ChatGPT
+                            几乎是一场意外。它原本只是一个研究演示，目的是让别人也来做类聊天产品、从而为
+                            API
+                            付费。但它在五天内反复冲高、证伪了「炒作周期」的判断，让奥特曼意识到手里握着一个稳稳的爆款，并触发了一场被迫同时建立公司和产品的「好的紧急情况」。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                从 API 退而求其次
+                            </div>
+                            <p class="topic-detail-content">
+                                故事从 GPT-3 讲起。做出 GPT-3 后，OpenAI
+                                急需赚钱去买十亿、几十亿美元级别的计算机，但
+                                GPT-3 虽是个「很酷的
+                                demo」，他们想不出能围绕它做什么产品。于是采取退而求其次的策略：把它做成
+                                API，指望别人能想出做什么产品。2020 年夏天 API
+                                上线，一开始几乎没有反响，一个月后才在 Twitter
+                                上意外病毒式传播。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">烂得惊人</div>
+                            <p class="topic-detail-content">
+                                奥特曼特别强调一个反直觉的事实：回头去看，GPT-3/3.5
+                                烂得惊人——相对于它当时引发的那种兴奋程度而言。人们试了各种东西，真正能跑出像样生意的只有「文案写作」（copywriting），既不算太好也不算太刺激。但关键的转折藏在一个细节里：开发者们已经摸出了「往
+                                prompt
+                                里输入内容然后和它聊天」的玩法，很多人没法把 API
+                                用进业务，却用自己的 API key 在那里聊天。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">五天判据</div>
+                            <p class="topic-detail-content">
+                                OpenAI 看到了这个现象，按 YC
+                                原则「看看用户爱什么，然后去做那个」决定围绕它做一个聊天机器人。奥特曼从
+                                YC
+                                学到一条经验：当一个东西真的开始增长、而它又还不够好的时候，你手上就有了一个稳稳的爆款。最初几天流量冲上去又掉下来，所有人都断言「这只是一波炒作周期」；但第二天它会冲到更高的峰值、再掉下来，人们还在说「炒作周期」。到了第四、第五天，他心里已经清楚了——于是把所有人聚到一起宣布：「这是一个紧急情况，这是一种好的紧急情况，但我们必须同时把一家公司和一个产品都建起来。」
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            「当某个东西真的开始增长、而它又还不够好的时候，你手上就有了一个稳稳的爆款。」—
+                            Sam Altman [00:15:11]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 05 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">05</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                从 Codex
+                                到流水线终局：杀手级企业应用的拐点，将由 AI
+                                来重写底层
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:16:30 - 00:19:18</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            编程才是真正的杀手级企业应用，Codex 的押注其实早于
+                            ChatGPT，直到 5.5
+                            才迎来真正拐点。更重要的判断是：当前的预训练/中期训练/后训练/强化学习流水线「碰巧成了一条流水线、感觉并非最优」，它终将被重写，而设计者将是
+                            AI 自己。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                编程与机器人是执行器
+                            </div>
+                            <p class="topic-detail-content">
+                                奥特曼点出一个常被忽略的时序：在 ChatGPT
+                                之前，OpenAI
+                                原本的计划是全力押注于编程（code）。更深的内在信念是——编程是模型控制计算机的方式，机器人是模型控制物理世界的方式；如果做出一个足够聪明、拥有「写代码」和「驾驶机器人」作为执行器（actuators）的模型，就能真正让智能在世界上替人做事。这条路线「花了一段时间才走到那一步」。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">5.5 的拐点</div>
+                            <p class="topic-detail-content">
+                                他认为 Codex
+                                是到今年年初才真正变好，而真正的拐点出现在
+                                5.5——「人们开始用它做出不可思议的事情」。编程作为杀手级企业应用的潜力，在那一刻才真正兑现。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                流水线将由 AI 重写
+                            </div>
+                            <p class="topic-detail-content">
+                                在被问及当前流水线是否会长期稳定时，他的判断分两层：它确实是当前的流水线，但他预计会经历一次「重大重写」——他坦承「不知道什么时候发生、也不知道具体怎么发生」，并给出一个耐人寻味的观察：它多少有点奇怪地、碰巧以一条流水线的方式存在，感觉并不像是真正的最优解。那么最优解长什么样？他把球踢回给
+                                AI 本身：「那是一个该交给 AI
+                                去研究的问题。」他给出两个时间表锚点：到今年 9
+                                月用 50 万张 A100 等效 GPU 作为一个 AI
+                                研究实习生，到 2028 年 3
+                                月拥有一个端到端、能发现全新架构的全职研究员。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            「我觉得那是一个该交给 AI 去研究的问题。」— Sam
+                            Altman [00:18:00]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 06 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">06</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                智能是新公用事业：从「卖电」到「卖夜晚的光」
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:19:18 - 00:23:58</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            智能正在成为一种新的「公用事业」，而人类历史上这种东西并不多（电、互联网、水）。但向世界解释它的最大难题，在于类比翻译的失效——就像当年电力公司最终发现人们听不懂「我在卖电」，于是改卖「夜晚的光」。OpenAI
+                            至今还没找到智能的「夜晚的光」。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                罕见的新公用事业
+                            </div>
+                            <p class="topic-detail-content">
+                                奥特曼认为正在发生的是：我们正在创造一种新的公用事业（utility），而这在历史上并不常发生——电是一种公用事业，互联网是一种公用事业，水也算，大概也就这些了。正因为罕见，人类没有多少现成的例子可以借鉴好的隐喻或经验，去想怎么向世界解释这件事。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">电力公司的启示</div>
+                            <p class="topic-detail-content">
+                                他转向研究电成为公用事业时发生了什么。关键洞察是：电力公司不谈「卖电」，因为没人知道那是什么、也不知道自己为什么想要。电听起来很吓人——这样一个会进到你家、可能以可怕方式杀死你的东西，让人感觉和之前的世界完全不同。后来他们开始卖的，是「夜晚的光」（light
+                                at
+                                night）——「你得到的不是电，而是夜晚的光；顺便说一句，这同一样东西将来还能替你洗衣服。」而人们对「将来能洗衣服」的反应是：「不不不，这个对我来说跳得太远了。」
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                OpenAI 的传播困境
+                            </div>
+                            <p class="topic-detail-content">
+                                由此他点出 OpenAI
+                                当前的核心传播困境：即便他们「完全是对的」、即便未来每个人都有一个
+                                OpenAI 的 token
+                                订阅、插到一切里，直接告诉世界「我们在卖智能」，人们就是共鸣不起来。他坦承自己不知道智能的「夜晚的光」对应物是什么，但断言：如果智能要成为新的公用事业，就必须找到一种方式向世界解释「拥有一根你可以随心所欲使用的智能管道」意味着什么。在
+                                token 公用事业 vs
+                                算力公用事业的争论上，他给出清晰的消费者视角：作为消费者你不会在乎硬件在哪、是哪款芯片——那些会被抽象掉，你真正在乎的是「能不能大量使用、便不便宜、干得好不好」。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            「他们不谈卖电，因为没人知道那是什么……后来他们开始向人们营销出售的，是『夜晚的光』。」—
+                            Sam Altman [00:20:21]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 07 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">07</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                一人前沿实验室与被低估的推理基础设施
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:24:13 - 00:25:43</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            面对一人前沿实验室的期末项目，奥特曼给出反共识的方向：模型不缺人做，会有大量聪明人在做出色模型；真正被投资不足的，是推理（inference）基础设施——如何大规模交付大量廉价的智能。他断言，所有前沿实验室都将在相当程度上不得不变成「推理公司」。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                模型不是被低估的机会
+                            </div>
+                            <p class="topic-detail-content">
+                                CS183
+                                的期末项目是「一人前沿实验室」：学生模拟自己作为一个个体、拥有所有合适工具和大量算力的实验室。奥特曼先称赞这是一个「特别棒的项目」，然后给出与他整场对谈一脉相承的判断：会有大量非常聪明的人在做很棒的训练想法，「不管你们做什么，我们都会拥有不可思议的模型——而且很快。」换句话说，模型本身不是被低估的机会。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                推理层被投资不足
+                            </div>
+                            <p class="topic-detail-content">
+                                真正被投资不足的，是整个技术栈里「推理」那一层——也就是「如何把这些不可思议的智能变得既便宜又充沛」。他直言「这部分被投资不足了」，并给出一个前瞻性的论断：所有前沿实验室都将在相当程度上不得不变成推理公司（inference
+                                companies）。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                与算力短缺形成闭环
+                            </div>
+                            <p class="topic-detail-content">
+                                这个判断与他后文关于「算力短缺将永远存在」的论点形成闭环：如果智能的供给端（模型）持续变强、而交付端（推理算力）长期短缺，那么谁能在推理基础设施上取得突破，谁就掌握了让智能「既便宜又充沛」的钥匙。这也是他对学生最直接的就业建议之一——推理基础设施是这个领域里最被低估的押注之一。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            「我认为所有前沿实验室都将在相当程度上不得不变成推理公司。」—
+                            Sam Altman [00:25:13]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 08 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">08</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                现场问答：LLM 是死路吗、身份与真相、教育的失败
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:25:56 - 00:33:24</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            问答环节密集输出了多个判断：押注 LLM
+                            规模化不会成功「相当误入歧途」，因为 OpenAI
+                            的模型已经证伪了数学猜想；阻碍人们看清真相的，往往不是数据而是身份认同；而教育系统在
+                            ChatGPT
+                            发布三年半后几乎没有任何重大变革，是奥特曼坦承的一个「预测错误」。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">LLM 不是死路</div>
+                            <p class="topic-detail-content">
+                                被问及 Yann
+                                LeCun（杨立昆）认为大语言模型是死路的观点，奥特曼的回应非常具体：就人类水平智能而言，这些模型在某些方面已远超人类，在另一些方面（如长周期、高判断力任务）又远不如人。但他抛出一个极具冲击力的最新事实——就在对话前一天，OpenAI
+                                的一个模型发现/证伪了一个「聪明人研究了很久」的数学猜想，而很多聪明科学家最近还断言「那种事不可能发生」，现在数学家们在问「数学是不是要结束了」。由此他给出明确结论：在当下押注
+                                LLM 规模化不会成功，「感觉相当误入歧途」。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">身份即盲点</div>
+                            <p class="topic-detail-content">
+                                被问到当那个「我早就说过了」的人烦不烦，奥特曼的回答意外平静：数据相当有力地站在他们这边。这段问答里最深刻的一句，是他对「为什么有人面对不利数据仍固执己见」的解释——如果你把自己的身份认同绑在「某件事成不成」上，而实证结果证伪了你，你对那个身份又太执着，你就放不下、就看不到真相。他称之为「一个双向的重要提醒」，既适用于坚信「AI
+                                不行」的人，也适用于任何把信念变成身份的人。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">教育的预测错误</div>
+                            <p class="topic-detail-content">
+                                谈及教育，奥特曼直言「很担心」，并坦承自己判断错了。他原本以为
+                                ChatGPT
+                                发布后，会有「一年学生在作弊、然后教育系统自我重设计」的过程。但自
+                                ChatGPT
+                                发布三年半以来，他很难指出整个教育系统有任何重大的系统性变化——这是一个
+                                prediction error（预测错误）。他担忧：如果继续像
+                                AGI
+                                之前的世界那样教学和评估，会导致思考能力的萎缩；但也划出边界——有些东西（如写作、编程）即便机器能做得更好也仍要教，因为它们培养的是「思考与学习」这种元技能。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            「如果你把自己的身份认同绑在『某件事成不成』上……你就看不到真相。」—
+                            Sam Altman [00:28:29]
+                        </div>
+
+                        <div class="thought-block">
+                            <div class="thought-label">最高位的关键点</div>
+                            当被问及最尖锐的观点，奥特曼的回答出乎意料地朴素却分量极重：「AI
+                            就是会一直向前走。」他认为这一点尚未被广泛相信——如果它被广泛相信，社会现在会出现明显更多的回响。他说这或许才是那个
+                            high order bit：如果 AI
+                            进步继续按当前指数曲线再走三年半，「世界、社会所能企及的模样，就完全不同了」。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 09 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <span class="topic-number">09</span>
+                        <div class="topic-info">
+                            <h3 class="topic-title">
+                                三大宇宙分岔与一场被低估的算力危机
+                            </h3>
+                            <span class="topic-timestamp"
+                                >00:33:24 - 00:41:06</span
+                            >
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-section-title">核心观点</div>
+                        <p class="topic-core-point">
+                            奥特曼把未来十年拆成几个关键分岔：最重要的，是技术被广泛民主化（约
+                            80% 概率）还是集中在少数公司（约
+                            20%）——后者比大多数安全风险更危险；在经济分配上，他更偏爱「公民财富基金/所有权股份」而非固定现金分红；而算力分配将成为新的公平性难题。最后，他警告一场被严重低估的、鲜活的危机：只要
+                            AI 持续进步，算力短缺将「永远存在」。
+                        </p>
+
+                        <div class="topic-section-title">深度阐述</div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                分岔一：民主化 vs 集中（80 / 20）
+                            </div>
+                            <p class="topic-detail-content">
+                                奥特曼认为最重要的分岔是：这项技术将在多大程度上被广泛民主化，又在多大程度上集中在少数几家公司手里。他坦言存在各种理由说明「默认情况下这件事会被集中到少数几家公司」，它们会变成地球财富的相当大比例——这「显然很糟糕」。他把「推向公用事业模式」的部分理由讲得很透：第一，少数公司拥有这一切的世界相当不稳定、糟糕，会让人感觉相当不公平；第二，那里存在一种真实的对齐失败（alignment
+                                failure）和一种非常脆弱的世界。他给出概率：大约
+                                80% 走上民主化道路；并呼吁——哪怕 OpenAI
+                                自己就是那少数公司之一，让技术集中在少数公司手里的风险「也不应该被我们容忍」。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">
+                                分岔二：所有权股份优于固定分红
+                            </div>
+                            <p class="topic-detail-content">
+                                主持人追问全民基本收入（UBI）等问题，并指出挪威主权财富基金（持有全球所有上市公司
+                                1.5% 股份、且事实上有
+                                UBI）可能已是这种模式的雏形。奥特曼明确表示：这些事不需要全新的点子。但他做了一个重要区分——他对「让人们拥有某种所有权股份」远比对「固定的每月现金分红」兴奋。他资助过大规模
+                                UBI
+                                研究，也观察过人们投资创业公司的心理反应，知道哪种模式更契合人类心理。他乐于看到的是：随着杠杆从劳动向资本转移，建立某种「公民财富基金」（citizens
+                                wealth
+                                fund），让人们拥有资本主义的一小块。值得注意的是，他还说自己已变得不那么「短期的就业末日论者」了。
+                            </p>
+                        </div>
+                        <div class="topic-detail">
+                            <div class="topic-detail-label">永远短缺的算力</div>
+                            <p class="topic-detail-content">
+                                主持人用「算力时代的卫生纸都被抢光了」来比喻当下的
+                                H100 / Blackwell
+                                价格乱象（长期预留与现货价差一度高达约 5
+                                倍、H100
+                                今年几乎售罄）。奥特曼确认「存在一场巨大的算力短缺」。为什么人们没有为此抓狂？他认为人们假设了「我们会在现有硬件上取得重大推理效率提升」，也期待「一波硬件浪潮」——但「也许需求的浪潮更大」。而关于这场短缺会持续多久，他给出全场最震撼的判断之一：不能脱离价格谈全世界对电的需求，AI
+                                也一样；如果能让模型足够聪明、成本足够低，需求基本上是封顶不了的（uncapped）。于是结论是——只要能持续取得进步，算力短缺就会永远存在。如果你有非常好的个人智能体，你会想同时跑
+                                10 个甚至 100 个，让它们一直为你工作。
+                            </p>
+                        </div>
+
+                        <div class="quote-block">
+                            「只要我们能在这一领域持续取得进步，算力短缺就会永远存在。」—
+                            Sam Altman [00:39:38]
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- 精华收获 Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">精华收获</h2>
+                <div class="takeaways-grid">
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">📈</div>
+                        <h3 class="takeaway-title">规模红利</h3>
+                        <p class="takeaway-desc">
+                            当一个东西已经在小规模上「跑通」，把它推到别人没试过的规模，大多数情况下是好主意，而绝大多数人做得远远不够——这是奥特曼职业经历中所有「最有趣的事」的共同特征。
+                        </p>
+                    </div>
+
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">🔧</div>
+                        <h3 class="takeaway-title">拆解即解法</h3>
+                        <p class="takeaway-desc">
+                            人们回避规模，是因为东西会加速且不可预测地坏掉。破解之道不是赌运气，而是把规模当作系统问题逐层拆解（技术可行性、资金、文化阻力），一个一个解决。
+                        </p>
+                    </div>
+
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">📐</div>
+                        <h3 class="takeaway-title">指数盲点</h3>
+                        <p class="takeaway-desc">
+                            人类没进化出想象指数级的能力。组织大规模的人靠三件套——清晰的目标、路径、决策方式——并花大量时间从第一性原理帮人想通「为什么指数级能发生」。
+                        </p>
+                    </div>
+
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">🚀</div>
+                        <h3 class="takeaway-title">爆款判据</h3>
+                        <p class="takeaway-desc">
+                            当一个东西真的开始增长、而它又还不够好的时候，你手上就有一个稳稳的爆款——ChatGPT
+                            五天内反复冲高、证伪「炒作周期」，触发了同时建公司和产品的「好的紧急情况」。
+                        </p>
+                    </div>
+
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">💡</div>
+                        <h3 class="takeaway-title">智能即公用事业</h3>
+                        <p class="takeaway-desc">
+                            智能正成为继电、互联网之后的新公用事业，但人类至今没找到向世界解释它的方式——当年的答案不是「卖电」，而是「卖夜晚的光」，OpenAI
+                            还在找自己的那个答案。
+                        </p>
+                    </div>
+
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">⚙️</div>
+                        <h3 class="takeaway-title">推理基础设施被低估</h3>
+                        <p class="takeaway-desc">
+                            模型不缺人做，真正投资不足的是推理层——如何大规模交付大量廉价的智能。所有前沿实验室都将在相当程度上变成「推理公司」。
+                        </p>
+                    </div>
+
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">⚖️</div>
+                        <h3 class="takeaway-title">最危险的分岔不是安全</h3>
+                        <p class="takeaway-desc">
+                            技术集中在少数公司（奥特曼估约 20%
+                            概率）比大多数安全风险更危险；民主化路径（约
+                            80%）需要整个世界的意志，因为它有一个「牵引态」。
+                        </p>
+                    </div>
+
+                    <div class="takeaway-card">
+                        <div class="takeaway-emoji">🔥</div>
+                        <h3 class="takeaway-title">永远短缺</h3>
+                        <p class="takeaway-desc">
+                            只要 AI
+                            持续进步、模型足够聪明且足够便宜，需求就封顶不了，算力短缺将「永远存在」——这是奥特曼眼中一场被严重低估的、鲜活的危机。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <h3 class="footer-title">
+                    Stanford CS153 — 前沿系统（Frontier Systems）
+                </h3>
+                <p class="footer-desc">
+                    Sam Altman 是 OpenAI 联合创始人兼 CEO，2014
+                    年曾在斯坦福讲授过现象级课程
+                    CS183《如何创办一家创业公司》。这场约 41 分钟的 CS153
+                    对谈，从「规模」作为一种被严重低估的押注出发，贯穿了 ChatGPT
+                    与 Codex 的诞生内幕、流水线终将由 AI
+                    自己重写的前瞻判断、智能作为新公用事业的传播困境，以及对民主化与算力短缺两大未来分岔的清醒估计。
+                </p>
+                <div class="footer-quote">
+                    「让这项技术集中在少数几家公司手里的风险——哪怕我们自己就是这几家之一——也不应该被我们容忍。」
+                </div>
+                <p class="footer-note">
+                    来源：Stanford Online · CS153 Frontier Systems | Scale, AGI,
+                    and the Future of Everything | 2026 | YouTube
+                </p>
+            </div>
+        </footer>
+
+        <!-- Scroll Animation Script -->
+        <script>
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("animate-in");
+                        }
+                    });
+                },
+                { threshold: 0.1 },
+            );
+
+            document
+                .querySelectorAll(".point-card, .takeaway-card, .topic")
+                .forEach((el) => {
+                    observer.observe(el);
+                });
+        </script>
+    </body>
+</html>

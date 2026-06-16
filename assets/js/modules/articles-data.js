@@ -1,6 +1,16 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/scale-agi-sam-altman.html",
+    card_class: "card-ai",
+    category: "Stanford · AI · AGI",
+    date: "2026-06-16",
+    title: "规模、AGI 与万物的未来 | Sam Altman 重返斯坦福 CS153",
+    excerpt:
+      "OpenAI CEO Sam Altman 重返斯坦福 CS153 课堂，系统拆解两条核心方法论——「规模」作为一种被严重低估的押注，以及把规模当作系统问题逐层破解的工程思维。从 ChatGPT 五天引爆「好的紧急情况」、到当前的预训练/后训练流水线终将由 AI 自己重写、再到智能成为继电力之后的新公用事业——以及一场被严重低估、且「永远存在」的算力短缺危机。他更警告：技术集中在少数公司（约 20% 概率）比大多数安全风险更危险。",
+    tags: ["#SamAltman", "#规模法则", "#AGI"],
+  },
+  {
     url: "articles/perplexity-aravind.html",
     card_class: "card-ai",
     category: "20VC · AI · 创业",
