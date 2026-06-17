@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <title>未来工厂：AI 如何重塑制造业 | SuperAI 2026</title>
+    <style>
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-card: #141416;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            --accent-primary: #ff4081;
+            --accent-secondary: #3b82f6;
+            --accent-primary-rgb: 255, 64, 129;
+            --accent-secondary-rgb: 59, 130, 246;
+            --border: #2a2a2e;
+            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            --font-size-hero: clamp(48px, 10vw, 120px);
+            --font-size-section: clamp(32px, 5vw, 56px);
+            --font-size-topic: clamp(24px, 4vw, 36px);
+            --font-size-number: clamp(64px, 15vw, 120px);
+            --font-heavy: 800;
+            --letter-spacing-tight: -0.03em;
+            --line-height-tight: 0.95;
+            --card-padding: 40px;
+            --radius-lg: 16px;
+            --radius-pill: 100px;
+            --transition-fast: 0.3s ease;
+            --hover-lift: translateY(-4px);
+            --gradient-accent: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-system); background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+        .header { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; }
+        .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to left, rgba(10,10,11,0.3) 0%, rgba(10,10,11,0.95) 40%, var(--bg-primary) 70%), radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.1) 0%, transparent 50%), radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.08) 0%, transparent 50%); pointer-events: none; }
+        .header-content { position: relative; z-index: 1; padding: 80px 0; }
+        .badge-wrapper { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+        .badge { display: inline-flex; align-items: center; padding: 8px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-pill); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--text-secondary); text-decoration: none; transition: all var(--transition-fast); }
+        .badge:hover { border-color: var(--text-primary); color: var(--text-primary); }
+        .title { font-size: var(--font-size-hero); font-weight: var(--font-heavy); line-height: var(--line-height-tight); letter-spacing: var(--letter-spacing-tight); margin-bottom: 24px; }
+        .title-line-1 { background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .title-line-2 { background: var(--gradient-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .subtitle { font-size: 20px; color: var(--text-secondary); font-weight: 300; max-width: 700px; line-height: 1.6; margin-bottom: 48px; }
+        .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; max-width: 700px; margin-bottom: 32px; }
+        .meta-item { padding: 16px 0; border-top: 1px solid var(--border); }
+        .meta-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-tertiary); margin-bottom: 8px; }
+        .meta-value { font-size: 16px; color: var(--text-primary); }
+        .cta-button { display: inline-flex; align-items: center; gap: 12px; padding: 16px 32px; background: var(--gradient-accent); color: #ffffff; text-decoration: none; border-radius: var(--radius-pill); font-weight: 600; font-size: 16px; transition: all var(--transition-fast); box-shadow: 0 4px 20px rgba(var(--accent-primary-rgb), 0.3); }
+        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(var(--accent-primary-rgb), 0.5); }
+        .cta-button svg { width: 20px; height: 20px; }
+        .section { padding: 120px 0; }
+        .section-title { font-size: var(--font-size-section); font-weight: var(--font-heavy); letter-spacing: -0.02em; margin-bottom: 64px; }
+        .points-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; }
+        .point-card { background: var(--bg-card); border: 1px solid var(--border); padding: var(--card-padding); border-radius: var(--radius-lg); transition: all var(--transition-fast); position: relative; overflow: hidden; }
+        .point-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient-accent); opacity: 0; transition: opacity var(--transition-fast); }
+        .point-card:hover { border-color: var(--accent-primary); transform: var(--hover-lift); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .point-card:hover::before { opacity: 1; }
+        .point-number { font-size: 48px; font-weight: var(--font-heavy); color: var(--border); margin-bottom: 16px; line-height: 1; }
+        .point-title { font-size: 20px; font-weight: 700; margin-bottom: 12px; color: var(--accent-primary); }
+        .point-desc { color: var(--text-secondary); font-size: 15px; line-height: 1.6; }
+        .topic { margin-bottom: 80px; }
+        .topic-header { display: flex; align-items: flex-start; gap: 32px; margin-bottom: 32px; }
+        .topic-number { font-size: var(--font-size-number); font-weight: var(--font-heavy); line-height: 1; background: var(--gradient-number); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; flex-shrink: 0; }
+        .topic-info { flex: 1; padding-top: 16px; }
+        .topic-title { font-size: var(--font-size-topic); font-weight: var(--font-heavy); letter-spacing: -0.02em; margin-bottom: 16px; line-height: 1.2; }
+        .topic-timestamp { display: inline-block; padding: 6px 12px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; font-size: 13px; font-family: var(--font-mono); color: var(--accent-secondary); }
+        .topic-content { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--card-padding); margin-left: clamp(40px, 10vw, 120px); }
+        .topic-section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 16px; color: var(--accent-primary); }
+        .topic-core-point { font-size: 18px; color: var(--text-primary); line-height: 1.6; margin-bottom: 32px; font-weight: 300; }
+        .topic-detail { padding-left: 24px; border-left: 2px solid var(--border); margin-bottom: 24px; }
+        .topic-detail-label { font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; }
+        .topic-detail-content { color: var(--text-tertiary); line-height: 1.6; }
+        .quote-block { border-left: 3px solid var(--accent-primary); padding: 24px; background: rgba(var(--accent-primary-rgb), 0.05); margin: 24px 0; font-style: italic; font-size: 17px; color: var(--text-primary); }
+        .takeaways-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .takeaway-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; transition: all var(--transition-fast); }
+        .takeaway-card:hover { border-color: var(--accent-secondary); transform: var(--hover-lift); }
+        .takeaway-emoji { font-size: 40px; margin-bottom: 16px; }
+        .takeaway-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+        .takeaway-desc { color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
+        .footer { border-top: 1px solid var(--border); padding: 120px 0; text-align: center; }
+        .footer-title { font-size: 24px; font-weight: var(--font-heavy); margin-bottom: 16px; }
+        .footer-desc { color: var(--text-secondary); max-width: 600px; margin: 0 auto 32px; line-height: 1.6; }
+        .footer-quote { font-size: clamp(28px, 5vw, 48px); font-weight: var(--font-heavy); background: var(--gradient-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 48px 0; line-height: 1.2; }
+        .footer-note { color: var(--text-tertiary); font-size: 14px; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+        .divider { height: 1px; background: var(--border); margin: 0; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .header .animate-in { animation: fadeInUp 0.6s ease forwards; opacity: 0; }
+        .point-card, .takeaway-card, .topic { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .point-card.animate-in, .takeaway-card.animate-in, .topic.animate-in { opacity: 1; transform: translateY(0); }
+        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
+        @media (max-width: 768px) {
+            .container { padding: 0 20px; }
+            .section { padding: 80px 0; }
+            .topic-content { margin-left: 0; }
+            .points-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper animate-in">
+                    <span class="badge">SuperAI 2026</span>
+                    <span class="badge">制造业 × AI</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1 animate-in delay-1">未来工厂</span>
+                    <span class="title-line-2 animate-in delay-2">AI 重塑制造业</span>
+                </h1>
+                <p class="subtitle animate-in delay-3">
+                    当黄仁勋在 Computex 上恳求供应商"多生产"时，一个 30 万亿美元的产业正在觉醒——AI 不再停留于软件，它正从车间地板开始，将制造业变成自己的未来工厂。
+                </p>
+                <div class="meta-grid animate-in delay-4">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Sophie Chiu · AppWorks</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Jinsong Xu / Daniel Yu / Rahul Nambiar</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 31 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=JCG-_lJt8YM" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    观看原片
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心洞察</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">产能觉醒</h3>
+                    <p class="point-desc">五大 hyperscaler 年资本支出超 6000 亿美元，约一半只能在 2-3 年后兑现——AI 算力需求已彻底超越制造业的物理供给能力。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">知识编码</h3>
+                    <p class="point-desc">资深工程师的隐性知识正在不可逆地流失，AI 智能体提供了将经验转化为自主系统的最后窗口期——这不仅是技术升级，更是知识保存。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">仿真即基建</h3>
+                    <p class="point-desc">数字孪生正从"漂亮展示"变为物理 AI 的"训练场"，建设时间从数月压缩至分钟，使快速迭代成为可能。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">效用＞成本</h3>
+                    <p class="point-desc">物理 AI 的价值不在让机器人更便宜，而在让它们更"有用"——处理边缘案例、系统级协同和数据驱动洞察。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">生态决定命运</h3>
+                    <p class="point-desc">制造业 AI 不可能单打独斗，中国台湾 200 公里半径内的产业集群模式证明：协同是最难复制的竞争壁垒。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">亚洲的跳球</h3>
+                    <p class="point-desc">在全球 AI 竞赛中，制造业是亚洲极少数的"先天优势"领域——几十年积累的制造直觉和产业链集群，构成硅谷难以追赶的护城河。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">从救火到自主：为什么制造业现在需要 AI</h3>
+                        <span class="topic-timestamp">00:00 → 04:51</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">制造业的 AI 转型不是技术推动的结果，而是产能瓶颈倒逼的必需。三家初创公司分别从 AI 智能体、数字孪生和物理 AI 三个维度切入，覆盖了未来工厂的核心技术栈。</p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">产能鸿沟</div>
+                        <p class="topic-detail-content">主持人 Sophie Chiu 以一组震撼的数据开场：五大 hyperscaler 每年 6000 亿美元以上的资本支出中，约有一半只能在 2-3 年后才能兑现。黄仁勋在 Computex 上公开"恳求供应商多生产"的象征性举动，揭示了 AI 算力与物理基础设施之间的严重错配。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三家公司定位</div>
+                        <p class="topic-detail-content">Innowave Tech 将 AI 智能体引入先进制造环境，让工程师将数十年领域知识转化为可自主运行的解决方案；MetAI 构建仿真基础设施，以分钟而非月为单位生成数字孪生环境；Botsync 在机器人之上搭建编排层，让不同制造商、不同类型的机器人协同工作。</p>
+                    </div>
+                    <div class="quote-block">"The most powerful man in the tech industry begging their supplier to make more. Why? Because yes, the capacity just couldn't catch up." — 科技行业最有权势的人在恳求供应商多生产。为什么？因为产能就是跟不上。</div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">为什么是现在：25 年救火生涯的终局</h3>
+                        <span class="topic-timestamp">04:50 → 08:31</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">AI 终于走到了可以"替代经验"而不仅仅是"辅助经验"的临界点。资深工程师的隐性知识正在以不可逆的速度流失，AI 智能体恰好提供了知识转化和自主化的窗口。</p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">25 年救火</div>
+                        <p class="topic-detail-content">Jinsong Xu 曾在格芯等半导体大厂积累了超过 25 年的经验，将其描述为"每天 7×24 小时救火"——制造现场的各种异常、不一致的判断、分散的数据、以及纯粹依赖人工经验的排障流程。此前从未有工具能让人的判断力被"编码化"并自动执行。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三层次架构</div>
+                        <p class="topic-detail-content">Jinsong 提出的三层次架构——感知（perceive）、AI 驱动的实时判断（judgment in real-time）、实时执行（real-time execute）——使 AI 智能体能像有经验的工程师一样感知环境、做出决策并采取行动。这并非替代工程师，而是"扩展和延伸人类的能力"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">5 年窗口期</div>
+                        <p class="topic-detail-content">Sophie 从投资者角度补充了紧迫性：拥有深厚领域知识但尚未数据化的老派工程师，可能只有最后 5 年的窗口期。5 年之后这批人将退出行业，隐性知识若未能转化为系统能力，将永久流失。</p>
+                    </div>
+                    <div class="quote-block">"We believe right now our vision is to help accelerate this, make every engineer's life easier, no more 7-11." — 我们相信现在正是时候，我们的愿景是帮助加速这一进程，让每个工程师的生活更轻松，不再 7×24 小时连轴转。</div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">从顶端切入：MetAI 的数字孪生产品策略</h3>
+                        <span class="topic-timestamp">08:31 → 13:44</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">数字孪生并非新技术，但长期以来只是"漂亮 3D 模型"。AI 的进步使数字孪生的建立时间从数月缩短至数分钟，使其从展示工具变为物理 AI 的训练基础设施。</p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从顶端做起的策略</div>
+                        <p class="topic-detail-content">MetAI 已拿下"不能说名字的那家顶级半导体公司"的订单，并成为第一家获得英伟达投资的中国台湾初创公司。Daniel Yu 的策略清晰：从行业领导者做起，获得在垂直领域标准化的机会。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">分钟级生成</div>
+                        <p class="topic-detail-content">传统数字孪生的核心痛点在于构建时间——一个半导体晶圆厂的数字孪生可能需要 6 个月。MetAI 将 3D 技术与 AI 技术融合，实现模块化和参数化的环境生成：工厂输入布局方案、BIM 模型、AutoCAD 图纸，系统在数分钟内生成功能完备的仿真环境。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">ROI 具体数字</div>
+                        <p class="topic-detail-content">在一座半导体晶圆厂中，通过加速设计和布局优化，可以提前一年完成建厂——仅利润就超过 200 亿美元，营收超过 400 亿美元。数字孪生正从"漂亮的 3D 模型"转变为"物理 AI 和机器人的训练场"。</p>
+                    </div>
+                    <div class="quote-block">"One year per fab is actually enormous for a semiconductor fab. It's actually like 20 billion US dollar plus in margin alone, not revenue." — 每座晶圆厂快一年，仅利润就超过 200 亿美元，不是营收。</div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">从单体到系统：物理 AI 的编排层</h3>
+                        <span class="topic-timestamp">13:44 → 19:28</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">物理 AI 的核心价值不在于让单个机器人更便宜，而在于让它们更"有用"——处理边缘案例、协同工作、产生数据洞察，这才是推动大规模采用的关键。</p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">效用＞成本</div>
+                        <p class="topic-detail-content">Rahul 将机器人采用的演进分为几个层次。早期阶段核心问题是降本，但物理 AI 开启了新阶段：即使机器人成本没有显著变化，它的"效用"却在快速上升——能处理更多类型的工作、能应对更复杂的边缘案例、能在人力干预以外自主运行。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">编排层：系统级智能</div>
+                        <p class="topic-detail-content">在控制层之上更关键的是编排层。Rahul 用团队比喻：即使每个个体都很优秀，如果他们不能协同工作，整体产出仍然有限。当一个机器人需要向另一个机器人交接货物但对方出现故障时，系统如何优雅降级和重新调度——这正是 AI 可以大显身手的空间。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">数据：被忽视的价值</div>
+                        <p class="topic-detail-content">当人工叉车司机搬运托盘时，除非手动录入，系统不知道托盘从哪到哪。当机器人接管后，每时每刻的轨迹、操作、异常都成为可追溯的数据资产。一家重型机械制造商的 10 年目标不是"用机器人替代人降本"，而是"将亚太工厂产能翻倍但不增加人头"。</p>
+                    </div>
+                    <div class="quote-block">"Even though the cost of the robot may not go down, the utility of the robot starts going up." — 即使机器人的成本没有下降，机器人的效用却在上升。</div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">在生态中生长：初创企业各自需要什么</h3>
+                        <span class="topic-timestamp">19:28 → 24:25</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">制造业 AI 转型不可能由任何一家公司独自完成。三家公司虽然技术路径不同，但都在寻找同一类人：系统集成商、生态系统伙伴和投资者——揭示了"生态驱动增长"的核心规律。</p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">高度重合的需求</div>
+                        <p class="topic-detail-content">Rahul（Botsync）强调系统集成商和工具/平台型公司；Daniel（MetAI）列出工业合作伙伴、生态伙伴（如 Botsync）和垂直策略投资者；Jinsong（Innowave Tech）补充地理扩张需求（覆盖东南亚后正扩展到日本、德国和美国）及技术合作伙伴（如西门子）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">产业集群的力量</div>
+                        <p class="topic-detail-content">Sophie 引用中国台湾的产业集群模式——在 200 公里半径内可以找到制造一台笔记本电脑所需的所有组件——来说明生态系统的力量。当年那些小型初创公司正是依靠彼此支撑和共同攻克客户才成长起来的。</p>
+                    </div>
+                    <div class="quote-block">"Within Taiwan, the 200 km distance, you can basically find any component to make a laptop, to make a mobile, to make data center, to make server. And that's exactly an ecosystem strengths." — 在中国台湾，在 200 公里的距离内，你基本上可以找到制造一台笔记本电脑、一部手机、一个数据中心、一台服务器所需的任何组件。这就是生态系统的力量。</div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">现场问答：可靠性、零售与差异化</h3>
+                        <span class="topic-timestamp">24:23 → 30:11</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">三个提问分别从技术方向、场景拓展和竞争壁垒三个角度，还原了听众对 AI 制造业的真实关切：导航技术的演进、数字孪生的跨界应用和物理 AI 平台的核心护城河。</p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AMR 自主导航</div>
+                        <p class="topic-detail-content">Botsync 正从传统信标/锚点导航转向基础设施无关的 SLAM/V-SLAM 方案。更深层的演进：控制算法正从基于规则的状态机向通用智能模型过渡，让机器人能自主理解环境并决策。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">零售数字孪生</div>
+                        <p class="topic-detail-content">数字孪生可用于超市等零售场景。中国台湾 7-Eleven 已在构建自有零售数字孪生，用于优化排队结账流程和商品陈列布局，旨在提高客流效率和客单价。但这需要不同的领域知识，并非 MetAI 当前的目标方向。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">差异化竞争</div>
+                        <p class="topic-detail-content">面对"每个机器人平台都自带编排功能"的质疑，Rahul 给出三个差异化维度：可靠性的现实鸿沟（演示环境中看似完美的机器人，进入工厂后可靠性可能从 99.99% 骤降至 94-95%）、系统级智能（个体优秀不等于协同优秀）、以及服务网络（硬件总会出故障，谁能及时修复才是关键）。</p>
+                    </div>
+                    <div class="quote-block">"The more intelligent you make the robots today, the unfortunate reality is that its reliability starts coming down." — 今天你让机器人变得更智能，一个不幸的现实是它的可靠性开始下降。</div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">亚洲的跳球时刻</h3>
+                        <span class="topic-timestamp">29:49 → 31:12</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">在全球 AI 竞赛中，亚洲多数时候是追赶者。但制造业的 AI 转型是亚洲少数拥有先天优势的领域——几十年的制造经验、产业链集群和人才密度构成了难以复制的护城河。</p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">行动呼吁</div>
+                        <p class="topic-detail-content">Sophie 以一个掷地有声的收尾结束整场讨论。在从基础模型到应用层的 AI 整体竞赛中，亚洲往往扮演学习者和跟随者。但在制造业 AI 这片战场上，亚洲拥有硬件基础设施之外的真正不可复制的资产：几十年积累的制造直觉、"工匠精神"的领域专业度、以及完整的产业链集群。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Computex 的启示</div>
+                        <p class="topic-detail-content">Computex 上大公司和初创公司各占一栋楼的景象，让 Sophie 产生了一种强烈的使命感：作为亚洲投资者，必须确保这片生态是在亚洲本土被支持和培养的，而不是流向硅谷或其他地方。制造业 AI 不是关于"AI 替代制造业"，而是关于"制造业能否用 AI 武装自己，在这个范式转换中掌握主动权"。</p>
+                    </div>
+                    <div class="quote-block">"In the overall AI race, Asia usually play the catching up. But this is a really few arena that we do have a very strong strengths." — 在全球 AI 竞赛中，亚洲通常扮演的是追赶者。但这是为数不多的我们确实拥有坚实优势的领域之一。</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔥</div>
+                    <h3 class="takeaway-title">产能觉醒</h3>
+                    <p class="takeaway-desc">AI 的巨大需求已超越制造业的物理供给能力，这场"供不应求"的危机正是制造业 AI 转型的最大驱动力。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧠</div>
+                    <h3 class="takeaway-title">知识编码</h3>
+                    <p class="takeaway-desc">资深工程师的隐性知识正在不可逆地流失，AI 智能体提供了将经验转化为自主系统的最后窗口期——这不仅是技术升级，更是知识保存。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏗️</div>
+                    <h3 class="takeaway-title">仿真即基建</h3>
+                    <p class="takeaway-desc">数字孪生正从"漂亮展示"变为物理 AI 的"训练场"，关键突破在于建设时间从数月压缩至分钟，使快速迭代成为可能。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">效用＞成本</h3>
+                    <p class="takeaway-desc">物理 AI 的价值不在让机器人更便宜，而在让它们更"有用"——处理边缘案例、系统级协同和数据驱动洞察，才是推动大规模采用的核心动力。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔗</div>
+                    <h3 class="takeaway-title">生态决定命运</h3>
+                    <p class="takeaway-desc">制造业 AI 不可能单打独斗，系统集成商、平台生态和技术伙伴是共同的必需品。200 公里半径内的协同是最难复制的竞争壁垒。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🌏</div>
+                    <h3 class="takeaway-title">亚洲的跳球</h3>
+                    <p class="takeaway-desc">在全球 AI 竞赛中，制造业是亚洲极少数的"先天优势"领域——几十年积累的制造直觉和产业链集群，构成了硅谷难以追赶的护城河。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">制造业的范式转换</h3>
+            <p class="footer-desc">
+                这不是关于"AI 如何替代制造业"的陈旧叙事，而是一场关于亚洲制造业如何凭借数十年积累的领域知识，在这场竞赛中赢得一席之地的讨论。
+            </p>
+            <div class="footer-quote">
+                "制造业能否用 AI 武装自己，掌握主动权"
+            </div>
+            <p class="footer-note">
+                内容基于 SuperAI 2026 圆桌讨论整理 · Innowave Tech × MetAI × Botsync · AppWorks 生态
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

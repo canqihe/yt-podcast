@@ -1,6 +1,26 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/silicon-photonics-ai-scaling-john-bowers.html",
+    card_class: "card-tech",
+    category: "632nm · 光子学 · AI 硬件",
+    date: "2026-06-17",
+    title: "硅光子学与 AI 扩展的未来 | John Bowers",
+    excerpt:
+      "硅光子学先驱、UCSB 教授 John Bowers 深度拆解 AI 时代最被低估的瓶颈——「搬运数据」已经和「计算数据」同样重要。当现代交换芯片要吞吐 100 太比特、铜线每米损失 20 分贝时，光子学正从利基技术变成架构性必需：从异构集成让硅上激光器反超原生衬底、自注入锁定把线宽压到 1 赫兹（DARPA 的意外礼物）、即开即用的微梳，到 Broadcom 50 太比特共封装光学芯片。他还还原了「分而治之」的工艺经济学、1% 良率的 Nature 论文与存在性证明的鸿沟，以及 Caliant 早了 25 年却最终在 Google 数据中心兑现的启示。",
+    tags: ["#硅光子学", "#AI硬件", "#数据中心"],
+  },
+  {
+    url: "articles/ai-reshaping-manufacturing-superai-2026.html",
+    card_class: "card-ai",
+    category: "SuperAI 2026 · AI · 制造业",
+    date: "2026-06-17",
+    title: "未来工厂：AI 如何重塑制造业",
+    excerpt:
+      "当黄仁勋在 Computex 上恳求供应商'多生产'时，一个 30 万亿美元的产业正在觉醒。来自 Innowave Tech、MetAI、Botsync 的三位创始人分享了制造业 AI 转型的核心洞察：从 AI 智能体编码资深工程师的隐性知识（仅剩 5 年窗口期），到数字孪生从数月缩短至分钟生成（每座晶圆厂快一年 = 200 亿美元利润），到物理 AI 的编排层让机器人更'有用'而非更便宜——以及亚洲制造业为何拥有这场竞赛中极少数的先天优势。",
+    tags: ["#制造业", "#数字孪生", "#SuperAI"],
+  },
+  {
     url: "articles/scale-agi-sam-altman.html",
     card_class: "card-ai",
     category: "Stanford · AI · AGI",
