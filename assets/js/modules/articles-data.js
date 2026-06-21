@@ -1,6 +1,36 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/dario-amodei-pentagon-mythos.html",
+    card_class: "card-ai",
+    category: "Bloomberg · AI · 地缘政治",
+    date: "2026-06-21",
+    title: "走进 Anthropic CEO Dario Amodei 的内心世界 | 五角大楼、Mythos 与 AI 的终局",
+    excerpt:
+      "估值逼近万亿美元、模型质量反超 OpenAI 的 Anthropic 掌舵人，被推到一连串最尖锐的问题前：当 Claude 被指控参与造成 150 余人死亡的伊朗女校空袭，他如何回应？当一款被早期客户称为「需要持枪证才能使用」的网络超级武器 Mythos 引发争议，他凭什么不放出来（在 Firefox 中发现 271 个新漏洞）？从离开 OpenAI 的信任崩塌、50% 白领岗位冲击、与五角大楼的红线对峙，到「人类保留最终决定权」、对华出口管制、文明的 10%-25% 概率——核心命题是：面对一条平滑却指数级加速的技术曲线，真正成熟的态度既不是恐慌，也不是否认，而是让反制措施随技术力量的增强而平滑地逐步收紧。",
+    tags: ["#Anthropic", "#AI安全", "#地缘政治"],
+  },
+  {
+    url: "articles/a16z-media-game-changed.html",
+    card_class: "card-finance",
+    category: "a16z · 新媒体 · 沟通策略",
+    date: "2026-06-20",
+    title: "媒体游戏已经改变 | Andreessen 与 Horowitz 谈新媒体时代的创始人沟通",
+    excerpt:
+      "a16z 新媒体峰会现场，Marc Andreessen 与 Ben Horowitz 把创始人沟通拆解成一套有清晰规则的新游戏。核心诊断：传统媒体作为「对你友善的渠道」在 2017 年后已不可逆失效；品牌重新等于「人」而非公司——这是媒体集中化时代留下的历史异常正在瓦解；新游戏的第一性规则是「必须有趣、必须两极分化、必须由外而内讲故事」。从 Alex Karp 永远不谈 Palantir、Ryan Peterson 把「货运」升维成「全球供应链崩溃」的作弊码，到「分发只是信息的乘数」「被恨是做大了的证明」——以及这一切都是可以后天习得的技能。",
+    tags: ["#新媒体", "#品牌沟通", "#a16z"],
+  },
+  {
+    url: "articles/ai-supercycle-chase-lochmiller.html",
+    card_class: "card-tech",
+    category: "Stanford · AI基础设施",
+    date: "2026-06-18",
+    title: "AI 超周期经济学：构建智能工厂的完整价值链",
+    excerpt:
+      "当五大科技巨头在AI基础设施上的投资超越太空计划和曼哈顿计划时，我们正在见证人类历史上最大规模的基础设施投资之一。Crusoe创始人Chase Lochmiller深度解析：数字化劳动力如何改写经济学模型、600亿美元投资的完整拆解、从『出租芯片』到『提供模型服务』的价值跃迁、以及『数据去能源所在地』的逆向策略如何打开可再生能源过剩地区的巨大机会。",
+    tags: ["#AI基础设施", "#数据中心", "#投资回报"],
+  },
+  {
     url: "articles/silicon-photonics-ai-scaling-john-bowers.html",
     card_class: "card-tech",
     category: "632nm · 光子学 · AI 硬件",
