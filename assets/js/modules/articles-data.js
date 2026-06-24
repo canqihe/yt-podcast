@@ -1,6 +1,46 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/unitree-robotics.html",
+    card_class: "card-tech",
+    category: "SemiAnalysis Weekly · 机器人 · 供应链",
+    date: "2026-06-24",
+    title: "宇树的进化意味着什么 — Unitree 人形机器人深度解析",
+    excerpt:
+      "宇树科技以 2.7 万美元税前售价的人形机器人交出 67% 毛利率，正在用激进定价与疯狂迭代悄然构筑护城河。三位分析师从部署现实、大疆比亚迪对标、需求冲击、深圳供应链实时成型等多个维度拆解了这套逻辑——「规模经济就是中国的 Scaling Law」。当华强北式的「一千个老板的海」衍生生态围绕人形机器人重新收敛，出货曲线从 400→4000→6500 台指数级跃升，这究竟是一记警钟还是终点判断？",
+    tags: ["#机器人", "#宇树科技", "#供应链"],
+  },
+  {
+    url: "articles/tesla-robotaxi-2026-brian-white.html",
+    card_class: "card-tech",
+    category: "Tesla Jigsaw · 自动驾驶 · 未来出行",
+    date: "2026-06-21",
+    title: "Robotaxi 2026：它真的来了 | Tesla Jigsaw × Brian White",
+    excerpt:
+      "当 Cybercab 拿下 EPA 全美通行证、无人监督 FSD 跑通德州街头，Brian White 用一组冷静到近乎残酷的数字揭示胜负手——Cybercab 每英里 165 瓦时，而 Waymo 光计算单元就额外耗掉 180–200 瓦时；一辆 Cybercab 约 4000 个零件，而 Waymo 那套传感器加装件本身就有 4000 个。从 EPA 合格证书与 67 万英里「零过错」、最后 400 英尺的导航瓶颈、Cybercab 的「商用洗碗机」过度设计哲学，到中国数据本地化的困境、英国意外的进步性立法、车主自营三四线城市的构想，以及 Elon「Roadster 之后无方向盘」的终局判断——成本、能耗、零件数与寿命的代差，决定了传统玩家难以翻盘。",
+    tags: ["#特斯拉", "#Robotaxi", "#自动驾驶"],
+  },
+  {
+    url: "articles/anthropic-fiona-fung-ai-engineering-team.html",
+    card_class: "card-ai",
+    category: "Lenny's Podcast · AI · 工程管理",
+    date: "2026-06-21",
+    title: "打造全球最 AI 化的工程团队 | Fiona Fung (Anthropic)",
+    excerpt:
+      "当编码不再是瓶颈、工程师人均代码产出暴涨到 8 倍，一家公司究竟该怎么管理？Anthropic 工程负责人 Fiona Fung（25 年经验，曾在微软主导 TypeScript/Visual Studio、在 Meta 创立年交易额超 1000 亿美元的 Facebook Marketplace）分享她每天在用的具体打法——在所有代码仓库接入 Claude 获得「上帝视角」、用 routines 让智能体清晨替她巡检反馈渠道并直接产出 PR；只招「创意型构建者」和「深度系统专家」两类人；用 bad vs sad 质量框架跨界面统一质量语言；让管理者必须先做 IC 并持续 dogfooding；并坦承「还没攻克」的头号难题：同时运行 20 个智能体带来的上下文切换灾难。从六个月路线图到 JIT 月度规划、从「潜在需求」方法论到「你害怕进入的那个洞穴藏着你寻找的宝藏」——这是一份来自 AI 原生工程团队前线的可操作地图。",
+    tags: ["#Anthropic", "#工程管理", "#ClaudeCode"],
+  },
+  {
+    url: "articles/ai-compute-gpu-myth-stephen-balaban.html",
+    card_class: "card-tech",
+    category: "The MAD Podcast · AI 基础设施",
+    date: "2026-06-21",
+    title: "GPU 的神话：2026 AI 算力真相 | Lambda CTO Stephen Balaban",
+    excerpt:
+      "很多人曾说 GPU 算力会沦为像水电一样的大宗商品，现实却恰恰相反。Lambda 联合创始人兼 CTO Stephen Balaban 把 AI 数据中心从模糊的词还原成一条从光子到 token、从工程到金融的完整产业链：为什么云算力从来不是商品、真正的瓶颈是「土地、电力、外壳」而非芯片、scaling laws 为何让整体算力持续不足。他重解 NVIDIA 的护城河——深不在 CUDA 而在 cuDNN 与 NCCL；揭示一块 2023 年的 H100 今天反而租得更贵的反常资产逻辑；拆解 GPU 装进 SPV 去借钱的融资工程；并抛出最激进愿景——「AI 不会去写软件，它会成为软件本身」的神经软件。从人脸识别、棒球帽摄像头起步，到 6 万美元豪赌长成近十亿云营收的传奇创业史，这是 2026 年 AI 算力最硬核的一手实录。",
+    tags: ["#AI算力", "#数据中心", "#英伟达"],
+  },
+  {
     url: "articles/dario-amodei-pentagon-mythos.html",
     card_class: "card-ai",
     category: "Bloomberg · AI · 地缘政治",

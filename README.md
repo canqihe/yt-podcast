@@ -17,7 +17,7 @@ A curated knowledge platform that distills the best YouTube podcast content into
 
 ## Articles
 
-**199 articles** across multiple domains:
+**200+ articles** across multiple domains:
 
 | Domain | Examples |
 |--------|---------|
@@ -25,9 +25,9 @@ A curated knowledge platform that distills the best YouTube podcast content into
 | **AI Agents & Platforms** | Harrison Chase (LangChain), Andrej Karpathy (agentic engineering, code agents), AI Agent Swarms, Claude Code, Claude Cowork, OpenClaw, ChatGPT Images 2.0, AI Sandwich model, SEO to Agent-Led Growth, Harvey AI, Daytona (Ivan Burazin), AI Agents Perplexity, Codex vs Claude |
 | **AI Engineering & Research** | Shane Legg (AGI), Joelle Pineau (AI frontiers), Richard Sutton (reinforcement learning), Zico Kolter (frontier AI), Mostafa Dehghani, Rohin Shah (AGI Safety, DeepMind), AI Math, MIT AI courses (Chris Bishop, 3 Laws) |
 | **AI Safety & Ethics** | Tristan Harris (AI god), Carissa Véliz (AI prediction), Power-seeking AI, AGI Safety (Rohin Shah), Anthropic Mythos Dilemma |
-| **Markets & Compute** | a16z (David George, Aaron Levie, Ben Horowitz, AI Winners), Coatue (Thomas Laffont, Lucas Swisher, Jaimin Rangwalla), SemiAnalysis (Dylan Patel 2x, AWS margins), ARK Invest (Big Ideas 2026), Gavin Baker (orbital compute) |
+| **Markets & Compute** | a16z (David George, Aaron Levie, Ben Horowitz, AI Winners), Coatue (Thomas Laffont, Lucas Swisher, Jaimin Rangwalla), SemiAnalysis (Dylan Patel 2x, AWS margins, Unitree robotics), ARK Invest (Big Ideas 2026), Gavin Baker (orbital compute) |
 | **Semiconductors** | Cerebras (Andrew Feldman, IPO, wafer-scale engine, TBPB Diet), TSMC, NVIDIA TPU competition, AI silicon shortage, VanEck semiconductor investing, Micron Q2 2026, Stanford CS153 (Value per Gigawatt) |
-| **Robotics & Physical AI** | Figure AI (Brett Adcock), Sergey Levine, Seeed Studio (open-source robot), Anduril, Palantir, Uber (Dara Khosrowshahi on Robotaxi), Atoms (Travis Kalanick), Caitlin Kalinowski (AI hardware), Robot Hardware Supply Chain |
+| **Robotics & Physical AI** | Figure AI (Brett Adcock), Unitree (robotics evolution, supply chain), Sergey Levine, Seeed Studio (open-source robot), Anduril, Palantir, Uber (Dara Khosrowshahi on Robotaxi), Atoms (Travis Kalanick), Caitlin Kalinowski (AI hardware), Robot Hardware Supply Chain |
 | **Finance & Investing** | Stanley Druckenmiller, Jeremy Grantham, Tom Lee, Dan Loeb (Third Point), Marc Rowan (Apollo private markets), Ken Griffin, Paul Tudor Jones, Blackstone (private credit, Tony James), Lloyd Blankfein 2x, Howard Marks (Oaktree), Jim Simons, Jake Paul, Alfred Lin (Sequoia), Goldman Sachs |
 | **Defense & Military** | Palantir (Alex Karp), Anduril (100 years military history), Pentagon AI plan, military industrial complex |
 | **Space & Frontier Tech** | SpaceX IPO, NASA (Jared Isaacman), Rocket Lab (Peter Beck), Starcloud, Quantum Computing (D-Wave, NVIDIA Ising), Brain-Computer Interfaces (World/Merge Labs), Anthropic-SpaceX deal & singularity economy |
@@ -80,7 +80,7 @@ All gradients, glows, shadows, and accent elements auto-inherit from these varia
 ```
 yt-podcast/
 ├── index.html                  # Homepage (article grid)
-├── articles/                   # 197 in-depth articles
+├── articles/                   # 200+ in-depth articles
 │   ├── images/                 # Article hero images
 │   └── research/               # 2 equity research reports
 ├── assets/
