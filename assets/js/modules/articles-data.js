@@ -1,6 +1,16 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/engram-memory-continual-learning.html",
+    card_class: "card-ai",
+    category: "Sequoia · AI · 记忆与持续学习",
+    date: "2026-06-25",
+    title: "把知识烤进权重：Engram 的记忆革命 | Dan Biderman & Jessy Lin",
+    excerpt:
+      "当所有人都在追逐更大的上下文窗口和更强的 RAG，Engram 联合创始人 Dan Biderman 与 Jessy Lin 提出反共识主张：把团队知识直接烤进模型权重，让模型像工作多年的老员工那样本能地懂你。他们承诺在与微软、Notion、Harvey 的合作中，用 100 个 token 做出前沿模型要 10 万 token 才能做到的事——两个数量级的成本下降。从「记忆与理解是伪二分法」、缺失的离线「梦境」学习阶段，到让主持人 Shaun Maguire 都承认还没完全 grok 的「RAG 杀手」，再到 70B 模型权重约 100GB 记住整个互联网、单篇维基百科 KV 缓存却要 80GB 的信息论反差，以及「每个人都有一个属于自己的模型」的愿景——这场对话把记忆可能是继 ChatGPT 之后下一个主舞台时刻，论证到了根本。",
+    tags: ["#记忆", "#持续学习", "#Engram"],
+  },
+  {
     url: "articles/unitree-robotics.html",
     card_class: "card-tech",
     category: "SemiAnalysis Weekly · 机器人 · 供应链",
