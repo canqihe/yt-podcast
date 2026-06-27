@@ -1,6 +1,26 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/wall-st-725bn-ai-open-source.html",
+    card_class: "card-finance",
+    category: "20VC · AI · 华尔街",
+    date: "2026-06-27",
+    title: "华尔街 7250 亿美元 AI 之问 | 开源如何威胁 OpenAI 与 Anthropic",
+    excerpt:
+      "DeepSeek 500 亿估值、GLM 超越 GPT、华尔街质疑 7250 亿资本支出回报——SaaS 投资教父 Jason Lemkin 与 Scale VP 合伙人 Rory O'Driscoll 联手交出 2025 AI 行业最真实的「体检报告」。从 Google 48 小时内被挖走两位划时代科学家（含诺贝尔奖得主）、第三名的死亡陷阱、中国主权叙事下的开源「假免费」，到 7-8% 劳动力替代才能回本的残酷算术、埃森哲人头模式崩塌、以及「你会得到一块欧米茄」的职场二选一——价格，是最终的仲裁者。",
+    tags: ["#开源", "#华尔街", "#AI投资"],
+  },
+  {
+    url: "articles/dwarkesh-patel-next-training-paradigm.html",
+    card_class: "card-ai",
+    category: "Dwarkesh Patel · AI · 训练范式",
+    date: "2026-06-27",
+    title: "下一个训练范式会是什么样子？ | Dwarkesh Patel",
+    excerpt:
+      "Dwarkesh Patel 深度分析当前 AI 训练范式的核心矛盾：模型已广泛部署却无法从经验中学习。他揭示三个根本问题——样本效率、可磨炼性和持续学习——并提出通往 2027 年的替代路径：从 OPSD（在策略自蒸馏）将上下文知识写回权重，到「做梦」（Dreaming）自建模拟器成为第四扩展轴，再到每次与 AI 互动都让它变得更聪明的持续学习飞轮。Dario Amodei 暗示短视界 RLVR 无法泛化到长视界的评论，为实验室「大规模 RL 训练自动通往 AGI」的核心赌注浇了一盆冷水。",
+    tags: ["#训练范式", "#持续学习", "#RLVR"],
+  },
+  {
     url: "articles/engram-memory-continual-learning.html",
     card_class: "card-ai",
     category: "Sequoia · AI · 记忆与持续学习",
