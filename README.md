@@ -17,7 +17,7 @@ A curated knowledge platform that distills the best YouTube podcast content into
 
 ## Articles
 
-**200+ articles** across multiple domains:
+**240+ articles** across multiple domains:
 
 | Domain | Examples |
 |--------|---------|
@@ -80,22 +80,27 @@ All gradients, glows, shadows, and accent elements auto-inherit from these varia
 ```
 yt-podcast/
 ├── index.html                  # Homepage (article grid)
-├── articles/                   # 200+ in-depth articles
+├── articles/                   # 240+ in-depth articles
 │   ├── images/                 # Article hero images
-│   └── research/               # 2 equity research reports
+│   └── research/               # Equity research reports
 ├── assets/
 │   ├── css/                    # Stylesheets
 │   │   └── homepage.css        # Homepage styles
 │   ├── js/                     # JavaScript
-│   │   └── homepage.js         # Homepage logic (search, pagination, theme)
+│   │   ├── homepage.js         # Homepage init logic
+│   │   └── modules/            # Modular JS components
+│   │       ├── articles-data.js    # Article data array
+│   │       ├── articles-list.js    # Article list rendering
+│   │       ├── articles-renderer.js# Article card renderer
+│   │       ├── scroll-animations.js# Scroll-triggered animations
+│   │       └── theme-toggle.js     # Dark/light mode toggle
 │   ├── images/                 # Shared images
 │   └── videos/                 # Video assets
 ├── design-system/
 │   ├── design-tokens.css       # Design tokens & color schemes
-│   ├── style.css               # Shared stylesheet
 │   ├── article-styles.css      # Article-specific styles
+│   ├── style.css               # Shared stylesheet
 │   ├── design-spec.md          # Design specification
-│   ├── template-article.html   # Article template
 │   └── template-standalone.html  # Standalone article template
 ├── rss-feeds.html              # RSS feed reader
 ├── rss-reader.html             # RSS reader UI
