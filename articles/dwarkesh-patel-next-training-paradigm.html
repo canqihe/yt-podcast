@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下一个训练范式会是什么样子？ — Dwarkesh Patel</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <style>
+        :root {
+            --accent-primary: #a855f7;
+            --accent-secondary: #FFC107;
+            --accent-primary-rgb: 168, 85, 247;
+            --accent-secondary-rgb: 255, 193, 7;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/dwarkesh-patel-next-training-paradigm-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">AI · 前沿</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">下一个训练范式</span>
+                    <span class="title-line-2">会是什么样子？</span>
+                </h1>
+                <p class="subtitle">
+                    今天的 AI 训练范式有一个荒谬的矛盾：模型已经被部署到经济体中，参与了成千上万种不同的真实任务，接触到了海量的领域特定隐性知识——但它们无法利用这些经验来改进自己。Dwarkesh Patel 揭示了当前范式中的三个根本问题——样本效率、可磨炼性和持续学习——并提出了一条通往 2027 年的替代路径：通过 OPSD 和「做梦」等技术，让 AI 真正从部署经验中学习。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">作者</div>
+                        <div class="meta-value">Dwarkesh Patel</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 20 分钟</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">频道</div>
+                        <div class="meta-value">Dwarkesh Patel</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=20p5-kQXF_Q" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看完整视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">实验室的赌注</h3>
+                    <p class="point-desc">各大 AI 实验室押注：在数千个可验证的 RL 环境上训练 AI，即使不解决样本效率和持续学习问题，也能自然通向 AGI。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">可磨炼性法则</h3>
+                    <p class="point-desc">领域不仅要「可验证」，还必须是「可磨炼的」——即能构建确定性的、可大规模并行的可回放模拟器。这解释了为什么编程进展比计算机使用快得多。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">短视界的局限</h3>
+                    <p class="point-desc">Dario Amodei 暗示短视界 RL 训练不会自动泛化到长视界现实任务。RLVR 可能只泛化到类似训练环境的任务上。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">30%~50% 的浪费</h3>
+                    <p class="point-desc">实验室大量计算用于推理，对改进模型毫无贡献——而最有价值的学习信号恰恰只存在于部署中。模型像个从未实习的天才研究生。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">OPSD 的突破</h3>
+                    <p class="point-desc">在策略自蒸馏（OPSD）提供了一条将上下文知识压缩回权重的路径，无需外部可验证奖励，且保留了 RL 的稀疏更新优势。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">「做梦」与 2027</h3>
+                    <p class="point-desc">自建模拟器「做梦」可能成为第四扩展轴。到 2027 年，持续学习飞轮将使每次与 AI 的互动都让它变得更聪明。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">实验室的重大赌注</h3>
+                        <span class="topic-timestamp">00:00:00 - 00:02:11</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">各大 AI 实验室相信，通过大规模 RL 训练，即使不解决样本效率和持续学习问题，也能自然达到通用人工智能。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">押注的逻辑</div>
+                        <p class="topic-detail-content">所有 AI 实验室都在押注同一个研究方向：在数千个不同的 RL 环境中训练 AI 完成数百万个可验证的任务。他们相信，经过这样的训练，AI 将自动发展成一个通用的问题解决者——能够在面对错误和不确定性时，持续处理开放式任务长达数周。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">论据一：训练是一次性成本</div>
+                        <p class="topic-detail-content">虽然模型在训练期间样本效率只有人类的百万分之一，但这个代价被摊薄到模型部署后的数十亿次会话中。重要的是模型在会话中的表现，而这正在通过 RL 训练持续改善——任何用 AI 写过代码的人都能感受到。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">论据二：持续学习可能不必要</div>
+                        <p class="topic-detail-content">如果上下文学习能强大到覆盖足够长的时间跨度，就不需要把模型在工作中学到的东西「写回」权重。针对 Transformer 的架构创新正在大幅扩展上下文窗口的容量。Dwarkesh 提出了一个犀利的类比：人们常说员工在上岗后至少六个月内达不到净生产力——但如果你能把那六个月的经验全部「塞进」上下文窗口呢？如果上下文窗口最终变得「无限大」，是否还需要持续学习？</p>
+                    </div>
+
+                    <div class="quote-block">"Training is this one-time cost that is amortized across billions of sessions that a model will experience." — "训练是一次性成本，摊薄在模型将经历的数十亿次会话中。" <cite>[00:00:43]</cite></div>
+
+                    <div class="quote-block">"What if you could just fit those six months into the context window?" — "但如果你能把那六个月的经验全部塞进上下文窗口呢？" <cite>[00:01:46]</cite></div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">「可磨炼性」与「可验证性」同等重要</h3>
+                        <span class="topic-timestamp">00:02:12 - 00:06:09</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">一个领域仅「可验证」是不够的——它还必须能被构建成可大规模并行执行的确定性模拟环境，才能取得快速进展。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">计算机使用为什么慢？</div>
+                        <p class="topic-detail-content">为什么计算机使用（Computer Use）的进步比编程和数学慢那么多？这个问题看似奇怪，因为计算机使用显然是可验证的（你可以明确判断一个操作是否成功）。Dwarkesh 提出一个被严重低估的原因：可磨炼性（grindability）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">编程的可磨炼性</div>
+                        <p class="topic-detail-content">要提高模型的编程能力，你可以定义一个 Docker 容器，里面放一个缺失某些功能的软件仓库，然后让一千个并行的智能体从完全相同的起点开始尝试——这是一个确定性的、可回放的模拟器。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">计算机使用的困境</div>
+                        <p class="topic-detail-content">你不能让一千个智能体同时去亚马逊测试结账流程——亚马逊会封杀你。理论上可以克隆所有常见应用，但这极度耗时。当然，一旦 AI 自己足够强，能自动构建高保真克隆，计算机使用就会迎刃而解——而且这个过程本身就是一个很好的 RL 训练目标。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">更广泛的难题</div>
+                        <p class="topic-detail-content">对于许多领域——从零建立企业、在法庭上赢得案件、在市场中盈利交易、帮助候选人赢得选举——我们根本无法构建模拟器。这些试运行需要与现实世界互动，外部验证可能需要数月甚至数年。处理这种「无重置、非平稳」环境是 RL 中长期存在的开放问题。如果 AI 要获得人类拥有的所有甚至更多技能，它必须能够从非结构化的、稀缺的现实互动中学习。</p>
+                    </div>
+
+                    <div class="quote-block">"It is not enough for a domain to be verifiable. It also has to be very grindable, in the sense that you have to be able to run lots of parallel rollouts against a deterministic and replayable simulator." — "一个领域仅可验证是不够的，它还必须是高度可磨炼的——你需要能针对确定性的、可回放的模拟器运行大量并行试运行。" <cite>[00:03:06]</cite></div>
+
+                    <div class="quote-block">"What is the RL environment to make an AI that is as good at politics as Lyndon Johnson, or as good at building a space-launch business as Elon Musk?" — "什么是让 AI 像林登·约翰逊那样擅长政治、像埃隆·马斯克那样擅长建立太空发射业务的 RL 环境呢？" <cite>[00:05:55]</cite></div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">RLVR 能独自泛化吗？</h3>
+                        <span class="topic-timestamp">00:06:10 - 00:08:40</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">RLVR 的泛化能力可能远没有实验室期望的那么强——短视界的 RL 训练不一定能泛化到长视界的真实世界任务。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Dario 的关键评论</div>
+                        <p class="topic-detail-content">Anthropic CEO Dario Amodei 在 Dwarkesh 的播客中说了一句极其有启发的话：「有两件事——一是在什么上下文长度下训练，二是在什么上下文长度下服务。如果你在小上下文长度下训练，然后试图在大上下文长度下服务，可能就会出现退化。」Dwarkesh 解读说，这暗示短视界的 RL 训练不会自动泛化到长视界。如果一个模型在 500 步的编码任务上训练得很好，谁能保证它被扔进现实世界后能像山姆·沃尔顿那样从零建立沃尔玛？</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">30%~50% 的计算浪费</div>
+                        <p class="topic-detail-content">即使 AI 经过足够多的上下文学习后变得像爱因斯坦一样聪明，所有这些学习成果如果不能写回权重，就会在会话结束时消失。一个实验室 30%~50% 的计算资源用于推理——这些计算目前对改进模型没有任何贡献。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">天才研究生的比喻</div>
+                        <p class="topic-detail-content">这比听起来更糟糕，因为只有在部署中，模型能够学到的最有价值的信息才会真正暴露：你的组织实际如何使用我？我倾向于犯什么样的错误？AI 已经广泛部署在经济中、参与了无数的任务、接触到了海量的隐性知识——却无法利用这些来改进自己。就像一个天才研究生，从来没有被允许参加真正的实习，却不断被塞给更多的课堂案例作业。</p>
+                    </div>
+
+                    <div class="quote-block">"Short-horizon RL training doesn't necessarily generalize to long-horizon RL performance." — "短视界的 RL 训练不一定能泛化到长视界的 RL 表现。" <cite>[00:07:28]</cite></div>
+
+                    <div class="quote-block">"It's so bizarre that we have AIs that are broadly deployed through the economy already... and they're not able to make use of it." — "这太奇怪了：AI 已经广泛部署在经济中……却无法利用这些信息来改进自己。" <cite>[00:08:25]</cite></div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">把学到的知识「塞回」权重</h3>
+                        <span class="topic-timestamp">00:08:41 - 00:15:22</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">真正的持续学习需要架构和损失函数的创新——OPSD（在策略自蒸馏）提供了一条将上下文学习压缩回权重的可行路径。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">人类学习的本质</div>
+                        <p class="topic-detail-content">人类的持续学习不是把所有观察到的东西保持在嘴边（那会导致自闭症天才式的数字记忆能力，却严重损害抽象理解）。相反，它更像「镌刻」——把正确的直觉和大局观压缩回大脑的「权重」中。这种压缩本身就是泛化的关键。但一旦进入权重更新，你就失去了上下文学习的高样本效率。目前，所有成功的在线学习（如 Cursor Tab）都只能通过数百万用户学习完全相同的东西。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">OPSD 的工作原理</div>
+                        <p class="topic-detail-content">在策略自蒸馏（OPSD, On-Policy Self-Distillation）的核心思想是：当模型解决一个真实问题时，训练基础模型去模拟那个积累了完整会话上下文的「教师模型」的输出。核心目的是把会话中隐含的知识压缩进权重。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">OPSD 的两大优势</div>
+                        <p class="topic-detail-content">第一，不需要外部可验证奖励——只要模型能在上下文中学到正确的东西，就可以训练基础模型去匹配它，这突破了 RLVR 的核心限制。第二，提供稠密的监督信号——不是在整条轨迹上投射一个单一的奖励信号，而是在每个 token 级别上训练概率差异。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">为什么优于 SFT</div>
+                        <p class="topic-detail-content">朴素的监督微调（SFT）会试图让模型记住会话中发生的一切——但你在工作中变强不是靠回忆每一天的逐字记录。RL 的优势在于：它只在绝对必要的范围内改变模型，不会覆盖和遗忘其他知识。OPSD 保留了这一特性——你只提取在真实任务上达到教师模型同等结果所必需的知识。</p>
+                    </div>
+
+                    <div class="quote-block">"Human continual learning is less about having all your observations at the tip of your tongue and more about chiseling the right intuitions and big-picture knowledge back into the weights." — "人类的持续学习，与其说是把所有观察到的东西都保持在嘴边，不如说是把正确的直觉和大局观'镌刻'回权重中。" <cite>[00:09:33]</cite></div>
+
+                    <div class="quote-block">"[In OPSD] you only extract the knowledge that is necessary to achieve the same results as the teacher on actual real-world tasks." — "你只提取在真实任务上达到教师模型同等结果所必需的知识。" <cite>[00:14:57]</cite></div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">「做梦」（Dreaming）</h3>
+                        <span class="topic-timestamp">00:15:22 - 00:17:23</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">如果 AI 能构建现实的内部模拟器并不断演练，它就能将样本效率提升数量级——这可能是继预训练、RL、推理时间缩放之后的第四个扩展轴。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">EfficientZero 的启示</div>
+                        <p class="topic-detail-content">在 DeepMind 的 AlphaZero 之后，研究人员训练了一个名为 EfficientZero 的模型。如果这个模型和人类都有两小时时间学习一个从未见过的 Atari 游戏，模型会击败人类新手。但在真实游戏的每一步中，EfficientZero 都在大脑中模拟了数十次游戏——它的真实样本消耗远高于表面数据。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第四扩展轴</div>
+                        <p class="topic-detail-content">未来的大语言模型可能消耗极少量的真实世界数据，同时在自己构建的模拟器中无休止地练习。如果成功，这将成为继预训练、强化学习、推理时间计算之后的第四个扩展轴：模型消耗计算资源编写 RL 环境，然后针对这些环境进行训练，排练那些将在生产环境中为特定用户实际使用的所有技能。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从 /compact 到 /dream</div>
+                        <p class="topic-detail-content">Dwarkesh 描绘了一个大胆的未来场景：与其在 Codex、Cursor 或 Claude 中敲击 /compact 来生成一个廉价的总结——给你一种持续学习的错觉——你敲击 /dream，然后它会消耗大量计算资源，构建一个视频游戏版的真实世界并针对它进行训练。这是一个将 RL 的「第二系统」从外部人类标注转向模型自我生成的训练环境的极富想象力的概念。</p>
+                    </div>
+
+                    <div class="quote-block">"Future LLMs might be able to consume far less real-world data while practicing endlessly against environments that they build for themselves." — "未来的大语言模型可能消耗极少量的真实世界数据，同时在自己构建的环境中无休止地练习。" <cite>[00:16:19]</cite></div>
+
+                    <div class="quote-block">"You could call it test-time training or dreaming." — "你可以称之为'测试时训练'或'做梦'。" <cite>[00:16:50]</cite></div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">2027 年会是什么样子</h3>
+                        <span class="topic-timestamp">00:17:23 - 00:19:52</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">持续学习将彻底改变 AI 的演进方式——每次与你的互动都会让 AI 变得更聪明，不仅从你的会话中学，也从全世界所有用户那里学。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第一步：RLVR 创建可部署的胜任者</div>
+                        <p class="topic-detail-content">到 2026 年左右，RLVR 训练已经能够产生一个至少足够胜任的智能体：面对新问题时能快速定位、尝试不同策略、遇到障碍时迭代调整。它不一定像爱因斯坦一样聪明——但它足以在现实世界中获取经验并从中学习。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第二步：部署并实时学习</div>
+                        <p class="topic-detail-content">一旦你拥有这个智能体，就让它去做真正的工作——即使是偏离训练分布的项目。假设到那时，有效的上下文窗口已经大到 AI 可以与你协作整整一周。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第三步：定期写回权重</div>
+                        <p class="topic-detail-content">一周结束时，你给 AI 一次工作考评。如果好评，基础模型使用 OPSD（可能结合「做梦」或其他技术）蒸馏出 AI 在一周中学到的一切。AI 会在那些它之前没有明确训练过的相邻领域上变得更好。下一轮学习中，它又会在更新的知识基础上继续扩展。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">持续学习飞轮</div>
+                        <p class="topic-detail-content">这种飞轮效应的最终结果是：AI 进步的主要方式不再来自发布前的训练，而是来自部署后积累的所有经验。每次你与 AI 互动时，它都会变得更聪明——不仅因为它从你之前的会话中学到了东西，还因为它从世界上所有其他用户的互动中学到了东西。这与当前 AI 改进的方式（发布新版本 → 用户获得改进 → 等下一个版本更新）截然不同。</p>
+                    </div>
+
+                    <div class="quote-block">"By this point, the main way that AIs get better is not from the training they have received before they are released to the public. Rather, it's from all this experience that they'll be accumulating from being broadly deployed in the economy." — "到那时，AI 进步的主要方式不再来自发布前接受的训练，而是来自它们广泛部署在经济中所积累的所有经验。" <cite>[00:18:41]</cite></div>
+
+                    <div class="quote-block">"Every time that you interact with an AI, it'll be smarter, not only because it's been learning from your previous sessions, but also because it's been learning from all its interactions with all the other users in the world." — "每次你与 AI 互动时，它都会变得更聪明——不仅因为它从你之前的会话中学到了东西，还因为它从世界上所有其他用户的互动中学到了东西。" <cite>[00:19:22]</cite></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚙️</div>
+                    <h3 class="takeaway-title">可磨炼性</h3>
+                    <p class="takeaway-desc">AI 取得快速进展的领域不仅仅是「可验证」的，还必须是「可磨炼的」——即能构建可大规模并行、可回放的确定性模拟器。这是编程和数学进展远快于计算机使用的根本原因。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔭</div>
+                    <h3 class="takeaway-title">短视界的局限</h3>
+                    <p class="takeaway-desc">短视界 RL 训练不会自动泛化到长视界任务。Dario Amodei 关于上下文长度训练与服务不匹配的评论，暗示了 RLVR 泛化能力的根本上限。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💸</div>
+                    <h3 class="takeaway-title">30%~50% 的浪费</h3>
+                    <p class="takeaway-desc">实验室当前大量计算资源用于推理——这些计算目前对改进模型没有任何贡献，而且最有价值的学习信号恰恰只存在于部署中。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔨</div>
+                    <h3 class="takeaway-title">镌刻胜于堆积</h3>
+                    <p class="takeaway-desc">人类的持续学习不是把所有信息保存在记忆中，而是将直觉和知识「镌刻」回大脑。未来的 AI 架构也需要实现同样的压缩——而 OPSD 提供了将上下文知识蒸馏回权重的可行路径。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💭</div>
+                    <h3 class="takeaway-title">「做梦」即训练</h3>
+                    <p class="takeaway-desc">如果 AI 能构建自身的内部模拟器，「练习」数量级高于真实的交互次数，这将开辟继预训练、RL、推理时间缩放之后的第四个扩展轴。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔄</div>
+                    <h3 class="takeaway-title">2027 持续学习飞轮</h3>
+                    <p class="takeaway-desc">可部署的胜任者 → 进入现实世界 → 会话学习 → 定期「写回」权重 → 变得更聪明 → 覆盖相邻领域。每次互动都将使 AI 变强。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">下一个训练范式</h3>
+            <p class="footer-desc">
+                Dwarkesh Patel 在这篇约 20 分钟的深度分析中，揭示了当前 AI 训练范式的核心矛盾——模型已广泛部署却无法从经验中学习——并提出了从 OPSD 到「做梦」的替代路径，描绘了一个每次互动都在让 AI 变聪明的 2027 愿景。
+            </p>
+            <div class="footer-quote">
+                "Every time that you interact with an AI, it'll be smarter."
+            </div>
+            <p class="footer-note">
+                原文及脚注详见 <a href="https://www.dwarkesh.com/p/the-next-paradigm" target="_blank">dwarkesh.com</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
