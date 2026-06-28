@@ -1,6 +1,36 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/ibm-10b-quantum-ai.html",
+    card_class: "card-tech",
+    category: "Masters of Scale · AI · 量子计算",
+    date: "2026-06-28",
+    title: "IBM的100亿美元豪赌：AI之后是什么？| Arvind Krishna",
+    excerpt:
+      "当整个科技行业追逐更大的AI模型，IBM CEO Arvind Krishna却唱反调——基础模型将商品化，GPU成本半年翻一番，8-12万亿AI数据中心投资的经济账根本算不过来。从Watson的三大战略失误、AI编排者的差异化定位、40%效率提升却3倍招聘的就业辩证法，到12000原子分子的量子突破——Krishna坦诚提出：最大的风险是不冒险，追求50%胜率而非90%。",
+    tags: ["#IBM", "#量子计算", "#AI编排"],
+  },
+  {
+    url: "articles/all-in-socialists-sweep-nyc-china-coding-ai-memory-micron.html",
+    card_class: "card-tech",
+    category: "All-In Podcast · 政治 · AI · 芯片",
+    date: "2026-06-27",
+    title: "社会主义者横扫纽约、中国编程追赶、AI 内存瓶颈与美光井喷 | All-In Podcast",
+    excerpt:
+      "DSA 三战三胜震惊全美，Gavin Baker 称 Mamdani 是他一生见过最有天赋的政治家。GLM 5.2 以 85% 的成本优势逼近美国前沿模型，蒸馏技术让追赶成本大幅降低。DRAM 成为 AI 最被低估的瓶颈——全球仅三家公司能制造 HBM，美光收入同比翻 4 倍。太空计算经济性正在成立，Anthropic 估值 3 万亿美元。从纽约选票到深圳芯片，技术与政治的交织图景。",
+    tags: ["#DSA", "#GLM", "#DRAM"],
+  },
+  {
+    url: "articles/cloudflare-ceo-bot-takeover-edge-ai.html",
+    card_class: "card-tech",
+    category: "Cloudflare · AI · 互联网未来",
+    date: "2026-06-27",
+    title: "Cloudflare CEO：机器人接管、边缘 AI 与每位 CEO 都将面临的艰难抉择",
+    excerpt:
+      "机器人流量首次超越人类流量，互联网 28 年的广告模式正在崩塌——Cloudflare CEO Matthew Prince 揭示「按爬取付费」的支付革命、裁员 20% 背后的决策逻辑，以及 AI 时代「瑞士奶酪」般的内容新经济。",
+    tags: ["#机器人", "#边缘AI", "#CEO决策"],
+  },
+  {
     url: "articles/wall-st-725bn-ai-open-source.html",
     card_class: "card-finance",
     category: "20VC · AI · 华尔街",
