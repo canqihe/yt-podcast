@@ -1,6 +1,26 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/openai-codex-andrew-ambrosino.html",
+    card_class: "card-ai",
+    category: "Lenny's Podcast · AI · 产品",
+    date: "2026-06-29",
+    title: "OpenAI Codex 负责人谈产品工作的新形态 | Andrew Ambrosino",
+    excerpt:
+      "OpenAI Codex桌面应用负责人Andrew Ambrosino深度对话：当实现变得唾手可得，「品味」成了最稀缺的能力。产品流程如何从「昂贵实现」走向「廉价试错」？为什么AI仍然不擅长设计？从「区域防守」式产品管理到角色平均值理论，以及Codex如何从开发者工具演进为知识工作的「大本营」——一个不只是超级应用的未来愿景。",
+    tags: ["#产品管理", "#AI原生", "#OpenAI"],
+  },
+  {
+    url: "articles/scaramucci-wealth-failure.html",
+    card_class: "card-finance",
+    category: "The Master Investor · 投资 · 人生哲学",
+    date: "2026-06-29",
+    title: "如何积累财富（并在失败中生存）| Anthony Scaramucci",
+    excerpt:
+      "从错过亚马逊的1400万到三次无视比特币——华尔街老将安东尼·斯卡拉穆奇以罕见的坦诚，讲述了38年职业生涯中一次又一次的错误举动：盲从巴菲特错过亚马逊、固执做多遭遇疫情爆杀、三次拒绝比特币直到被打脸。他从17岁就践行的投资纪律、对SpaceX绝不卖出的信念、视通缩为更大威胁的逆向判断，以及在白宫11天学到的残酷现实——这些失败比成功更值得倾听。",
+    tags: ["#斯卡拉穆奇", "#投资哲学", "#比特币"],
+  },
+  {
     url: "articles/ibm-10b-quantum-ai.html",
     card_class: "card-tech",
     category: "Masters of Scale · AI · 量子计算",
