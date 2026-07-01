@@ -1,6 +1,36 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/bloom-energy-ceo-ai-power-sovereignty.html",
+    card_class: "card-tech",
+    category: "20VC · AI · 能源 · 基础设施",
+    date: "2026-07-01",
+    title: "Bloom Energy CEO：我们不在 AI 泡沫中 | 能源主权与数字电力革命",
+    excerpt:
+      "从 NASA 火箭科学家到 AI 基础设施巨头——KR Sridhar 深度对话：为什么 AI 不是泡沫而是「制造智能」、安迪·格鲁夫如何改变他的领导力、55 天交付 Oracle 数据中心的传奇、为什么能源主权比模型主权更重要、以及为什么分布式电力将改变地缘政治格局。",
+    tags: ["#能源主权", "#数字电力", "#Bloom Energy"],
+  },
+  {
+    url: "articles/etched-two-harvard-dropouts-800m-nvidia.html",
+    card_class: "card-tech",
+    category: "Invest Like The Best · AI · 芯片 · 创业",
+    date: "2026-07-01",
+    title: "两位哈佛辍学生：融资 8 亿美元挑战 NVIDIA | Etched",
+    excerpt:
+      "Etched 创始人 Gavin Uberti 与 Robert Wachen 完整讲述：如何从「没人相信」到签下 10 亿美元客户合同。低压推理与集群级内存的两大技术赌注、班加罗尔 24 小时开发将芯片到量产从 10 个月压缩到 40 天、30 页 memo 被所有风投拒绝后雪球式融到 1 亿美元、以及 50 皮秒时钟对齐的「不可能」突破——两个 24 岁年轻人如何用第一性原理挑战整个半导体行业。",
+    tags: ["#Etched", "#AI芯片", "#推理经济"],
+  },
+  {
+    url: "articles/dylan-patel-co-design-100x.html",
+    card_class: "card-tech",
+    category: "Sequoia Capital · AI · 芯片 · 硬件",
+    date: "2026-07-01",
+    title: "软硬件协同设计才是 AI 真正的 100 倍杠杆 | Dylan Patel",
+    excerpt:
+      "SemiAnalysis 创始人迪伦·帕特尔抛出惊人论点：AI 最大的效率提升不是来自单独某一层的 2 倍改进，而是来自跨层协同优化——把模型、内核和芯片结合在一起设计，让每个 2 倍变成 100 倍。他揭示 DeepSeek 的专家模型如何针对 Nvidia 硬槃优化、CUDA 护城河的真相、推理将超越石油成为最大市场、以及黄仁勋的多极化战略。",
+    tags: ["#软硬件协同", "#推理经济", "#Nvidia"],
+  },
+  {
     url: "articles/openai-codex-andrew-ambrosino.html",
     card_class: "card-ai",
     category: "Lenny's Podcast · AI · 产品",
