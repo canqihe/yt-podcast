@@ -1,6 +1,36 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/joe-rogan-aravind-srinivas.html",
+    card_class: "card-ai",
+    category: "Joe Rogan Experience · AI · 哲学 · 文明",
+    date: "2026-07-02",
+    title: "JRE #2521 — Perplexity CEO Aravind Srinivas：从《摩诃婆罗多》到 AGI，好奇心是终极答案",
+    excerpt:
+      "Perplexity AI 创始人兼 CEO Aravind Srinivas 与 Joe Rogan 展开了一场横跨上古神话、失落文明、晶体管阴谋论、教育革命与超级智能的深度对话。两个半小时里，一个核心理念贯穿始终——「好奇心溢价」是人类最古老也最被低估的品质。从《摩诃婆罗多》中描述的氢弹和自主武器，到埃及金字塔下方 1.2 公里未知结构，再到好奇心在教育、人际关系和 AI 时代的终极价值——这是一场关于人类本质的沉思。",
+    tags: ["#好奇心溢价", "#Perplexity", "#JoeRogan"],
+  },
+  {
+    url: "articles/greg-brockman-openai-merge-chat-agents.html",
+    card_class: "card-ai",
+    category: "Big Technology Podcast · AI · 战略",
+    date: "2026-07-02",
+    title: "OpenAI 总裁 Greg Brockman：将聊天与智能体融为一体",
+    excerpt:
+      "OpenAI 总裁 Greg Brockman 系统阐述公司终极愿景——将 ChatGPT 从一个「会聊天的工具」升级为能主动替你完成任务的个人通用智能体。从硬件设备计划、语音交互革命、与苹果微软的竞争，到 AI 在医疗领域的惊人潜力——当所有人都能造出顶级模型时，OpenAI 的护城河究竟在哪里？答案：不是算法，不是数据，而是算力。",
+    tags: ["#OpenAI", "#AGI", "#算力"],
+  },
+  {
+    url: "articles/prototype-to-production-scaling-robotics.html",
+    card_class: "card-tech",
+    category: "South Park Commons · 机器人 · 制造业",
+    date: "2026-07-02",
+    title: "从原型到量产：机器人初创公司规模化的真相",
+    excerpt:
+      "四位机器人创始人与CTO毫无保留地分享了从实验室到客户现场的「真相时刻」：标签被吸盘撕掉、地毯卡住机器人、化学物质溶掉密封圈……以及中国10倍速安装机器人背后的制造业警钟。这不是一场融资路演，而是一次坦诚的战后复盘。",
+    tags: ["#机器人", "#制造业", "#AI"],
+  },
+  {
     url: "articles/bloom-energy-ceo-ai-power-sovereignty.html",
     card_class: "card-tech",
     category: "20VC · AI · 能源 · 基础设施",
