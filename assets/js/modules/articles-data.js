@@ -1,6 +1,16 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/a16z-goes-global.html",
+    card_class: "card-finance",
+    category: "a16z · AI · 地缘政治 · 风险投资",
+    date: "2026-07-04",
+    title: "a16z 走向全球：美国科技必须引领世界 | Ben Horowitz × Anne Neuberger × Raghu Raghuram",
+    excerpt:
+      "a16z 联合创始人 Ben Horowitz 与 Anne Neuberger、Raghu Raghuram 深度对话——技术如何从国家实力的工具变成了竞技场本身。当世界各国争相定义下一代 AI 基础设施时，AI 模型的价值取向为何成为地缘政治新战场？进入市场的壁垒不是技术而是信任，硅谷的独特基因为何无法被复制。",
+    tags: ["#a16z", "#AI价值观", "#地缘政治"],
+  },
+  {
     url: "articles/joe-rogan-aravind-srinivas.html",
     card_class: "card-ai",
     category: "Joe Rogan Experience · AI · 哲学 · 文明",
