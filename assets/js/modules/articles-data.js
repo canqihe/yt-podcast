@@ -1,6 +1,16 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/sierra-clay-bavor-token-budget.html",
+    card_class: "card-ai",
+    category: "20VC · AI · 创业 · 企业级AI",
+    date: "2026-07-05",
+    title: "每位工程师都将需要的 10 万美元 Token 预算 | Sierra 联合创始人 Clay Bavor",
+    excerpt:
+      "Sierra 联合创始人 Clay Bavor 深度对话 20VC——揭示 Token 成本不降反升的底层逻辑：顶级工程师年化 Token 花费已超 10 万美元，未来将占薪资的 20%；AI 智能体如何重构企业运营；以及那个最反直觉的判断——对前沿智能的需求是「无限的」。从分布式团队到 Pinecone 内部智能体，一场关于 AI 时代的实操指南。",
+    tags: ["#Token经济", "#Sierra", "#企业AI"],
+  },
+  {
     url: "articles/a16z-goes-global.html",
     card_class: "card-finance",
     category: "a16z · AI · 地缘政治 · 风险投资",
