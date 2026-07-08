@@ -1,6 +1,26 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/billion-dollar-pdf-jeremy-giffon.html",
+    card_class: "card-finance",
+    category: "Invest Like The Best · 风险投资 · 叙事 · 文化",
+    date: "2026-07-08",
+    title: "十亿美元 PDF：叙事如何主导资本、地位与权力 | Jeremy Giffon",
+    excerpt:
+      "当一个人在正确的时间、以正确的方式讲出正确的故事，仅凭一个叙事就能聚合数十亿美元的资金。从「亿万富翁崇拜」到「发帖者时代」——Jeremy Giffon 揭示权力、地位、资本与注意力的底层重构。",
+    tags: ["#叙事即资本", "#权力转移", "#发帖者时代"],
+  },
+  {
+    url: "articles/a16z-software-age-of-agents.html",
+    card_class: "card-ai",
+    category: "a16z · AI · 企业软件 · 智能体",
+    date: "2026-07-08",
+    title: "智能体时代的软件：无头化、异常处理与企业软件变局 | a16z Show",
+    excerpt:
+      "当 Salesforce 宣布「无头化」时，一个问题浮出水面：如果 AI 智能体而非人类成为软件的主要用户，过去三十年围绕 UI 构建的 SaaS 帝国会怎样？Steven Sinofsky 给出的答案出人意料——企业软件中最粘的部分不是界面，而是藏在界面之下、被数十年定制化浇灌出来的业务逻辑。从 SAP 为何不可替代到「站两个巨头中间」的创业框架，一场关于企业软件未来的深度对话。",
+    tags: ["#无头软件", "#企业软件", "#智能体"],
+  },
+  {
     url: "articles/accel-sourcery.html",
     card_class: "card-finance",
     category: "Sourcery · 风险投资 · AI · VC",

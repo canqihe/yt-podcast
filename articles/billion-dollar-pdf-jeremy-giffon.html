@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <title>十亿美元 PDF：叙事如何主导资本、地位与权力 | Jeremy Giffon</title>
+    <style>
+        /* ========== Design Tokens ========== */
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-card: #141416;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            /* Scheme 2: 紫黄 */
+            --accent-primary: #a855f7;
+            --accent-secondary: #FFC107;
+            --accent-primary-rgb: 168, 85, 247;
+            --accent-secondary-rgb: 255, 193, 7;
+            --border: #2a2a2e;
+            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            --font-size-hero: clamp(48px, 10vw, 120px);
+            --font-size-section: clamp(32px, 5vw, 56px);
+            --font-size-topic: clamp(24px, 4vw, 36px);
+            --font-size-number: clamp(64px, 15vw, 120px);
+            --font-heavy: 800;
+            --letter-spacing-tight: -0.03em;
+            --line-height-tight: 0.95;
+            --card-padding: 40px;
+            --radius-lg: 16px;
+            --radius-pill: 100px;
+            --transition-fast: 0.3s ease;
+            --hover-lift: translateY(-4px);
+            --gradient-accent: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+        }
+
+        /* ========== Reset ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ========== Scrollbar ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-primary);
+        }
+
+        /* ========== Container ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/billion-dollar-pdf-jeremy-giffon-cover.jpg') no-repeat right center / cover;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 0;
+        }
+
+        /* ========== Badge ========== */
+        .badge-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .badge:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* ========== Title ========== */
+        .title {
+            font-size: var(--font-size-hero);
+            font-weight: var(--font-heavy);
+            line-height: var(--line-height-tight);
+            letter-spacing: var(--letter-spacing-tight);
+            margin-bottom: 24px;
+        }
+
+        .title-line-1 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-line-2 {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== Subtitle ========== */
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        /* ========== Meta Grid ========== */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .meta-item {
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        /* ========== CTA Button ========== */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--gradient-accent);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 16px;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 20px rgba(var(--accent-primary-rgb), 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(var(--accent-primary-rgb), 0.5);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== Section ========== */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            font-size: var(--font-size-section);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 64px;
+        }
+
+        /* ========== Points Grid ========== */
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* ========== Point Card ========== */
+        .point-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .point-card:hover {
+            border-color: var(--accent-primary);
+            transform: var(--hover-lift);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .point-card:hover::before {
+            opacity: 1;
+        }
+
+        .point-number {
+            font-size: 48px;
+            font-weight: var(--font-heavy);
+            color: var(--border);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .point-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-primary);
+        }
+
+        .point-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ========== Topic ========== */
+        .topic {
+            margin-bottom: 80px;
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .topic-number {
+            font-size: var(--font-size-number);
+            font-weight: var(--font-heavy);
+            line-height: 1;
+            background: var(--gradient-number);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .topic-info {
+            flex: 1;
+            padding-top: 16px;
+        }
+
+        .topic-title {
+            font-size: var(--font-size-topic);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .topic-timestamp {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--accent-secondary);
+        }
+
+        .topic-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--card-padding);
+            margin-left: clamp(40px, 10vw, 120px);
+        }
+
+        .topic-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-primary);
+        }
+
+        .topic-core-point {
+            font-size: 18px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .topic-detail {
+            padding-left: 24px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .topic-detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .topic-detail-content {
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--accent-primary);
+            padding: 24px;
+            background: rgba(var(--accent-primary-rgb), 0.05);
+            margin: 24px 0;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-primary);
+        }
+
+        .thought-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .thought-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        /* ========== Takeaways ========== */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .takeaway-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-fast);
+        }
+
+        .takeaway-card:hover {
+            border-color: var(--accent-secondary);
+            transform: var(--hover-lift);
+        }
+
+        .takeaway-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .takeaway-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .takeaway-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: var(--font-heavy);
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .footer-quote {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: var(--font-heavy);
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 48px 0;
+            line-height: 1.2;
+        }
+
+        .footer-note {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Divider ========== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header animations - use keyframes for initial page load */
+        .header .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        /* Card animations - use transition for scroll trigger */
+        .point-card,
+        .takeaway-card,
+        .topic {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .point-card.animate-in,
+        .takeaway-card.animate-in,
+        .topic.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .topic-content {
+                margin-left: 0;
+            }
+
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .meta-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">Invest Like The Best</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">十亿美元 PDF</span>
+                    <span class="title-line-2">叙事如何主导资本、地位与权力</span>
+                </h1>
+                <p class="subtitle">
+                    当一个人在正确的时间、以正确的方式讲出正确的故事，仅凭一个叙事就能聚合数十亿美元的资金。Jeremy Giffon 以犀利的观察揭示：从亿万富翁崇拜到发帖者时代，美国的权力结构正在经历怎样的底层重构。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Patrick O'Shaughnessy</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Jeremy Giffon</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 87 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=Y82q5Lw7_8E" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <!-- Point Card 1 -->
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">叙事即资本</h3>
+                    <p class="point-desc">在高度不确定的环境中，最稀缺的不是资金，而是有信服力的叙事。谁能设定一个让所有人「愿意跟随」的故事，谁就能聚合资本和资源——甚至在故事被验证之前。</p>
+                </div>
+
+                <!-- Point Card 2 -->
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">权力从金钱转向注意力</h3>
+                    <p class="point-desc">亿万富翁崇拜到达顶峰，发帖者阶层正在成为新的祭司。判断权力更替的方法很简单：看哪个阶层对另一个阶层「谦卑」——而现在，亿万富翁们争着坐在发帖者旁边。</p>
+                </div>
+
+                <!-- Point Card 3 -->
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">承认一切都是娱乐</h3>
+                    <p class="point-desc">不要欺骗自己——时间线上的内容被生产、筛选和编辑的唯一目的就是娱乐你。最自由的状态不是戒断，而是承认这一点。</p>
+                </div>
+
+                <!-- Point Card 4 -->
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">AI 解放而非威胁</h3>
+                    <p class="point-desc">任何能被自动化的事情都应该被自动化。大多数白领工作是「编造出来的」——人类会继续编造新的事情来做。远程办公的热度证明大多数人每天只需要 2–3 小时的工作量。</p>
+                </div>
+
+                <!-- Point Card 5 -->
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">软件业的沃尔玛化</h3>
+                    <p class="point-desc">软件正从「卖代码」（零边际成本、高毛利）转向「卖算力」（正边际成本、低毛利）。低毛利大规模正在取代高毛利小规模——「沃尔玛效应」将在软件行业上演。</p>
+                </div>
+
+                <!-- Point Card 6 -->
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">硅谷需要被解密</h3>
+                    <p class="point-desc">支撑硅谷和 AI 发展的是一套被忽视的哲学体系——新佛教功利主义、有效利他主义、加速主义等思想在表面下涌动。理解这些隐秘哲学才是理解科技走向的关键。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Deep Insights Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1: 十亿美元 PDF -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">十亿美元 PDF</h3>
+                        <span class="topic-timestamp">05:50 — 11:31</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        当一个叙事在最恰当的时机被精准呈现，即使它不完全正确，也能吸引数十亿美元资本的跟随——这就是「十亿美元 PDF」。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">概念的诞生</div>
+                        <p class="topic-detail-content">吉芬和肖内西共同发明了这个概念——当市场充满不确定性和恐慌时，某人恰好以一种极具自信的方式「设定故事」，成为整个时代的基础性观点。这个叙事不一定正确，但它传递出一种不容置疑的确定性——「这就是正在发生的事，跟我走」。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">资本如足球，PDF 如球</div>
+                        <p class="topic-detail-content">吉芬将资本比作一群 10 岁孩子在踢足球——「他们全都跟着球跑，资本就跟着十亿美元 PDF 满场跑」。当这份 PDF 出现时，它锚定了预期，形成共识，资本自然流向共识所指的方向。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">叙事能力 = 大过滤器</div>
+                        <p class="topic-detail-content">在私募市场中，基金的「大过滤器」不是投资能力，而是叙事能力。因为基金的产品——现金回报——需要十年才能兑现。在此之前无论是季度更新还是 LP 对话，都是在销售叙事。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「你可以仅仅通过设定一个新想法就能聚集数十亿美元的资金。」——杰里米·吉芬 [05:52]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2: 算法与幂律 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">算法与幂律</h3>
+                        <span class="topic-timestamp">11:31 — 20:28</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        X 的时间线已成为全球性的「统一信息流」——数亿人每天阅读同样的 500 条推文，而这条信息流正在驱动资本市场的定价、政策的制定和企业的成败。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">统一信息流与全球报纸</div>
+                        <p class="topic-detail-content">X 每天给每位用户推送基本相同的内容，这和 30 年前《华尔街日报》的功能完全一样——区别是今天这些内容形成观点、定价证券、决定资本流向、制定政策。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">时间线原生</div>
+                        <p class="topic-detail-content">一个机构能否存活，取决于它是否「时间线原生」——即对时间线既有反应（持续监控）又有自反（自身行动反过来影响时间线）。白宫、风险投资和公开市场都是如此。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">幂律效应的极端化</div>
+                        <p class="topic-detail-content">表现从正态分布变成幂律分布——一旦突破阈值，感觉就像占领了全世界的大脑。这是技术的产物：RSS 变成了算法推荐，播客世界仍然对如何向算法投喂内容高度天真，而 YouTube 主播已经深谙此道。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「世界上所有最重要的人——资本市场、政治、新闻、创业、技术——他们每天早上都在读同一份日报……这些内容形成观点、定价证券、决定资本流向、制定政策。」 [08:49]
+                    </div>
+
+                    <div class="quote-block">
+                        「如果你高度自律、有动力，使用新媒体可以比以往任何时候都更好；但如果你不是，那就会比以往任何时候都更糟糕。」 [18:14]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3: 巅峰大佬 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">巅峰大佬</h3>
+                        <span class="topic-timestamp">20:28 — 31:19</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        社会正在经历从「亿万富翁崇拜」到「发帖者崇拜」的转变，金钱作为权力象征的地位正在被注意力取代。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">祭司迭代史</div>
+                        <p class="topic-detail-content">吉芬用一条「祭司迭代史」解释权力变迁：原始宗教（神无处不在）→ 文艺复兴（神在云层上）→ 科学时代（科学家是祭司）→ 亿万富翁时代（商人提供意义）→ 发帖者时代（今天）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">亿万富翁已通货膨胀</div>
+                        <p class="topic-detail-content">当格兰特·卡多内和埃隆·马斯克都是「亿万富翁」时，这个词就失去了分量。一条吸引百万人关注的好帖比十亿美元更难以复制。「获得十亿美元比在人们心中或时间线上获得顶尖发帖者那样的地位要容易得多。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">阶层更替的证据</div>
+                        <p class="topic-detail-content">如何判断权力？「看哪个阶层对另一个阶层谦卑。」科学阶层对亿万富翁谦卑（爱泼斯坦的教训），而现在亿万富翁阶层对发帖者阶层谦卑——吉芬亲身经历：亿万富翁投资人争着坐在 Tyler Cowen 旁边。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「我认为我们正处于巅峰大佬时期……我们曾寄望于物理学带来意义，但它没有。然后我们看向亿万富翁阶层——但亿万富翁太多了，这个概念已经通货膨胀了。」 [21:25]
+                    </div>
+
+                    <div class="quote-block">
+                        「获得十亿美元比在人们心中或时间线上获得顶尖发帖者那样的地位要容易得多。」 [27:15]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4: 退出时间线 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">退出时间线</h3>
+                        <span class="topic-timestamp">31:19 — 36:14</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        屏幕上的一切内容本质上都是娱乐——承认这一点，才能获得真正的自由。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">承认即自由</div>
+                        <p class="topic-detail-content">吉芬曾完全脱离社交媒体 6 个月。他的核心感悟：不要欺骗自己，认为消费的内容是为了学习或提高生产力。它就是为了娱乐而生产、筛选和编辑的。劳力士和耐克说服你它们是投资而非消耗品，播客和文章说服你它们是有用的——但本质没有区别。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">让别人先暴露在辐射中</div>
+                        <p class="topic-detail-content">最开明的消费方式：让别人先「暴露在辐射中」，再告诉你什么有趣。他们的朋友杰西拒绝所有算法，他的信息来源是「人们会告诉你」。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">自由与影响力的权衡</div>
+                        <p class="topic-detail-content">西奥多·罗斯福和安德鲁·卡内基能花大量时间休闲，拉里·埃里森创立甲骨文时就抱着消失两周去航海的意图。但在今天，美国总统完全失联一个月不可想象。有多少「努力工作」是表演性的？</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「一个人不应该欺骗自己，认为自己消费的所有媒体是为了别的什么——它就是为了娱乐。」 [32:12]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5: AI 与白领工作 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">人工智能与白领工作</h3>
+                        <span class="topic-timestamp">36:14 — 43:31</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        任何能被自动化的事情都应该被自动化。白领工作大多是「编造出来的」——但这没关系，因为人类会继续编造新的事情来做。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">10 岁 vs 20 岁</div>
+                        <p class="topic-detail-content">一个朋友的比喻：有孩子上大学和有一个 10 岁孩子的父亲，更担心的是大学生——方向正确。从 10 岁孩子的视角看，AI 带来的解放远大于恐惧。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">工作的本质</div>
+                        <p class="topic-detail-content">大多数白领工作不直接关系到住所、食物和药品这些必需品。以他自己的工作为例：别人给他钱，他投出去——「有用吗？当然，但它不是真实的。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">远程办公的信号</div>
+                        <p class="topic-detail-content">人们对远程办公的执着恰恰证明大多数人每天只需要 2 到 3 小时的实际工作。远程办公星期五是四天工作制的软启动。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「你可能正处于生命中最后几年还需要坐在电脑前操作它的阶段——这个想法让人无比解放。」 [38:14]
+                    </div>
+
+                    <div class="quote-block">
+                        「我们可以继续付钱让人远程办公或每周工作四天，这只是表明我们实际上需要更少的劳动时间了——而且仍然能保持同样的生产力。」 [41:24]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6: 金融的下一个时代 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">金融的下一个时代</h3>
+                        <span class="topic-timestamp">43:31 — 53:56</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        金融的下一波浪潮将由「种子投资」和「股权文化」驱动，从量化的金融工程转向定性的乐观主义——而西海岸正在吃掉东海岸。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从杠杆收购到种子投资</div>
+                        <p class="topic-detail-content">当前最大的金融公司诞生于 80 年代的杠杆收购文化——债务驱动、金融工程。如果下一代金融巨头的创始行为是种子投资呢？股权驱动、幂律分布、极度乐观——这意味着一种根本性的乐观主义。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">东西海岸的薪酬逆转</div>
+                        <p class="topic-detail-content">华尔街曾是每年巨额现金的代名词，硅谷是纸面富贵。但这两者正在翻转——华尔街现在更多用 RSU，硅谷则因为成熟的二级市场变成了每年拿大量现金的地方。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">算法在定价市场</div>
+                        <p class="topic-detail-content">在信息由算法过滤、叙事由随机帖子驱动的时代，证券的边际价格在某种意义上是由 AI 算法「定价」的——因为它选择展示的叙事决定了人们的判断。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「西海岸正在吃掉东海岸。风险投资创造了世界上最大的企业，而私募股权没有。」 [49:33]
+                    </div>
+
+                    <div class="quote-block">
+                        「算法——在某种真实的意义上正在为市场定价，因为它选择它想展示给人们的叙事，然后那些人根据这个叙事定价。」 [54:32]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7: 软件的新经济学 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">软件的新经济学</h3>
+                        <span class="topic-timestamp">53:56 — 01:03:22</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        软件业正在从「卖代码」（零边际成本、高毛利）转向「卖算力」（高边际成本、低毛利、大规模）——一场根本性的经济结构变化。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">SaaS 黄金时代的终结</div>
+                        <p class="topic-detail-content">SaaS 的黄金时代建立在卖一串代码副本的基础上——边际成本为零。但卖算力时代你不能写一次提示然后无限复制输出——每次都需要重新计算，边际成本不再为零。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">沃尔玛效应</div>
+                        <p class="topic-detail-content">软件行业的未来是低毛利、薄净利、大规模。就像沃尔玛进入小镇，小型 SaaS 提供商将难以与规模巨头竞争。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">资本的海绵</div>
+                        <p class="topic-detail-content">反直觉视角：高资本支出的 AI 业务之所以出现，某种程度上是因为资本「无处可去」。过剩的资本像水一样寻找通道，企业成了「资本的海绵」。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「SaaS 如今被惩罚，是因为零边际成本高毛利的时代正在被卖算力的时代取代。边际成本不再为零，一切都不一样了。」 [59:28]
+                    </div>
+
+                    <div class="quote-block">
+                        「你可以说这些高资本支出业务几乎是资本的下游产物——资本在寻找去处，无处可去，所以创造了它们。」 [58:15]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8: 评估新兴基金经理 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">评估新兴基金经理</h3>
+                        <span class="topic-timestamp">01:03:22 — 01:18:17</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        投资经理的基金首先是一家企业——了解自己是哪种客户，然后找到与自身利益最对齐的经理，远比追逐品牌基金更明智。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">给 LP 的忠告</div>
+                        <p class="topic-detail-content">如果你只能写 50 万美元的支票，不要投入一家管理 50 亿美元的增长基金——它们的设计是为了服务主权基金。对小型 LP 来说，新兴经理被严重低估了，因为回报直接决定基金能否继续生存。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">评估经理个人</div>
+                        <p class="topic-detail-content">人们高估投资主题和过往记录，低估关于人的基本事实。经理的个人财务状况是一个常被忽视的关键指标——银行有 5 亿美元的人募集 5000 万和银行有 50 万的人募集 5000 万是两种完全不同的游戏。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">模仿性封建制度</div>
+                        <p class="topic-detail-content">在 AI 公司的 SPV 投资中，正在形成一种类似封建制度的体系——大型 AI 实验室的「领主」分配份额，获得分配的人拿着这个「封地」去主权基金收费。一种前所未有的内部准入游戏。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「判断经理的好坏：如果你的投资赌注比你全部身家还大一个数量级，你会被美元的数量麻痹。」 [01:07:48]
+                    </div>
+
+                    <div class="quote-block">
+                        「我们正在从第一原理重建封建制度——有领主，他们通过分配份额制造土地和贵族。」 [01:09:08]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9: 硅谷的隐秘哲学 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">硅谷的隐秘哲学</h3>
+                        <span class="topic-timestamp">01:18:17 — 01:26:35</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        硅谷背后有一套被忽视的哲学体系——新佛教功利主义、有效利他主义和加速主义——这种文化底层决定了科技的发展方向。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">未被定价的特质</div>
+                        <p class="topic-detail-content">身高、智商、简历被定价，但思想家和哲学家——那些支撑整个体系的文化与模仿性理念——被严重低估。硅谷存在一种真实但深藏不露的哲学体系。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">隐秘哲学谱系</div>
+                        <p class="topic-detail-content">新佛教功利主义渗透在技术发展的底层逻辑中。从 Will MacAskill 的有效利他主义、Nick Land 的加速主义到 Curtis Yarvin 的黑暗启蒙——这些思想多年来从科技巨头领导人嘴里说出却不被指名。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">科技 vs 华尔街的文化本质</div>
+                        <p class="topic-detail-content">80 年代华尔街本质上是虚无主义的——一切都是为了赚钱。而科技行业认为自己是「完全正义的」——由利他主义驱动。吉芬认为这种自我正当性到了病态程度——科技行业没有把收益转化为文化的自反性需求，因为他们认为业务本身就是最终的慈善。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「这些文化、哲学和宗教思想——无论你喜欢与否——影响这些模型为什么被建造，以及它们内在的世界观是什么。」 [01:22:24]
+                    </div>
+
+                    <div class="quote-block">
+                        「80 年代的华尔街需要把金融收益转化为文化——艺术、建筑、慈善。科技认为自己就是最终的慈善，不需要任何转化。」 [01:23:50]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <!-- Takeaway 1 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📄</div>
+                    <h3 class="takeaway-title">叙事即资本</h3>
+                    <p class="takeaway-desc">在高度不确定的环境中，最稀缺的不是资金，而是有信服力的叙事。谁能设定一个让所有人「愿意跟随」的故事，谁就能聚合资本和资源——甚至在故事被验证之前。</p>
+                </div>
+
+                <!-- Takeaway 2 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">👑</div>
+                    <h3 class="takeaway-title">注意力取代金钱</h3>
+                    <p class="takeaway-desc">亿万富翁崇拜到达顶峰后开始衰退，发帖者阶层正在成为新的祭司。判断权力更替的方法很简单：看哪个阶层对另一个阶层「谦卑」。</p>
+                </div>
+
+                <!-- Takeaway 3 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎮</div>
+                    <h3 class="takeaway-title">承认一切都是娱乐</h3>
+                    <p class="takeaway-desc">算法生产的内容本质上是娱乐。最自由的状态不是戒断，而是承认这一点——然后用「让别人过滤后告诉你」的方式消费信息。</p>
+                </div>
+
+                <!-- Takeaway 4 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🤖</div>
+                    <h3 class="takeaway-title">AI 解放而非威胁</h3>
+                    <p class="takeaway-desc">任何能被自动化的事情都应该被自动化。大多数白领工作是编造出来的，人类会继续编造新的事情来做。AI 只是让这个真相更早浮出水面。</p>
+                </div>
+
+                <!-- Takeaway 5 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏪</div>
+                    <h3 class="takeaway-title">软件业的沃尔玛化</h3>
+                    <p class="takeaway-desc">软件正从卖代码转向卖算力。低毛利大规模正在取代高毛利小规模——规模成为决定性因素，沃尔玛效应将在软件行业上演。</p>
+                </div>
+
+                <!-- Takeaway 6 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔮</div>
+                    <h3 class="takeaway-title">硅谷需要被解密</h3>
+                    <p class="takeaway-desc">支撑硅谷和 AI 发展的是一套被忽视的哲学体系。理解这些隐秘哲学是理解科技走向的关键——正如理解 80 年代需要理解华尔街的文化一样。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h2 class="footer-title">关于本节目</h2>
+            <p class="footer-desc">
+                Invest Like The Best 由 Patrick O'Shaughnessy 主持，每期邀请顶尖投资人、创业者和思想家，探讨资本、商业与文化的前沿动态。
+            </p>
+            <div class="footer-quote">
+                「叙事是最强大的资本」
+            </div>
+            <p class="footer-note">
+                本文基于 Jeremy Giffon 在 Invest Like The Best 的对话整理而成。<br>
+                点击上方按钮观看完整视频。
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
