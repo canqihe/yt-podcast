@@ -1,6 +1,26 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/accel-sourcery.html",
+    card_class: "card-finance",
+    category: "Sourcery · 风险投资 · AI · VC",
+    date: "2026-07-07",
+    title: "Accel：Facebook、Cursor、Nebius 背后那家低调的传奇风投",
+    excerpt:
+      "Accel 三位合伙人深度对话 Sourcery——从 2005 年 Facebook A 轮 10% 持股开始，到如今横跨芯片、新型云、实验室和应用的 70 亿美元 AI 版图。通才策略如何在 AI 时代胜过专家？三个万亿级 IPO 即将到来，市场能否消化？",
+    tags: ["#Accel", "#风险投资", "#AI版图"],
+  },
+  {
+    url: "articles/tesla-spacex-ai-race.html",
+    card_class: "card-future",
+    category: "AI · 竞赛 · 未来科技 · 基础设施",
+    date: "2026-07-06",
+    title: "特斯拉 + SpaceX：将颠覆 AI 竞赛格局",
+    excerpt:
+      "当全球科技巨头为构建更大规模的语言模型而投入数十亿美元时，一个被忽视的关键问题浮出水面：谁拥有支撑AI未来的基础设施？从Robotaxi迈阿密无人监督运营到1100万平方英尺的太空AI卫星工厂，Elon Musk正在从算力、能源到真实世界数据构建一个不可逾越的帝国。Elon本人亲自点赞了这一分析。",
+    tags: ["#基础设施", "#ElonMusk", "#AGI"],
+  },
+  {
     url: "articles/sierra-clay-bavor-token-budget.html",
     card_class: "card-ai",
     category: "20VC · AI · 创业 · 企业级AI",
