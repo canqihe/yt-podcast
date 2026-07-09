@@ -1,6 +1,36 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/quantum-computers-encryption-prineha-narang.html",
+    card_class: "card-future",
+    category: "Core Memory · 量子计算 · 加密 · 未来科技",
+    date: "2026-07-09",
+    title: "量子计算机将比你想象的更早破解加密 | UCLA 教授 Prineha Narang",
+    excerpt:
+      "从「永远十年」的量子计算迷雾到 10,000 量子比特就能破解 ECC 加密的惊人发现。UCLA 教授、美国科学特使 Prineha Narang 深度解析量子计算的真实进展、Q-Day 恐慌、量子传感革命，以及为什么 AI 和量子正在从对手变成伙伴。",
+    tags: ["#量子计算", "#加密安全", "#量子传感"],
+  },
+  {
+    url: "articles/next-president-superintelligence.html",
+    card_class: "card-ai",
+    category: "80,000 Hours · AI · 政治 · 倡导",
+    date: "2026-07-09",
+    title: "下一位总统可能掌控超级智能 | Sneha Revanur × 80,000 Hours",
+    excerpt:
+      "15 岁创立 AI 倡导非营利组织 Encode，与 OpenAI 正面交锋，推动美国最前沿的 AI 安全立法。Sneha Revanur 分享六年 AI 政治博弈的全部经验——从「如果你做所有事情你就会赢」的全面出击策略，到晚餐桌上传票事件的政治平衡术。",
+    tags: ["#AI政治", "#Encode", "#安全立法"],
+  },
+  {
+    url: "articles/meta-cto-andrew-bosworth.html",
+    card_class: "card-ai",
+    category: "Big Technology Podcast · AI · 战略 · Meta",
+    date: "2026-07-09",
+    title: "Meta CTO Andrew Bosworth：前沿 AI 之路、模型租赁与消费者 AI 困境",
+    excerpt:
+      "Meta 首席技术官罕见坦白——Llama 3 的成功如何透支 Llama 4 的研发管线；单体模型时代终结，多模型编排才是新常态；消费者 AI 迟迟未爆发的真正原因；以及「疼痛就是药物」——AI 时代组织变革必须经历的生产性痛苦。",
+    tags: ["#Meta", "#Llama", "#消费者AI"],
+  },
+  {
     url: "articles/billion-dollar-pdf-jeremy-giffon.html",
     card_class: "card-finance",
     category: "Invest Like The Best · 风险投资 · 叙事 · 文化",

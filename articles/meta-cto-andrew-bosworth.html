@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta CTO Andrew Bosworth: 前沿 AI 之路、模型租赁与消费者 AI 困境</title>
+    
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+    
+    <!-- 配色方案覆盖：紫黄 -->
+    <style>
+        :root {
+            --accent-primary: #a855f7;
+            --accent-secondary: #FFC107;
+            --accent-primary-rgb: 168, 85, 247;
+            --accent-secondary-rgb: 255, 193, 7;
+        }
+        
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/meta-cto-andrew-bosworth-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">BIG TECHNOLOGY PODCAST</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">Meta CTO Andrew Bosworth</span>
+                    <span class="title-line-2">前沿 AI 之路、模型租赁与消费者 AI 困境</span>
+                </h1>
+                <p class="subtitle">
+                    Meta 首席技术官罕见坦白：Llama 3 的成功如何透支 Llama 4，模型本身不是价值，消费者 AI 为何迟爆发，以及 AI 时代必须经历的「生产性痛苦」
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Alex Kantrowitz</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Andrew Bosworth</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 44 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=qZhCeV6XATw" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看完整对话
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">管线透支</h3>
+                    <p class="point-desc">Llama 3 的全力以赴虽然创造了成功模型，但无意中掏空了 Llama 4 的研发管线，在推理和混合专家模型上落后于竞争对手</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">单体模型终结</h3>
+                    <p class="point-desc">一个模型统治一切的时代已经结束，未来是多模型协作——昂贵的旗舰模型与廉价的小模型按任务调用</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">模型是保险政策</h3>
+                    <p class="point-desc">拥有自研模型不仅是技术独立性，更是租赁谈判中的定价权——供应商知道你可以退回到自己的模型</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">产品才是价值</h3>
+                    <p class="point-desc">消费者不在乎模型版本号，只关心东西好不好用；Meta 的优势在于模型+产品+分发+体验的组合</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">消费者 AI 困境</h3>
+                    <p class="point-desc">技术足够好，但产品不够易用、不够有价值——人们不愿意为一个还不够好的工具改变习惯</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">生产性痛苦</h3>
+                    <p class="point-desc">AI 时代的组织变革必须经历「疼痛就是药物」的过程——跳过适应期是最容易也最危险的选择</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Meta 的 AI 挫折：Llama 3 的成功透支了 Llama 4 的未来</h3>
+                        <span class="topic-timestamp">[00:01:13 → 00:03:10]</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Meta 在前沿 AI 竞赛中落后的根本原因不是资源不足，而是在集中全力交付 Llama 3 时，无意中抽干了前瞻性研究的管线，导致在推理、混合专家模型等关键技术节点上落后于竞争对手。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">早期优势</div>
+                        <p class="topic-detail-content">Meta 的 AI 之旅可以追溯到十多年前的 FAIR（基础 AI 研究）团队。在 Llama 1、Llama 2、Llama 3 阶段，Meta 一直走在前沿。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">透支管线</div>
+                        <p class="topic-detail-content">当 Meta 决定倾尽所有资源打造 Llama 3 时，团队「提前支取了未来的赌注」——把原本为后续版本储备的突破性研究力量全部投入到了 Llama 3 中。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">落后节点</div>
+                        <p class="topic-detail-content">到了 Llama 4 的开发周期，其他实验室在推理（Reasoning）、混合专家模型（Mixture of Experts）等关键技术上已有大幅进展，Meta 发现自己在这些基础能力上落后了。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">战略转折</div>
+                        <p class="topic-detail-content">这直接引发了 Mark Zuckerberg 的根本性转变：AI 从「Meta 的众多赌注之一」升级为「对整家公司具有奠基意义的赌注」。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「这听起来很老套，但我找不到更好的词来形容——就像是'创始人模式'附体。」—— Boz
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">单体模型的终结：一个模型统治一切的时代已经结束</h3>
+                        <span class="topic-timestamp">[00:06:05 → 00:06:50]</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 行业已经从「一个模型统治一切」的单体模型时代，进入了一个多模型协作、按任务调用不同模型的新范式。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">新范式</div>
+                        <p class="topic-detail-content">当开发者使用 Claude Code、OpenAI Codex、Gemini 这样的工作平台时，后端会根据任务类型调用多个不同的模型——多模型协作已成为常态。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">分层逻辑</div>
+                        <p class="topic-detail-content">你需要有一个极其昂贵、极其智能的「旗舰模型」，然后将它的能力通过蒸馏（Distillation）压缩到各种更小、更快、更便宜的模型中。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">核心逻辑</div>
+                        <p class="topic-detail-content">竞争的核心不再是「谁的单一模型最聪明」，而是「谁能组合出一套在性能、价格和延迟之间取得最佳平衡的模型集合」。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">自研模型 vs 租赁模型：Meta 的双轨战略</h3>
+                        <span class="topic-timestamp">[00:04:28 → 00:11:40]</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Meta 既自研前沿模型又租赁第三方模型——拥有自己的模型不仅是为了技术独立性，更是为了在租赁谈判中获得定价权和战略主动权。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">双轨并行</div>
+                        <p class="topic-detail-content">Meta 目前已在广泛使用 Google、Anthropic、OpenAI 的模型进行内部开发，但同时也保持着强大的自研能力。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">定价权</div>
+                        <p class="topic-detail-content">只有当你有一个足够好的自主模型时，你才能在租赁谈判中获得真正的议价权——因为供应商知道你可以随时退回到自己的模型。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Apple 案例</div>
+                        <p class="topic-detail-content">当被问及是否会像 Apple 与 Google 那样做一笔交易（据传 Apple 支付了约 10 亿美元使用 Gemini）时，Boz 的回答很微妙。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">产品为王：模型本身不是价值</h3>
+                        <span class="topic-timestamp">[00:05:06 → 00:06:05, 00:15:47 → 00:16:36]</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Boz 认为 AI 行业过度关注模型本身，而低估了产品、分发和消费者体验的重要性——「模型本身不是价值，产品才是」。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">四要素组合</div>
+                        <p class="topic-detail-content">Meta 的竞争优势分解为四个要素：模型（Model）、产品（Product）、分发（Distribution）和消费者体验（Consumer Experience）。大多数竞争对手只拥有其中一项或两项。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">分发优势</div>
+                        <p class="topic-detail-content">Meta 旗下产品日活用户超过 30 亿，这是一个难以逾越的分发优势。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">信任转换成本</div>
+                        <p class="topic-detail-content">每个 AI 助理都需要深度了解用户的个人信息，用户与助理之间建立的信任关系本身就构成了巨大的转换成本。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">消费者 AI 为何迟迟未能爆发</h3>
+                        <span class="topic-timestamp">[00:16:36 → 00:19:49]</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        消费者 AI 发展缓慢的根本原因不是技术不够好，而是产品未达到「易用性」和「价值感」的临界点。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">炒作周期</div>
+                        <p class="topic-detail-content">人们常常误解炒作周期——它的核心信息不是技术是虚假的，而是「愿意经历种种麻烦来使用新技术的人只占人口的一小部分」。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">习惯阻碍</div>
+                        <p class="topic-detail-content">人们在没有 AI 的情况下也过得很好，你是在要求他们改变与计算机交互的方式——而大多数人并不喜欢改变。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">亲身案例</div>
+                        <p class="topic-detail-content">Boz 给妻子搭建的智能体，他自己每天都在用，但妻子从来不用——她宁愿直接让他去做事。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 伴侣 vs AI 助理：个性化和多样化的需求光谱</h3>
+                        <span class="topic-timestamp">[00:19:49 → 00:22:20]</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        人们对 AI 的个性化和交互方式有着截然不同的偏好——这种多样性要求市场提供丰富选择。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">偏好光谱</div>
+                        <p class="topic-detail-content">一端是希望 AI 有身体、有面孔、有个性，甚至为生活的不同方面配备 20 个不同个性的智能体；另一端是只想要一个无形但可靠的存在。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">核心判断</div>
+                        <p class="topic-detail-content">对于绝大多数人来说，AI 的主要价值将是增加与真实人类相处的时间。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Meta 的 AI 眼镜战略：从手机伴侣到独立平台</h3>
+                        <span class="topic-timestamp">[00:24:46 → 00:30:39]</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Meta 的 AI 眼镜战略始于「不拿手机也能做到的事」，但 AI 技术的爆发使其从手机附属品进化成极具潜力的独立计算平台。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">起点逻辑</div>
+                        <p class="topic-detail-content">手机已经很好，但有什么事情是你想不拿出手机也做到的？答案是拍照和通话/听音。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 顺风</div>
+                        <p class="topic-detail-content">AI 的爆发改变了游戏规则——现在眼镜可以通过蓝牙与手机连接，利用云端 AI 的能力，成为「输入和输出」设备。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">未来愿景</div>
+                        <p class="topic-detail-content">「应用式」的形态不是未来方向，未来将是按需服务。你的 AI 知道你的需求，你跟眼镜说一句就完成了。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「我的烤面包机有一个应用，我拒绝安装。我不想操作一个应用来烤面包，我只想告诉我的 AI：'帮我搞定的同款面包'。」—— Boz
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">内部变革的阵痛：Applied AI 的重组与「专家痕迹」</h3>
+                        <span class="topic-timestamp">[00:32:25 → 00:36:56]</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Meta 在发现 Muse Spark 模型后训练的惊人效果后，快速将数千名员工调入了 AI 组织从事「专家痕迹」工作——这项战略决策在技术上是正确的，但组织变革的巨大阵痛反映了整个行业适应 AI 革命的普遍困境。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">发现机遇</div>
+                        <p class="topic-detail-content">Muse Spark 的开箱编码能力超出预期，通过少量专家指导的训练样本进行后训练，模型的竞争力就能显著提升。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">快速转型</div>
+                        <p class="topic-detail-content">Meta 几乎是一夜之间做出决定，将数千名员工从原来项目中调出，进入 AI 组织做「专家痕迹」工作。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">沟通不足</div>
+                        <p class="topic-detail-content">Boz 承认这个转型「没有太多结构，沟通不够好」，被泄露的评论中他称之为「糟糕透顶」。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">员工追踪：键盘数据与 AI 训练的边界</h3>
+                        <span class="topic-timestamp">[00:36:56 → 00:40:08]</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Meta 的员工键盘记录计划本质上是一个大规模的真事世界交互数据采集项目——让 AI 理解人类如何使用计算机界面。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两个维度</div>
+                        <p class="topic-detail-content">第一是长尾行为数据采集——人类大量知识不在互联网上，它在人的头脑和行为习惯中。第二是高质量专家训练。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">长期价值</div>
+                        <p class="topic-detail-content">这是一个长期数据集，可能需要一年的数据才能产生有价值的结果。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">生产性痛苦与 AI 时代的组织适应</h3>
+                        <span class="topic-timestamp">[00:40:43 → 00:44:01]</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 正在消除工作中的「不生产性痛苦」，但同时也带来了必须经历的「生产性痛苦」——组织和个人都必须经历适应 AI 的艰难过程。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">核心比喻</div>
+                        <p class="topic-detail-content">在药物戒断治疗中，疼痛本身就是药物——经历痛苦是大脑重新编程、克服成瘾的方式。如果你用止痛药消除了疼痛，病人就永远无法康复。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">生产性 vs 非生产性</div>
+                        <p class="topic-detail-content">不让用计算器做数学题是非生产性的痛苦；但用计算器做需要批判性思维的数学题是生产性的，因为它创造了真正的价值。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「公司失败通常不是因为设定了困难的目标而未能实现，而是因为设定了容易的目标并一路'成功'下去。」—— Sheryl Sandberg
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔬</div>
+                    <h3 class="takeaway-title">管线比模型更重要</h3>
+                    <p class="takeaway-desc">不要为了一个里程碑式的模型版本而耗尽所有前瞻性研发力量。AI 研发需要同时维持三个层次：基础平台、增量改进和前沿探索。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🤖</div>
+                    <h3 class="takeaway-title">多模型协作是新常态</h3>
+                    <p class="takeaway-desc">「一个模型统治一切」的时代已经结束。未来的 AI 产品是一个模型集合——竞争的关键不是单一模型的智商，而是多模型编排的系统能力。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🛡️</div>
+                    <h3 class="takeaway-title">拥有模型是一种保险政策</h3>
+                    <p class="takeaway-desc">只有当你拥有一个有竞争力的自主模型时，你才能真正做到「模型无关」——供应商知道你可以随时退回到自己的模型，从而为你创造定价权。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📱</div>
+                    <h3 class="takeaway-title">消费者 AI 的瓶颈是产品</h3>
+                    <p class="takeaway-desc">技术已经足够好，但消费者 AI 迟迟没有爆发的根本原因是产品不够易用、不够有价值——任何想赢的 AI 产品都必须跨越这道「易用性鸿沟」。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💪</div>
+                    <h3 class="takeaway-title">区分生产性与非生产性的痛苦</h3>
+                    <p class="takeaway-desc">AI 在消除大量不创造价值的痛苦，但也带来了必须经历的成长痛苦。跳过适应 AI 的艰难过程是最容易也最危险的短期选择。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">👓</div>
+                    <h3 class="takeaway-title">眼镜可能成为新计算平台</h3>
+                    <p class="takeaway-desc">从「不拿出手机就能做到的事」出发，AI 让智能眼镜从手机配件进化为独立计算平台的路径清晰可见。「应用式」将被「按需服务」取代。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">关于这场对话</h3>
+            <p class="footer-desc">
+                这场深度对话揭示了 Meta 在 AI 时代的战略全景——从模型研发到产品哲学，从组织变革到未来愿景。Boz 的坦诚让我们看到了科技巨头在面对技术革命时的真实挣扎与思考。
+            </p>
+            <div class="footer-quote">
+                「模型本身不是价值，产品才是。」
+            </div>
+            <p class="footer-note">
+                访谈来源：Big Technology Podcast | 主持人：Alex Kantrowitz | 嘉宾：Andrew "Boz" Bosworth（Meta 首席技术官）
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
