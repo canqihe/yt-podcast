@@ -1,6 +1,66 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/token-heist-emily-sands-stripe.html",
+    card_class: "card-ai",
+    category: "The MAD Podcast · AI · 智能体商务 · 支付",
+    date: "2026-07-10",
+    title: "「Token 劫案」——正在摧毁 AI 创业公司的隐形危机 | Emily Sands（Stripe）",
+    excerpt:
+      "当 Stripe 的数据告诉你「AI 公司每六个新注册用户中就有一个是欺诈者」时——这不是危言耸听，而是一次正在发生的系统性危机。Stripe 数据与 AI 主管 Emily Sands 深度解析智能体商务的完整谱系、共享支付令牌、Token 盗窃的三种模式，以及为什么「微型企业」智能体将在 12 个月内自主运营业务。",
+    tags: ["#智能体商务", "#Token安全", "#AI创业"],
+  },
+  {
+    url: "articles/mosseri-taste-ai-authenticity.html",
+    card_class: "card-ai",
+    category: "Lenny's Podcast · AI · 产品领导力 · Instagram",
+    date: "2026-07-10",
+    title: "品味、真实与判断力 — Adam Mosseri 谈 AI 世界的人类价值",
+    excerpt:
+      "Instagram 负责人 Adam Mosseri 深度对话 Lenny Rachitsky——Meta 正在用 6 人 Pod 取代 13 人团队，AI 重写了「谁成功」的定义，品味和策展力正成为最难替代的人类优势。从 Facebook Home 到第一版 Reels 的惨痛失败，到 Instagram 算法的真实面貌和 AI 内容的顺风判断。",
+    tags: ["#产品领导力", "#AI时代", "#品味与策展"],
+  },
+  {
+    url: "articles/all-in-open-source-agi-scorsese-cerebras-black-forest-labs.html",
+    card_class: "card-ai",
+    category: "All-In Podcast · AI · 芯片 · 开源",
+    date: "2026-07-10",
+    title: "开源崛起、AGI 已至、斯科塞斯的 AI 工具箱 — Cerebras & Black Forest Labs CEO 对话",
+    excerpt:
+      "Cerebras 创始人宣称「AGI 已经实现」，250 亿美元订单积压揭示基础设施疯狂需求；Black Forest Labs 创始人揭秘潜在扩散算法如何驱动多模态世界，以及与传奇导演马丁·斯科塞斯合作的幕后细节。从打破摩尔定律到开源与 AI 主权运动，一场关于 AI 产业最前沿的全景对话。",
+    tags: ["#开源AI", "#AGI", "#Cerebras"],
+  },
+  {
+    url: "articles/sam-altman-trump-5-openai.html",
+    card_class: "card-ai",
+    category: "20VC · AI · 风险投资 · 政策",
+    date: "2026-07-10",
+    title: "Sam Altman 给特朗普 5% 的疯狂博弈 | 20VC 深度解读",
+    excerpt:
+      "当 OpenAI 主动向美国政府交出 5% 股份、DeepSeek 宣布自研芯片、Meta 转身做云服务商——两位顶级投资人拆解 AI 行业 12 个重大事件，揭示从「讲故事」到「讲成本」的根本转变。",
+    tags: ["#OpenAI", "#风投博弈", "#AI监管"],
+  },
+  {
+    url: "articles/semianalysis-datacenter-energy.html",
+    card_class: "card-tech",
+    category: "SemiAnalysis Weekly · 数据中心 · 能源 · AI基础设施",
+    date: "2026-07-10",
+    title: "别再说2026年美国数据中心容量有一半被取消了 | SemiAnalysis Weekly",
+    excerpt:
+      "Bloomberg 率先报道「半数美国数据中心容量被延迟」后引发市场恐慌，但 SemiAnalysis 团队揭露原始报告的分母计算存在根本错误——仅亚马逊一家2026年新增的5GW就已超过报告声称的「总计划上线量」。节目深入探讨表后计量（BTM）40GW预测、Oracle新墨西哥困境、燃气轮机供应链爆发，以及为什么2020年代数据中心将高度依赖天然气。",
+    tags: ["#数据中心", "#能源基础设施", "#表后计量"],
+  },
+  {
+    url: "articles/the-real-roi-of-ai-tokens-dallas-dolen.html",
+    card_class: "card-ai",
+    category: "Big Technology Podcast · AI · 企业 · 投资回报",
+    date: "2026-07-10",
+    title: "AI 代币的真实投资回报率——对话 Dallas Dolen",
+    excerpt:
+      "PwC TMT 负责人 Dallas Dolen 深度解析企业 AI 支出的真实面貌——为什么「结果最大化」正在取代「代币最大化」，AI 模型价格战为何一触即发，以及智能体部署的三重限制（风险、成本、组织）。现场投票揭示用户付费意愿三个月内骤降。",
+    tags: ["#AI投资回报", "#代币经济学", "#企业AI"],
+  },
+  {
     url: "articles/quantum-computers-encryption-prineha-narang.html",
     card_class: "card-future",
     category: "Core Memory · 量子计算 · 加密 · 未来科技",

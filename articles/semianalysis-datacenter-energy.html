@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <title>别再说2026年美国数据中心容量有一半被取消了 | SemiAnalysis Weekly</title>
+    <style>
+        /* ========== Design Tokens ========== */
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-card: #141416;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            /* 方案 2: 紫黄 */
+            --accent-primary: #a855f7;
+            --accent-secondary: #FFC107;
+            --accent-primary-rgb: 168, 85, 247;
+            --accent-secondary-rgb: 255, 193, 7;
+            --border: #2a2a2e;
+            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            --font-size-hero: clamp(48px, 10vw, 120px);
+            --font-size-section: clamp(32px, 5vw, 56px);
+            --font-size-topic: clamp(24px, 4vw, 36px);
+            --font-size-number: clamp(64px, 15vw, 120px);
+            --font-heavy: 800;
+            --letter-spacing-tight: -0.03em;
+            --line-height-tight: 0.95;
+            --card-padding: 40px;
+            --radius-lg: 16px;
+            --radius-pill: 100px;
+            --transition-fast: 0.3s ease;
+            --hover-lift: translateY(-4px);
+            --gradient-accent: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+        }
+
+        /* ========== Reset ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ========== Scrollbar ========== */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
+
+        /* ========== Container ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/semianalysis-datacenter-energy-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 0;
+        }
+
+        /* ========== Badge ========== */
+        .badge-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .badge:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* ========== Title ========== */
+        .title {
+            font-size: var(--font-size-hero);
+            font-weight: var(--font-heavy);
+            line-height: var(--line-height-tight);
+            letter-spacing: var(--letter-spacing-tight);
+            margin-bottom: 24px;
+        }
+
+        .title-line-1 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-line-2 {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== Subtitle ========== */
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        /* ========== Meta Grid ========== */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .meta-item {
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        /* ========== CTA Button ========== */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--gradient-accent);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 16px;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 20px rgba(var(--accent-primary-rgb), 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(var(--accent-primary-rgb), 0.5);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== Section ========== */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            font-size: var(--font-size-section);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 64px;
+        }
+
+        /* ========== Points Grid ========== */
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* ========== Point Card ========== */
+        .point-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .point-card:hover {
+            border-color: var(--accent-primary);
+            transform: var(--hover-lift);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .point-card:hover::before {
+            opacity: 1;
+        }
+
+        .point-number {
+            font-size: 48px;
+            font-weight: var(--font-heavy);
+            color: var(--border);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .point-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-primary);
+        }
+
+        .point-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ========== Topic ========== */
+        .topic {
+            margin-bottom: 80px;
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .topic-number {
+            font-size: var(--font-size-number);
+            font-weight: var(--font-heavy);
+            line-height: 1;
+            background: var(--gradient-number);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .topic-info {
+            flex: 1;
+            padding-top: 16px;
+        }
+
+        .topic-title {
+            font-size: var(--font-size-topic);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .topic-timestamp {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--accent-secondary);
+        }
+
+        .topic-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--card-padding);
+            margin-left: clamp(40px, 10vw, 120px);
+        }
+
+        .topic-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-primary);
+        }
+
+        .topic-core-point {
+            font-size: 18px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .topic-detail {
+            padding-left: 24px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .topic-detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .topic-detail-content {
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--accent-primary);
+            padding: 24px;
+            background: rgba(var(--accent-primary-rgb), 0.05);
+            margin: 24px 0;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-primary);
+        }
+
+        .thought-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .thought-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        /* ========== Takeaways ========== */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .takeaway-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-fast);
+        }
+
+        .takeaway-card:hover {
+            border-color: var(--accent-secondary);
+            transform: var(--hover-lift);
+        }
+
+        .takeaway-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .takeaway-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .takeaway-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: var(--font-heavy);
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .footer-quote {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: var(--font-heavy);
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 48px 0;
+            line-height: 1.2;
+        }
+
+        .footer-note {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Divider ========== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .point-card,
+        .takeaway-card,
+        .topic {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .point-card.animate-in,
+        .takeaway-card.animate-in,
+        .topic.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .container { padding: 0 20px; }
+            .section { padding: 80px 0; }
+            .topic-content { margin-left: 0; }
+            .points-grid { grid-template-columns: 1fr; }
+            .meta-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper animate-in">
+                    <span class="badge">SemiAnalysis Weekly</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1 animate-in delay-1">别再说2026年</span>
+                    <span class="title-line-2 animate-in delay-2">数据中心容量有一半被取消了</span>
+                </h1>
+                <p class="subtitle animate-in delay-3">
+                    SemiAnalysis 团队揭露媒体报道中的错误数据：分母本身就是错的。亚马逊一家就推翻了「半数取消」的结论，而真正的瓶颈在电力供应和许可审批。
+                </p>
+                <div class="meta-grid animate-in delay-4">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Jordan Nanos</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Jeremy, Ellie, Rake</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 50 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=xqq5_7daYWc" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心洞察</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">分母陷阱</h3>
+                    <p class="point-desc">媒体报道「一半数据中心容量被取消」的根本原因是一个错误的计算——仅亚马逊2026年新增的5GW就超过了报告所谓的「总计划上线容量」的很大部分。核实原始数据源是穿透噪音的第一原则。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">Clawcoded 项目</h3>
+                    <p class="point-desc">市场上充斥着大量「AI编码」的虚假项目——看起来很真实，但没有实际执行力。识别它们的方法很简单：看网站有没有实际内容、查许可记录、追踪供应链和劳动力可行性。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">电网的致命约束</h3>
+                    <p class="point-desc">美国电网无法匹配AI基础设施的需求增速——公用事业公司没有法律义务遵守其口头承诺的时间表。这意味着单纯依赖电网的开发商「极有可能失望」，BTM 正在从备选变为必选。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">供应链的意外多样化</h3>
+                    <p class="point-desc">燃气轮机从三家寡头垄断演变为30+供应商的竞争格局，汽车行业（特斯拉、福特）的电池和发动机制造能力正在跨界进入数据中心市场——这将在中期显著缓解供应瓶颈。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">电力成本已不重要</h3>
+                    <p class="point-desc">AI产业链每层（模型→云→应用）的每兆瓦收入都在飙升，使得电力成本在总支出中的占比持续下降。这意味着「为电费优化」的必要性正在让位于「为通电速度优化」。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">2020年代=天然气，2030年代=多元化</h3>
+                    <p class="point-desc">短期内天然气的地位不可撼动。太阳能有土地和间歇性问题，核能建设周期太长。但到2030年代，SMR、碳捕集、大规模储能等技术将改变数据中心的能源格局。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">「一半容量被取消」的谬论</h3>
+                        <span class="topic-timestamp">00:51 — 04:43</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Bloomberg 率先发布「半数美国数据中心容量被延迟」的报道后，各大媒体蜂拥引用同一份数据源。SemiAnalysis 团队发现，该报告声称2026年计划上线12GW、仅5GW在建，但仅亚马逊一家就能推翻这个结论。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">错误的分母</div>
+                        <p class="topic-detail-content">这场舆论风暴始于 Bloomberg 的一篇报道，标题声称「半数美国数据中心容量被延迟」。由于数据来源指向同一份公开报告，该说法迅速在各大媒体间病毒式传播。SemiAnalysis 团队在阅读原始报告后发现，其分母计算存在根本性错误——报告称2026年美国计划上线的数据中心容量为12GW，其中只有5GW在建，因此推断约7GW（即超过一半）被取消或延迟。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">一个数据就能驳倒</div>
+                        <p class="topic-detail-content">仅需一个数据就能驳倒整篇报告：亚马逊在2025年已建成4GW数据中心容量，且2026年还将新增5GW以上，仅一家公司的新增量就已经接近报告所谓的「总计划上线量」。CoreWeave也将在2026年新增约1GW，全部都在建设中。换言之，仅这两家公司的在建容量就已经超过报告声称的「5GW在建」数字。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">SemiAnalysis 的预测几乎没变</div>
+                        <p class="topic-detail-content">更重要的是，SemiAnalysis 自建的预测模型从2024年4月到2025年5月间几乎没有变化——波动幅度不到5%。这说明真正懂行的市场参与者从未因为所谓的「取消潮」而调整预期。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「亚马逊公开宣布2025年建成4GW。2026年会减少吗？显然会增加。」 — Amazon announced publicly they built 4 gigawatt in 2025. Is that going up or not in 2026? Obviously it's going up. [02:02]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">为什么早期项目会被取消</h3>
+                        <span class="topic-timestamp">04:43 — 08:06</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        市场上确实存在大量项目取消，但这些取消全部集中在非常早期的阶段——这是正常的市场筛选过程，与「需求崩溃」无关。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Clawcoded 项目的由来</div>
+                        <p class="topic-detail-content">SemiAnalysis 团队的 Rake 创造了一个精辟的词——「Clawcoded」（AI编码）项目，用以形容现在市场上大量存在的、看起来漂亮但实际并无可行性的早期项目。2023年底，AI热潮催生了数据中心容量的井喷式需求，所有人都在疯狂寻找有电可用的地点。由于竞争激烈，开发商被迫同时推进多个备选方案。在最终投资决策阶段，一家超大规模云服务商可能会同时评估10个以上不同地点的项目。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">超过1太瓦的虚假申请</div>
+                        <p class="topic-detail-content">SemiAnalysis 的团队发现，目前美国运营商申请的数据中心用电负荷已超过1太瓦（terawatt），而整个美国电网的峰值负荷仅为750GW。这种巨大的落差意味着，绝大多数申请都是不现实的。更夸张的是，这个1太瓦的数字在近六个月内已经翻了一倍。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 无法过滤虚假项目</div>
+                        <p class="topic-detail-content">这些「Clawcoded」项目的典型特征是什么？某公司宣布建设10GW的数据中心，声称第一期500MW明年可用——但你点进它的网站，只有一个「联系我们」的页面，查遍许可文件也找不到任何实质内容。人类分析师一眼就能看穿这些项目的水分，但依赖AI批量抓取数据的模型却无法有效过滤。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「AI不太擅长过滤。有真人参与时，很明显有些公告过于激进了。」 — AI is not very good at filtering. When you have humans in the loop, it's pretty obvious that some of these announcements are way too aggressive. [06:44]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Oracle 的新墨西哥问题</h3>
+                        <span class="topic-timestamp">08:40 — 13:47</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Oracle 与 OpenAI 合作的「木星项目」（Project Jupiter）在新墨西哥州面临严重的许可和天然气管道难题，成为「成熟项目遭遇执行困难」的典型案例。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">管道审批困境</div>
+                        <p class="topic-detail-content">Oracle 的「木星项目」计划在新墨西哥州德安娜县建设一座大型表后计量数据中心，由天然气发电供电。项目需要新建一条天然气输送管道，但规划的路线尚未获批。备选路线虽已获批，却并非理想选择。更关键的是，整个审批流程已经进入一种监管程序——这种程序没有先例在短于两年的时间内完成。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">替代方案不可行</div>
+                        <p class="topic-detail-content">除管道外，通过卡车运输压缩天然气（CNG）或液化天然气（LNG）理论上可行。但经验证的大规模CNG输送能力仅约200MW，且当地缺乏足够的生产商和运输车辆。对于Oracle这个体量的项目而言，杯水车薪。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">当地反对声浪</div>
+                        <p class="topic-detail-content">新墨西哥州对天然气基础设施并不友好，项目面临大量来自当地社区和环保团体的反对声音。此前该项目已因涡轮机选型问题从传统燃气轮机转向了 Bloom Energy 的燃料电池方案，但这并未解决天然气供应这一更根本的问题。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「这说明了一个可能在更多表后计量设施中出现的瓶颈——建设天然气管道基础设施，尤其是在新墨西哥这样的地区。」 [11:05]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">表后计量：40GW 的雄心与现实</h3>
+                        <span class="topic-timestamp">13:47 — 18:50</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        SemiAnalysis 预测到2028年，美国表后计量数据中心净新增容量将超过40GW。这一预测源于电网能力不足的刚性约束——依赖电网的项目注定会令人失望。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">电网的结构性不足</div>
+                        <p class="topic-detail-content">核心原因是美国电网无法满足AI基础设施的爆发式需求。SemiAnalysis 团队指出，美国每年需要新增数十GW的发电能力来匹配数据中心需求，但电网的实际扩容速度远远跟不上。开发商从公用事业公司那里频繁听到的故事是：「我以为2027年能拿到500MW，但几个月后他们告诉我，抱歉，2028年只能给100MW，2032年才能给500MW。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">BTM 的规模预测</div>
+                        <p class="topic-detail-content">SemiAnalysis 预测到2028年美国将新增超过40GW的表后计量数据中心容量。这个数字目前几乎从零起步——但趋势已非常明显：仅过去两周内，就有3GW的表后计量数据中心交易签署。Crusoe 在德克萨斯 Abilene 的项目（与微软签约，1.72GW）已公开确认为表后计量模式，证明了这种模式的可行性。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">控制权的优势</div>
+                        <p class="topic-detail-content">从控制权角度看，BTM 是更优选择。开发商自行建设发电设施，可以自己掌控进度，不依赖电网的不确定性。但这也引入了全新风险——你能按时建好发电厂吗？你能拿到所有必要的许可吗？Oracle 在新墨西哥的困境就是典型的BTM执行风险。然而，鉴于单纯依赖电网策略「极有可能让你失望」，BTM 尽管引入了执行层面的新挑战，在整体风险上反而可能更低。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「如果你的策略只依赖电网，你极有可能失望。」 — If your strategy is only grid, you're extremely likely to be disappointed. [17:57]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">OEM 如何应对</h3>
+                        <span class="topic-timestamp">18:50 — 20:24</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        从传统巨头到新兴玩家，整个燃气轮机供应链正在以前所未有的速度扩张。AI需求正在重塑一个古老的工业行业。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">老牌巨头与新兴玩家</div>
+                        <p class="topic-detail-content">面对BTM市场的爆发，西门子、GE等传统巨头正在扩大制造能力，但市场的真正亮点在于：Bloom Energy 的燃料电池因更低的排放和更快的部署速度，在许可审批方面拥有优势；汽车行业（特斯拉、福特）开始将闲置的电池制造能力转向数据中心储能市场；旧的飞机发动机技术被改造为地面发电机组。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从稀缺叙事到市场竞争</div>
+                        <p class="topic-detail-content">去年市场上还在谈论「供应链瓶颈」——铸件、叶片的供应限制。但到了2025-2026年，大型OEM们发现大量新玩家正在涌入市场，它们的策略已从「制造稀缺恐慌」转向「努力保住市场份额」。西门子在日前的一次财报电话会议上明确表达了对这一趋势的认知。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">从签约到 GPU 供电</h3>
+                        <span class="topic-timestamp">20:24 — 23:44</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        签约到通电的时间线因交易类型不同差异巨大，但整体趋势是越来越快。经验法则：签约后18个月实现首批容量的上线。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">交易类型与时间线</div>
+                        <p class="topic-detail-content">Jeremy 详细拆解了不同类型的交易：交钥匙租赁（开发商负责从零到一，客户拎包入住）、电力外壳（开发商承担较少工作，租户投入更多资本支出）、纯购电协议（PPA，仅涉及电力采购）。不论哪种形式，从签约到首批GPU通电的参考时间是18个月。但从第一批容量到全部铺开的「爬坡」速度正在越来越快。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">资金迅速到位</div>
+                        <p class="topic-detail-content">以 Oracle 与 Stack（新墨西哥）、与 Vantage（德克萨斯）的GW级交易为例，项目签署后约一个月，Digital Bridge 就为 Vantage 筹集了250亿美元的融资——资金全部就位后，团队的目标就是尽可能快地建设。3GW 不会花五年——会短得多。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">超大规模云服务商的市场份额</h3>
+                        <span class="topic-timestamp">23:44 — 27:49</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI基础设施建设本质上是由少数几家超大规模云服务商推动的，因为它们拥有AI实验室所需的资本实力和融资通道。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">四大超大规模云服务商</div>
+                        <p class="topic-detail-content">AWS 的容量建设主要由 Anthropic 推动，Meta 为自己使用（MSL，Meta自研大模型），微软主要为 OpenAI 建设（也有部分 Anthropic 交易）。这些超大规模云服务商之所以能主导市场，核心优势在于：投资级信用——它们能以较低成本获得大规模融资；资本实力——数十亿美元级别的项目对其资产负债表不构成致命压力；长期承诺——愿意为AI实验室签署长期、大容量合同。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">NeoCloud 的融资困境</div>
+                        <p class="topic-detail-content">相比之下，NeoCloud（新型云服务商）在融资方面面临巨大挑战——从建设数据中心到购买GPU，整个链条需要数十亿美元的资本投入。只有 Blackstone、KKR 等顶级投资机构支持的NeoCloud才能参与竞争。四家超大规模云服务商占据了在建数据中心容量的绝大部分份额，其中仅两家就拥有超过5GW的在建容量。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">SemiAnalysis 如何追踪数据中心</h3>
+                        <span class="topic-timestamp">27:49 — 31:34</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        SemiAnalysis 采用自下而上的方法论，将每个数据中心作为独立数据点，结合卫星图像、许可文件和AI工具（Claude）进行全链条追踪。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">卫星图像分析</div>
+                        <p class="topic-detail-content">Jeremy 和 Rake 已经看过1-2万张卫星图像。他们能通过一个灰度像素识别出混凝土垫层的铺设——这是施工开始的信号；能通过角落的深色像素判断垂直施工是否已经开始。这种「人眼识别」能力是任何AI模型难以替代的。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Claude 驱动的智能体系统</div>
+                        <p class="topic-detail-content">团队构建了一套基于 Claude 的智能体（agent）系统，每周花费17万美元的Token用量（「我们在Token碾压Meta」）。这些智能体自动扫描全球各州、市、县、镇的许可门户，下载和分析所有公开申报文件，提取关键时间线信息。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">行业交叉验证</div>
+                        <p class="topic-detail-content">芯片→数据中心→AI实验室的「飞轮」效应意味着，一个层面的数据可以交叉验证另一个层面的结论。这种全方位分析能力是SemiAnalysis的核心竞争力。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「我们在最大化使用Token，我们在Token上碾压Meta。人均Token比Meta还多。」 [29:46]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">表后计量的真正含义</h3>
+                        <span class="topic-timestamp">31:34 — 33:31</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        「表后计量」并非简单的「离网发电」，而是一个光谱——从完全孤岛到与电网形成共生关系，有多个层次。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">BTM 的三种模式</div>
+                        <p class="topic-detail-content">Ellie 澄清了BTM的不同层次：完全孤岛（离网）——数据中心完全自给自足，不依赖任何电网连接；净计量——与电网保持互动关系，自发电多余时可馈入电网；混合模式——主要自发电，同时保留电网连接作为备份。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">未来的共生关系</div>
+                        <p class="topic-detail-content">一个有趣的前景是：这些「表后」资产未来可能成为「表上」资产的一部分。当BTM数据中心的燃气轮机连接到电网后，它们本身可能成为电网的分布式发电资源，帮助解决整体电力短缺问题。「这不是非此即彼的关系，它比很多媒体描绘的更加共生。」</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">燃气轮机供应链</h3>
+                        <span class="topic-timestamp">33:31 — 38:22</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        燃气轮机的供应链正在经历前所未有的多元化，从传统的GE/西门子双头垄断向数十家供应商的竞争格局演变。汽车行业的加入将在中期解锁巨大产能。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">前所未有的供应商多样性</div>
+                        <p class="topic-detail-content">SemiAnalysis 展示了一张燃气轮机供应商的图谱，前八大供应商加起来的市场份额仅略超一半，脚注中还有25个以上的名字。这种多样性在任何AI硬件供应链中都是罕见的——GPU、HBM内存、先进封装等环节都高度集中在一到三家供应商手中。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">2026年涡轮机峰值</div>
+                        <p class="topic-detail-content">Jeremy 预测2026年将出现「涡轮机峰值」——大量开发商过度购买涡轮机，但其中许多人无法及时拿到许可证或建成数据中心来使用它们。这将导致二手市场上出现大量涡轮机，可能引发短期恐慌。但长期来看，他仍然极其看好BTM市场。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">汽车行业的逆袭</div>
+                        <p class="topic-detail-content">汽车行业每年有100GW以上的发动机生产产能，但利用率仅40-50%。随着EV需求增速放缓，这些闲置产能正在转向数据中心市场。想想看，100GW的产能中哪怕分出很小一部分给数据中心，都将解锁巨大容量。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「每兆瓦的收入在所有层面都在上升。随着收入增长，电力成本变得越来越不重要。」 [40:58]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 11 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">11</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">太阳能、电池和核能的角色</h3>
+                        <span class="topic-timestamp">42:54 — 46:13</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        2020年代数据中心将高度依赖天然气。太阳能和电池虽然增长迅猛，但土地需求和间歇性问题限制了BTM的可行性。核能和小型模块化反应堆（SMR）则在2030年代才可能发挥更大作用。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">太阳能/电池的局限</div>
+                        <p class="topic-detail-content">美国每年新增大致50-60GW的太阳能和电池装机（名义值），但有效负荷容量系数（ELCC）可能只有10-20%。在电网端，太阳能面临与天然气相同的输电瓶颈问题。在BTM端，一块GW级数据中心需要的太阳能板可能需要2万英亩土地——土地收购过程本身就会因「土地发现是千亿美元级项目」而出现价格暴涨。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">核能的漫长周期</div>
+                        <p class="topic-detail-content">大家都是共识：建核电站需要很长时间。目前市场上充斥着大量不具约束力的意向书（LOI）和条件性交易。SemiAnalysis 预测2030年代将看到能源来源的巨大多元化，但2020年代「将非常依赖天然气」。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">碳捕集的前景</div>
+                        <p class="topic-detail-content">Ellie 补充了一个前瞻性观点——未来可能会看到碳捕集、利用与封存（CCUS）设施与BTM数据中心共置，以应对碳排放方面的压力。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 12 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">12</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">最终总结与最喜欢的项目</h3>
+                        <span class="topic-timestamp">46:13 — 50:29</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        三位团队成员分享了各自最喜欢的项目，并以「完全由机器人建成的数据中心」这一前瞻性话题收尾。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">最喜欢的项目</div>
+                        <p class="topic-detail-content">Rake 选择了 NScale 挪威项目——独特的地理位置和能源结构；Jeremy 选择了 Colossus 2——「快速、高效、规模化、超高收入」；Ellie 选择了 Vanevius Switch 和新泽西项目。讨论以一道有趣的思考题收尾：「你会在哪一年看到完全由机器人建成的数据中心？」团队的初步猜测是2029-2030年——前提是供应链能跟上永磁体等关键零部件的需求。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔍</div>
+                    <h3 class="takeaway-title">分母陷阱</h3>
+                    <p class="takeaway-desc">媒体报道「一半数据中心容量被取消」的根本原因是一个错误的计算——仅亚马逊2026年新增的5GW就超过了报告所谓的「总计划上线容量」的很大部分。核实原始数据源是穿透噪音的第一原则。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">电网的致命约束</h3>
+                    <p class="takeaway-desc">美国电网无法匹配AI基础设施的需求增速——公用事业公司没有法律义务遵守其口头承诺的时间表。这意味着单纯依赖电网的开发商「极有可能失望」，BTM 正在从备选变为必选。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏭</div>
+                    <h3 class="takeaway-title">供应链的意外多样化</h3>
+                    <p class="takeaway-desc">燃气轮机从三家寡头垄断演变为30+供应商的竞争格局，汽车行业（特斯拉、福特）的电池和发动机制造能力正在跨界进入数据中心市场——这将在中期显著缓解供应瓶颈。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💰</div>
+                    <h3 class="takeaway-title">电力成本已不重要</h3>
+                    <p class="takeaway-desc">AI产业链每层（模型→云→应用）的每兆瓦收入都在飙升，使得电力成本在总支出中的占比持续下降。这意味着「为电费优化」的必要性正在让位于「为通电速度优化」。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔋</div>
+                    <h3 class="takeaway-title">2020年代=天然气</h3>
+                    <p class="takeaway-desc">短期内天然气的地位不可撼动。太阳能有土地和间歇性问题，核能建设周期太长。但到2030年代，SMR、碳捕集、大规模储能等技术将改变数据中心的能源格局。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🛰️</div>
+                    <h3 class="takeaway-title">追踪方法论</h3>
+                    <p class="takeaway-desc">SemiAnalysis 每周花17万美元在 Claude 上，用智能体扫描全球许可门户，结合1-2万张卫星图像分析，构建了自下而上的数据中心追踪体系。这种「飞轮」效应是穿透行业噪音的关键。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">SemiAnalysis Weekly</h3>
+            <p class="footer-desc">
+                深入数据中心、能源与工业基础设施的交叉地带，用数据穿透媒体噪音，揭示AI基础设施建设的真实图景。
+            </p>
+            <div class="footer-quote">
+                "如果你的策略只依赖电网，你极有可能失望"
+            </div>
+            <p class="footer-note">
+                原视频：<a href="https://www.youtube.com/watch?v=xqq5_7daYWc" target="_blank">YouTube</a> | SemiAnalysis Weekly Ep. 018
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

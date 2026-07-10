@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <title>「Token 劫案」——正在摧毁 AI 创业公司的隐形危机 | Emily Sands（Stripe）</title>
+    <style>
+        /* ========== Design Tokens ========== */
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-card: #141416;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            /* 配色方案：绿黄 */
+            --accent-primary: #22c55e;
+            --accent-secondary: #eab308;
+            --accent-primary-rgb: 34, 197, 94;
+            --accent-secondary-rgb: 234, 179, 8;
+            --border: #2a2a2e;
+            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            --font-size-hero: clamp(48px, 10vw, 120px);
+            --font-size-section: clamp(32px, 5vw, 56px);
+            --font-size-topic: clamp(24px, 4vw, 36px);
+            --font-size-number: clamp(64px, 15vw, 120px);
+            --font-heavy: 800;
+            --letter-spacing-tight: -0.03em;
+            --line-height-tight: 0.95;
+            --card-padding: 40px;
+            --radius-lg: 16px;
+            --radius-pill: 100px;
+            --transition-fast: 0.3s ease;
+            --hover-lift: translateY(-4px);
+            --gradient-accent: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+        }
+
+        /* ========== Reset ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ========== Scrollbar ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-primary);
+        }
+
+        /* ========== Container ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                /* 渐变遮罩层 */
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                /* 背景图 */
+                url('images/token-heist-emily-sands-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        /* 启用 .header::after（额外光晕叠加层） */
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 0;
+        }
+
+        /* ========== Badge ========== */
+        .badge-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .badge:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* ========== Title ========== */
+        .title {
+            font-size: var(--font-size-hero);
+            font-weight: var(--font-heavy);
+            line-height: var(--line-height-tight);
+            letter-spacing: var(--letter-spacing-tight);
+            margin-bottom: 24px;
+        }
+
+        .title-line-1 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-line-2 {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== Subtitle ========== */
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        /* ========== Meta Grid ========== */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .meta-item {
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        /* ========== CTA Button ========== */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--gradient-accent);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 16px;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 20px rgba(var(--accent-primary-rgb), 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(var(--accent-primary-rgb), 0.5);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== Section ========== */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            font-size: var(--font-size-section);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 64px;
+        }
+
+        /* ========== Points Grid ========== */
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* ========== Point Card ========== */
+        .point-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .point-card:hover {
+            border-color: var(--accent-primary);
+            transform: var(--hover-lift);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .point-card:hover::before {
+            opacity: 1;
+        }
+
+        .point-number {
+            font-size: 48px;
+            font-weight: var(--font-heavy);
+            color: var(--border);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .point-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-primary);
+        }
+
+        .point-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ========== Topic ========== */
+        .topic {
+            margin-bottom: 80px;
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .topic-number {
+            font-size: var(--font-size-number);
+            font-weight: var(--font-heavy);
+            line-height: 1;
+            background: var(--gradient-number);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .topic-info {
+            flex: 1;
+            padding-top: 16px;
+        }
+
+        .topic-title {
+            font-size: var(--font-size-topic);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .topic-timestamp {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--accent-secondary);
+        }
+
+        .topic-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--card-padding);
+            margin-left: clamp(40px, 10vw, 120px);
+        }
+
+        .topic-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-primary);
+        }
+
+        .topic-core-point {
+            font-size: 18px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .topic-detail {
+            padding-left: 24px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .topic-detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .topic-detail-content {
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--accent-primary);
+            padding: 24px;
+            background: rgba(var(--accent-primary-rgb), 0.05);
+            margin: 24px 0;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-primary);
+        }
+
+        .thought-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .thought-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        /* ========== Takeaways ========== */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .takeaway-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-fast);
+        }
+
+        .takeaway-card:hover {
+            border-color: var(--accent-secondary);
+            transform: var(--hover-lift);
+        }
+
+        .takeaway-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .takeaway-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .takeaway-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: var(--font-heavy);
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .footer-quote {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: var(--font-heavy);
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 48px 0;
+            line-height: 1.2;
+        }
+
+        .footer-note {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Divider ========== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header animations - use keyframes for initial page load */
+        .header .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        /* Card animations - use transition for scroll trigger */
+        .point-card,
+        .takeaway-card,
+        .topic {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .point-card.animate-in,
+        .takeaway-card.animate-in,
+        .topic.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .topic-content {
+                margin-left: 0;
+            }
+
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper animate-in">
+                    <span class="badge">AI · 智能体商务</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1 animate-in delay-1">「Token 劫案」</span>
+                    <span class="title-line-2 animate-in delay-2">正在摧毁 AI 创业公司的隐形危机</span>
+                </h1>
+                <p class="subtitle animate-in delay-3">
+                    当 Stripe 的数据告诉你「AI 公司每六个新注册用户中就有一个是欺诈者」时——这不是危言耸听，而是一次正在发生的系统性危机。
+                </p>
+                <div class="meta-grid animate-in delay-4">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Matt Turck</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Emily Sands（Stripe）</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 75 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=6opo7LnZajM" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <!-- Point Card 1 -->
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">Token 盗窃是 AI 经济的隐形杀手</h3>
+                    <p class="point-desc">超过六分之一的 AI 公司注册是欺诈行为。在 AI 经济中，偷 Token 比偷钱更危险——因为每次推理都有真实成本，高欺诈率直接威胁公司生存。</p>
+                </div>
+
+                <!-- Point Card 2 -->
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">智能体商务不是非黑即白</h3>
+                    <p class="point-desc">从人类完全自主到智能体完全自主，这是一个完整的谱系。无论你在哪个位置，都需要产品目录暴露、消费者授权、安全交易执行的新基础设施。</p>
+                </div>
+
+                <!-- Point Card 3 -->
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">AI 正在重塑商业构成</h3>
+                    <p class="point-desc">新企业创办速度翻倍，增长完全由个体创业者驱动。美国已有 500 万人靠单人公司维持生计。AI 将创业门槛从「你会编程」降至「你有想法」。</p>
+                </div>
+
+                <!-- Point Card 4 -->
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">部署是新的瓶颈</h3>
+                    <p class="point-desc">AI 解决了写代码，但没有解决让代码上线。当智能体可以在 20 分钟内写完完整应用时，注册数据库、配置 CDN、管理 API 密钥反而成了最大摩擦点。</p>
+                </div>
+
+                <!-- Point Card 5 -->
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">微交易的黄金时代来了</h3>
+                    <p class="point-desc">智能体可以无缝执行微交易，人类不需要做任何操作。结合稳定币结算，将催生全新的 AI 支付经济——从 5 美分的文章到按量推理计费。</p>
+                </div>
+
+                <!-- Point Card 6 -->
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">「微型企业」智能体即将到来</h3>
+                    <p class="point-desc">12 个月后，我们将看到第一批端到端自主运营的智能体——它们买、卖、集成、运营，成为真正的经济单元。这不是工具，是经济主体。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">智能体电商的崛起</h3>
+                        <span class="topic-timestamp">00:01:24 - 00:05:53</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        过去一年，智能体作为买家已从假设变为已部署的基础设施。但其展开方式并非单一模式，而是涵盖一个完整谱系——从完全自主到人类辅助。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">完整谱系</div>
+                        <p class="topic-detail-content">在谱系的一端是机器支付协议（MPP）——智能体完全自主发现服务、决定购买并执行交易；另一端是人类在 AI 界面中搜索产品、获得推荐后一键下单。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">贯穿线</div>
+                        <p class="topic-detail-content">无论你在谱系的哪个位置，都需要一套全新基础设施：企业暴露产品目录，消费者授权智能体支付，智能体安全执行交易。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">合作伙伴</div>
+                        <p class="topic-detail-content">Stripe 已与 Google（Gemini AI 模式）、Microsoft（Copilot）、OpenAI（ChatGPT）、Meta（广告结账）合作。Wix、Shopify、Big Commerce 等平台和 Best Buy、Coach、Kate Spade 等品牌已全面接入。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「当人们进行合理规模的交易时，这没问题。我认为我们会很快进入一个世界——在智能体商务和稳定币所支持的微交易的交汇处。」—— Emily Sands [00:03:17]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">智能体电商协议：AI 商务的通用语言</h3>
+                        <span class="topic-timestamp">00:07:08 - 00:11:38</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        ACP（Agent Commerce Protocol）是与 OpenAI 联合推出的开放标准，让企业一次接入即可触达所有 AI 智能体，类似 MCP 但面向商务场景。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">产品目录暴露</div>
+                        <p class="topic-detail-content">企业一次性暴露产品目录，选择加入所有采用该协议的智能体。不需要针对每个新智能体分别注册。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">共享支付令牌</div>
+                        <p class="topic-detail-content">在交易瞬间，智能体将令牌化凭证安全传递给卖家。智能体永远看不到底层凭证。令牌编码权限边界，支持多种支付方式，与支付处理器无关。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">采用情况</div>
+                        <p class="topic-detail-content">Best Buy、Coach、URBN、Kate Spade 等零售品牌已上线；Wix、Shopify、Big Commerce 等平台已完成接入；Google、Microsoft、OpenAI 等 AI 玩家全面就位。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「我认为企业不会愿意只押注一个智能体界面。他们可能同时做 B2C 和 B2B，希望触达许多不同界面上的广泛消费者群体。」—— Emily Sands [00:07:40]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">个体创业者繁荣：AI 正在重塑商业构成</h3>
+                        <span class="topic-timestamp">00:14:46 - 00:16:58</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Stripe 数据显示：新企业创办速度同比翻倍，增长完全由「非雇主企业」（个体创业者）驱动。美国已有 500 万人靠经营单人公司维持生计。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">宏观数据</div>
+                        <p class="topic-detail-content">美国企业注册数量在疫情期间激增后曾趋于平稳，最近又开始加速。增长完全来自「非雇主企业」（non-employer firms），即个体创业者。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">惊人数字</div>
+                        <p class="topic-detail-content">自 2022 年以来，年收入超过 10 万美元的个体创业者数量呈直线上升。全美目前有 500 万人通过经营单人公司维持生计，其中数十万人年收入超过 100 万美元。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">结构性因素</div>
+                        <p class="topic-detail-content">凭感觉编程（Vibe Coding）和凭感觉部署（Vibe Deployment）让他们能构建产品；AI 领域的各类专用智能体帮助处理会计、客服等运营，使单人公司从结构上变得可行。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「自 2022 年以来，年收入超过 10 万美元的个体创业者数量呈直线上升。现在仅在美国就有 500 万人通过经营个人公司来维持生计。」—— Emily Sands [00:15:10]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">信任：AI 商务的最大障碍</h3>
+                        <span class="topic-timestamp">00:16:56 - 00:23:18</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        技术基础已基本到位，但消费者信任需要时间建立——就像二十年前人们不敢相信在网上输入信用卡号一样。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">信任技术层</div>
+                        <p class="topic-detail-content">Stripe 做了大量工作：共享支付令牌确保智能体永远看不到底层凭证；每个令牌都携带 Radar 评分实时评估；Link 钱包（3 亿用户）正在被改造为「智能体钱包」。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">信任建立</div>
+                        <p class="topic-detail-content">在金融领域，没有人一开始就假设信任——必须去赢得它。Emily 类比电商早期历史：二十年前没人网上买床垫，如今网上购买的可能比实体店还多。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">用户体验挑战</div>
+                        <p class="topic-detail-content">消费者目前主要用 AI 发现产品，但仍在亲自做购买决策。需要一个「魔法时刻」——让人确切知道可以把哪些事情完全卸载给 AI。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「基本上没有人一开始就假设信任。你必须去赢得它。」—— Emily Sands [00:19:42]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Link 钱包与共享支付令牌</h3>
+                        <span class="topic-timestamp">00:23:16 - 00:29:59</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Link 钱包允许消费者授权智能体付款，同时提供细粒度控制——从单次交易的审批模式到预算、商家、地理限制的灵活配置。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">演进阶段</div>
+                        <p class="topic-detail-content">第一阶段是「一次性虚拟卡」——极安全但极死板，只能用于单次、单商家、固定金额交易。第二阶段是 Link 钱包，提供更灵活的控制：预算上限、商家类别限制、单笔或累计金额审批。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">支付原语</div>
+                        <p class="topic-detail-content">共享支付令牌是全新支付原语——编码了智能体的全部权限边界，支持卡以外多种支付方式（先买后付等），且与支付处理器无关。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">整合价值</div>
+                        <p class="topic-detail-content">一个人可能有信用卡、借记卡、银行账户、稳定币等多种支付凭证。Link 钱包将所有凭证整合到一个统一的智能体钱包中，「使推理变得更加简洁」。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「你不是给智能体一张空白支票或无限访问你的活期账户。你明确地定义了它能做什么。而且你随时可以收回权限。」—— Emily Sands [00:23:47]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">稳定币与微交易：AI 的微支付经济</h3>
+                        <span class="topic-timestamp">00:29:59 - 00:36:38</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        微交易在人类经济中从未真正起飞，但智能体可以无缝执行微交易，结合稳定币结算，将催生全新的 AI 支付经济。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">人类交易的摩擦</div>
+                        <p class="topic-detail-content">微交易在互联网内容经济中从未成功——没人愿意为 5 美分文章掏出信用卡。买卖双方都亏。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">智能体的优势</div>
+                        <p class="topic-detail-content">当人类不需要输入凭证、导航页面、批准弹窗时，交易成本降为零。智能体替你完成一切，微交易变得可行。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">稳定币结算</div>
+                        <p class="topic-detail-content">通过与 Tempo 合作，使用稳定币即时结算，微支付在经济上变得可持续。在购买推理、AI SaaS 产品等场景中，用户将通过 Link 钱包进行大量微交易。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「微交易实际上从来没有太大的意义，即使在内容消费的背景下也是如此，因为没有人愿意——即使只有 5 美分——输入他们的信用卡去购买一篇 5 美分的文章。」—— Emily Sands [00:29:59]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">凭感觉部署：编程已解决，部署成瓶颈</h3>
+                        <span class="topic-timestamp">00:37:41 - 00:42:50</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 已基本解决写代码的问题，但部署仍然是一团乱麻。Stripe 推出 Stripe Projects，让智能体可以一站式集成所有部署所需服务。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">数据印证</div>
+                        <p class="topic-detail-content">Stripe 文档的智能体流量过去一年增长 10 倍以上，占所有文档流量 40%；CLI 70% 的 API 请求来自智能体——编程这件事已被 AI 基本解决。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">新瓶颈</div>
+                        <p class="topic-detail-content">一个智能体 20 分钟写完完整应用后，你需要注册数据库、托管、CDN……每个服务都有人类导向的入职流程。当写代码不再是瓶颈，部署成了新的痛点。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Stripe Projects</div>
+                        <p class="topic-detail-content">一站式编排服务，让智能体直接从命令行注册和配置部署所需的所有服务，包括 Vercel、Supabase、Cloudflare、Twilio、Clerk 等 16+ 合作伙伴。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「凭感觉编程很容易。凭感觉部署反而成了更紧的约束。」—— Emily Sands [00:40:13]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Token 如何颠覆 SaaS 计费模式</h3>
+                        <span class="topic-timestamp">00:42:50 - 00:50:41</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        传统 SaaS 边际成本近乎零，AI 的每次推理都有真实成本。AI 公司正从纯订阅转向「混合计费」——固定费用 + 按 Token 消耗收费。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">模式转变</div>
+                        <p class="topic-detail-content">传统 SaaS 构建一次产品，边际成本近乎零，按席位订阅完美运作。AI 打破了这种模式——每一条提示、每一次 API 调用都有真实推理成本。客户的用量直接决定企业是赚还是亏。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">混合计费</div>
+                        <p class="topic-detail-content">几乎没有规模化的 AI 公司仍使用纯订阅模式。解决方案是「混合计费」：每月固定费用（如 25 美元），包含一定积分，超出部分按实际消耗收费。Lovable、11 Labs 都走过这条路径。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">流式支付</div>
+                        <p class="topic-detail-content">当买家是智能体时，传统月度计费也面临挑战——智能体可以以机器速度消费。Emily 预见「流式支付」：在 Token 消耗的同时实时计费和收款。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「AI 打破了这种模式，因为每一条提示、每一次 API 调用、每一个任务突然都有了真实的边际成本，这在 SaaS 中是没有的。」—— Emily Sands [00:42:50]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Token 盗窃：AI 经济中增长最快的欺诈</h3>
+                        <span class="topic-timestamp">00:50:41 - 01:00:10</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        超过六分之一的 AI 公司注册是欺诈行为。在 AI 经济中，偷 Token 比偷钱更危险——因为每次推理都有真实成本，高欺诈率直接威胁公司生存。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三种主要欺诈</div>
+                        <p class="topic-detail-content">
+                            <strong>多账户滥用</strong>：超过 1/6 的注册属于此类——欺诈者不断创建新账户获取免费积分。<br>
+                            <strong>免费试用滥用</strong>：过去六个月翻倍，已形成围绕「免费试用卡」的灰色产业。<br>
+                            <strong>用完就跑</strong>：积累数千美元费用后拒不付款。在 SaaS 时代被偷无所谓，但 AI 时代 Token 成本真实。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">变现方式</div>
+                        <p class="topic-detail-content">批量生成音乐曲目上传 Spotify 骗版税；克隆整个 AI 公司——用凭感觉编程做网站，后端调用被窃取的服务，以更低价格出售。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">快速响应</div>
+                        <p class="topic-detail-content">Stripe 与大型 AI 公司形成闭环：发现欺诈模式 → 几周内构建 API → AI 公司接入后实时获得评分 → 在登录、试用、用量累积时分别阻断。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「超过六分之一的 AI 公司注册属于这种滥用行为。」—— Emily Sands [00:52:26]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 创业生态加速与 Token 成本冲击</h3>
+                        <span class="topic-timestamp">01:04:12 - 01:11:19</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Stripe Atlas 初创公司 2026 年收入追踪数据显示为 2025 年同期的 5 倍。AI 正在将创业门槛降至历史最低，但 Token 浪费问题只是成长中的重新调整。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">全球创业潮</div>
+                        <p class="topic-detail-content">新企业注册在全球范围内激增——荷兰 40%、芬兰 70%、法国 80%。以 Stripe 数据看，新企业创办速度同比翻了一倍。2026 年批次的 Atlas 创业公司收入追踪数据是 2025 年同期的 5 倍。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">全球化从第一天开始</div>
+                        <p class="topic-detail-content">过去是做大后才全球化；现在的新公司在上线第一天就进入十几个国家。以 Emergent Labs 为例，2024 年成立，70% 收入来自国际销售，16 个国家有实质性业务。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Token 成本理性</div>
+                        <p class="topic-detail-content">真正烧光天价费用的大都是资金充足的大公司，两三个月低效支出不致命。小公司大多仍在固定费用小套餐内。会有些重新调整，但不会是生存性的。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「2026 年批次的 Atlas 创业公司，收入追踪数据是去年同批公司的 5 倍。5 倍！」—— Emily Sands [01:05:45]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 11 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">11</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">2026 年预测：智能体作为微型企业</h3>
+                        <span class="topic-timestamp">01:11:19 - 01:14:39</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        12 个月后，我们将看到第一批端到端运营的智能体——它们不仅买东西，还卖东西、配置基础设施、经营完整业务——成为真正的「微型企业」。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">多面经济行为者</div>
+                        <p class="topic-detail-content">Emily 的愿景不是「智能体买得更好了」，而是「智能体成为完整的经济行为者」——它们履行企业从采购到销售的全部职能。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">技术准备</div>
+                        <p class="topic-detail-content">Stripe 的新举措已经在铺路：Stripe Directory（公开预览）让智能体发现服务提供商；Stripe Projects 让智能体直接集成这些服务。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">完整闭环</div>
+                        <p class="topic-detail-content">未来：智能体发现服务 → 集成服务 → 购买服务 → 基于这些服务组合创建新产品 → 开始销售。不是辅助人类的工具，而是自主创造价值的经济主体。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「不是 Emily 授权一个智能体替她买东西。而是 Emily 有一个负责经营业务的智能体——这包括买一些东西、卖一些东西、赚一些利润。」—— Emily Sands [01:14:19]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <!-- Takeaway Card 1 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🚨</div>
+                    <h3 class="takeaway-title">Token 盗窃是隐形杀手</h3>
+                    <p class="takeaway-desc">六分之一的 AI 注册用户是欺诈者。传统 SaaS 被盗用没有边际成本，AI 不一样——每次推理都有真实成本。当欺诈率高到一定程度，产品盈利模型会「非常快地崩溃」。</p>
+                </div>
+
+                <!-- Takeaway Card 2 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🌐</div>
+                    <h3 class="takeaway-title">智能体商务是完整谱系</h3>
+                    <p class="takeaway-desc">从人类完全自主到智能体完全自主，不是非黑即白。无论你在哪个位置，都需要同一套基础设施。即使「全自动智能体」还很远，企业现在就该开始改造。</p>
+                </div>
+
+                <!-- Takeaway Card 3 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏢</div>
+                    <h3 class="takeaway-title">创业门槛降至历史最低</h3>
+                    <p class="takeaway-desc">新企业创办速度翻倍，增长由个体创业者驱动。5 万美国人靠单人公司维持生计。AI + 凭感觉编程 + AI 专用智能体 = 创业不再需要编程。</p>
+                </div>
+
+                <!-- Takeaway Card 4 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🛡️</div>
+                    <h3 class="takeaway-title">智能体支付可能更安全</h3>
+                    <p class="takeaway-desc">共享支付令牌 + 实时评分 + 网络密度 → 智能体交易在极限情况下应该比人类手动输入卡号更安全。凭证高度令牌化，永不暴露。</p>
+                </div>
+
+                <!-- Takeaway Card 5 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🚀</div>
+                    <h3 class="takeaway-title">部署是新瓶颈</h3>
+                    <p class="takeaway-desc">AI 解决了写代码，但没解决让代码上线。当智能体 20 分钟写完应用时，注册数据库、配置 CDN 反而是最大摩擦。Stripe Projects 试图成为新操作系统。</p>
+                </div>
+
+                <!-- Takeaway Card 6 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🤖</div>
+                    <h3 class="takeaway-title">微型企业智能体即将到来</h3>
+                    <p class="takeaway-desc">12 个月后，第一批端到端自主运营的智能体——买、卖、集成、运营。不是辅助人类的工具，是自主创造价值的经济主体。这可能定义未来十年的商业形态。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">智能体商务的未来</h3>
+            <p class="footer-desc">
+                当信任建立、基础设施完善、欺诈被遏制，我们将迎来一个智能体自主经营业务的世界。
+            </p>
+            <div class="footer-quote">
+                "Emily has an agent who's tasked with running a business"
+            </div>
+            <p class="footer-note">
+                基于 The MAD Podcast with Matt Turck 的深度对话制作<br>
+                © 2026 · YouTube 总结系列
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

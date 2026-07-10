@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <title>Sam Altman 给特朗普 5% | 20VC 深度解读</title>
+    <style>
+        /* ========== Design Tokens ========== */
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-card: #141416;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            --accent-primary: #f97066;
+            --accent-secondary: #fbbf24;
+            --accent-primary-rgb: 249, 112, 102;
+            --accent-secondary-rgb: 251, 191, 36;
+            --border: #2a2a2e;
+            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            --font-size-hero: clamp(48px, 10vw, 120px);
+            --font-size-section: clamp(32px, 5vw, 56px);
+            --font-size-topic: clamp(24px, 4vw, 36px);
+            --font-size-number: clamp(64px, 15vw, 120px);
+            --font-heavy: 800;
+            --letter-spacing-tight: -0.03em;
+            --line-height-tight: 0.95;
+            --card-padding: 40px;
+            --radius-lg: 16px;
+            --radius-pill: 100px;
+            --transition-fast: 0.3s ease;
+            --hover-lift: translateY(-4px);
+            --gradient-accent: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+        }
+
+        /* ========== Reset ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ========== Scrollbar ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-primary);
+        }
+
+        /* ========== Container ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/sam-altman-trump-5-openai-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 0;
+        }
+
+        /* ========== Badge ========== */
+        .badge-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .badge:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* ========== Title ========== */
+        .title {
+            font-size: var(--font-size-hero);
+            font-weight: var(--font-heavy);
+            line-height: var(--line-height-tight);
+            letter-spacing: var(--letter-spacing-tight);
+            margin-bottom: 24px;
+        }
+
+        .title-line-1 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-line-2 {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== Subtitle ========== */
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        /* ========== Meta Grid ========== */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .meta-item {
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ========== CTA Button ========== */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--gradient-accent);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 16px;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 20px rgba(var(--accent-primary-rgb), 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(var(--accent-primary-rgb), 0.5);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== Section ========== */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            font-size: var(--font-size-section);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 64px;
+        }
+
+        /* ========== Points Grid ========== */
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* ========== Point Card ========== */
+        .point-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .point-card:hover {
+            border-color: var(--accent-primary);
+            transform: var(--hover-lift);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .point-card:hover::before {
+            opacity: 1;
+        }
+
+        .point-number {
+            font-size: 48px;
+            font-weight: var(--font-heavy);
+            color: var(--border);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .point-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-primary);
+        }
+
+        .point-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ========== Topic ========== */
+        .topic {
+            margin-bottom: 80px;
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .topic-number {
+            font-size: var(--font-size-number);
+            font-weight: var(--font-heavy);
+            line-height: 1;
+            background: var(--gradient-number);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .topic-info {
+            flex: 1;
+            padding-top: 16px;
+        }
+
+        .topic-title {
+            font-size: var(--font-size-topic);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .topic-timestamp {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--accent-secondary);
+        }
+
+        .topic-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--card-padding);
+            margin-left: clamp(40px, 10vw, 120px);
+        }
+
+        .topic-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-primary);
+        }
+
+        .topic-core-point {
+            font-size: 18px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .topic-detail {
+            padding-left: 24px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .topic-detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .topic-detail-content {
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--accent-primary);
+            padding: 24px;
+            background: rgba(var(--accent-primary-rgb), 0.05);
+            margin: 24px 0;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-primary);
+        }
+
+        .thought-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .thought-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        /* ========== Takeaways ========== */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .takeaway-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-fast);
+        }
+
+        .takeaway-card:hover {
+            border-color: var(--accent-secondary);
+            transform: var(--hover-lift);
+        }
+
+        .takeaway-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .takeaway-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .takeaway-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: var(--font-heavy);
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .footer-quote {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: var(--font-heavy);
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 48px 0;
+            line-height: 1.2;
+        }
+
+        .footer-note {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Divider ========== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .point-card,
+        .takeaway-card,
+        .topic {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .point-card.animate-in,
+        .takeaway-card.animate-in,
+        .topic.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .topic-content {
+                margin-left: 0;
+            }
+
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">20VC · AI · 风投</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">Sam Altman 给特朗普</span>
+                    <span class="title-line-2">5% 的疯狂博弈</span>
+                </h1>
+                <p class="subtitle">
+                    当 OpenAI 主动向美国政府交出 5% 股份、DeepSeek 宣布自研芯片、Meta 转身做云服务商——两位顶级投资人拆解 AI 行业 12 个重大事件，揭示从「讲故事」到「讲成本」的根本转变。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Harry Stebbings</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Jason Lemkin & Rory O'Driscoll</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 87 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=LUkbZHSQIog" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">锚定博弈</h3>
+                    <p class="point-desc">Sam Altman 给出 5% 的真实意图不是「奉献」，而是锚定——在 Bernie Sanders 喊出「50%」之前，先把公众讨论固定在最小份额上。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">稀释失敏</h3>
+                    <p class="point-desc">AI 时代的高估值和大量融资已彻底改变创始人行为——「再也没有人担心让上一轮高价投资者的钱赚钱了」。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">算力金融化</h3>
+                    <p class="point-desc">Nvidia「先算后付」和 Meta/SpaceX 的云业务转型揭示算力正从技术资源变成金融资产——一个衍生品赌注。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">企业采纳瓶颈</h3>
+                    <p class="point-desc">MIT 发现 95% 的企业 AI 试点无 ROI。根本问题不是 AI 不够好，而是企业根本没有人能消化这些技术。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">垂直整合悖论</h3>
+                    <p class="point-desc">Anthropic 和 DeepSeek 自研芯片——真正驱动的不是定制化需求，而是对 Nvidia 超高利润率的觊觎。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">个人品牌时代</h3>
+                    <p class="point-desc">Ashton Kutcher 离开 Sound Ventures 的深层含义：在 AI 时代，个人品牌已超越机构品牌。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">华盛顿解除 Fable Five 禁令：预审批时代来临</h3>
+                        <span class="topic-timestamp">00:01:10 - 00:03:58</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        美国政府解除了为期 19 天的 Claude Fable Five 禁令，但这标志着 AI 行业从「自由发布」进入了「先审批后操作」的新时代。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Harry Stebbings 开场</div>
+                        <p class="topic-detail-content">开场抛出的第一个话题就是华盛顿解除了对 Anthropic 最新模型 Fable Five 的禁令。表面上看这是利好，但 Jason 和 Rory 的解读远非如此简单。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Rory 的行业巨变观点</div>
+                        <p class="topic-detail-content">Rory 指出，真正值得关注的是这个事件所揭示的行业巨变：「六个月前你还可以自由发布软件，现在你必须在做之前先获得华盛顿的许可。」他认为，美国经济之所以充满活力，很大程度上正是因为缺乏这种欧洲式的预审批机制——「我们曾嘲笑 GDPR，现在我们自己也在走向同样的道路。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">实际影响有限</div>
+                        <p class="topic-detail-content">两位嘉宾都认为，Fable Five 这个具体案例的影响其实有限。原因很简单：OpenAI 即将在数周内推出基于 token 可变定价的机制，Fable 将变得极为昂贵，多数人根本不会去用它。在它渗透到标准的 Opus 和 Sonnet 之前的几个月里，它只会是一个小众模型。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "You'd prefer not to have to get permission from any administration before you can pursue your business. I think part of the reason the US is such a dynamic economy is because we don't have a ton of that. Europe does and now we do. We sneered at GDPR and here we are."<br>
+                        — Rory O'Driscoll<br>
+                        「你当然不希望在做生意之前需要获得任何行政部门的许可。我认为美国经济如此充满活力的部分原因就是我们没有太多这种东西。欧洲有，现在我们也有了。我们曾嘲笑 GDPR，而现在我们自己也身处其中。」
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">OpenAI 给政府 5%：一场疯狂的锚定游戏</h3>
+                        <span class="topic-timestamp">00:03:58 - 00:13:18</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Sam Altman 主动提出 OpenAI 向美国政府转让 5% 股份，表面上是「爱国」之举，实则是一场精心策划的锚定策略——他试图将公众讨论锚定在「5%」而非「50%」，以对冲日益高涨的 AI 监管浪潮。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Rory 的第一性原理批判</div>
+                        <p class="topic-detail-content">这是本期节目最具争议性的话题。Rory 从第一性原理出发，试图理解 Sam 到底想解决什么问题。显然不是网络安全——那至少还有点可信度。他认为这是某种宏观层面的、「AI 会摧毁所有人工作」的叙事延伸。OpenAI 一个月前发布的九点计划甚至谈到要重构美国的税收体系——对资本利得多征税、对收入少征税，因为 AI 将让大量人口失业。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Rory 的「愤怒」</div>
+                        <p class="topic-detail-content">「你有一家非常优秀、正在快速成长的公司，对就业还没有产生任何可察觉的影响。你有一堆问题需要解决，因为你已经被直接竞争对手超越了。而你的重点却是告诉国会：『你们每年筹集约 5 万亿美元，我这 500 亿相当于一年增量的 1%——你们应该为此重构整个税收体系。』」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">潘多拉魔盒</div>
+                        <p class="topic-detail-content">他进一步警告，这种做法无异于打开潘多拉魔盒：「你从预审批开始，突然就有了所有权权益，然后就有了董事会成员……这就像重写《阿特拉斯耸耸肩》，约翰·高尔特走进华盛顿说——『你为什么不更多地监管我？为什么不拿走更多？』」他引用了一个鲜活的例子：TARP（问题资产救助计划）当年政府持有银行少量股份，没有投票控制权，却能直接决定谁能拿工资。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Jason 的对齐论</div>
+                        <p class="topic-detail-content">Jason 提供了不同的视角。他指出，Sam Altman 不仅是 CEO，也是有史以来最成功的投资者之一。他用自己投资组合中 Klaviyo 给 Shopify 5% 股份的案例说明：5% 的所有权能让更大的实体与较小的实体产生惊人的「对齐」效果——「这能把你带进董事会，让你进入决策层。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">微软的反例</div>
+                        <p class="topic-detail-content">Rory 用一个反问就瓦解了这个论点：「微软拥有 OpenAI 30% 的股份。如果所有权能带来对齐，他们应该是最好的朋友。但他们不是——他们处在一段想要离婚但付不起税的陈旧婚姻中。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">锚定效应解读</div>
+                        <p class="topic-detail-content">Jason 随后提出了一个更精妙的解读——锚定效应。他认为 Sam 是非常深思熟虑的沟通者：「问题不在于给 5% 是不是个好主意——而是 50% 或 20%。Sam 只是在锚定这个想法——『嘿，5% 能让我们对齐』——他正在把讨论锚定在 5% 而不是 50%。」</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "It's about an hour before Bernie Sanders says, 'You know, you're right. This is really impactful. Maybe we should go for 50.'"<br>
+                        — Rory O'Driscoll<br>
+                        「大约一个小时后，Bernie Sanders 就会说——『你说得对，这影响确实很大，也许我们应该拿 50%。』」
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">稀释敏感度丧失：创始人不再在乎了</h3>
+                        <span class="topic-timestamp">00:13:18 - 00:22:14</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 时代的高估值和大量融资轮次已经从根本上改变了创始人对稀释的态度——「再也没有人担心让上一轮高价投资者的钱赚钱了」，这种心态正在重塑整个风投行业的游戏规则。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Jason 的观察</div>
+                        <p class="topic-detail-content">Jason 抛出了一个他在投资实践中观察到的深刻变化：今天的创始人几乎完全不在意稀释。他举例说，一些热门初创公司已经做了 16、17、甚至 20 轮融资，每轮 5%-6% 的稀释，「它们真的加起来很多」。最极端的例子是 Anthropic——有史以来最成功的初创公司之一，创始人 Dario 仅持有 1.7% 的股份，Sam Altman 名义上为零。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">历史对比</div>
+                        <p class="topic-detail-content">Rory 补充了一个历史对比：微软时代，比尔·盖茨和保罗·艾伦各持有大量股份，鲍尔默最后也足够买下一支篮球队。「现在两个 CEO 中一个拥有 1.7%，另一个拥有 0%——这确实很奇怪。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">投资者不再阻挠</div>
+                        <p class="topic-detail-content">创始人不再恐惧高估值后期融资的根本原因在于：投资者已经学会了接受 1x 回报，不再像过去那样阻挠退出。「我这一代创始人对此恐惧——我们害怕那期望。现在的创始人——『哦，我以 40 亿估值融资，但可能以 8 亿退出，我能拿到 8000 万的 carve-out』——他们根本不担心。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">稀释率下降</div>
+                        <p class="topic-detail-content">Rory 引用数据指出，每轮稀释率实际在下降——因为估值上涨更快了。但他也承认，对于像 Anthropic 这样的万亿美元级别的机会，稀释确实无关紧要——「如果你要为万亿美元的奖品而战，什么代价都不重要」。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "No one's worried about making their last round high-priced investors money anymore. Literally, no one is."<br>
+                        — Jason Lemkin<br>
+                        「再也没有人担心让上一轮高价投资者的钱赚钱了。一个都没有了。」
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">DeepSeek 自研芯片 & Anthropic 与三星洽谈</h3>
+                        <span class="topic-timestamp">00:22:14 - 00:36:22</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Anthropic 和 DeepSeek 相继计划自研 AI 芯片，标志着行业正在向垂直整合演进——当算力成为 AI 公司的命脉，拥有自主芯片或许不再是可选而是必然。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Anj Mida 的两个论点</div>
+                        <p class="topic-detail-content">Rory 承认他上周还认为自研芯片「疯狂」，但在听了 Anj Mida（一位敏锐的行业观察者）的观点后改变了看法。Mida 提出了两个有力论点：第一，「你必须拥有算力——如果你不拥有它，你就完了。」这类似于加密货币的逻辑：如果你没有密钥，你就不拥有资产。第二，定制芯片可以为特定模型优化，获得比 Nvidia 通用 GPU 显著更高的效率。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Jason 的半导体经验反驳</div>
+                        <p class="topic-detail-content">Jason 从半导体行业的实际经验出发提出了尖锐的反驳：「如果你给 Nvidia 带来那么大的销量，你需要一个特殊版本的芯片——他们会为你造。我的经验可能有点过时，但他们绝对会为你做定制 tape out。」他认为，OpenAI 和 Anthropic 声称「我们需要定制化」只是软性语言，真正的动机是——Nvidia 的利润率太高了，他们想重新捕获那部分利润。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Alex Karp 的企业 ROI 质疑</div>
+                        <p class="topic-detail-content">Alex Karp（Palantir CEO）在 CNBC 上的 viral 采访提出了两个核心论点：企业美国在质疑 AI 的 ROI，以及企业在担心将自己的数据交给 AI 公司后被用于训练竞争对手的模型。Jason 特别强调了数据隐私的隐患——HubSpot 一周前宣布将拉取所有客户的潜客数据来改进 prospecting 工具，结果客户强烈反对，不得不在一周内收回。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "You got to own the compute — if you don't own the compute, you're screwed. A little like crypto: if you don't own the keys, you don't own the asset."<br>
+                        — Anj Mida（转述）<br>
+                        「你必须拥有算力——如果你不拥有算力，你就完了。有点像加密货币：如果你没有密钥，你就不拥有资产。」
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Meta 推出云业务 & Nvidia「先算后付」</h3>
+                        <span class="topic-timestamp">00:36:22 - 00:50:32</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Meta 和 SpaceX 相继将过剩算力转化为云业务，Nvidia 则以「先算后付」的融资方案加速需求创造——当 AI 算力成为硬通货，整个行业正在形成一套全新的金融化体系。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Meta 的 Plan B</div>
+                        <p class="topic-detail-content">Meta 推出 MetaMP Compute 云业务，股价单日上涨 10%——这在 Jason 看来简直是奇观：「能够把计划 A 反转、转成计划 B 还能获得 10% 的涨幅，这确实很奇怪。」Rory 从两个可能的角度解读了市场的积极反应。正面情景一：Meta 最终会把这些算力拿回去用于自己的前沿模型。正面情景二：成为一个超大规模云提供商本身就是很好的长期业务。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">算力过剩风险</div>
+                        <p class="topic-detail-content">Rory 指出了潜在的隐患——如果更多公司经历 Meta 同样的历程（大量购买算力却无法充分利用），最终剩下的只有少数买家（OpenAI、Anthropic）和一大堆卖家，算力市场就会从紧俏变成过剩。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Nvidia 的衍生品赌注</div>
+                        <p class="topic-detail-content">对于 Nvidia 的「先算后付」方案——即向 Neocloud 公司出售 GPU，预先确认收入，同时给予客户「卖回权」——Rory 的解读非常精准：「这基本上是一个关于保持这势头继续的衍生品赌注。」他警告，一旦算力需求放缓，Nvidia 将不仅停止增长，还可能需要撤销之前确认的收入，因为客户会破产。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">周期观察</div>
+                        <p class="topic-detail-content">Jason 补充了一个周期角度的观察：「我认为应该在没人管理 downside 的时候管理 downside。我们处于周期的这个阶段了——99 年 2000 年的阶段。」但他也承认，历史不会重复，只会押韵。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "As long as the raw demand for compute and intelligence keeps going up and to the right, these deals will look wildly smart because they'll work."<br>
+                        — Rory O'Driscoll<br>
+                        「只要算力和智能的原始需求持续向右上角走，这些交易看起来会非常聪明，因为它们会成功。」
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Kling 融资 180 亿 & Sora 的失败</h3>
+                        <span class="topic-timestamp">00:50:32 - 00:57:46</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        中国 AI 视频公司 Kling 以 180 亿美元估值融资 28 亿美元，年化收入 5 亿美元，成为全球最大 AI 视频企业——而 OpenAI 的 Sora 却因成本过高被迫关闭。这一对比揭示了中美 AI 在商业模式和战略重心上的根本差异。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">战略优先级差异</div>
+                        <p class="topic-detail-content">Jason 提出了一个深刻的问题：为什么 Kling 能成功而 Sora 不能？他认为关键差距不在技术，而在于战略优先级。对 OpenAI 来说，GPU 是稀缺资源，用在企业级编程上比用在消费级视频上赚钱得多——「如果我有有限数量的 GPU，而且我在编程方面落后了，编程比消费视频更赚钱。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">成本视角</div>
+                        <p class="topic-detail-content">Rory 补充了成本视角：一段 30 秒的视频生成需要约 1.30 到 2 美元的 GPU 成本。只要能从中收到钱，这就是一门生意——但对 OpenAI 来说，把算力投入视频是一种「分心」，低于重要性线。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">中国访问受限的后果</div>
+                        <p class="topic-detail-content">Jason 从中国之行带回了一个更有力的观察。在中国和香港，OpenAI 和 Claude 是完全不可用的——你连访问都不行。「世界第二大经济体——当然他们会建造和我们一样有竞争力或更好的东西。如果你不能使用领先者的产品，还能期望什么？」</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "What do you expect when you can't access the leaders? When you simply can't access them, they're going to build something as good or better if they can."<br>
+                        — Jason Lemkin<br>
+                        「当你根本不能访问领先者的产品时，你还能期望什么？他们会建造同样好或更好的东西——如果他们能做到的话。」
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">开源平台瓶颈：前沿模型 vs 廉价模型</h3>
+                        <span class="topic-timestamp">00:57:46 - 01:07:16</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        廉价的开源模型在某些场景下确实够用，但当解决复杂问题时，前沿模型的智能优势不仅值得支付溢价——它实际上更便宜，因为你节省了数小时的试错时间。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Jason 的亲身经历</div>
+                        <p class="topic-detail-content">Jason 用自己的亲身经历说明了这一点。他在 Replit 上用 Sonnet 加开源模型组合花了 10 个小时解决一个算法问题，完全卡住了。然后他切换到 Fable 和 Opus——20 分钟内就解决了。「我失去了一整天的时间在无穷无尽的循环中——忘记那 500 美元，我有事情要做。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Decagon 的框架</div>
+                        <p class="topic-detail-content">Rory 引用了 Decagon 创始人 Jesse Zhang 的框架：当你尝试新东西、不了解问题时，你会使用前沿模型，因为它们能处理「未知的未知」。当问题变成一个商品化的已知答案时，才适合推给开源模型。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">CX 领域的平台瓶颈</div>
+                        <p class="topic-detail-content">Jason 进一步指出，在 AI 客户体验（CX）领域，行业正在标准化在每次解决 50 美分的成本上。从 30% 到 65% 的解决率提升也许值 1 美元，但从 65% 到 75% 可能需要 2 美元——客户仍然会付。「这是一个高端问题——你的竞争对手在变得更好。」</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "If the only way to solve the problem is with the frontier model and the problem's worth solving, you're going to pay for it."<br>
+                        — Rory O'Driscoll<br>
+                        「如果解决这个问题的唯一方法是用前沿模型，而且问题值得解决，你会为它付费。」
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">微软嵌入工程师 & 企业 AI 采纳困境</h3>
+                        <span class="topic-timestamp">01:07:16 - 01:17:04</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        微软投入 25 亿美元和 6000 人向企业客户派驻工程师来推动 AI 采纳，这一「服务化」转型暴露了 AI 行业最大的瓶颈——不是技术不够好，而是企业根本没有人能消化这些技术。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Jason 的真实案例</div>
+                        <p class="topic-detail-content">Jason 以一个令人瞠目结舌的真实案例开场：他和一家顶级 SaaS 公司合作，其 AI 系统仍在讨论「2026 年 5 月已经发生的 SAS 大会」——而当时已经是 7 月。更糟的是，当他们的现场数字专家（FD）休陪产假时，接替者明确表示需要 3 个月才能修复这个 bug。他的结论是：「这个想法在电子表格上说得通，但我会告诉你它会失败——因为我合作的所有公司中，根本没有足够的深度来做这个。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Rory 的「下一代 IBM」理论</div>
+                        <p class="topic-detail-content">Rory 则从一个更宏观的角度解读了这个趋势。他回顾了科技史上的经典模式：「每个科技公司要么倒闭，要么活得够久变成下一代 IBM。」30 年前，微软是那个拥有突破性新产品的公司，其他公司（如 HP、IBM）建立咨询服务来帮助企业采纳微软的技术。今天，OpenAI 和 Anthropic 变成了那个拥有新产品的公司，而微软本身变成了那个拥有企业关系的老牌公司——它正在建立大型服务业务来帮助企业采纳别人的新产品。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">信任关系资产</div>
+                        <p class="topic-detail-content">Rory 认为微软和企业客户之间的信任关系是巨大的资产：「企业美国先生，你需要采纳这个新技术。硅谷那些家伙挺吓人的——他们谈论疯狂的东西，比如世界末日。我们已经卖给你东西 20 年了。你信任我们，我们信任你。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">人才短缺现实</div>
+                        <p class="topic-detail-content">但 Jason 坚持认为问题在于人才短缺：「没有足够的——没有几十万人想要这些工作而且超级聪明。」他引用 Harvey（AI 法律助手）的案例——每个部署都需要一个现场专家加一个律师同时在场，这种人才配置根本无法规模化。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Every technology company either goes bust or lives long enough to become next generation's IBM."<br>
+                        — Rory O'Driscoll<br>
+                        「每个科技公司要么倒闭，要么活得够久变成下一代 IBM。」
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Ashton Kutcher 离开 & ElevenLabs 220 亿估值</h3>
+                        <span class="topic-timestamp">01:17:04 - 01:26:57</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Ashton Kutcher 离开自己创立的 Sound Ventures，反映出 AI 时代个人品牌已超越机构品牌；而 ElevenLabs 220 亿美元的估值背后，是员工流动性——tender offer——正在成为顶尖人才选择雇主的首要考量。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Jason 的困惑</div>
+                        <p class="topic-detail-content">Jason 对 Ashton Kutcher 的离开感到困惑——「离开自己的公司太疯狂了」——但 Rory 给出了更冷静的解读：Kutcher 的品牌价值完全独立于他的公司。「我在知道 Sound Ventures 之前就知道 Ashton Kutcher。如果他去想做别的事，更干净的方式就是直接说『我是 Ashton Kutcher 在做这个』。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Google Trends 对比</div>
+                        <p class="topic-detail-content">Rory 提供了一个令人深思的对比：Google Trends 上，Ashton Kutcher 的搜索量超过 Sequoia Capital 而毫不费力——「3.3 亿人大致知道他是谁，而大概 300 万人知道 Sequoia。」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">员工流动性问题</div>
+                        <p class="topic-detail-content">最后一段关于 ElevenLabs 的讨论转向了一个更广泛的话题——员工流动性。Jason 提出了一个尖锐的问题：「作为今天的员工，你为什么要加入一个你认为不会有二级市场选择权的公司？」他认为，在 IPO 窗口从几年变成了 12 年的时代，tender offer（定期的员工股票回购）成为了上市的替代品——如果你不能给员工提供流动性，你就无法吸引顶尖人才。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Rory 的逆向策略</div>
+                        <p class="topic-detail-content">Rory 则提出了一个逆向策略：「诀窍是加入一个今天不做 tender offer 的公司——拿到一个健康的授予——然后在一两年内，当你已经 vest 了 60% 时，公司开始做 tender offer。」这本质上是对初创公司发展阶段的赌注——一种「顺序化风投」策略。</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">锚定博弈</h3>
+                    <p class="takeaway-desc">Sam Altman 给出 5% 的真实意图不是「奉献」，而是锚定——在 Bernie Sanders 喊出「50%」之前，先把公众讨论固定在最小份额上。这是一种被 Jason 称为「硅谷最精妙的沟通策略」的政治预判。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💸</div>
+                    <h3 class="takeaway-title">稀释失敏</h3>
+                    <p class="takeaway-desc">AI 时代的高估值和大量融资已经彻底改变了创始人的行为模式。当投资者已经习惯接受 1x 回报、不再阻挠退出时，创始人融资的动力从「生存」变成了「可选性」。对于万亿美元级别的机会，稀释确实无关紧要。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">算力金融化</h3>
+                    <p class="takeaway-desc">Nvidia 的「先算后付」和 Meta/SpaceX 的云业务转型揭示了算力正在从「技术资源」变成「金融资产」。只要需求不降，看起来就无比聪明；一旦需求放缓，后果将是灾难性的。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏢</div>
+                    <h3 class="takeaway-title">企业采纳瓶颈</h3>
+                    <p class="takeaway-desc">MIT 发现 95% 的企业 AI 试点项目没有带来可衡量的 P&L 影响。根本问题不是 AI 不够好，而是企业根本没有足够的人才来消化和管理 AI——微软正在变成「下一代 IBM」。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔧</div>
+                    <h3 class="takeaway-title">垂直整合悖论</h3>
+                    <p class="takeaway-desc">Anthropic 和 DeepSeek 都在自研芯片，但真正驱动自研芯片的不是「定制化需求」，而是对 Nvidia 超高利润率的觊觎。当你采购量够大时，Nvidia 会为你做任何定制。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">👤</div>
+                    <h3 class="takeaway-title">个人品牌时代</h3>
+                    <p class="takeaway-desc">Ashton Kutcher 离开 Sound Ventures 的深层含义是：在 AI 时代，个人品牌已经超越了机构品牌。当一名投资者的个人搜索量超过 Sequoia 这样的顶级风投时，机构的存在本身就成了可选项。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">20VC with Harry Stebbings</h3>
+            <p class="footer-desc">
+                SaaS 投资界老将 Jason Lemkin 和 Scale 合伙人 Rory O'Driscoll 在 1 小时 27 分钟里对 AI 行业 12 个重大事件进行了逐条拆解，揭示了 AI 行业正在经历的从「讲故事」到「讲成本」的根本转变。
+            </p>
+            <div class="footer-quote">
+                "Every technology company either goes bust or lives long enough to become next generation's IBM."
+            </div>
+            <p class="footer-note">
+                源自 20VC with Harry Stebbings · 2026 年 7 月<br>
+                <a href="https://www.youtube.com/watch?v=LUkbZHSQIog" target="_blank">观看原视频</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
