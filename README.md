@@ -17,7 +17,7 @@ A curated knowledge platform that distills the best YouTube podcast content into
 
 ## Articles
 
-**240+ articles** across multiple domains:
+**246+ articles** across multiple domains:
 
 | Domain | Examples |
 |--------|---------|
