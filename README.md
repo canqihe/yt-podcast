@@ -17,17 +17,17 @@ A curated knowledge platform that distills the best YouTube podcast content into
 
 ## Articles
 
-**246+ articles** across multiple domains:
+**270+ articles** across multiple domains:
 
 | Domain | Examples |
 |--------|---------|
-| **AI Strategy & Leaders** | OpenAI (Sam Altman, Greg Brockman, Brad Lightcap, Sarah Friar), Anthropic (Dario Amodei 3x, Daniela Amodei, Cat Wu, Felix Rieseberg, Krishna Rao, Mike Krieger), Google AI (Sundar Pichai 2x, Demis Hassabis 6x), NVIDIA (Jensen Huang 4x), xAI (Elon Musk), Boris Cherny (Claude Code), Satya Nadella 2x, Marc Andreessen 3x, Benedict Evans, Scott Galloway |
-| **AI Agents & Platforms** | Harrison Chase (LangChain), Andrej Karpathy (agentic engineering, code agents), AI Agent Swarms, Claude Code, Claude Cowork, OpenClaw, ChatGPT Images 2.0, AI Sandwich model, SEO to Agent-Led Growth, Harvey AI, Daytona (Ivan Burazin), AI Agents Perplexity, Codex vs Claude |
+| **AI Strategy & Leaders** | OpenAI (Sam Altman 12x, Greg Brockman, Brad Lightcap, Sarah Friar), Anthropic (Dario Amodei 4x, Daniela Amodei, Cat Wu, Felix Rieseberg, Krishna Rao, Mike Krieger), Google AI (Sundar Pichai 2x, Demis Hassabis 6x), NVIDIA (Jensen Huang 4x), xAI (Elon Musk 8x), Boris Cherny (Claude Code), Satya Nadella 2x, Marc Andreessen 3x, Benedict Evans, Scott Galloway |
+| **AI Agents & Platforms** | Harrison Chase (LangChain), Andrej Karpathy (agentic engineering, code agents), AI Agent Swarms, Claude Code, Claude Cowork, OpenClaw, ChatGPT Images 2.0, AI Sandwich model, SEO to Agent-Led Growth, Harvey AI, Daytona (Ivan Burazin), AI Agents Perplexity, Codex vs Claude, Stripe (Emily Sands 13x: agentic commerce, token theft), Tempo (blockchain payments) |
 | **AI Engineering & Research** | Shane Legg (AGI), Joelle Pineau (AI frontiers), Richard Sutton (reinforcement learning), Zico Kolter (frontier AI), Mostafa Dehghani, Rohin Shah (AGI Safety, DeepMind), AI Math, MIT AI courses (Chris Bishop, 3 Laws) |
 | **AI Safety & Ethics** | Tristan Harris (AI god), Carissa Véliz (AI prediction), Power-seeking AI, AGI Safety (Rohin Shah), Anthropic Mythos Dilemma |
-| **Markets & Compute** | a16z (David George, Aaron Levie, Ben Horowitz, AI Winners), Coatue (Thomas Laffont, Lucas Swisher, Jaimin Rangwalla), SemiAnalysis (Dylan Patel 2x, AWS margins, Unitree robotics), ARK Invest (Big Ideas 2026), Gavin Baker (orbital compute) |
-| **Semiconductors** | Cerebras (Andrew Feldman, IPO, wafer-scale engine, TBPB Diet), TSMC, NVIDIA TPU competition, AI silicon shortage, VanEck semiconductor investing, Micron Q2 2026, Stanford CS153 (Value per Gigawatt) |
-| **Robotics & Physical AI** | Figure AI (Brett Adcock), Unitree (robotics evolution, supply chain), Sergey Levine, Seeed Studio (open-source robot), Anduril, Palantir, Uber (Dara Khosrowshahi on Robotaxi), Atoms (Travis Kalanick), Caitlin Kalinowski (AI hardware), Robot Hardware Supply Chain |
+| **Markets & Compute** | a16z (David George, Aaron Levie, Ben Horowitz, AI Winners), Coatue (Thomas Laffont, Lucas Swisher, Jaimin Rangwalla), SemiAnalysis (Dylan Patel 4x, AWS margins, Unitree robotics), ARK Invest (Big Ideas 2026), Gavin Baker (orbital compute) |
+| **Semiconductors** | Cerebras (Andrew Feldman 2x, IPO, wafer-scale engine, TBPB Diet), Black Forest Labs (potential diffusion algorithms), TSMC, NVIDIA TPU competition, AI silicon shortage, VanEck semiconductor investing, Micron Q2 2026, Stanford CS153 (Value per Gigawatt) |
+| **Robotics & Physical AI** | Figure AI (Brett Adcock 2x), Unitree (robotics evolution, supply chain), Sergey Levine, Seeed Studio (open-source robot), Anduril (Alex Karp, military AI), Palantir (Alex Karp 2x), Uber (Dara Khosrowshahi on Robotaxi), Atoms (Travis Kalanick), Caitlin Kalinowski (AI hardware), Robot Hardware Supply Chain |
 | **Finance & Investing** | Stanley Druckenmiller, Jeremy Grantham, Tom Lee, Dan Loeb (Third Point), Marc Rowan (Apollo private markets), Ken Griffin, Paul Tudor Jones, Blackstone (private credit, Tony James), Lloyd Blankfein 2x, Howard Marks (Oaktree), Jim Simons, Jake Paul, Alfred Lin (Sequoia), Goldman Sachs |
 | **Defense & Military** | Palantir (Alex Karp), Anduril (100 years military history), Pentagon AI plan, military industrial complex |
 | **Space & Frontier Tech** | SpaceX IPO, NASA (Jared Isaacman), Rocket Lab (Peter Beck), Starcloud, Quantum Computing (D-Wave, NVIDIA Ising), Brain-Computer Interfaces (World/Merge Labs), Anthropic-SpaceX deal & singularity economy |
@@ -35,7 +35,7 @@ A curated knowledge platform that distills the best YouTube podcast content into
 | **Philosophy & Society** | Yuval Harari (stories, power, truth), Dan Shipper (AI paradox), Robert Pantano (self-awareness), Swami Sarvapriyananda (consciousness, Vedanta), 60 Minutes AI Reports |
 | **Wisdom & Thinking** | Kevin Kelly (79 maxims for excellent living), Eric Jorgenson (Elon Musk methodology), Nick Bloom (navigating uncertainty), Ben Horowitz (managerial philosophy), Joe Hudson (emotional fluidity) |
 | **Health & Science** | David Sinclair (aging reversal), Ben Lamm (synthetic biology), AI-designed life forms, MIT (Sally Kornbluth, Chris Bishop) |
-| **Crypto & Web3** | Worldcoin (Alex Blania), Circle (Jeremy Allaire), Anthony Pompliano (Bitcoin), stablecoins, agent economy |
+| **Crypto & Web3** | Worldcoin (Alex Blania 2x), Circle (Jeremy Allaire), Anthony Pompliano (Bitcoin), stablecoins, agent economy, Stripe Tempo (blockchain for AI payments) |
 | **Organizational Transformation** | Jack Dorsey (Block reorg), Amjad Masad (Replit: only 2 roles remain), SEO to Agent-Led Growth, AI teammates (Arnab Bose), forward-deployed engineering, Organizational Singularity |
 | **Energy & Infrastructure** | Chris Wright (data center energy), global infrastructure partnerships, Hormuz blockade, trade policy |
 | **Global Trade & Geopolitics** | Ryan Petersen (global trade history), American finance 100 years, tech billionaires' AI plans, SpaceX/OpenAI/Anthropic IPO landscape |
