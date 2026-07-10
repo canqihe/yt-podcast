@@ -15,22 +15,9 @@ A curated knowledge platform that distills the best YouTube podcast content into
 - **Responsive Design** - Optimized for desktop and mobile
 - **Zero Dependencies** - Pure HTML/CSS/JS, no build step required
 
-## Latest Updates
-
-Recent additions (July 2026):
-
-| Article | Description |
-|---------|-------------|
-| **「Token 劫案」——Emily Sands (Stripe)** | Stripe 揭示智能体商务的完整谱系、Token 盗窃的三种模式，以及为什么「微型企业」智能体将在 12 个月内自主运营业务 |
-| **Adam Mosseri × Lenny Rachitsky** | Instagram 负责人深度对话——Meta 正在用 6 人 Pod 取代 13 人团队，AI 重写了「谁成功」的定义 |
-| **Cerebras & Black Forest Labs** | Cerebras 创始人宣称「AGI 已经实现」，Black Forest Labs 创始人揭秘潜在扩散算法 |
-| **Sam Altman 给特朗普 5%** | 两位顶级投资人拆解 AI 行业 12 个重大事件，揭示从「讲故事」到「讲成本」的根本转变 |
-| **SemiAnalysis Weekly** | 揭露 Bloomberg 数据中心报道的分母计算错误，深入探讨表后计量 40GW 预测 |
-| **Dallas Dolen (PwC TMT)** | 为什么「结果最大化」正在取代「代币最大化」，AI 模型价格战为何一触即发 |
-
 ## Articles
 
-**246+ articles** across multiple domains:
+**240+ articles** across multiple domains:
 
 | Domain | Examples |
 |--------|---------|
