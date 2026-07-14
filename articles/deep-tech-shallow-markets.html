@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <title>Deep Tech, Shallow Markets — 世界经济论坛深度对话</title>
+    <style>
+        /* ========== Design Tokens ========== */
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-card: #141416;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            /* 配色方案：紫黄 */
+            --accent-primary: #a855f7;
+            --accent-secondary: #FFC107;
+            --accent-primary-rgb: 168, 85, 247;
+            --accent-secondary-rgb: 255, 193, 7;
+            --border: #2a2a2e;
+            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            --font-size-hero: clamp(48px, 10vw, 120px);
+            --font-size-section: clamp(32px, 5vw, 56px);
+            --font-size-topic: clamp(24px, 4vw, 36px);
+            --font-size-number: clamp(64px, 15vw, 120px);
+            --font-heavy: 800;
+            --letter-spacing-tight: -0.03em;
+            --line-height-tight: 0.95;
+            --card-padding: 40px;
+            --radius-lg: 16px;
+            --radius-pill: 100px;
+            --transition-fast: 0.3s ease;
+            --hover-lift: translateY(-4px);
+            --gradient-accent: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+        }
+
+        /* ========== Reset ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ========== Scrollbar ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-primary);
+        }
+
+        /* ========== Container ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/deep-tech-shallow-markets-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 0;
+        }
+
+        /* ========== Badge ========== */
+        .badge-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .badge:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* ========== Title ========== */
+        .title {
+            font-size: var(--font-size-hero);
+            font-weight: var(--font-heavy);
+            line-height: var(--line-height-tight);
+            letter-spacing: var(--letter-spacing-tight);
+            margin-bottom: 24px;
+        }
+
+        .title-line-1 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-line-2 {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== Subtitle ========== */
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        /* ========== Meta Grid ========== */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .meta-item {
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        /* ========== CTA Button ========== */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--gradient-accent);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 16px;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 20px rgba(var(--accent-primary-rgb), 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(var(--accent-primary-rgb), 0.5);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== Section ========== */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            font-size: var(--font-size-section);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 64px;
+        }
+
+        /* ========== Points Grid ========== */
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* ========== Point Card ========== */
+        .point-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .point-card:hover {
+            border-color: var(--accent-primary);
+            transform: var(--hover-lift);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .point-card:hover::before {
+            opacity: 1;
+        }
+
+        .point-number {
+            font-size: 48px;
+            font-weight: var(--font-heavy);
+            color: var(--border);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .point-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-primary);
+        }
+
+        .point-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ========== Topic ========== */
+        .topic {
+            margin-bottom: 80px;
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .topic-number {
+            font-size: var(--font-size-number);
+            font-weight: var(--font-heavy);
+            line-height: 1;
+            background: var(--gradient-number);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .topic-info {
+            flex: 1;
+            padding-top: 16px;
+        }
+
+        .topic-title {
+            font-size: var(--font-size-topic);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .topic-timestamp {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--accent-secondary);
+        }
+
+        .topic-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--card-padding);
+            margin-left: clamp(40px, 10vw, 120px);
+        }
+
+        .topic-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-primary);
+        }
+
+        .topic-core-point {
+            font-size: 18px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .topic-detail {
+            padding-left: 24px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .topic-detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .topic-detail-content {
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--accent-primary);
+            padding: 24px;
+            background: rgba(var(--accent-primary-rgb), 0.05);
+            margin: 24px 0;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-primary);
+        }
+
+        .thought-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .thought-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        /* ========== Takeaways ========== */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .takeaway-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-fast);
+        }
+
+        .takeaway-card:hover {
+            border-color: var(--accent-secondary);
+            transform: var(--hover-lift);
+        }
+
+        .takeaway-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .takeaway-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .takeaway-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: var(--font-heavy);
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .footer-quote {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: var(--font-heavy);
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 48px 0;
+            line-height: 1.2;
+        }
+
+        .footer-note {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Divider ========== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .point-card,
+        .takeaway-card,
+        .topic {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .point-card.animate-in,
+        .takeaway-card.animate-in,
+        .topic.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .topic-content {
+                margin-left: 0;
+            }
+
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .meta-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">世界经济论坛 · 深度对话</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">深度技术，</span>
+                    <span class="title-line-2">浅薄市场</span>
+                </h1>
+                <p class="subtitle">
+                    当 AI 从「语言」走向「行动」，从数字世界渗透到物理世界——每一个国家、每一家企业、每一位投资者都在面对同一个选择题：是追逐前沿模型的「高射炮」，还是深耕应用场景的「阵地战」？
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Jing · Brandon · Jonathan</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">频道</div>
+                        <div class="meta-value">世界经济论坛</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 64 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=Es6onMnWSwQ" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心洞察</h2>
+            <div class="points-grid">
+                <!-- Point Card 1 -->
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">AI 从语言到行动</h3>
+                    <p class="point-desc">AI 正从生成文字转向执行动作、控制流程、参与决策——这不仅替代劳动力，更改变整个管理体系。</p>
+                </div>
+
+                <!-- Point Card 2 -->
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">索洛悖论的挑战</h3>
+                    <p class="point-desc">技术进步到生产力提升通常需要 20-40 年，但 AI 的递归式自我改进正在压缩这一时间窗口。</p>
+                </div>
+
+                <!-- Point Card 3 -->
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">中美路线分野</h3>
+                    <p class="point-desc">美国集中资源冲刺前沿大模型，中国千军万马搞应用——两种模式各有逻辑与瓶颈。</p>
+                </div>
+
+                <!-- Point Card 4 -->
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">耐心资本的真相</h3>
+                    <p class="point-desc">「耐心」不是时间维度的概念，而是基于实时进展信息的信念密度——否则只是盲目的祈祷。</p>
+                </div>
+
+                <!-- Point Card 5 -->
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">物理世界的护城河</h3>
+                    <p class="point-desc">网络数据可以爬取，但物理世界的传感器数据和工业 Know-how 构成天然护城河。</p>
+                </div>
+
+                <!-- Point Card 6 -->
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">主权 AI 产品化</h3>
+                    <p class="point-desc">主权从地缘政治议题演变为产品设计要求——本地化实例、私有化部署成为标配。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">这一轮，为什么真的不一样？</h3>
+                        <span class="topic-timestamp">00:04:38 → 00:08:49</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        这一次 AI 革命的不同之处在于：它不再是「连接信息」，而是「驱动行动」——这将从根本上改变经济活动的组织方式，而不仅仅是扩大人类已有的能力。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">关键洞察</div>
+                        <p class="topic-detail-content">Jing 指出，2024 年底 AI 从「语言」走向了「行动」。当大语言模型（Large Language Model）不再只是生成文字，而是开始执行动作、控制流程、参与决策时，它替代的就不再仅仅是劳动岗位，而是整个管理体系。效率提升不仅来自产品端，还来自工厂、供应链、全球系统。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">技术落地</div>
+                        <p class="topic-detail-content">Brandon（Archetype AI 创始人）从技术角度丰富了这一论点：物理世界的设备、流程和供应链已经变得如此复杂，劳动力根本跟不上。AI 的独特价值在于能够处理这些复杂的信号——将物理世界中的多维度数据融合起来，转化为可理解的交互界面。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">实例</div>
+                        <p class="topic-detail-content">过去检测风力涡轮机的异常，工程师只能逐个信号地去「找问题」；而 Archetype 的基础模型 Newton 可以同时融合三到五个传感器信号，不仅能找到已知的异常模式，还能发现之前根本没意识到的全新状态条件——从「异常检测」升级到「异常发现」。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "The internet connect people. That's one thing, but advanced technology — AI — empowers people and make people become an individual a more powerful actor." — Jing<br><br>
+                        「互联网连接的是人——这是一方面。但先进技术——AI——赋能于人，让人成为更强大的行动者。」
+                    </div>
+
+                    <div class="quote-block">
+                        "AI is this lever that is going to move the world. What's fundamentally different is that it isn't about extending or scaling things we can already do, but about changing in the physical world who can do things and what you can understand about the physical world." — Brandon<br><br>
+                        「AI 就是那个将改变世界的杠杆。根本性不同在于，它不是把我们已有的能力放大，而是改变物理世界中谁能做什么、你能理解什么。」
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">索洛悖论在 AI 时代依然成立吗？</h3>
+                        <span class="topic-timestamp">00:17:36 → 00:21:23</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        技术本身可以快速进步，但从技术发现到生产力提升的「扩散」过程可能需要 20-40 年——但 AI 的自我改进特性可能正在打破这一历史规律。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">索洛悖论</div>
+                        <p class="topic-detail-content">Analikica 引用了经济学家罗伯特·索洛（Robert Solow）在 1987 年的著名观察——「你到处都能看到计算机时代，就是在生产力统计数据中看不到」——说明重大的技术变革通常需要 20 到 40 年才能在宏观生产力数据上体现出来。典型的 VC 基金周期是 5 到 7 年，当一项技术需要 10 到 15 年甚至更长时间来达到商业成熟时，传统的风险投资模型就会面临根本性错配。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">新型投资工具</div>
+                        <p class="topic-detail-content">市场上正在出现一些新型的投资工具——由政府在早期帮助降低风险，以及越来越重要的二级市场策略——让投资者既能保留高增长潜力的公司资产，又能在基金层面展示 DPI（已分配收益）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 的反论</div>
+                        <p class="topic-detail-content">Brandon 提出了有力的反论：AI 的自我改进特性可能正在改写时间线。他以代码生成为例——硅谷率先采用了 AI 辅助开发的公司已经获得了百倍到千倍的生产力优势。AI 具有「递归式自我改进」（recursive self-improvement）的特性——系统一旦启动，就会自动迭代。先行者一旦进入这个飞轮，后来者的追赶成本会越来越高。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "The diffusion timeline may be accelerated by the competitive pressure of the advantages that you get rebuilding your firm sooner around how you use this new technology." — Brandon<br><br>
+                        「围绕如何使用这项新技术更快地重建你的公司——你所获得的优势造成的竞争压力，可能会加速扩散的时间线。」
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">美国做前沿，中国做应用——谁的战略更优？</h3>
+                        <span class="topic-timestamp">00:13:26 → 00:23:39</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        中美 AI 投资路径出现根本性分野：美国集中资源冲刺前沿大模型，中国以「千军万马搞应用」的方式将 AI 嵌入各行各业——两种模式各自有逻辑，也各自面临瓶颈。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">市场结构差异</div>
+                        <p class="topic-detail-content">美国市场高度集中于几家巨头——英伟达、OpenAI——追求「前沿」；而中国则是「千千万万家公司」在做应用，AI 已经嵌入制造业，并正在向服务业扩散。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">五层蛋糕框架</div>
+                        <p class="topic-detail-content">Jonathan 用黄仁勋的「五层蛋糕」框架（电力 → 芯片 → 基础设施 → 模型 → 应用）解构两国竞争力：中国在电力与基础设施方面很强，芯片方面受限，模型与应用方面被迫更加注重扩散。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">中国前沿研究</div>
+                        <p class="topic-detail-content">Jing 引用数据：在某些特定领域，中国的高被引前沿研究论文数量已远超美国——在高频通信基础研究方面是美国的 6 倍，在光纤通信方面是 3 倍。同时在量子计算、核聚变等领域，中国的进展也很快。中国并非不做前沿技术——而是在「建设前沿技术能力」和「推动技术扩散」两条路上同时前进。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "In the US, the market is very much focused on frontier technology, big company, NVIDIA, OpenAI, all those big ones. But in China it's very much millions companies on applications, applications, applications, and it's embedded in all the industry now." — Mi<br><br>
+                        「在美国，市场集中于前沿技术——大公司、英伟达、OpenAI 这些巨头。但在中国，是千千万万家公司做应用、再应用，AI 现在已经嵌入到所有行业中。」
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">「耐心资本」的谎言与真相</h3>
+                        <span class="topic-timestamp">00:35:59 → 00:42:24</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        「耐心」不是一个时间维度的概念，而是「信念密度」的体现——只有建立在对实时进展持续监控基础上的耐心才是真正的耐心，否则只是盲目的祈祷。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">尖锐问题</div>
+                        <p class="topic-detail-content">主持人提出了一个尖锐问题：外界对中国有「国家主导投资、耐心资本」的刻板印象，但中国政府近期不得不公开要求投资者「更有耐心」（patient capital）。为什么？中国的投资者真的在变得更有耐心吗？</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">耐心的本质</div>
+                        <p class="topic-detail-content">Jonathan 提醒大家，像他这样的市场投资者是「他人资金的受托人」（fiduciaries），不可能把资金放进去然后等待 50 年。耐心必须有具体的锚点。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">亲身经历</div>
+                        <p class="topic-detail-content">Jonathan 分享了 2018 年投资中国数据中心公司的经历：公司基本面做得很好，成功上市——但公开市场不认可，股价下跌。他们没有恐慌性抛售，而是将公司私有化，继续建设。他们之所以敢这么做，是因为对业务的根本价值有持续的、实时的信心——不是盲目的等待，而是基于实时信息的判断。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Patience has to be built on conviction. Patience has to be built on having real-time information on progress. Because otherwise patience would be misguided, would be blind, would be a prayer." — Jonathan<br><br>
+                        「耐心必须建立在信念的基础上，而信念必须建立在实时进展信息的基础上。否则耐心就是盲目的，就是祈祷。」
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">物理世界的护城河：为什么这次真的抓不住</h3>
+                        <span class="topic-timestamp">00:48:40 → 00:50:45</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        在数字世界，数据可以轻易抓取、模型可以被复制；但在物理世界，传感器数据和工业 Know-how 构成了天然的护城河——你将无法通过网络爬虫来构建一个「世界模型」。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">核心论点</div>
+                        <p class="topic-detail-content">Brandon 的核心论点出人意料地简洁：在物理世界中，你的竞争对手无法轻易抓取你的训练数据。在数字世界，构建一个大语言模型相对直接——互联网上有海量的文本数据可以爬取。但物理世界的数据分布在成千上万个传感器、工业设备和生产线上——这些都是私有化的、碎片化的、物理不可移动的。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">战略选择</div>
+                        <p class="topic-detail-content">Archetype 的应对策略：做一个基础模型公司，而不是应用层公司。Brandon 直言不讳地说：「我们不想有一天醒来发现我们做的东西成了别人模型的一个功能。」所以他选择控制「命运的关键节点」——物理 AI 的底层模型。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "The web is very easy to scrape. It's very straightforward to build an open source large language model. It's a lot more challenging however to scrape the physical world." — Brandon<br><br>
+                        「网络很容易抓取，构建开源大语言模型是很直接的事。但要抓取物理世界就困难得多。」
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">主权 AI：不仅是地缘政治，更是产品需求</h3>
+                        <span class="topic-timestamp">00:54:22 → 01:01:41</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 的主权化浪潮正在从「国家安全议题」演变为「产品设计要求」——这将导致全球 AI 市场分裂，但也可能催生新一代产品架构的诞生。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">主权悖论</div>
+                        <p class="topic-detail-content">观众提出了一个两难问题：如果每个国家都要求「自己的 AI」，我们会不会在全球范围内重复建设同样的东西？Analikica 指出，如果 20 年前就开始要求「技术主权」，就不会有今天台积电、ASML 和英伟达这样的全球化巨头。主权化必然增加资本支出（Capex），因为无法在全球利用最优资源。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">产品化思维</div>
+                        <p class="topic-detail-content">Brandon 的回应提供了一个意外的实用主义角度：主权甚至不是一个地缘政治选择——它首先是一个产品需求。Archetype 的产品设计从一开始就让每个客户拥有自己实例化的模型，运行在客户的私有云中，可以在本地计算资源上部署物理智能体（Physical Agents），完全避开公共云。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">深层担忧</div>
+                        <p class="topic-detail-content">Jing 发出了整场讨论中最深切的担忧：我们今天缺少的是国际合作、安全护栏和监管框架。没有这些，每个国家都被自己的边界束缚——主权问题越走越极端。但讽刺的是，我们今天连这些框架的雏形都没有。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "We don't have that one. So I think that's a big risk. If you don't have that one, every country will be bounded by its own board, and sovereignty becomes a very serious issue." — Jing<br><br>
+                        「我们没有这些（国际合作框架和安全护栏）。所以这是一个大风险。没有它们，每个国家都会被自己的边界所束缚，主权问题就变得非常严重。」
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <!-- Takeaway Card 1 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💡</div>
+                    <h3 class="takeaway-title">信息 ≠ 洞察</h3>
+                    <p class="takeaway-desc">当信息唾手可得——每个人都能用 ChatGPT、Claude、Cursor——真正的差异化不再是知道什么，而是如何理解信息、转化为洞察并付诸行动。</p>
+                </div>
+
+                <!-- Takeaway Card 2 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">耐心是动词</h3>
+                    <p class="takeaway-desc">「耐心资本」的真正含义不是「把钱放进去等」，而是「在长期信念的基础上，基于实时进展信息，持续做出投资决策」。没有持续跟踪的耐心，等于在赌博。</p>
+                </div>
+
+                <!-- Takeaway Card 3 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏭</div>
+                    <h3 class="takeaway-title">物理护城河</h3>
+                    <p class="takeaway-desc">网络可以爬虫，但物理世界不可以。工业传感器数据、供应链流程、设备工况——这些不会被轻易复制。这可能是 AI 领域最后一个「结构性优势」可以持久存在的战场。</p>
+                </div>
+
+                <!-- Takeaway Card 4 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🇨🇳</div>
+                    <h3 class="takeaway-title">中国双轨实验</h3>
+                    <p class="takeaway-desc">在芯片受限的事实面前，中国同时在两条路上奔跑：科研机构主攻前沿突破（高频通信论文 6 倍于美国），市场主体全力推进应用落地。两种能力能否最终交汇，将决定中国 AI 格局的终局。</p>
+                </div>
+
+                <!-- Takeaway Card 5 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔐</div>
+                    <h3 class="takeaway-title">主权产品化</h3>
+                    <p class="takeaway-desc">不是先有产品再应对主权，而是将主权需求直接嵌入产品设计——本地化实例、私有化部署、数据不出域。这可能是下一代 AI 基础设施的标准配置。</p>
+                </div>
+
+                <!-- Takeaway Card 6 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">递归升级窗口</h3>
+                    <p class="takeaway-desc">AI 的「递归式自我改进」意味着：一旦一个公司或国家开始在应用层面形成飞轮效应，后来者的追赶窗口可能迅速收窄。今天不「跳进去」的成本，明天会比今天高得多。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">深度技术，浅薄市场</h3>
+            <p class="footer-desc">
+                一场来自世界经济论坛的深度对话，汇聚中国前央行官员、硅谷创业者、亚洲投资人和欧洲投资者的多重视角，探讨 AI 时代的深度技术革命与市场现实。
+            </p>
+            <div class="footer-quote">
+                「耐心必须建立在信念的基础上。」
+            </div>
+            <p class="footer-note">
+                内容来源：世界经济论坛 · YouTube<br>
+                本文为深度翻译总结，非逐字转录
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

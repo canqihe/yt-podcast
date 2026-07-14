@@ -1,6 +1,26 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/deep-tech-shallow-markets.html",
+    card_class: "card-finance",
+    category: "世界经济论坛 · AI · 深度科技 · 投资",
+    date: "2026-07-11",
+    title: "Deep Tech, Shallow Markets — 世界经济论坛深度对话",
+    excerpt:
+      "当 AI 从「语言」走向「行动」，从数字世界渗透到物理世界——中国前央行官员、硅谷创业者、亚洲投资人和欧洲投资者的多重视角碰撞：索洛悖论在 AI 时代是否被打破？中美 AI 路线谁更优？耐心资本的真相是什么？物理世界的护城河为何难以逾越？",
+    tags: ["#深度科技", "#AI投资", "#耐心资本"],
+  },
+  {
+    url: "articles/physical-ai-jaime-lien-archetype.html",
+    card_class: "card-ai",
+    category: "AiNews · AI · 物理世界 · 传感器",
+    date: "2026-07-11",
+    title: "什么是物理 AI？AI 如何理解真实世界 | Jaime Lien × Archetype AI",
+    excerpt:
+      "Archetype AI 联合创始人 Jaime Lien 深度揭秘物理 AI——从 Google Soli 雷达到基础模型 Newton，AI 如何通过传感器数据理解振动、温度、电流，覆盖全球 85% 的实体产业。局部自适应世界模型、自监督学习、自然语言交互，一场关于 AI 超越屏幕的全新范式。",
+    tags: ["#物理AI", "#传感器", "#世界模型"],
+  },
+  {
     url: "articles/token-heist-emily-sands-stripe.html",
     card_class: "card-ai",
     category: "The MAD Podcast · AI · 智能体商务 · 支付",

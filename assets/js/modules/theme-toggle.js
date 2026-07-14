@@ -22,6 +22,7 @@
     function setTheme(theme) {
         html.setAttribute('data-theme', theme);
         updateButtonIcon(theme);
+        updateLogo(theme);
     }
 
     /**
@@ -32,6 +33,23 @@
         if (!themeToggle) return;
         themeToggle.setAttribute('data-mode', theme);
         themeToggle.title = theme === 'dark' ? '夜间模式' : '日间模式';
+    }
+
+    /**
+     * 更新 Logo（深色模式切换为反色版本）
+     * @param {string} theme - 'dark' 或 'light'
+     */
+    function updateLogo(theme) {
+        const logoSrc = theme === 'dark' ? 'assets/images/logo-night.svg' : 'assets/images/logo.svg';
+        // 更新页面内所有 logo img
+        document.querySelectorAll('img[src*="logo"]').forEach(function(img) {
+            img.src = logoSrc;
+        });
+        // 更新 favicon
+        const favicon = document.querySelector('link[rel="icon"]');
+        if (favicon) {
+            favicon.href = logoSrc;
+        }
     }
 
     /**

@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <title>什么是物理 AI？AI 如何理解真实世界 | Jaime Lien × Archetype AI</title>
+    <style>
+        /* ========== Design Tokens ========== */
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-card: #141416;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            --accent-primary: #22c55e;
+            --accent-secondary: #eab308;
+            --accent-primary-rgb: 34, 197, 94;
+            --accent-secondary-rgb: 234, 179, 8;
+            --border: #2a2a2e;
+            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            --font-size-hero: clamp(48px, 10vw, 120px);
+            --font-size-section: clamp(32px, 5vw, 56px);
+            --font-size-topic: clamp(24px, 4vw, 36px);
+            --font-size-number: clamp(64px, 15vw, 120px);
+            --font-heavy: 800;
+            --letter-spacing-tight: -0.03em;
+            --line-height-tight: 0.95;
+            --card-padding: 40px;
+            --radius-lg: 16px;
+            --radius-pill: 100px;
+            --transition-fast: 0.3s ease;
+            --hover-lift: translateY(-4px);
+            --gradient-accent: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+        }
+
+        /* ========== Reset ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ========== Scrollbar ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-primary);
+        }
+
+        /* ========== Container ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/physical-ai-jaime-lien-archetype-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 0;
+        }
+
+        /* ========== Badge ========== */
+        .badge-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .badge:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* ========== Title ========== */
+        .title {
+            font-size: var(--font-size-hero);
+            font-weight: var(--font-heavy);
+            line-height: var(--line-height-tight);
+            letter-spacing: var(--letter-spacing-tight);
+            margin-bottom: 24px;
+        }
+
+        .title-line-1 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-line-2 {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== Subtitle ========== */
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        /* ========== Meta Grid ========== */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .meta-item {
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        /* ========== CTA Button ========== */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--gradient-accent);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 16px;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 20px rgba(var(--accent-primary-rgb), 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(var(--accent-primary-rgb), 0.5);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== Section ========== */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            font-size: var(--font-size-section);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 64px;
+        }
+
+        /* ========== Points Grid ========== */
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* ========== Point Card ========== */
+        .point-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .point-card:hover {
+            border-color: var(--accent-primary);
+            transform: var(--hover-lift);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .point-card:hover::before {
+            opacity: 1;
+        }
+
+        .point-number {
+            font-size: 48px;
+            font-weight: var(--font-heavy);
+            color: var(--border);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .point-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-primary);
+        }
+
+        .point-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ========== Topic ========== */
+        .topic {
+            margin-bottom: 80px;
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .topic-number {
+            font-size: var(--font-size-number);
+            font-weight: var(--font-heavy);
+            line-height: 1;
+            background: var(--gradient-number);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .topic-info {
+            flex: 1;
+            padding-top: 16px;
+        }
+
+        .topic-title {
+            font-size: var(--font-size-topic);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .topic-timestamp {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--accent-secondary);
+        }
+
+        .topic-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--card-padding);
+            margin-left: clamp(40px, 10vw, 120px);
+        }
+
+        .topic-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-primary);
+        }
+
+        .topic-core-point {
+            font-size: 18px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .topic-detail {
+            padding-left: 24px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .topic-detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .topic-detail-content {
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--accent-primary);
+            padding: 24px;
+            background: rgba(var(--accent-primary-rgb), 0.05);
+            margin: 24px 0;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-primary);
+        }
+
+        .thought-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .thought-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        /* ========== Takeaways ========== */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .takeaway-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-fast);
+        }
+
+        .takeaway-card:hover {
+            border-color: var(--accent-secondary);
+            transform: var(--hover-lift);
+        }
+
+        .takeaway-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .takeaway-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .takeaway-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: var(--font-heavy);
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .footer-quote {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: var(--font-heavy);
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 48px 0;
+            line-height: 1.2;
+        }
+
+        .footer-note {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Divider ========== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .point-card,
+        .takeaway-card,
+        .topic {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .point-card.animate-in,
+        .takeaway-card.animate-in,
+        .topic.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .topic-content {
+                margin-left: 0;
+            }
+
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">AI · 物理世界 · 传感器</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">什么是物理 AI？</span>
+                    <span class="title-line-2">AI 如何理解真实世界</span>
+                </h1>
+                <p class="subtitle">
+                    Archetype AI 联合创始人 Jaime Lien 深度对话——从 Google Soli 雷达到物理世界基础模型 Newton，揭示 AI 超越屏幕、理解振动与温度的全新范式。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Alicia Shapiro</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Jaime Lien</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 22 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=BL4DbPaj2eQ" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">物理 AI ≠ 机器人</h3>
+                    <p class="point-desc">物理 AI 是让 AI 理解物理世界的通用框架，覆盖制造、能源、城市基础设施等几乎所有实体行业。全球 85% 的经济体量是它的潜在应用空间。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">物理世界比数字世界难理解 100 倍</h3>
+                    <p class="point-desc">数字制品是静态的；物理世界是动态的（非平稳）、极端多样的——每台机器都有自己的「个性」且随时间退化，经典 ML 始终无法规模化。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">局部自适应世界模型</h3>
+                    <p class="point-desc">Newton 架构精髓：「通用预训练 + 局部实时自适应」——模型在跨领域传感器数据上预训练，再通过每台机器的实时数据微调，人类通过自然语言与 AI 对话。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">IoT 基础设施已就位</h3>
+                    <p class="point-desc">15 年前的 IoT 浪潮已完成传感器大规模部署。物理 AI 解决的不是「如何采集数据」，而是「如何让这些数据变得有意义」。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">自监督学习取代人工标注</h3>
+                    <p class="point-desc">Newton 不需要人工标注或物理方程，通过自监督学习从海量传感器数据中发现物理规律，大幅降低工业 AI 部署门槛。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">AI 的终极价值：发现未知</h3>
+                    <p class="point-desc">物理 AI 最令人兴奋的不是验证已知规则，而是揭示人类从未注意到的新现象——感知盲区中的模式、关联和洞察。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">物理 AI 的定义：不止是机器人</h3>
+                        <span class="topic-timestamp">00:01:34 → 00:03:56</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">物理 AI 的本质是「扎根于现实世界物理测量和观测的 AI」，机器人技术只是其子集。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">与大语言模型的本质区别</div>
+                        <p class="topic-detail-content">LLM 的训练数据来源是数字制品——互联网上的文本、图片等人类已加工过的信息。而物理 AI 的「教科书」是传感器数据：气体传感器检测空气中的化学成分变化、压力传感器感知管道或结构中的受力状态、电力传感器追踪电流和电压的波动、气象传感器测量温度湿度和风速——这些人类无法直接感知的物理量构成了一个难以想象的数据宇宙。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">「非平稳」——物理世界的根本特征</div>
+                        <p class="topic-detail-content">数字世界中的文本和图像相对稳定，但物理世界永远在变化：同一型号的两台机器，因制造公差、使用环境、磨损程度不同，行为模式截然不同。即使同一台机器，随时间推移轴承磨损、油温变化、负载波动都会让它的「行为」持续漂移。这种极端多样性是过去 20 年经典机器学习技术始终无法攻克物理世界的主要原因。</p>
+                    </div>
+                    <div class="quote-block">「机器人技术是物理 AI 的一个子集。从更宏观的角度来看，物理 AI 指的是基于现实世界实际物理测量和观测的 AI。」[00:01:57]</div>
+                    <div class="quote-block">「物理世界是完全动态的。我们用技术术语称之为'非平稳'。」[00:03:20]</div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">传感器数据的体量与多样性</h3>
+                        <span class="topic-timestamp">00:03:56 → 00:06:07</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">现代工业机器普遍配备传感器，但将多样化传感器数据转化为可操作的洞察，是过去所有技术方案都未能解决的规模化难题。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">数据已经存在，但洞察缺失</div>
+                        <p class="topic-detail-content">15 年前的物联网（IoT）爆发将大量传感器嵌入到了机器和环境中。这些传感器持续测量两类数据：内部状态（电机电流、轴承温度、液压压力）和外部环境（温度、湿度、振动）。难点不在于获取数据——数据已经在那里——而在于如何将每秒都在产生的、形式各异的物理测量流，转化为可执行的洞察：这个系统到底在做什么？它是如何进入当前状态的？接下来会发生什么？</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">过去为何无法规模化</div>
+                        <p class="topic-detail-content">每台机器的「个性」都不同，传统方法需要为每台机器单独建模和调参，这在成百上千台机器的规模上根本无法维持。现在，大型模型让「一个通用基础 + 局部自适应」的范式成为可能。</p>
+                    </div>
+                    <div class="quote-block">「将这些不同的物理测量数据流转化为关于系统实际在做什么的可操作洞察……以前的技术和经典机器学习无法实现规模化。」[00:05:50]</div>
+                    <div class="quote-block">「全球约 85% 的经济基于实体产业。」[00:12:28]</div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">机器能「看见」什么：超越人类感知的维度</h3>
+                        <span class="topic-timestamp">00:06:05 → 00:07:54</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">传感器可以捕捉人类无法直接感知的现象（电流、无线电波），以及规模过大或过小的人类感官盲区——AI 的解读能力让这些数据产生意义。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两大类人类感知盲区</div>
+                        <p class="topic-detail-content">第一类是人类感官无法直接触及的物理量：电流在导线中流动、无线电波在空间中传播——人类没有对应的感官来感受它们，传感器可以捕获。第二类更微妙：现象本身人类可感知，但规模太大或太微观，人类无法在实时中捕捉全部信息。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">贝尔维尤市行人安全案例</div>
+                        <p class="topic-detail-content">Archetype 与华盛顿州贝尔维尤市合作分析交叉路口的行人安全。AI 将摄像头画面、交通信号灯状态、行人踏入路口的时机和模式融合分析，注意到人类交通管理员无法实时察觉的细微模式，预判不安全情况并主动建议调整交通模式预防事故。</p>
+                    </div>
+                    <div class="quote-block">「我们与贝尔维尤市合作分析交叉路口的行人安全。AI 能够将来自摄像头和交通信号灯等多种信息源结合起来，注意到行人何时踏入路口、何时后退的细微模式。」[00:07:30]</div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Newton 的核心架构：局部自适应世界模型</h3>
+                        <span class="topic-timestamp">00:07:54 → 00:10:35</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">Newton 采用「局部自适应世界模型」范式，通过基础模型的全局理解加上基于本地传感器数据的实时自适应调整，解决物理世界的多样性和持续演变挑战，并提供自然语言接口。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">世界模型（World Models）</div>
+                        <p class="topic-detail-content">模型理解物理世界中正在发生的事情和系统行为的动态规律。它不是在「看到」数据，而是在「理解」行为。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">局部自适应（Locally Adapted）</div>
+                        <p class="topic-detail-content">由于每台机器都独一无二且随时间退化，AI 不能拿着一个「通用模型」去套所有场景。Newton 允许模型根据部署在具体机器上的实时传感器数据，自主调整对这台特定机器的理解——就像一位经验丰富的工程师接手一台陌生设备，先凭基础理论理解，再通过观察摸清这台设备的「脾气」。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">语言接口（Language Interface）</div>
+                        <p class="topic-detail-content">人类可以用自然语言向模型提问：「3 号涡轮机的振动模式最近有变化吗？」「预测 2 号线未来 48 小时内的故障概率。」模型也能将物理理解转化为语言，以可解释的方式回应不同角色的用户。</p>
+                    </div>
+                    <div class="quote-block">「我们喜欢将自己的基本方法称为局部自适应世界模型。世界模型是因为它们理解正在发生的事情，局部自适应是因为它们可以根据局部传感器观测进行调整。」[00:08:40]</div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">训练方式：让机器自己从传感器数据中学习</h3>
+                        <span class="topic-timestamp">00:10:35 → 00:12:10</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">Newton 不需要人工标注数据或预置物理定律，而是通过自监督学习从大量多样化传感器观测中提取底层物理规律。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">传统工业 AI 的痛点</div>
+                        <p class="topic-detail-content">传统方案需要大量人工介入：手动标注数据（「这个振动模式正常、那个异常」）、根据物理定律编写方程、为每种故障模式定义阈值。不仅劳动密集，而且无法应对物理世界的多样性。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">自监督学习的突破</div>
+                        <p class="topic-detail-content">Newton 将来自不同传感器类型、不同物理资产、不同物理领域的稀疏但多样的观测数据组合起来，全部输入到一个大模型中。模型从这些极端多样的数据中找到共同的东西——底层物理行为中普适的数学结构。这个过程类似 GPT 从海量文本中学习语法和语义的统计规律，而非依赖人工标注。</p>
+                    </div>
+                    <div class="quote-block">「模型应该能够自己学习——在传感器数据本身上训练。这样人类就不需要去提供大量标注数据，也不需要注入物理定律方程。」[00:10:50]</div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">从 Soli 雷达学到的教训：技术与设计必须交织</h3>
+                        <span class="topic-timestamp">00:12:57 → 00:14:55</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">从 Google Soli 雷达到 Archetype AI，先进传感技术从实验室走向现实世界的关键是「全场景鲁棒性」和「技术与设计共同开发」。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">全场景鲁棒性</div>
+                        <p class="topic-detail-content">Soli 雷达在消费产品上实现手势和运动检测。Lien 深刻体会到：实验室中性能完美的算法，进入真实世界后可能因各种因素失控——不同外壳材料影响雷达波传播、用户手势习惯千差万别、环境温湿度变化影响传感器物理特性。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">技术与设计共同开发</div>
+                        <p class="topic-detail-content">用户体验的思考不能是技术实现后的「后期美化」。谁会用这个系统？在什么场景下使用？操作是否无缝？这些必须在技术路线选择阶段就参与决策。这也是 Archetype 的核心文化。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Archetype 的差异化定位</div>
+                        <p class="topic-detail-content">主流世界模型（如 World Labs）致力于模拟未来——创建逼真视觉场景。而 Archetype 的世界模型聚焦于理解当前状态——系统现在处于什么状态？它怎么到达这个状态？这对即将发生的事情意味着什么？这一差异化定位被称为解决「运营智能差距」（operational intelligence gap）。</p>
+                    </div>
+                    <div class="quote-block">「技术和设计必须紧密交织、共同发展。不能是技术优先、设计其次。必须是共同开发。」[00:14:15]</div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">物理 AI 的实际价值：实时监控、异常检测与安全</h3>
+                        <span class="topic-timestamp">00:16:07 → 00:18:13</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">物理 AI 在三个维度创造实际价值——实时运行监控、异常预测性检测、人机安全防护——而所有能力的基石是 IoT 时代已铺设完成的传感器基础设施。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">实时运行监控</div>
+                        <p class="topic-detail-content">确保系统在正常参数范围内运行，不超出安全阈值。成百上千台设备同时运行时，人工巡检无法覆盖实时状态，传统监控系统只能检查固定阈值，无法理解行为变化趋势。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">异常预测性检测</div>
+                        <p class="topic-detail-content">机器可能在失效前数周就开始表现出细微的行为漂移，但「看起来仍然正常」。AI 通过持续学习正常行为模式，能在偏离基线时及时识别——这是「比人类看得更远」的场景。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">人机安全保障</div>
+                        <p class="topic-detail-content">将传感器测量与人类行为结合分析，确保操作人员不暴露于危险中。传统安全系统基于静态规则，物理 AI 可以理解动态场景——当人进入危险区域时，结合机器状态判断是否存在真实风险。</p>
+                    </div>
+                    <div class="quote-block">「这个感知层在今天的现实世界中已经存在。我们现在看到的是，大型模型、自监督学习和传感器的普及化正在汇聚，使得 AI 可以成为跨越所有这些事物的通用智能层。」[00:17:50]</div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">最激动人心的前景：AI 将揭示人类不知道的未知</h3>
+                        <span class="topic-timestamp">00:18:46 → 00:20:32</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">物理 AI 最令人兴奋的潜力不在于验证已知，而在于「发现未知」——揭示人类尚未意识到的新现象和新洞察。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从「已知」到「未知」的范式跃迁</div>
+                        <p class="topic-detail-content">主流 AI 应用（搜索、生成、分类）本质上在已知信息空间内工作。但物理世界不同：在人类直接感知的层面之下，存在着太多看不见的现象。物理 AI 的核心价值，恰恰是去探索这片「感知盲区」。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">风力涡轮机群的发现</div>
+                        <p class="topic-detail-content">Archetype 与一家能源公司合作，对方运营着一支风力涡轮机群——每台涡轮机上装有 40-60 个不同类型的传感器。AI 同时分析所有传感器的所有数据，自动发现工程师不会注意到的模式和关联，超越了「验证已知规则」的范畴，进入了真正的「发现」领域。</p>
+                    </div>
+                    <div class="quote-block">「对我来说，最令人兴奋、最有影响力的，是当物理 AI 能够揭示我们原本不知道的现象或洞察——也就是发现新事物。」[00:18:52]</div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">结语：AI 潜力与人文价值</h3>
+                        <span class="topic-timestamp">00:20:30 → 00:22:01</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">当机器开始理解物理世界时，人类对物理世界中真实互动的珍视——那些无法被传感器捕捉的情感连接——或许会变得更加有意义。</p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 潜力与人际温度的平衡</div>
+                        <p class="topic-detail-content">Jaime Lien 在科研之外，是两个孩子的母亲。她坦言，AI 的巨大潜力让她反而更加珍视人与人之间的物理互动——面对面的交谈、真实的接触。这个回答为整场关于技术和物理世界的对话增添了一层人文厚度，也呼应了物理 AI 的一个深层逻辑。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧠</div>
+                    <h3 class="takeaway-title">认知升级</h3>
+                    <p class="takeaway-desc">物理 AI 不是机器人的同义词。它是「让 AI 理解物理世界」的通用框架，覆盖制造、能源、城市基础设施、HVAC、交通运输等几乎所有实体行业。全球 85% 的经济体量是它的潜在应用空间。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">核心洞察</h3>
+                    <p class="takeaway-desc">物理世界比数字世界难理解 100 倍。数字制品是静态的、人类标注过的；物理世界是动态的（非平稳）、极端多样的——每台机器都有自己的「个性」且随时间退化。经典 ML 始终无法规模化。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏗️</div>
+                    <h3 class="takeaway-title">创新架构</h3>
+                    <p class="takeaway-desc">Newton 的局部自适应世界模型：通用预训练 + 局部实时自适应。模型在大量跨领域传感器数据上预训练，再通过每台机器的局部数据微调，人类通过自然语言与「理解物理世界的 AI」对话。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">可行动建议</h3>
+                    <p class="takeaway-desc">别等数据基础设施——传感器已经就位。15 年前的 IoT 浪潮已完成大规模部署。物理 AI 解决的不是「如何采集数据」，而是「如何让这些数据变得有意义」。如果你的组织有大量未利用的传感器数据，这可能是当前最具性价比的突破口。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔄</div>
+                    <h3 class="takeaway-title">范式转变</h3>
+                    <p class="takeaway-desc">从标注到自监督。Newton 不需要人工标注或手工编写物理方程，通过自监督学习从观测数据中发现物理规律。这大幅降低了工业场景部署 AI 的门槛，让没有数据科学家的传统制造企业也能使用物理 AI。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔭</div>
+                    <h3 class="takeaway-title">未来展望</h3>
+                    <p class="takeaway-desc">AI 的终极价值是「发现未知」。物理 AI 最令人兴奋的前景不是验证已知规则，而是揭示人类从未注意到的新现象——那些存在于感知盲区中的模式、关联和洞察。当 AI 告诉我们「你不知道你不知道的东西」时，它就是人类认知能力的延伸。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">物理世界，等待 AI 的理解</h3>
+            <p class="footer-desc">
+                当 AI 走出屏幕，开始理解振动、温度、电流和风速——全球 85% 的实体经济，迎来了属于它的智能时代。
+            </p>
+            <div class="footer-quote">
+                "85% of the global economy is based on physical industries."
+            </div>
+            <p class="footer-note">
+                内容来源：AiNews — What Is Physical AI? How AI Is Learning to Understand the Real World
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
