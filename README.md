@@ -1,47 +1,69 @@
-# Colin's Reading Notes
+<p align="center">
+  <img src="./assets/readme/hero.svg" width="100%" alt="Colin's Reading Notes — 270+ curated deep-read articles from the best AI, finance, and tech podcast conversations">
+</p>
 
-> Transforming deep podcast conversations into structured, accessible knowledge
+<p align="center">
+  <a href="https://canqihe.github.io/yt-podcast/">Live Demo</a> · <a href="#quick-start">Quick Start</a> · <a href="#topics-covered">Browse Topics</a>
+</p>
 
-A curated knowledge platform that distills the best YouTube podcast content into structured, in-depth articles covering AI, finance, science, and more. Each article is a carefully crafted synthesis of expert conversations.
+---
 
-## Features
+<p align="center">
+  <img src="./assets/readme/section-what.svg" width="100%" alt="What It Is">
+</p>
 
-- **Curated Content** - Extracting the most valuable insights from top podcasts
-- **Structured Presentation** - Long-form conversations reorganized into scannable articles
-- **Multi-Scheme Dark Theme** - 6 curated color palettes for visual variety
-- **Dark/Light Mode** - Comfortable reading experience with theme toggle
-- **Real-time Search** - Quickly find articles by title, excerpt, category, or tags
-- **Pagination** - Browse content efficiently (15 articles per page)
-- **Responsive Design** - Optimized for desktop and mobile
-- **Zero Dependencies** - Pure HTML/CSS/JS, no build step required
+A curated knowledge platform that distills the best YouTube podcast conversations into structured, in-depth articles. Each article is a carefully crafted synthesis of expert conversations — no fluff, just the insights that matter.
 
-## Articles
+**270+ articles** across **18 domains**: AI strategy, semiconductor supply chains, robotics, global macro, defense tech, and more. Every piece reorganizes long-form conversations into scannable, evidence-backed reads.
 
-**270+ articles** across multiple domains:
+Browse all articles at **[index.html](index.html)** or visit the **[GitHub Pages](https://canqihe.github.io/yt-podcast/)** deployment.
+
+---
+
+<p align="center">
+  <img src="./assets/readme/section-topics.svg" width="100%" alt="Topics Covered">
+</p>
+
+| Domain | Featured Sources |
+|--------|-----------------|
+| **AI Strategy & Leaders** | OpenAI (Sam Altman, Greg Brockman), Anthropic (Dario Amodei, Mike Krieger), Google DeepMind (Demis Hassabis), NVIDIA (Jensen Huang), xAI (Elon Musk) |
+| **AI Agents & Platforms** | Harrison Chase (LangChain), Andrej Karpathy, Claude Code, Harvey AI, Stripe (Emily Sands) |
+| **Markets & Compute** | a16z, Coatue, SemiAnalysis (Dylan Patel), ARK Invest, Gavin Baker |
+| **Semiconductors** | Cerebras (Andrew Feldman), TSMC, NVIDIA TPU, Micron, Stanford CS153 |
+| **Robotics & Physical AI** | Figure AI (Brett Adcock), Unitree, Anduril, Palantir (Alex Karp) |
+| **Finance & Investing** | Stanley Druckenmiller, Howard Marks, Ken Griffin, Paul Tudor Jones, Jim Simons |
+| **Space & Frontier Tech** | SpaceX, NASA (Jared Isaacman), Rocket Lab (Peter Beck), Quantum Computing |
+| **Philosophy & Society** | Yuval Harari, Kevin Kelly, Dan Shipper, Swami Sarvapriyananda |
+| **Health & Science** | David Sinclair, Ben Lamm, synthetic biology, AI-designed life forms |
+| **Crypto & Web3** | Worldcoin (Alex Blania), Circle (Jeremy Allaire), stablecoins, agent economy |
+
+<details>
+<summary><strong>View all 18 domains</strong></summary>
 
 | Domain | Examples |
-|--------|---------|
-| **AI Strategy & Leaders** | OpenAI (Sam Altman 12x, Greg Brockman, Brad Lightcap, Sarah Friar), Anthropic (Dario Amodei 4x, Daniela Amodei, Cat Wu, Felix Rieseberg, Krishna Rao, Mike Krieger), Google AI (Sundar Pichai 2x, Demis Hassabis 6x), NVIDIA (Jensen Huang 4x), xAI (Elon Musk 8x), Boris Cherny (Claude Code), Satya Nadella 2x, Marc Andreessen 3x, Benedict Evans, Scott Galloway |
-| **AI Agents & Platforms** | Harrison Chase (LangChain), Andrej Karpathy (agentic engineering, code agents), AI Agent Swarms, Claude Code, Claude Cowork, OpenClaw, ChatGPT Images 2.0, AI Sandwich model, SEO to Agent-Led Growth, Harvey AI, Daytona (Ivan Burazin), AI Agents Perplexity, Codex vs Claude, Stripe (Emily Sands 13x: agentic commerce, token theft), Tempo (blockchain payments) |
-| **AI Engineering & Research** | Shane Legg (AGI), Joelle Pineau (AI frontiers), Richard Sutton (reinforcement learning), Zico Kolter (frontier AI), Mostafa Dehghani, Rohin Shah (AGI Safety, DeepMind), AI Math, MIT AI courses (Chris Bishop, 3 Laws) |
-| **AI Safety & Ethics** | Tristan Harris (AI god), Carissa Véliz (AI prediction), Power-seeking AI, AGI Safety (Rohin Shah), Anthropic Mythos Dilemma |
-| **Markets & Compute** | a16z (David George, Aaron Levie, Ben Horowitz, AI Winners), Coatue (Thomas Laffont, Lucas Swisher, Jaimin Rangwalla), SemiAnalysis (Dylan Patel 4x, AWS margins, Unitree robotics), ARK Invest (Big Ideas 2026), Gavin Baker (orbital compute) |
-| **Semiconductors** | Cerebras (Andrew Feldman 2x, IPO, wafer-scale engine, TBPB Diet), Black Forest Labs (potential diffusion algorithms), TSMC, NVIDIA TPU competition, AI silicon shortage, VanEck semiconductor investing, Micron Q2 2026, Stanford CS153 (Value per Gigawatt) |
-| **Robotics & Physical AI** | Figure AI (Brett Adcock 2x), Unitree (robotics evolution, supply chain), Sergey Levine, Seeed Studio (open-source robot), Anduril (Alex Karp, military AI), Palantir (Alex Karp 2x), Uber (Dara Khosrowshahi on Robotaxi), Atoms (Travis Kalanick), Caitlin Kalinowski (AI hardware), Robot Hardware Supply Chain |
-| **Finance & Investing** | Stanley Druckenmiller, Jeremy Grantham, Tom Lee, Dan Loeb (Third Point), Marc Rowan (Apollo private markets), Ken Griffin, Paul Tudor Jones, Blackstone (private credit, Tony James), Lloyd Blankfein 2x, Howard Marks (Oaktree), Jim Simons, Jake Paul, Alfred Lin (Sequoia), Goldman Sachs |
-| **Defense & Military** | Palantir (Alex Karp), Anduril (100 years military history), Pentagon AI plan, military industrial complex |
-| **Space & Frontier Tech** | SpaceX IPO, NASA (Jared Isaacman), Rocket Lab (Peter Beck), Starcloud, Quantum Computing (D-Wave, NVIDIA Ising), Brain-Computer Interfaces (World/Merge Labs), Anthropic-SpaceX deal & singularity economy |
-| **Tech Companies & Earnings** | Alphabet Q4 2026, Micron Q2 2026, Google Cloud (Thomas Kurian), Tesla, Roblox (David Baszucki), Canva, Replit, SAP, Asana, Shopify (Tobi Lütke 21 years), Stripe Sessions 2026, Samsung Design, IBM (Arvind Krishna) |
-| **Philosophy & Society** | Yuval Harari (stories, power, truth), Dan Shipper (AI paradox), Robert Pantano (self-awareness), Swami Sarvapriyananda (consciousness, Vedanta), 60 Minutes AI Reports |
-| **Wisdom & Thinking** | Kevin Kelly (79 maxims for excellent living), Eric Jorgenson (Elon Musk methodology), Nick Bloom (navigating uncertainty), Ben Horowitz (managerial philosophy), Joe Hudson (emotional fluidity) |
-| **Health & Science** | David Sinclair (aging reversal), Ben Lamm (synthetic biology), AI-designed life forms, MIT (Sally Kornbluth, Chris Bishop) |
-| **Crypto & Web3** | Worldcoin (Alex Blania 2x), Circle (Jeremy Allaire), Anthony Pompliano (Bitcoin), stablecoins, agent economy, Stripe Tempo (blockchain for AI payments) |
-| **Organizational Transformation** | Jack Dorsey (Block reorg), Amjad Masad (Replit: only 2 roles remain), SEO to Agent-Led Growth, AI teammates (Arnab Bose), forward-deployed engineering, Organizational Singularity |
-| **Energy & Infrastructure** | Chris Wright (data center energy), global infrastructure partnerships, Hormuz blockade, trade policy |
-| **Global Trade & Geopolitics** | Ryan Petersen (global trade history), American finance 100 years, tech billionaires' AI plans, SpaceX/OpenAI/Anthropic IPO landscape |
-| **Research Reports** | AMAT (Applied Materials), MU (Micron) |
+|--------|----------|
+| AI Strategy & Leaders | OpenAI, Anthropic, Google AI, NVIDIA, xAI |
+| AI Agents & Platforms | LangChain, Karpathy, Claude Code, Harvey AI |
+| AI Engineering & Research | Shane Legg, Joelle Pineau, Richard Sutton |
+| AI Safety & Ethics | Tristan Harris, Carissa Véliz, AGI Safety |
+| Markets & Compute | a16z, Coatue, SemiAnalysis, ARK Invest |
+| Semiconductors | Cerebras, TSMC, NVIDIA, Micron |
+| Robotics & Physical AI | Figure AI, Unitree, Anduril, Palantir |
+| Finance & Investing | Druckenmiller, Marks, Griffin, Simons |
+| Defense & Military | Palantir, Anduril, Pentagon AI |
+| Space & Frontier Tech | SpaceX, NASA, Rocket Lab, Quantum |
+| Tech Companies & Earnings | Alphabet, Tesla, Roblox, Shopify |
+| Philosophy & Society | Harari, Kelly, Shipper |
+| Wisdom & Thinking | Kevin Kelly, Ben Horowitz, Joe Hudson |
+| Health & Science | Sinclair, Lamm, synthetic biology |
+| Crypto & Web3 | Worldcoin, Circle, stablecoins |
+| Organizational Transformation | Jack Dorsey, Replit, agent-led growth |
+| Energy & Infrastructure | Data center energy, global infrastructure |
+| Global Trade & Geopolitics | Ryan Petersen, trade policy |
 
-Browse all articles at [index.html](index.html)
+</details>
+
+---
 
 ## Quick Start
 
@@ -51,11 +73,15 @@ cd yt-podcast
 open index.html
 ```
 
-Or visit the [GitHub Pages](https://canqihe.github.io/yt-podcast/) deployment.
+Or visit the **[GitHub Pages](https://canqihe.github.io/yt-podcast/)** deployment — no install needed.
 
-## Design System
+---
 
-The design system lives in `design-system/` and supports **6 color schemes** with **light/dark mode**:
+<p align="center">
+  <img src="./assets/readme/section-design.svg" width="100%" alt="Design System">
+</p>
+
+**6 curated color schemes** with dark/light mode — all gradients, glows, and accents auto-inherit from CSS custom properties:
 
 | # | Scheme | Primary | Secondary |
 |---|--------|---------|-----------|
@@ -66,53 +92,45 @@ The design system lives in `design-system/` and supports **6 color schemes** wit
 | 5 | Coral-Gold | `#f97066` | `#fbbf24` |
 | 6 | Teal-Violet | `#14b8a6` | `#a78bfa` |
 
-All gradients, glows, shadows, and accent elements auto-inherit from these variables. See `design-system/design-tokens.css` for full documentation.
+See `design-system/design-tokens.css` for the full token system.
+
+---
 
 ## Tech Stack
 
-- **HTML5 / CSS3 / Vanilla JS** - No build tools, no frameworks
-- **CSS Custom Properties** - Design tokens for consistent theming
-- **Intersection Observer** - Scroll-triggered animations
-- **Google Fonts** - Typography (Fraunces, Source Serif 4, Space Mono, Orbitron, JetBrains Mono)
+- **HTML5 / CSS3 / Vanilla JS** — zero dependencies, no build step
+- **CSS Custom Properties** — design tokens for consistent theming
+- **Intersection Observer** — scroll-triggered animations
+- **Google Fonts** — Fraunces, Source Serif 4, Space Mono, Orbitron, JetBrains Mono
 
 ## Project Structure
 
 ```
 yt-podcast/
 ├── index.html                  # Homepage (article grid)
-├── articles/                   # 240+ in-depth articles
+├── articles/                   # 270+ in-depth articles
 │   ├── images/                 # Article hero images
 │   └── research/               # Equity research reports
 ├── assets/
 │   ├── css/                    # Stylesheets
-│   │   └── homepage.css        # Homepage styles
-│   ├── js/                     # JavaScript
-│   │   ├── homepage.js         # Homepage init logic
-│   │   └── modules/            # Modular JS components
-│   │       ├── articles-data.js    # Article data array
-│   │       ├── articles-list.js    # Article list rendering
-│   │       ├── articles-renderer.js# Article card renderer
-│   │       ├── scroll-animations.js# Scroll-triggered animations
-│   │       └── theme-toggle.js     # Dark/light mode toggle
-│   ├── images/                 # Shared images
-│   └── videos/                 # Video assets
+│   ├── js/                     # Modular JS components
+│   └── images/                 # Shared images
 ├── design-system/
 │   ├── design-tokens.css       # Design tokens & color schemes
 │   ├── article-styles.css      # Article-specific styles
-│   ├── style.css               # Shared stylesheet
-│   ├── design-spec.md          # Design specification
-│   └── template-standalone.html  # Standalone article template
+│   └── template-standalone.html# Standalone article template
 ├── rss-feeds.html              # RSS feed reader
-├── rss-reader.html             # RSS reader UI
-└── README.md
+└── rss-reader.html             # RSS reader UI
 ```
 
 ## Interactive Features
 
-- **Search**: Real-time article filtering by title, description, category, or tags
-- **Theme Switcher**: Toggle between light and dark modes
-- **Pagination**: Browse articles 15 per page with page navigation
-- **External Links**: [Indigo Reading List](articles/indigo_readlist.html), [RSS Feeds](rss-feeds.html)
+- **Search** — real-time filtering by title, description, category, or tags
+- **Theme Switcher** — toggle between light and dark modes
+- **Pagination** — browse articles 15 per page
+- **External Links** — [Indigo Reading List](articles/indigo_readlist.html), [RSS Feeds](rss-feeds.html)
+
+---
 
 ## Contributing
 
@@ -124,4 +142,4 @@ Content is curated from YouTube podcasts for educational purposes. Original cont
 
 ## Maintainer
 
-[canqihe](https://github.com/canqihe) | [X/Twitter](https://x.com/nfa_trader)
+[canqihe](https://github.com/canqihe) · [X/Twitter](https://x.com/nfa_trader)
