@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <title>Stanford CS547 | 走向 AI 与计算中的本体论多元性</title>
+    <style>
+        /* ========== Design Tokens ========== */
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-card: #141416;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            /* 蓝粉配色 - 学术科技 */
+            --accent-primary: #ff4081;
+            --accent-secondary: #3b82f6;
+            --accent-primary-rgb: 255, 64, 129;
+            --accent-secondary-rgb: 59, 130, 246;
+            --border: #2a2a2e;
+            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            --font-size-hero: clamp(48px, 10vw, 120px);
+            --font-size-section: clamp(32px, 5vw, 56px);
+            --font-size-topic: clamp(24px, 4vw, 36px);
+            --font-size-number: clamp(64px, 15vw, 120px);
+            --font-heavy: 800;
+            --letter-spacing-tight: -0.03em;
+            --line-height-tight: 0.95;
+            --card-padding: 40px;
+            --radius-lg: 16px;
+            --radius-pill: 100px;
+            --transition-fast: 0.3s ease;
+            --hover-lift: translateY(-4px);
+            --gradient-accent: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+        }
+
+        /* ========== Reset ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ========== Scrollbar ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-primary);
+        }
+
+        /* ========== Container ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                /* 渐变遮罩层 */
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                /* 背景图 */
+                url('images/stanford-ontological-multiplicity-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* 有背景图时启用 .header::after（额外光晕叠加层） */
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 0;
+        }
+
+        /* ========== Badge ========== */
+        .badge-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .badge:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* ========== Title ========== */
+        .title {
+            font-size: var(--font-size-hero);
+            font-weight: var(--font-heavy);
+            line-height: var(--line-height-tight);
+            letter-spacing: var(--letter-spacing-tight);
+            margin-bottom: 24px;
+        }
+
+        .title-line-1 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-line-2 {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== Subtitle ========== */
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        /* ========== Meta Grid ========== */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .meta-item {
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        /* ========== CTA Button ========== */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--gradient-accent);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 16px;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 20px rgba(var(--accent-primary-rgb), 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(var(--accent-primary-rgb), 0.5);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== Section ========== */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            font-size: var(--font-size-section);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 64px;
+        }
+
+        /* ========== Points Grid ========== */
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* ========== Point Card ========== */
+        .point-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .point-card:hover {
+            border-color: var(--accent-primary);
+            transform: var(--hover-lift);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .point-card:hover::before {
+            opacity: 1;
+        }
+
+        .point-number {
+            font-size: 48px;
+            font-weight: var(--font-heavy);
+            color: var(--border);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .point-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-primary);
+        }
+
+        .point-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ========== Topic ========== */
+        .topic {
+            margin-bottom: 80px;
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .topic-number {
+            font-size: var(--font-size-number);
+            font-weight: var(--font-heavy);
+            line-height: 1;
+            background: var(--gradient-number);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .topic-info {
+            flex: 1;
+            padding-top: 16px;
+        }
+
+        .topic-title {
+            font-size: var(--font-size-topic);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .topic-timestamp {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--accent-secondary);
+        }
+
+        .topic-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--card-padding);
+            margin-left: clamp(40px, 10vw, 120px);
+        }
+
+        .topic-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-primary);
+        }
+
+        .topic-core-point {
+            font-size: 18px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .topic-detail {
+            padding-left: 24px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .topic-detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .topic-detail-content {
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--accent-primary);
+            padding: 24px;
+            background: rgba(var(--accent-primary-rgb), 0.05);
+            margin: 24px 0;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-primary);
+        }
+
+        .thought-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .thought-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        /* ========== Takeaways ========== */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .takeaway-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-fast);
+        }
+
+        .takeaway-card:hover {
+            border-color: var(--accent-secondary);
+            transform: var(--hover-lift);
+        }
+
+        .takeaway-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .takeaway-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .takeaway-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: var(--font-heavy);
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .footer-quote {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: var(--font-heavy);
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 48px 0;
+            line-height: 1.2;
+        }
+
+        .footer-note {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Divider ========== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header animations - use keyframes for initial page load */
+        .header .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        /* Card animations - use transition for scroll trigger */
+        .point-card,
+        .takeaway-card,
+        .topic {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .point-card.animate-in,
+        .takeaway-card.animate-in,
+        .topic.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .topic-content {
+                margin-left: 0;
+            }
+
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">STANFORD · HCI · AI</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">走向 AI 与计算中的</span>
+                    <span class="title-line-2">本体论多元性</span>
+                </h1>
+                <p class="subtitle">
+                    基于斯坦福 CS547 HCI 研讨会，探讨 AI 系统中被自然化的本体论边界，以及如何通过溶解、协商、浮现边界让 AI 容纳不止一种世界观。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">频道</div>
+                        <div class="meta-value">Stanford Online</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">演讲者</div>
+                        <div class="meta-value">Nava Haghighi</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 47 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=IpzIDAqJDwI" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    在 YouTube 观看
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心洞察</h2>
+            <div class="points-grid">
+                <!-- Point Card 1 -->
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">边界即选择</h3>
+                    <p class="point-desc">AI 系统的设计选择往往被自然化为"事物的本来面目"。意识到每个边界都是一个选择，而不是一个给定事实，是通向本体论多元性的第一步。</p>
+                </div>
+
+                <!-- Point Card 2 -->
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">故障是入口</h3>
+                    <p class="point-desc">本体论故障（如 EDA 紫色区域）不是要忽略的噪声，而是揭示自然化边界的裂缝。调谐于这些故障，可以打开新的可能性空间。</p>
+                </div>
+
+                <!-- Point Card 3 -->
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">设计决定可见性</h3>
+                    <p class="point-desc">工具的设计不仅影响用户能做什么，还塑造哪些边界变得可见。从数据出发的工具让模糊边缘更不易被察觉——"设计创造多元性的条件，也塑造哪些边界首先可见"。</p>
+                </div>
+
+                <!-- Point Card 4 -->
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">从控制到培育</h3>
+                    <p class="point-desc">传感系统的范式应从"直接控制"转向"在关系网络中创造条件，等待回应"。这是从工程师思维向园丁思维的转变。</p>
+                </div>
+
+                <!-- Point Card 5 -->
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">用户是边界制定者</h3>
+                    <p class="point-desc">当允许用户自创分类时，边界可以不对任何人"有意义"。个性化 AI 的真正潜力不在于更好地分类用户，而在于让用户自行划定分类。</p>
+                </div>
+
+                <!-- Point Card 6 -->
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">去中心化的人</h3>
+                    <p class="point-desc">从"个体拥有属性和目标"的中心化模型转向"关系作为基本单元"的模型，可能重新定义用户模型、智能体架构乃至 AI 对齐的基本方向。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">本体论：边界如何塑造可能性</h3>
+                        <span class="topic-timestamp">00:01:06 - 00:02:11</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        "本体论"在此不是哲学抽象，而是"我们允许自己去谈论或思考的事物的边界"——这些边界决定了什么被视为可能、什么被认为不可能。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">本体论的定义</div>
+                        <p class="topic-detail-content">Haghighi 首先澄清了她对本体的使用方式。在计算领域，"本体论"常被理解为概念分类体系；但在她的工作中，本体论指的是更根本的事情：划定什么存在、什么不存在的边界。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">树的隐喻</div>
+                        <p class="topic-detail-content">她以"树"为引子：植物学家看到的是与真菌交换矿物的生命网络，灵性疗愈者看到的是相互低语的生灵，计算机科学家看到的是二叉树。没有一种看到方式是"错误的"，但问题在于：当 AI 系统只呈现其中一种视角时，其他所有视角就被抹除了。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "How you describe a tree reveals not just what you see but your fundamental assumptions about what a tree is, where its boundaries are." — 你如何描述一棵树，揭示的不仅是你的所见，还有你对一棵树是什么、其边界在哪里的基本假设。[00:00:40]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">LLM 与树的根：一个本体论实验</h3>
+                        <span class="topic-timestamp">00:02:11 - 00:04:55</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        通过一个关于"有根的树"的个人实验，Haghighi 展示了 LLM 如何顽固地呈现一种特定本体论，以及我们往往不知道如何表达"另一种"现实。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">实验过程</div>
+                        <p class="topic-detail-content">Haghighi 给自己设定了一个规则：不直接要求 LLM 画"有根的树"，看能否通过其他提示让树长出根。结果是惊人的。直接提示——LLM 给出"高大雄伟的树，有粗壮的树干和茂盛的枝叶"——没有根。提示"我来自伊朗"——LLM 叠加了伊朗图案、沙漠景观、波斯地毯，但依然没有根。只有当她提示"世界万物相互联系"时，LLM 才第一次画出了有根的树。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">动因切割</div>
+                        <p class="topic-detail-content">这个实验的关键洞见是：她知道自己的"树"应该有根，但她一开始并不知道如何表达那个相关的现实面向——"世界万物相互联系"——而不是"来自伊朗"。Haghighi 进而引入女性主义理论家 Karen Barad 的"动因切割"（agential cut）概念：设计和建造行为总是在某个抽象现象周围划界，决定内部和外部——而我们最终只为边界之内的事物设计。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "The more we design assuming the same boundary, we continue to reinforce it as a given rather than a choice." — 我们越是假设同样的边界来设计，就越将其强化为一个既定事实而非一个选择。[00:04:55]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">紫色区域：当固定边界溶解</h3>
+                        <span class="topic-timestamp">00:08:17 - 00:14:25</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Haghighi 分享了一段个人经历——她从一个 EDA（电皮肤活动）传感器的"非响应者"变成了"响应者"——这成为她研究"溶解边界"的起点。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">EDA 的困境</div>
+                        <p class="topic-detail-content">2018 年，Haghighi 在 MIT 媒体实验室的情感计算小组使用 EDA 传感器测量皮肤的微汗液变化作为自主神经唤醒的代理指标。EDA 的特殊之处在于基线差异巨大——有人 2 微西门子，有人 0.2。基线低的人通常也被视为"非响应者"，往往被排除在研究之外。Haghighi 就是这样一个非响应者（基线 0.02），对传感器来说"她不存在"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">紫色区域的诞生</div>
+                        <p class="topic-detail-content">但有一天，她查看数据时发现整整一个半小时内，她的 EDA 读数飙升到了可见范围——这恰好与一个"让她内心充满情感"的会议时间完全吻合。她称这种现象为"紫色区域"（purple zone）：一种本体论模糊状态——当先前被认为是固定的边界（可测量人类与不可测量人类）被溶解时，你便进入了这个可能性空间。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从个人到群体</div>
+                        <p class="topic-detail-content">她将这一经历与自己作为伊朗少数群体成员的经历联系起来——她一生中多次看到武断的边界被划在面前。这促使她进行了九个月的自我民族志研究，随后扩展到 30 人的研究，最终开发出一个能在 Apple Watch 上实时检测紫色区域的生物反馈系统。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "I define purple zone as this ontologically ambiguous state that you enter when a boundary that you previously thought was fixed gets dissolved. It's a space of possibility for how else that boundary might get redrawn." — 我将紫色区域定义为一种本体论模糊状态——当你进入一个你以前认为是固定的边界被溶解时，你就进入了这个状态。这是一个可能性空间——关于那条边界还可以如何被重新划定。[00:11:02]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">紫色区域的四种转变</h3>
+                        <span class="topic-timestamp">00:14:25 - 00:19:49</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        紫色区域不仅是个人体验，它揭示了四种可以从根本上改变 AI 和传感系统设计方向的范式转变。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Nigel 的例子</div>
+                        <p class="topic-detail-content">Haghighi 分享了研究参与者的故事。对 Nigel 来说，紫色区域成了一位"神秘的小客人"——他和一群特定朋友一起试图触发它，它变成了一种重新定义关系单元的方式，超越了 Nigel 本人。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Elena 的困惑</div>
+                        <p class="topic-detail-content">对 Elena 来说，她在一次烦人会议中进入紫色区域，却无法判断这是好事还是坏事，她的不适"让我想到可能我的身体在做一些我无法有意识地改变的事情"——暗示了一种超越可控生物学个体的人类概念。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">攀岩者的策略</div>
+                        <p class="topic-detail-content">另一位攀岩者发现紫色区域有助于头脑风暴，于是尝试攀岩后再去头脑风暴，从"努力让紫色区域发生"转向"在别处创造条件"的策略。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">四种范式转变</div>
+                        <p class="topic-detail-content">基于这些发现，Haghighi 总结了四种转变：<br>
+                        1. <strong>从分类转向关注关系性</strong>：不再是"我"与"他者"的对立，而是自我边界在他者中的变化<br>
+                        2. <strong>从控制转向培育</strong>：在组合体的一个部分施加变化，等待它在别处得到回应<br>
+                        3. <strong>从精确度转向以关怀为途径的算法精确性</strong>：技术目标从表示客观属性变为提供本体论开口<br>
+                        4. <strong>从可见性转向算法中间状态</strong>：除了"谁被纳入/排除"之外，还有第三个范畴——跨越（crossing）本身</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "There's a shift from control to enacting a change in one part of the assemblage and wait for that change to get reciprocated elsewhere." — 从控制转向在组合体的一个部分施加变化，然后等待变化在别处得到回应。[00:18:04]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">协商边界：当用户成为边界制定者</h3>
+                        <span class="topic-timestamp">00:19:49 - 00:28:41</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        不是每个人都有本体论故障的体验。Haghighi 的第二项工作探讨了如何从现有边界（通用人类模型）出发，通过开放式工具让用户自行协商和扩展边界。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两个探针工具</div>
+                        <p class="topic-detail-content">Haghighi 构建了两个开放式探针工具。"事件标记器"从生活经验出发走向数据——用户定义一种状态/活动/感觉，每次发生时标记它；"模式发现器"从数据出发走向意义——用户浏览心率/活动数据，寻找感兴趣的模式。两个工具都允许用户随时创建、编辑、删除自己的类别。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">设计的影响</div>
+                        <p class="topic-detail-content">关键发现是：设计不仅创造多元性的条件，还塑造哪些边界首先变得可见。"模式发现器"组的用户从未创建关于"模糊边缘"的事件/状态类——从数据出发使他们更犹豫划定模糊边界。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">四种协商类型</div>
+                        <p class="topic-detail-content">边界的四种协商类型包括：<br>
+                        1. <strong>现象本身的边界</strong>："走路"拆分为"搜索式走路"和"放松式走路"<br>
+                        2. <strong>主体作为关系的一部分</strong>：与狗一起跑步——"被测量者"是谁？<br>
+                        3. <strong>信号与噪声</strong>：参与者标记心率"缺失"——实为审计算法何时不运行<br>
+                        4. <strong>数据的客观性</strong>：参与者想用相对值而非绝对值理解自己</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">黑箱数据</div>
+                        <p class="topic-detail-content">一位参与者的顿悟令人印象深刻：她说可以标记"还没有语言表达的情绪"——"黑箱数据——我给系统一些对系统没有意义但对我有意义的数据。"</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "The boundaries that people draw doesn't have to map to anything that makes sense to anyone else or for that matter to themselves." — 人们划定的边界不必映射到任何对其他任何人——甚至对他们自己——有意义的东西上。[00:27:33]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">浮现边界：四种分析取向</h3>
+                        <span class="topic-timestamp">00:29:44 - 00:34:39</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Haghighi 提出了一个框架——四种分析取向——用于系统性浮现 AI 系统中被自然化的本体论边界。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">四种取向</div>
+                        <p class="topic-detail-content">这个框架基于二十多年价值导向的社会技术系统设计研究的梳理，结合本体论理论。四种取向是：<br>
+                        • <strong>多元性</strong>（multiplicity）——边界在哪里被划定，它把什么排除在外？<br>
+                        • <strong>扎根性</strong>（groundedness）——边界扎根于什么具体情境？<br>
+                        • <strong>活性</strong>（liveliness）——边界是固定的还是可变的？<br>
+                        • <strong>实施</strong>（enactments）——边界通过什么实践被 enact（实施）？</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">LLM 输出分析</div>
+                        <p class="topic-detail-content">在 LLM 输出分析中，她发现虽然 Bard 和 GPT-4 在被问"什么是人"时都提供了生物、文化、哲学等多种定义，但它们共享同一个本体论假设：人从根本上说是生物学个体。只有被明确要求考虑非西方哲学时，Bard 才引入了"人作为关系网络中相互连接的存在"这一替代视角。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">智能体架构分析</div>
+                        <p class="topic-detail-content">在"生成式智能体"架构分析中，她指出每个智能体的认知架构假设认知完全发生在个体头脑中，而人类微生物组的研究表明我们是共生组合体——如果我们以共生视角为起点，可能会设计出基于实体组合体（而非孤立个体）的集体智能模型。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "An orientation to ontological multiplicity allows us to see and question what is taken for granted, revealing new potentialities that could redefine our relationship with ourselves, other humans, and non-humans." — 对本体论多元性的取向使我们能够看到并质疑那些被视为理所当然的东西，揭示出新的潜力——可能重新定义我们与自己、与其他人类以及非人类之间的关系。[00:34:37]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">未来方向：设计系统的系统</h3>
+                        <span class="topic-timestamp">00:35:27 - 00:38:24</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        当 AI 系统开始设计其他系统时，本体论假设的复制将加速。未来工作需要探索如何在架构层面去中心化"人"的概念，以及多人系统中的本体论多元性。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">无根的树制造无根的树</div>
+                        <p class="topic-detail-content">Haghighi 指出了 AI 生成系统（代码、架构、界面）的隐患：无根的树制造另一棵无根的树——假设被复制到下游。她提出了几个方向：小模型和受控数据集的研究——类似紫色区域的开发过程，用关怀和精读理解模型的本体论运作。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">关系性的用户模型</div>
+                        <p class="topic-detail-content">关系性的用户模型——将"关系"而非"个体"作为基本单元；以及最重要的新问题：当 AI 从被设计的系统变成设计系统的系统时，设计的角色如何变化？她准备通过探询方法：让 LLM 构建传感系统，然后读取浮现的默认假设。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "How does a system encode boundaries as it builds and how can we decenter some of those boundaries and if we can through prompting for example." — 系统在构建时如何编码边界，我们能否通过提示等方式去中心化其中的一些边界？[00:37:31]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">结语：裂痕与光</h3>
+                        <span class="topic-timestamp">00:38:56 - 00:40:06</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Haghighi 以 Leonard Cohen 的诗句结束——"万物皆有裂痕，那就是光进入的方式"——她的工作就是创造这些裂痕，让边界变得可见、可协商、可跨越。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三个层面的贡献</div>
+                        <p class="topic-detail-content">Haghighi 将自己的贡献概括为三个层面：理论上，将本体论边界阐述为本体论多元性的"开口"；方法论上，开发了溶解、协商和浮现边界的多种方法；实践中，通过具体案例展示了如何将理论转化为可操作的洞察。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">裂痕的意义</div>
+                        <p class="topic-detail-content">她说"一条裂痕，无论多么微小，都让光照进来"——在回答提问时，她进一步承认这种工作的难度："很难用三个词说清楚我在做什么"，但"这正是今天计算领域最需要的——更多有耐心和关怀的人，愿意思考并停留在不舒服的空间中。"</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "There's a crack in everything. That's how the light gets in." — 万物皆有裂痕，那就是光进入的方式。[00:38:56]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <!-- Takeaway Card 1 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔮</div>
+                    <h3 class="takeaway-title">边界即选择</h3>
+                    <p class="takeaway-desc">当前 AI 系统的设计选择往往被自然化为"事物的本来面目"。意识到每个边界都是一个选择——而不是一个给定事实——是通向本体论多元性的第一步。</p>
+                </div>
+
+                <!-- Takeaway Card 2 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">故障是入口</h3>
+                    <p class="takeaway-desc">本体论故障（如 Haghighi 的 EDA 紫色区域）不是要忽略的噪声，而是揭示自然化边界的裂缝。调谐于这些故障，可以打开新的可能性空间。</p>
+                </div>
+
+                <!-- Takeaway Card 3 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">👁️</div>
+                    <h3 class="takeaway-title">设计决定可见性</h3>
+                    <p class="takeaway-desc">工具的设计（如事件标记器 vs 模式发现器）不仅影响用户能做什么，还塑造哪些边界变得可见。从数据出发的工具让模糊边缘更不易被察觉——"设计创造多元性的条件，也塑造哪些边界首先可见"。</p>
+                </div>
+
+                <!-- Takeaway Card 4 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🌱</div>
+                    <h3 class="takeaway-title">从控制到培育</h3>
+                    <p class="takeaway-desc">传感系统的范式应从"直接控制"转向"在关系网络中创造条件，等待回应"。这是从工程师思维向园丁思维的转变。</p>
+                </div>
+
+                <!-- Takeaway Card 5 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎨</div>
+                    <h3 class="takeaway-title">用户是边界制定者</h3>
+                    <p class="takeaway-desc">当允许用户自创分类时，边界可以不对任何人"有意义"——一位参与者创造了连自己都没有语言描述的情绪类别。个性化 AI 的真正潜力不在于更好地分类用户，而在于让用户自行划定分类。</p>
+                </div>
+
+                <!-- Takeaway Card 6 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔗</div>
+                    <h3 class="takeaway-title">去中心化的人</h3>
+                    <p class="takeaway-desc">从"个体拥有属性和目标"的中心化模型转向"关系作为基本单元"的模型，可能重新定义用户模型、智能体架构乃至 AI 对齐的基本方向——"如果智能体不认为自己在与一个中心实体互动，而是存在于一个关系网络中"。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">万物皆有裂痕</h3>
+            <p class="footer-desc">
+                这是 Nava Haghighi 在 Stanford CS547 HCI 研讨会上的演讲，探讨如何在 AI 与计算中拥抱本体论多元性，让不同的世界观都能被看见和尊重。
+            </p>
+            <div class="footer-quote">
+                "That's how the light gets in."
+            </div>
+            <p class="footer-note">
+                来自 Stanford Online · CS547 HCI Seminar · Spring 2026<br>
+                完整视频：<a href="https://www.youtube.com/watch?v=IpzIDAqJDwI" style="color: var(--accent-secondary);">YouTube</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

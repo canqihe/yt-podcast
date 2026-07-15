@@ -1,6 +1,66 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/anthropic-platform-ecosystem.html",
+    card_class: "card-ai",
+    category: "Sequoia Capital · AI · 平台 · 开发者生态",
+    date: "2026-07-14",
+    title: "Anthropic 的平台哲学：构建生态系统而非围墙花园 | Katelyn Lesse & Angela Jiang",
+    excerpt:
+      "平台团队负责人 Katelyn Lesse 与 Angela Jiang 深度解析 Anthropic 的三层抽象框架（知识→执行→协调）、开放生态策略与智能体架构未来。不执着于「围墙花园」，而是让架构健全比基础设施归属更重要。「电力之所以变革，是因为每个人都能接入」——这是开放生态的核心理念。",
+    tags: ["#AI平台", "#开发者生态", "#智能体架构"],
+  },
+  {
+    url: "articles/ai-extinction-risk-daniel-kokotajlo.html",
+    card_class: "card-ai",
+    category: "The Diary Of A CEO · AI · 安全 · 未来预测",
+    date: "2026-07-14",
+    title: "他赌上一切警告你：AI 70% 概率导致灭绝 | Daniel Kokotajlo",
+    excerpt:
+      "前 OpenAI 研究员 Daniel Kokotajlo 放弃 200 万美元股权，只为能自由发声。他揭示了自己为何认为 AI 导致人类灭绝的概率高达 70%，超级智能为何可能在本十年末到来，以及他认为尚可拯救我们的唯一计划。",
+    tags: ["#AI安全", "#超级智能", "#OpenAI"],
+  },
+  {
+    url: "articles/stanford-ontological-multiplicity-ai.html",
+    card_class: "card-ai",
+    category: "Stanford Online · HCI · AI · 本体论",
+    date: "2026-07-14",
+    title: "走向 AI 与计算中的本体论多元性 — Nava Haghighi (斯坦福 CS547 HCI)",
+    excerpt:
+      "斯坦福博士生 Nava Haghighi 深度探讨 AI 系统中被自然化的本体论边界：从 EDA 传感器的紫色区域到用户自创分类的协商边界，再到四种分析取向框架。「万物皆有裂痕，那就是光进入的方式」——通过溶解、协商、浮现边界，让 AI 容纳不止一种世界观。",
+    tags: ["#本体论", "#HCI", "#AI伦理"],
+  },
+  {
+    url: "articles/palantir-lonsdale-ai-investment.html",
+    card_class: "card-finance",
+    category: "Bloomberg Tech · AI · 国防科技 · 风险投资",
+    date: "2026-07-14",
+    title: "AI 投资热潮 — Palantir 联合创始人 Joe Lonsdale 深度拆解",
+    excerpt:
+      "Palantir 联合创始人、8VC 管理合伙人 Joe Lonsdale 谈 AI 时代的核心命题：美国如何在与中国的科技竞赛中保持领先，生物技术领域的「无声失守」有多严重，五角大楼的文化正在发生怎样的深层变革，以及那些能实现每季度收入翻倍的 AI 公司究竟做对了什么。",
+    tags: ["#国防科技", "#VC投资", "#中美竞争"],
+  },
+  {
+    url: "articles/stanford-ghodsi-ai-supercycle.html",
+    card_class: "card-ai",
+    category: "Stanford Online · AI · 企业AI · SaaS",
+    date: "2026-07-14",
+    title: "AGI 已来 — Databricks CEO 谈 AI 落地瓶颈",
+    excerpt:
+      "当全世界追逐超级智能时，Ali Ghodsi 的断言振聋发聩：模型已经够聪明了，但组织上下文的缺失让 AI 在企业中形同废物。从「连接器」案例到「从发电机到计算机」的历史启示，一个关于 AI 落地真正瓶颈的深度对话。",
+    tags: ["#AGI", "#企业AI", "#组织变革"],
+  },
+  {
+    url: "articles/allin-trillion-dollar-ai-voice-law.html",
+    card_class: "card-ai",
+    category: "All-In Podcast · AI · 语音 · 法律",
+    date: "2026-07-14",
+    title: "AI 颠覆万亿产业：语音、法律与计费时代终结",
+    excerpt:
+      "ElevenLabs 用40个月做到6亿美元ARR、Legora 12天完成并购尽调。两位AI创业者深度揭示：当AI从「帮人做事」变为「能做事」，语音交互心理拐点已过、法律行业96%仍是手工、窄模型策略胜过通用模型——哪些万亿美元产业会被连根拔起。",
+    tags: ["#AI语音", "#法律科技", "#创业"],
+  },
+  {
     url: "articles/deep-tech-shallow-markets.html",
     card_class: "card-finance",
     category: "世界经济论坛 · AI · 深度科技 · 投资",

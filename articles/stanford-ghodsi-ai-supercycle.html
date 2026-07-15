@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <title>AGI 已来 — Databricks CEO 谈 AI 落地瓶颈</title>
+    <style>
+        /* ========== Design Tokens ========== */
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-card: #141416;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            /* 配色方案：蓝粉 */
+            --accent-primary: #ff4081;
+            --accent-secondary: #3b82f6;
+            --accent-primary-rgb: 255, 64, 129;
+            --accent-secondary-rgb: 59, 130, 246;
+            --border: #2a2a2e;
+            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            --font-size-hero: clamp(48px, 10vw, 120px);
+            --font-size-section: clamp(32px, 5vw, 56px);
+            --font-size-topic: clamp(24px, 4vw, 36px);
+            --font-size-number: clamp(64px, 15vw, 120px);
+            --font-heavy: 800;
+            --letter-spacing-tight: -0.03em;
+            --line-height-tight: 0.95;
+            --card-padding: 40px;
+            --radius-lg: 16px;
+            --radius-pill: 100px;
+            --transition-fast: 0.3s ease;
+            --hover-lift: translateY(-4px);
+            --gradient-accent: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+        }
+
+        /* ========== Reset ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ========== Scrollbar ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-primary);
+        }
+
+        /* ========== Container ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/stanford-ghodsi-ai-supercycle-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 0;
+        }
+
+        /* ========== Badge ========== */
+        .badge-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .badge:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* ========== Title ========== */
+        .title {
+            font-size: var(--font-size-hero);
+            font-weight: var(--font-heavy);
+            line-height: var(--line-height-tight);
+            letter-spacing: var(--letter-spacing-tight);
+            margin-bottom: 24px;
+        }
+
+        .title-line-1 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-line-2 {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== Subtitle ========== */
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        /* ========== Meta Grid ========== */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .meta-item {
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        /* ========== CTA Button ========== */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--gradient-accent);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 16px;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 20px rgba(var(--accent-primary-rgb), 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(var(--accent-primary-rgb), 0.5);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== Section ========== */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            font-size: var(--font-size-section);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 64px;
+        }
+
+        /* ========== Points Grid ========== */
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* ========== Point Card ========== */
+        .point-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .point-card:hover {
+            border-color: var(--accent-primary);
+            transform: var(--hover-lift);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .point-card:hover::before {
+            opacity: 1;
+        }
+
+        .point-number {
+            font-size: 48px;
+            font-weight: var(--font-heavy);
+            color: var(--border);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .point-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-primary);
+        }
+
+        .point-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ========== Topic ========== */
+        .topic {
+            margin-bottom: 80px;
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .topic-number {
+            font-size: var(--font-size-number);
+            font-weight: var(--font-heavy);
+            line-height: 1;
+            background: var(--gradient-number);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .topic-info {
+            flex: 1;
+            padding-top: 16px;
+        }
+
+        .topic-title {
+            font-size: var(--font-size-topic);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .topic-timestamp {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--accent-secondary);
+        }
+
+        .topic-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--card-padding);
+            margin-left: clamp(40px, 10vw, 120px);
+        }
+
+        .topic-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-primary);
+        }
+
+        .topic-core-point {
+            font-size: 18px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .topic-detail {
+            padding-left: 24px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .topic-detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .topic-detail-content {
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--accent-primary);
+            padding: 24px;
+            background: rgba(var(--accent-primary-rgb), 0.05);
+            margin: 24px 0;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-primary);
+        }
+
+        .thought-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .thought-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        /* ========== Takeaways ========== */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .takeaway-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-fast);
+        }
+
+        .takeaway-card:hover {
+            border-color: var(--accent-secondary);
+            transform: var(--hover-lift);
+        }
+
+        .takeaway-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .takeaway-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .takeaway-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: var(--font-heavy);
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .footer-quote {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: var(--font-heavy);
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 48px 0;
+            line-height: 1.2;
+        }
+
+        .footer-note {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Divider ========== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .point-card,
+        .takeaway-card,
+        .topic {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .point-card.animate-in,
+        .takeaway-card.animate-in,
+        .topic.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; transition-delay: 0.4s; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .topic-content {
+                margin-left: 0;
+            }
+
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .meta-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">Stanford Online</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">AGI 已来</span>
+                    <span class="title-line-2">Databricks CEO 谈 AI 落地瓶颈</span>
+                </h1>
+                <p class="subtitle">
+                    当全世界追逐超级智能时，Ali Ghodsi 的断言振聋发聩：模型已经够聪明了，但组织上下文的缺失让 AI 在企业中形同废物。一个 Databricks 内部"连接器"案例，彻底揭示了 AI 落地的最大障碍。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Apoorv Agrawal</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Ali Ghodsi</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 39 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=sRvrXL83N-c" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心洞察</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">AGI 已来，不必焦虑</h3>
+                    <p class="point-desc">模型已比多数人聪明，追逐"超级智能"是不必要的幻象。按 2009 年的标准，我们早就达到了 AGI。真正的瓶颈不在模型能力，而在组织上下文的缺失。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">上下文是 AI 落地的真正瓶颈</h3>
+                    <p class="point-desc">每个组织里都有那个"去问 John"的关键人物，他脑子里的隐性知识——客户关系、历史决策、流程变通——完全没有被注入 AI。没有这些上下文，模型再聪明也是废物。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">"软件已死"是伪命题</h3>
+                    <p class="point-desc">如果软件真死了，OpenAI、Anthropic、Nvidia 都应该是死公司。真正发生的是进入壁垒和转换成本的下降——但软件本身不会消亡。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">连接器案例：流程重组 > AI</h3>
+                    <p class="point-desc">Databricks 从 9 个月建一个连接器到一个季度交付 7 个，核心改变不是 AI，而是重新布线组织流程——需求从一季压到一周、外包环境搭建、消除巴士因子。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">价值永远向上移动</h3>
+                    <p class="point-desc">IBM→Microsoft→VMware→应用层，价值始终在向上游迁移。AI 堆栈的最终赢家是应用层，不是芯片或基础设施。开源前沿模型差距已缩至一个月。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">医疗与教育：万亿赛道</h3>
+                    <p class="point-desc">这两个领域具备数据护城河、规模经济、赢家通吃和极高支付意愿。Ghodsi 认为它们是 AI 时代最被低估的投资方向。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">时代焦虑与 AGI 的现实</h3>
+                        <span class="topic-timestamp">00:00 - 00:05:00</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        世界对 AI 的焦虑过度了。人们追逐"超级智能"的幻象，却忽略了我们已经拥有了 AGI 的事实——真正的问题不在模型能力，而在数据上下文。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">过度焦虑的现实</div>
+                        <p class="topic-detail-content">Ghodsi 认为当前时代的过度焦虑完全没有必要——压力让人做出愚蠢的决定：追逐 Twitter 上的热点、产生隧道视野、无法专注于真正重要的事情。他分享了一个生动的例子：每年 Databricks 实习生交流会上，22 岁的孩子已经在担心"延迟六个月创业是否这辈子就完了"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AGI 已经实现的三个理由</div>
+                        <p class="topic-detail-content">第一，"超级智能"从未被明确定义，它更像 Kurzweil 式的奇点神话；第二，按 2009 年 AMPLab 研究员的标准，AGI 已被全面超越；第三，AGI 的门槛总在被移动——数不清 strawberry 里的 R 不应该成为否定 AGI 的理由。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">逻辑推论</div>
+                        <p class="topic-detail-content">既然模型已经足够聪明，花巨资购买 GPU、建设数据中心，在模型能力层面继续疯狂投入就变得不那么必要了。问题已经不在"大脑"，而在"身体"。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "我们已经有 AGI，它已经比你接触的很多人更聪明。但总有人移动球门柱。" — Ali Ghodsi [00:03:28]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AGI 已来却没人用：上下文的缺失</h3>
+                        <span class="topic-timestamp">00:05:00 - 00:07:11</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        模型缺乏组织内部的上下文——那些资深员工 10-40 年积累的隐性知识——因此无法真正用于实际工作。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">MIT 报告 vs. 现实</div>
+                        <p class="topic-detail-content">95% 的 AI 项目失败——MIT 技术报告的数据。企业内部没有"智能体同事"在各处高效运作。就像电影《上班一条虫》里那样，人类还在手动整理 TPS 报告。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"John"或"Jane"效应</div>
+                        <p class="topic-detail-content">每个组织里都有一个在公司待了 10-40 年的关键人物。失去了这个人，整个部门都可能瘫痪。这个人脑子里的隐性知识——客户关系的细微之处、历史决策的背景——完全没有被注入 AI。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">务实的建议</div>
+                        <p class="topic-detail-content">Ghodsi 给学生的建议非常直接：如果你想让世界变得更好，找到方法把组织中的上下文注入 AI。改造传统业务，把流程转移到智能体里。你会产生巨大的影响——因为 AGI 已经在这里了。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "如果你想让世界变得更好，找到方法把组织中的上下文注入 AI。改造传统业务，把流程转移到智能体里。你会产生巨大的影响——因为 AGI 已经在这里了。" [00:06:17 → 00:07:11]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">"软件已死"的反驳</h3>
+                        <span class="topic-timestamp">00:07:28 - 00:10:03</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        "软件已死"是一个被说烂了的周期性叙事。如果软件真的死了，那 OpenAI、Anthropic 和 Nvidia 这些软件驱动的公司也应该是死的——但这显然不是事实。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">归谬法反驳</div>
+                        <p class="topic-detail-content">如果所有软件都死了，OpenAI 和 Anthropic 也不过是写软件的研究员——它们也应该死，但它们的估值高达万亿美元。Nvidia 也只是聪明人用软件做芯片设计，然后把设计发给台积电——按此逻辑，这家全球最有价值的公司也是死的。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">进入壁垒下降</div>
+                        <p class="topic-detail-content">写软件比以往任何时候都更便宜、更容易。但这个武器对所有玩家平等开放，包括现有的软件巨头。至少目前还看不到有人用它替换掉核心软件。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">转换成本下降</div>
+                        <p class="topic-detail-content">如果未来你只是跟智能体对话，不管你用的是 Android 还是 iPhone、Gmail 还是 Outlook——谁在乎底层是哪个软件？这一变化将打破许多传统软件企业的锁定效应。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">真正的护城河不止是软件</h3>
+                        <span class="topic-timestamp">00:10:34 - 00:12:50</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        软件不是唯一的护城河。规模经济、品牌、信任、数据等传统壁垒依然有效。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">多重护城河</div>
+                        <p class="topic-detail-content">Ghodsi 推荐了 Hamilton Helmer 的《七力》：规模经济（Amazon AWS）、品牌（法拉利、劳力士）、信任与安全（安全认证、专利）、数据（别人没有的特殊数据——AI 时代最强大的护城河）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">10 年分水岭</div>
+                        <p class="topic-detail-content">如果一个公司 10 年来没有创新，软件跟 10 年前一模一样，但收入一直在涨——它应该感到恐惧。进入壁垒已经降低，今天的新公司可以快速写出更好的产品。而那些持续创新或现在振作起来的公司会没事。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "如果一个公司 10 年没有创新，软件看起来跟 10 年前一样，但收入一直在涨——他们应该担心。" [00:12:02]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 落地的"锯齿形前沿"</h3>
+                        <span class="topic-timestamp">00:13:48 - 00:16:28</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 在某些领域极强（如代码生成），但在大多数真实企业场景中仍然很弱——瓶颈仍然是上下文。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Databricks 客服的困境</div>
+                        <p class="topic-detail-content">客户是聪明的数据科学家，遇到模型训练问题打来客服。Ghodsi 坦言，他们尝试了市面上所有的客服自动化产品——无一奏效。但解决方案很清晰：如果 AI 能拥有支持工程师的上下文，它就能做到。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">核心洞见</div>
+                        <p class="topic-detail-content">你的 AI 战略从你的数据战略开始。你必须先铺好路，让数据流动起来。没有数据上下文，再强的模型也发挥不了作用。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">重新布线：连接器案例</h3>
+                        <span class="topic-timestamp">00:16:28 - 00:24:45</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 落地的最大障碍不是模型能力，而是组织流程需要"重新布线"。Databricks 内部的真实案例完美说明了这一点。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">《从发电机到计算机》的启示</div>
+                        <p class="topic-detail-content">1990 年斯坦福研究员的经典文章：电动机出现后工厂只是替换蒸汽机，没有效率提升。直到 40 年后的 1920 年人们才意识到需要彻底改变工厂布局。同样的故事正在 AI 时代重演。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第一轮：AI 只压缩了 1.5 个月</div>
+                        <p class="topic-detail-content">Databricks 团队说构建一个生产级连接器需要 9 个月。Ghodsi 试验后觉得两天就能搞定。团队研究两个月后回复：AI 有用——从 9 个月压缩到 7.5 个月。令人哭笑不得的进步。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第二轮：第一性原理重塑流程</div>
+                        <p class="topic-detail-content">一位"第一性原理"同事发现瓶颈不在代码而在流程：需求收集花一个季度、环境搭建慢且易错、一人负责容易停摆。解决方案：需求从一季压到一周、外包环境搭建并行处理、七人共同负责消除巴士因子。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "这跟 AI、AGI、更智能的模型或者超级智能没有任何关系。就算你有 GPT-7 或 Opus-6，也不会帮我们做得更好。我们需要的是做出那些改变——人类的重新架构问题和流程变革。" [00:24:03 → 00:24:45]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">价值流向何处：AI 投资分配</h3>
+                        <span class="topic-timestamp">00:24:45 - 00:32:25</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 堆栈的价值最终会流向应用层，而不是基础设施层——因为所有价值永远在向上移动。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">互联网时代的教训</div>
+                        <p class="topic-detail-content">Ghodsi 读博时做的是多播问题——所有最聪明的人都在研究。然后带宽成本暴跌，整个方向完全失效。今天没人知道什么是多播问题。最成功的互联网创新来自出租车（Uber）、卖书（Amazon）、出租卧室（Airbnb）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">医疗与教育的万亿机会</div>
+                        <p class="topic-detail-content">医疗占美国 GDP 17%，人们愿意为健康付出一切。教育是关系文化价值观的核心话题。两家公司如果做得好，都可能成为万亿市值公司，拥有数据护城河和规模经济。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">开源的定价压力</div>
+                        <p class="topic-detail-content">Kimi 2.6 被称为"人类历史上最好的模型"，开源与前沿模型的差距已缩至一个月。前沿模型的业务最终会变成微利规模游戏——毛利率极低，只能靠规模生存。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "当时最热门的是 Nvidia、OpenAI、Anthropic、DeepMind。但互联网时代最后成功的是那些奇怪的东西。" [00:27:45]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">快问快答与职业建议</h3>
+                        <span class="topic-timestamp">00:34:51 - 00:39:06</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        好主意极其难得。不要被恐慌和热点左右，做有长期影响力的事情。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">日常 AI 工具</div>
+                        <p class="topic-detail-content">Ghodsi 喜欢 Cursor（Elon 收购前），最常用的其实是 Databricks 的 Genie——因为 CEO 的决策大多涉及数值分析和时间序列数据。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">不要被恐慌营销影响</div>
+                        <p class="topic-detail-content">Ghodsi 坦诚自己读博时也极其焦虑——以为互联网正在颠覆一切，在解决"全世界最重要的多播问题"——结果证明那根本不是一个真实的问题。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">好主意需要时间</div>
+                        <p class="topic-detail-content">Airbnb 本可以在 2001 年就成立——互联网条件都具备了——但直到 2009 年 Brian Chesky 才因为会议住宿困扰想到这个主意。用了 9 年。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">学习 Jeff Bezos 的模式</div>
+                        <p class="topic-detail-content">他在华尔街放大视野，看到"最大的趋势是互联网"——然后做长期世俗赌注，从最无聊的商品（书）开始。每年这个趋势都更正确，最终成为"万物商店"。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "放松，采取长期视角，做你认为有长期积极影响的事情。不要被 Twitter 上大家都在嚷嚷的最酷的东西左右——因为它很可能是另一个多播问题。" [00:37:35]
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧠</div>
+                    <h3 class="takeaway-title">认知升级：AGI 已来 ≠ AI 已落地</h3>
+                    <p class="takeaway-desc">模型能力已经足够，但组织上下文的缺失是 AI 落地的真正瓶颈。我们需要解决的是"碳基到硅基的对接"，而非追求更强的模型。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔧</div>
+                    <h3 class="takeaway-title">先重构流程，再引入 AI</h3>
+                    <p class="takeaway-desc">Databricks 连接器案例清晰说明：AI 的价值最大化的前提是组织流程的"重新布线"。先解决人的问题和流程问题，再让 AI 赋能——顺序不能颠倒。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⏱️</div>
+                    <h3 class="takeaway-title">关键数据：40 年</h3>
+                    <p class="takeaway-desc">从电动机到工厂真正释放生产力，用了 40 年。Ghodsi 认为 AI 的生产力释放也需要类似的"重新布线"周期，而非一蹴而就。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📈</div>
+                    <h3 class="takeaway-title">价值永远向上移动</h3>
+                    <p class="takeaway-desc">从 IBM 到微软到 VMware 再到应用层，科技价值始终在向上游移动。AI 时代的最大赢家不会是芯片或基础设施公司，而是那些在应用层创造价值的玩家。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">不要追逐热点 Twitter 话题</h3>
+                    <p class="takeaway-desc">Ghodsi 的"多播问题"教训：所有聪明人投入的大方向，可能是完全错误的。独立思考、长期视角、朴素的世俗趋势判断胜过追逐噪音。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💰</div>
+                    <h3 class="takeaway-title">医疗与教育：AI 时代最被低估的赛道</h3>
+                    <p class="takeaway-desc">这两大领域具备数据护城河、规模经济、赢家通吃和极高的用户支付意愿——可能是下一批万亿市值公司的摇篮。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">Stanford MS&E435 — AI 超级周期经济学</h3>
+            <p class="footer-desc">
+                2026 春季课程，探讨 AI 基础设施、企业 AI 和 SaaS 的未来。由 Stanford 客座讲师 Apoorv Agrawal 主持。
+            </p>
+            <div class="footer-quote">
+                "我们已经有了 AGI，但组织的重新布线才刚刚开始。"
+            </div>
+            <p class="footer-note">
+                来源：Stanford Online · YouTube · 时长约 39 分钟<br>
+                嘉宾：Ali Ghodsi（Databricks CEO）· 主持：Apoorv Agrawal
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
