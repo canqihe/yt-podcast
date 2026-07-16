@@ -1,6 +1,16 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/openai-sachin-katti-industrial-compute.html",
+    card_class: "card-tech",
+    category: "The MAD Podcast · AI · 工业算力 · 基础设施",
+    date: "2026-07-16",
+    title: "OpenAI 算力负责人：我们建得不够快 | Sachin Katti",
+    excerpt:
+      "当市场争论 AI 是否过度建设时，OpenAI 工业算力负责人 Sachin Katti 给出相反答案：更大的风险是建得不够快。从「电子→Token」工厂、液冷与电网，到 Jalapeño 自研芯片、Stargate 伞战略与保障容量——物理世界如何卡住智能上限。",
+    tags: ["#工业算力", "#OpenAI", "#数据中心"],
+  },
+  {
     url: "articles/anthropic-platform-ecosystem.html",
     card_class: "card-ai",
     category: "Sequoia Capital · AI · 平台 · 开发者生态",
