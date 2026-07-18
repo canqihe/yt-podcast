@@ -1,6 +1,16 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/kimi-k3-china-frontier-model.html",
+    card_class: "card-ai",
+    category: "SemiAnalysis · AI · 中国 · 开源",
+    date: "2026-07-18",
+    title: "Kimi K3 到来：中国前沿模型如何改变 AI 格局",
+    excerpt:
+      "2.8 万亿参数开源模型全面超越 Gemini，三巨头格局彻底改变。SemiAnalysis 紧急拆解 K3 的真正实力、闭源模型惊人利润率、开源追赶闭源的底层逻辑，以及国产芯片生态的国家级战略。",
+    tags: ["#KimiK3", "#开源AI", "#中国芯片"],
+  },
+  {
     url: "articles/openai-sachin-katti-industrial-compute.html",
     card_class: "card-tech",
     category: "The MAD Podcast · AI · 工业算力 · 基础设施",
