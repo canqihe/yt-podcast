@@ -1,6 +1,16 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/inference-101-sambanova-ceo-rodrigo-liang.html",
+    card_class: "card-tech",
+    category: "Sourcery · AI · 芯片 · 推理",
+    date: "2026-07-18",
+    title: "Inference 101: SambaNova CEO 揭示推理芯片的未来 | Rodrigo Liang",
+    excerpt:
+      "用 10 千瓦风冷机架跑赢 140 千瓦 Nvidia GPU 集群。从 SN10 到 SN50 的六代芯片演进，万亿参数模型单机架运行的工程突破，智能体时代的延迟战争，以及为什么「tokenmaxxing」是错误的 AI 投资策略。",
+    tags: ["#推理芯片", "#SambaNova", "#数据中心"],
+  },
+  {
     url: "articles/kimi-k3-china-frontier-model.html",
     card_class: "card-ai",
     category: "SemiAnalysis · AI · 中国 · 开源",

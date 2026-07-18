@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <title>Inference 101: SambaNova CEO Rodrigo Liang | 推理芯片的未来</title>
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <!-- 配色方案：紫黄 -->
+    <style>
+        :root {
+            --accent-primary: #a855f7;
+            --accent-secondary: #FFC107;
+            --accent-primary-rgb: 168, 85, 247;
+            --accent-secondary-rgb: 255, 193, 7;
+        }
+
+        /* 覆盖 header 背景图片 */
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/sambanova-rodrigo-liang-inference-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">AI 推理芯片</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">SambaNova CEO</span>
+                    <span class="title-line-2">揭示推理芯片的未来</span>
+                </h1>
+                <p class="subtitle">
+                    用 10 千瓦风冷机架跑赢 140 千瓦 Nvidia GPU 集群。从 SN10 到 SN50 的六代芯片演进，万亿参数模型单机架运行的工程突破，智能体时代的延迟战争，以及为什么「tokenmaxxing」是错误的 AI 投资策略。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Molly O'Shea</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Rodrigo Liang</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 60 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=etod19D9IEg" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心洞察</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">推理规模</h3>
+                    <p class="point-desc">推理所需的芯片数量将比训练高出几个数量级。大多数企业还未意识到这一差距，先行布局推理基础设施的公司将获得长期竞争优势。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">智能体延迟</h3>
+                    <p class="point-desc">智能体时代将延迟要求从秒级压缩到百毫秒级。一个 20 步的智能体编排链，每个环节响应时间必须低于 0.1 秒——否则用户就会放弃。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">最小量子</h3>
+                    <p class="point-desc">SambaNova 将推理部署的「最小量子」压缩到单个机架。这使推理服务商可以从小规模起步，随着用户增长灵活扩展。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">竞合策略</h3>
+                    <p class="point-desc">SambaNova 与 Nvidia 并非简单的替代关系。将推理流量路由到 SambaNova、释放 Nvidia 机架用于更高价值的工作，是提升利润率的有效策略。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">回归本地</h3>
+                    <p class="point-desc">数据隐私担忧正在驱动从云端到本地的长期周期逆转。「主权 AI」正在成为全球趋势，这将在企业级创造新的硬件需求。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">差异化至上</h3>
+                    <p class="point-desc">AI 能否创造竞争优势，取决于你是否能用它做出别人做不到的事。使用和竞争对手完全相同的模型，不可能产生差异化。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">SambaNova 的 10 亿美元融资</h3>
+                        <span class="topic-timestamp">00:00 - 03:00</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        SambaNova 以 110 亿美元估值完成首轮 10 亿美元融资，标志着资本市场对 AI 推理芯片赛道的信心达到了前所未有的高度。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">融资背景</div>
+                        <p class="topic-detail-content">Rodrigo Liang 已在芯片行业深耕 32 年，本轮融资由 General Atlantic 领投，Seligman Ventures、T. Rowe Price 和 Capital Group 等顶级投资机构参投。值得注意的是，这些全部是美国主流投资机构，而非「热钱」。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">资本逻辑</div>
+                        <p class="topic-detail-content">Liang 强调，资本的涌入反映了市场的基本判断：芯片正处于 AI 变革的中心。大规模 AI 部署离不开高效运行的芯片，而 SambaNova 提供的是传统 GPU 难以实现的推理规模化方案。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">融资规模</div>
+                        <p class="topic-detail-content">SambaNova 历史上累计融资 25 亿美元——达到这一级别的芯片公司屈指可数。Liang 认为，能融到这么多钱本身就说明投资者相信这家公司会成为长期的行业参与者。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「I've been in this industry for 32 years, building high performance chips for a long time. I've never seen the interest in semiconductors higher.」<br>
+                        ——「我在这个行业 32 年了，从未见过半导体行业的兴趣如此高涨。」[00:02:09]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">从训练到推理：被忽视的更大挑战</h3>
+                        <span class="topic-timestamp">03:00 - 04:52</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 行业的焦点正在从训练转向推理，而推理对芯片的需求在数量级上将远超训练。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">推理的类比</div>
+                        <p class="topic-detail-content">Liang 用一个简单类比说明了推理的重要性：你发明了一个搜索算法但从不进行搜索，那有什么意义？同样，训练模型而不去使用它，也是没有意义的。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">历史演变</div>
+                        <p class="topic-detail-content">2017 年 SambaNova 创立时，行业焦点是训练——能否用更少的芯片更快地训练模型？当时的应用场景也很基础：图像识别（区分猫和狗）、语音识别与生成。推理还「不是问题」，因为使用模型的人很少。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">当前挑战</div>
+                        <p class="topic-detail-content">随着 Anthropic、OpenAI 和 Gemini 的规模化，每天有数百万人在使用 AI。大规模推理带来了三个核心约束：能耗（不能「烧掉地球」）、空间（数据中心容量有限）、成本（基础设施不能爆炸式增长）。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「At scale, the number of chips deployed for inferencing will be orders of magnitude greater than whatever you're doing for training.」<br>
+                        ——「在大规模部署下，用于推理的芯片数量将比训练多出几个数量级。」[00:04:37]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">从 SN10 到 SN50：六代芯片的推理进化论</h3>
+                        <span class="topic-timestamp">04:52 - 07:19</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        SambaNova 七年六代芯片的演进历程，就是从训练优先到推理优先的战略转向，其核心技术突破体现在功耗、性能和部署便利性三个维度。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">芯片节奏</div>
+                        <p class="topic-detail-content">SambaNova 在七年中完成了六代芯片的「流片」（tape out），第七代将于明年推出。这个节奏在半导体行业堪称激进。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从训练到推理</div>
+                        <p class="topic-detail-content">早期芯片 SN10 和 SN20 专注于训练——目标是「用更少的芯片更快地训练模型」。但 Liang 敏锐地发现，更大挑战是训练之后的推理。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">SN40 的突破</div>
+                        <p class="topic-detail-content">SN40 创造了令行业震惊的数据：<strong>一个 10 千瓦的 SN40 风冷机架，性能超越了 130-140 千瓦的 Nvidia GPU 机架</strong>。三个颠覆性特征：风冷（无需液冷升级）、极致能效（功耗仅为竞争对手的十分之一）、超高密度（万亿参数模型单机架运行）。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「Instead of a 130-140 kilowatt rack of Nvidia GPU, we were outperforming them with a 10 kilowatt SN40 rack.」<br>
+                        ——「相比一个 130-140 千瓦的 Nvidia GPU 机架，我们用一个 10 千瓦的 SN40 机架就能超越其性能。」[00:05:50]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">一个机架运行万亿参数模型：推理的「最小量子」革命</h3>
+                        <span class="topic-timestamp">07:19 - 11:00</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        SambaNova 将推理部署的最小单位从几十个机架压缩到一个机架，这从根本上改变了 AI 基础设施的部署逻辑。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">训练 vs 推理的物理特性</div>
+                        <p class="topic-detail-content">在训练场景中，你需要将数千颗 GPU 聚合在一起协同工作，需要昂贵的超高性能网络设备，且任何一个节点故障整个集群就失败。推理是向外扩展（scale out）的：随着用户增长增加机架即可。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">DeepSeek 的案例</div>
+                        <p class="topic-detail-content">以 DeepSeek（1.5 万亿参数）为例：在其他服务商那里，运行这个模型至少需要 10-20 个机架；在 SambaNova，<strong>一个机架就够了</strong>。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">部署优势</div>
+                        <p class="topic-detail-content">资本效率（起步成本从 20 个机架降到 1 个）、部署灵活性（可进入没有千兆瓦供电的环境）、低延迟优势（在大城市部署小型集群）、标准化基础设施（标准 19 英寸机架、标准风冷、标准 Kubernetes）。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「We could take a trillion parameter model and run it in a single rack where it would take dozens of racks of other people's equipment to run the same model.」<br>
+                        ——「我们可以把万亿参数模型放在单个机架上运行，而如果用其他人的设备，则需要几十个机架才能运行同样的模型。」[00:06:23]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">智能体时代：为什么延迟从「可以接受」变成「生死攸关」</h3>
+                        <span class="topic-timestamp">11:00 - 14:14</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        智能体的多步骤编排将延迟要求提升了两个数量级——单个模型调用延迟 2 秒尚可接受，但 20 个智能体串行调用就会让用户彻底放弃。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">思想实验</div>
+                        <p class="topic-detail-content">在传统单模型交互中，2 秒响应完全可接受（你读输出都需要更久）。但在智能体世界中，你的一个提示可能触发 20 个智能体相互通信和编排。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">延迟爆炸</div>
+                        <p class="topic-detail-content">如果每个智能体耗时 2 秒，20 个就是 <strong>40 秒</strong>——用户早就放弃了。用户的期望响应时间是 1-2 秒，分摊到 20 个智能体，<strong>每个不超过 0.1 秒</strong>。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">硬件部署策略</div>
+                        <p class="topic-detail-content">你不能依赖偏远地区的大型数据中心——必须把计算放在用户所在的大城市，靠近商业活动发生的地方。而大城市没有建设千兆瓦数据中心的物理空间，这意味着中等规模、分布式部署将成为主流。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「In the world of agents, these agents are orchestrating within themselves without us. If each of them takes two seconds to respond, now I got 40 seconds. The end user's expectation is one to two seconds.」<br>
+                        ——「在智能体的世界里，智能体之间会自己编排。如果每个需要 2 秒，那就是 40 秒。而用户期望的是 1-2 秒。」[00:12:34]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">高端推理：大模型+高速度的双重溢价</h3>
+                        <span class="topic-timestamp">14:14 - 20:43</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        高端推理由两个维度定义：模型准确性（对应模型大小）和响应速度，两者加起来构成了 AI 服务的「高端溢价」。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">维度一：模型大小 = 准确性</div>
+                        <p class="topic-detail-content">行业正在走向极大规模模型。Llama 8B 和 70B 如今已被视为「小模型」，GPT-5 已达 5 万亿参数，新模型正向 10 万亿迈进。为什么模型越来越大？因为<strong>准确性就是一切</strong>——如果模型输出可信，你就不需要人力复核。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">维度二：速度</div>
+                        <p class="topic-detail-content">智能体时代将响应时间要求从秒级压缩到百毫秒级。SambaNova 不做量化（quantization），以<strong>原始精度全精度</strong>运行模型，同时做到比任何人都快。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">速度市场化</div>
+                        <p class="topic-detail-content">当 5G 出现后，没有人回去注册 2G。一旦快速推理成为通用商品，没人会选慢速。目前支付溢价的将是代码生成、实时银行、实时医疗等行业，但长期来看，所有人都将期望快速。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「Premium inference is: large models which equal the most accurate models, and fast. Ultimately steady state is what everybody's going to want.」<br>
+                        ——「高端推理就是最大的模型（也就是最准确的模型）加上快速。最终稳态是每个人都想要的。」[00:20:13]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">千亿美元数据中心 vs 分布式边缘计算</h3>
+                        <span class="topic-timestamp">20:43 - 24:27</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        世界会是异构的——既有超大规模数据中心，也有大量中等规模的分布式部署，后者将在 AI 普及化中扮演关键角色。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">卫星互联网的影响</div>
+                        <p class="topic-detail-content">Starlink 等卫星互联网服务的普及正在改变全球数据访问格局。如果相信 AI 会像互联网一样普及——即地球上的每个人都应该能使用 AI——那么它不可能只靠几十个千亿美元数据中心来实现。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">集装箱数据中心</div>
+                        <p class="topic-detail-content">SambaNova 的技术使得一种新的部署模式成为可能：10-20 个机架集群（每个 10 千瓦）放进标准海运集装箱，配合 Starlink 的卫星互联网和太阳能农场供电，就可以部署在任何地方。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">边缘部署场景</div>
+                        <p class="topic-detail-content">Armada 是 SambaNova 在这一领域的合作伙伴，专注于模块化边缘数据中心。客户涵盖石油天然气（海上钻井平台）、采矿、军事和国防等关键行业。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「If you believe AI is going to be a technology as pervasive as internet, then it's not going to be equally deployed using just hundred billion dollar gigawatt data centers.」<br>
+                        ——「如果你相信 AI 将像互联网一样普及，它就不可能只靠千亿美元千兆瓦数据中心来实现。」[00:21:29]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">竞合时代：SambaNova 如何与 Nvidia、AMD 共存</h3>
+                        <span class="topic-timestamp">24:27 - 32:07</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        在推理成为数据中心主要工作负载后，SambaNova 的定位不是替代 Nvidia，而是为客户提供「释放 Nvidia 机架用于更高价值工作」的优化策略。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">竞合关系</div>
+                        <p class="topic-detail-content">Liang 将当前芯片行业的状态称为「竞合」（coopetition）——既是竞争者也是合作者。核心洞察：<strong>在一个典型的推理云服务提供商的数据中心里，70-80% 的机架在运行推理</strong>。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">流量路由策略</div>
+                        <p class="topic-detail-content">让客户把推理流量路由到 SambaNova 机架上（更快、更便宜、更高性能），释放出来的 Nvidia 机架可以重新用于训练、HPC 或其他高价值任务。结果是一箭三雕：不增加硬件投入产生更多收入、降低运营成本和资本支出、更高 token 速度带来更高定价。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">KPI：每机架收入</div>
+                        <p class="topic-detail-content">Liang 引入了最清晰的 KPI：<strong>每机架收入</strong>（revenue per rack）。每天每秒生成的 token 数 × token 单价 × 30 天 = 机架月收入，对比运营成本即可得出利润率。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「If 70-80% of those racks are running inference, why would you run inference on those racks when you can run it at a fraction of the cost at a higher performance on SambaNova?」<br>
+                        ——「如果 70-80% 的机架在跑推理，为什么不在 SambaNova 上以更低成本更高性能跑推理？」[00:26:11]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 圈地运动：规模游戏中的差异化生存</h3>
+                        <span class="topic-timestamp">32:07 - 38:09</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 推理市场正在上演一场全球性的「圈地运动」（land grab），谁能最快达到规模、同时实现差异化，谁就能在最终格局中占据主导地位。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">多维度竞争</div>
+                        <p class="topic-detail-content">超大规模云商（AWS、Azure、GCP）、前沿实验室（OpenAI、Anthropic）、NeoCloud、主权云——这场竞争的核心是「谁先到达规模」。历史规律表明，主导玩家往往能获得持久的市场影响力。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">SambaNova 的差异化</div>
+                        <p class="topic-detail-content">提供真正不同的服务（运行最大模型、最快推理、最高能效）、降低资本门槛（一个机架就能开始）、灵活混合部署（与现有 Nvidia/AMD 基础设施共存）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">芯片格局预测</div>
+                        <p class="topic-detail-content">Liang 预测：AI 基础设施的异构性不会无限增加。「可能只有两三种，最多三四种芯片会成为主流。」推理服务商将通过在能力层而非硬件层实现差异化。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「It's all about scaling. It's all about who can get to scale faster.」<br>
+                        ——「一切都关乎规模化，谁能更快达到规模，谁就赢了。」[00:32:40]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">主权 AI 与本地部署的回归</h3>
+                        <span class="topic-timestamp">41:03 - 44:31</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        数据隐私和安全担忧正在推动一轮从云端回到本地的范式逆转，主权 AI——各国训练自己的大模型——正成为全球趋势。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">数据隐私的必要性</div>
+                        <p class="topic-detail-content">Liang 以极具画面感的方式解释了主权 AI 的必要性：「你能想象你的银行账户信息未经许可就出现在世界某个地方的 ChatGPT 中吗？」</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">国家层面</div>
+                        <p class="topic-detail-content">各国不希望自己的数据被纳入美国公司的全球模型。日本、韩国已宣布训练「国族模型」（national model），从零开始训练而非基于美国模型微调。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">企业层面</div>
+                        <p class="topic-detail-content">全球 2000 强企业意识到，如果所有公司使用同一个通用模型，<strong>差异化从何而来？</strong> 历史上企业的竞争优势来自独有的数据、供应链关系和知识产权。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「Can you imagine if your bank account information starts showing up in ChatGPT in some other place in the world without your permission?」<br>
+                        ——「你能想象你的银行账户信息未经许可就出现在世界某个地方的 ChatGPT 中吗？」[00:42:03]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 11 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">11</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 投资的真正 ROI：从省钱到创造新收入</h3>
+                        <span class="topic-timestamp">47:55 - 55:21</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 投资的正确目标不是「最大化 token 使用量」（tokenmaxxing），而是创造新服务、实现业务差异化。省钱只是副作用，不是目标。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第一步：优化成本</div>
+                        <p class="topic-detail-content">把你目前的支出投入 AI，看看能否更高效地完成同样的事——不是花更多钱，而是让每一分钱产生更大价值。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">第二步：创造新服务</div>
+                        <p class="topic-detail-content">思考「我能做什么以前做不到的事」——这才是 AI 真正的价值。Liang 引用谷歌的「AI 优先」战略：在不知道具体 ROI 的情况下全面拥抱 AI，因为「你不知道你不知道什么」。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">tokenmaxxing 的陷阱</div>
+                        <p class="topic-detail-content">盲目追求 token 使用量最大化，就像「把越多钱扔向 AI 越好」。正确的思维应该是：<strong>我可以跑多少 token 来实现业务转型？</strong> token 是手段，不是目的。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">差异化问题</div>
+                        <p class="topic-detail-content">仅仅使用 AI 不能带来差异化——因为你的竞争对手也在使用相同的模型。真正的差异化来自于你用 AI 做了别人做不到的事。Liang 以 Netflix 颠覆 Blockbuster 为例：拥抱技术进步并持续创新，最终成为全球顶级企业。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「Throwing money at AI isn't really the goal. The goal is really how do we let AI generate more business benefit to you.」<br>
+                        ——「盲目向 AI 砸钱不是目标。真正的目标是让 AI 为你带来更多业务收益。」[00:48:27]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 12 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">12</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">32 年芯片生涯的感悟与 SN50 亮相</h3>
+                        <span class="topic-timestamp">55:21 - 59:00</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        构建伟大的企业需要坚韧和信念——商业从来不是线性增长的，你需要控制的是对自己的信念，而非外界环境。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">韧性的重要性</div>
+                        <p class="topic-detail-content">Liang 的回答出人意料地不是关于技术，而是关于<strong>韧性</strong>（resilience）。「商业从来不是一条直线。规模化的业务会带来最高点和最低点，你必须挺过所有这一切。」他引用 Nvidia 的 Jensen Huang 作为参照。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">信念的力量</div>
+                        <p class="topic-detail-content">你无法控制世界的需求、经济和政治。你唯一能控制的是<strong>对所建之物的信念</strong>。伟大的公司不是一夜之间出现的，需要持续努力、持续坚持、持续应对下一个挑战和意外。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">SN50 亮相</div>
+                        <p class="topic-detail-content">节目最后，Liang 亮出了 SambaNova 的最新芯片——<strong>SN50</strong>。这款今年早些时候发布的新品正在产生「真正令人难以置信的成果」。SN50 的核心定位是<strong>聚合推理</strong>（aggregated inference）——与 Nvidia 芯片、Xeon 等协同工作，成为最高效的大规模推理部署方案。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「It's never a straight line. You can't control what the world wants at any given point. What you can control is your conviction around what you're building and being resilient and staying with it.」<br>
+                        ——「从来都不是一条直线。你无法控制世界在任何时点的需求。你能控制的是对所建之物的信念，以及坚韧不拔、坚持到底。」[00:57:31]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">推理规模</h3>
+                    <p class="takeaway-desc">推理所需的芯片数量将比训练高出几个数量级。先行布局推理基础设施的公司将获得长期竞争优势。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⏱️</div>
+                    <h3 class="takeaway-title">智能体延迟</h3>
+                    <p class="takeaway-desc">20 步智能体编排链，每个环节响应时间必须低于 0.1 秒——计算必须靠近最终用户。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔧</div>
+                    <h3 class="takeaway-title">最小量子</h3>
+                    <p class="takeaway-desc">SambaNova 将推理部署压缩到单个机架，使服务商可以从小规模起步灵活扩展。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🤝</div>
+                    <h3 class="takeaway-title">竞合策略</h3>
+                    <p class="takeaway-desc">将推理流量路由到专用芯片、释放 Nvidia 机架用于更高价值工作，是提升利润率的有效策略。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏠</div>
+                    <h3 class="takeaway-title">回归本地</h3>
+                    <p class="takeaway-desc">数据隐私担忧驱动从云端到本地的逆转。「主权 AI」正在成为全球趋势。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">差异化至上</h3>
+                    <p class="takeaway-desc">AI 能否创造竞争优势，取决于你是否能用它做出别人做不到的事。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">关于本期节目</h3>
+            <p class="footer-desc">
+                本节目由 Sourcery with Molly O'Shea 出品，录制于巴黎 RAISE AI 峰会。
+            </p>
+            <div class="footer-quote">
+                「It's all about scaling. It's all about who can get to scale faster.」
+            </div>
+            <p class="footer-note">
+                本期节目由 Brex、MongoDB 和 Assembly AI 联合赞助播出。
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
