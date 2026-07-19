@@ -1,11 +1,21 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/urgent-update-ai-sputnik-moment-kimi-k3.html",
+    card_class: "card-ai",
+    category: "Moonshots · AI · 地缘政治 · 奇点",
+    date: "2026-07-18",
+    title: "AI 斯普特尼克时刻：Kimi K3 震惊世界",
+    excerpt:
+      "月之暗面发布 2.8 万亿参数开源模型超越 Fable 5 登顶。前沿智能为何成为「易逝品」？芯片管制反噬催生中国自主创新，1% 成本法则首次在前沿规模验证。口袋 GPT-5、AI 超级预测、递归自我改进——五位 AI 思想家剖析奇点时刻。",
+    tags: ["#KimiK3", "#开源AI", "#斯普特尼克时刻"],
+  },
+  {
     url: "articles/inference-101-sambanova-ceo-rodrigo-liang.html",
     card_class: "card-tech",
     category: "Sourcery · AI · 芯片 · 推理",
     date: "2026-07-18",
-    title: "Inference 101: SambaNova CEO 揭示推理芯片的未来 | Rodrigo Liang",
+    title: "SambaNova CEO 揭示推理芯片的未来",
     excerpt:
       "用 10 千瓦风冷机架跑赢 140 千瓦 Nvidia GPU 集群。从 SN10 到 SN50 的六代芯片演进，万亿参数模型单机架运行的工程突破，智能体时代的延迟战争，以及为什么「tokenmaxxing」是错误的 AI 投资策略。",
     tags: ["#推理芯片", "#SambaNova", "#数据中心"],
