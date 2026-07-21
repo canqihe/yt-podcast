@@ -1,6 +1,46 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/the-2028-natural-gas-crisis-no-one-sees-coming.html",
+    card_class: "card-future",
+    category: "Invest Like The Best · 能源 · 天然气 · AI",
+    date: "2026-07-21",
+    title: "2028 年无人预见的天然气危机",
+    excerpt:
+      "经过 18 个月自下而上的全链路建模——覆盖产气盆地、管道、加工基础设施、LNG 出口和 AI 电力项目——能源分析师 Matt Smith 揭示了美国最早可能在 2028 年以前所未有的速度消耗天然气储备的惊人结论，以及对电价、超大规模计算运营商和消费者的深远影响。",
+    tags: ["#天然气", "#能源危机", "#AI电力", "#LNG"],
+  },
+  {
+    url: "articles/open-source-ai-reality-token-costs-lin-qiao.html",
+    card_class: "card-ai",
+    category: "20VC · AI · 开源 · Token 经济",
+    date: "2026-07-21",
+    title: "Token 成本降 10 倍，用量爆 100 倍 — 开源 AI 的现实",
+    excerpt:
+      "Fireworks AI 170 亿美元估值、10 亿美元 ARR，200 人团队挑战整个 AI 基础设施层。创始⼈ Lin Qiao 押注专用智能替代 AGI，预测三年内 Token 成本降 10 倍推动 100 倍用量暴增。从 PyTorch 创始成员到 48 岁创业，开源模型已跨质量门槛，「扩张到破产」成为真实风险——每家公司都应拥有自己的智能。",
+    tags: ["#FireworksAI", "#开源AI", "#Token经济"],
+  },
+  {
+    url: "articles/kimi-k3-price-war-google-openai-partners.html",
+    card_class: "card-ai",
+    category: "Big Technology Podcast · AI · 价格战 · 合作关系",
+    date: "2026-07-21",
+    title: "Kimi K3 与 AI 价格战：Google 困局与 OpenAI 合作者危机",
+    excerpt:
+      "当前沿智能不再稀缺，行业商业逻辑还成立吗？Meta、Grok、Kimi 三方夹击 90% 推理利润率，Nadella「逆向信息悖论」敲打，Google 内耗缺算力，Apple 起诉 OpenAI——模型商品化临界点全景拆解。",
+    tags: ["#KimiK3", "#价格战", "#OpenAI", "#Google"],
+  },
+  {
+    url: "articles/the-ai-race-starship-silicon-valleys-defense-bet.html",
+    card_class: "card-ai",
+    category: "Bloomberg Tech · AI · 太空 · 国防",
+    date: "2026-07-20",
+    title: "AI 竞赛、星舰与硅谷的国防赌注 | Bloomberg Tech",
+    excerpt:
+      "Moonshot Kimi K3 震动芯片市场，SpaceX 星舰第 13 次试飞在最后一刻被叫停，a16z 招揽退伍军人押注 American Dynamism。中国 AI 差距缩小、星舰快速修复、Interlune 月球采氦、AI 估值辩论与台积电美国扩张——2026 年科技最关键的几条脉络。",
+    tags: ["#BloombergTech", "#KimiK3", "#SpaceX"],
+  },
+  {
     url: "articles/urgent-update-ai-sputnik-moment-kimi-k3.html",
     card_class: "card-ai",
     category: "Moonshots · AI · 地缘政治 · 奇点",

@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <title>AI 竞赛、星舰与硅谷的国防赌注 | Bloomberg Tech</title>
+    <style>
+        /* ========== Design Tokens ========== */
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-card: #141416;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            /* 配色方案：橙青 */
+            --accent-primary: #ff6b35;
+            --accent-secondary: #00d4ff;
+            --accent-primary-rgb: 255, 107, 53;
+            --accent-secondary-rgb: 0, 212, 255;
+            --border: #2a2a2e;
+            --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            --font-size-hero: clamp(48px, 10vw, 120px);
+            --font-size-section: clamp(32px, 5vw, 56px);
+            --font-size-topic: clamp(24px, 4vw, 36px);
+            --font-size-number: clamp(64px, 15vw, 120px);
+            --font-heavy: 800;
+            --letter-spacing-tight: -0.03em;
+            --line-height-tight: 0.95;
+            --card-padding: 40px;
+            --radius-lg: 16px;
+            --radius-pill: 100px;
+            --transition-fast: 0.3s ease;
+            --hover-lift: translateY(-4px);
+            --gradient-accent: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+            --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+        }
+
+        /* ========== Reset ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ========== Scrollbar ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-primary);
+        }
+
+        /* ========== Container ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/the-ai-race-starship-silicon-valleys-defense-bet-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 0;
+        }
+
+        /* ========== Badge ========== */
+        .badge-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .badge:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* ========== Title ========== */
+        .title {
+            font-size: var(--font-size-hero);
+            font-weight: var(--font-heavy);
+            line-height: var(--line-height-tight);
+            letter-spacing: var(--letter-spacing-tight);
+            margin-bottom: 24px;
+        }
+
+        .title-line-1 {
+            display: block;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-line-2 {
+            display: block;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== Subtitle ========== */
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        /* ========== Meta Grid ========== */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .meta-item {
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        /* ========== CTA Button ========== */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--gradient-accent);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 16px;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 20px rgba(var(--accent-primary-rgb), 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(var(--accent-primary-rgb), 0.5);
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== Section ========== */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            font-size: var(--font-size-section);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 64px;
+        }
+
+        /* ========== Points Grid ========== */
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* ========== Point Card ========== */
+        .point-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: var(--card-padding);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .point-card:hover {
+            border-color: var(--accent-primary);
+            transform: var(--hover-lift);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .point-card:hover::before {
+            opacity: 1;
+        }
+
+        .point-number {
+            font-size: 48px;
+            font-weight: var(--font-heavy);
+            color: var(--border);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .point-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-primary);
+        }
+
+        .point-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ========== Topic ========== */
+        .topic {
+            margin-bottom: 80px;
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .topic-number {
+            font-size: var(--font-size-number);
+            font-weight: var(--font-heavy);
+            line-height: 1;
+            background: var(--gradient-number);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .topic-info {
+            flex: 1;
+            padding-top: 16px;
+        }
+
+        .topic-title {
+            font-size: var(--font-size-topic);
+            font-weight: var(--font-heavy);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .topic-timestamp {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: var(--font-mono);
+            color: var(--accent-secondary);
+        }
+
+        .topic-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--card-padding);
+            margin-left: clamp(40px, 10vw, 120px);
+        }
+
+        .topic-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-primary);
+        }
+
+        .topic-core-point {
+            font-size: 18px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .topic-detail {
+            padding-left: 24px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .topic-detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .topic-detail-content {
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--accent-primary);
+            padding: 24px;
+            background: rgba(var(--accent-primary-rgb), 0.05);
+            margin: 24px 0;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-primary);
+        }
+
+        .thought-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .thought-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        /* ========== Takeaways ========== */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .takeaway-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all var(--transition-fast);
+        }
+
+        .takeaway-card:hover {
+            border-color: var(--accent-secondary);
+            transform: var(--hover-lift);
+        }
+
+        .takeaway-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .takeaway-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .takeaway-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: var(--font-heavy);
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .footer-quote {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: var(--font-heavy);
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 48px 0;
+            line-height: 1.2;
+        }
+
+        .footer-note {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== Divider ========== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .point-card,
+        .takeaway-card,
+        .topic {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .point-card.animate-in,
+        .takeaway-card.animate-in,
+        .topic.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .topic-content {
+                margin-left: 0;
+            }
+
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .meta-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">Bloomberg Tech · AI · 太空 · 国防</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">AI 竞赛、星舰</span>
+                    <span class="title-line-2">与硅谷的国防赌注</span>
+                </h1>
+                <p class="subtitle">
+                    Kimi K3 震动周末芯片市场，星舰第 13 次试飞在点火前被叫停，a16z 招揽退伍军人押注 American Dynamism。Bloomberg Tech 以高密度信息，勾勒 2026 年科技世界最关键的几条脉络。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Ed Ludlow</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">多位分析师与创始人</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 44 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=pJRn5HTBuS4" class="cta-button" target="_blank" rel="noopener noreferrer">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心洞察</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">差距归零</h3>
+                    <p class="point-desc">中国 AI 与美国前沿的差距可能已从「6–12 个月」缩至「几个月」。Moonshot、DeepSeek、阿里巴巴三线并进，玩家数量远超预期。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">成本崩溃 ≠ 支出下降</h3>
+                    <p class="point-desc">推理成本已下降 95%。更便宜的模型不会削减总支出，而是释放被成本压抑的需求——工作负载迁移本身就是增长引擎。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">星舰就是估值</h3>
+                    <p class="point-desc">SpaceX 不是火箭公司，而是连接与数据中心公司。星链、NEO Cloud、轨道数据中心——都建立在星舰可重复使用之上。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">先赚地球钱，再登月</h3>
+                    <p class="point-desc">Interlune 用登月级冷捕获技术先在地球分离氦-3，拿下近 5 亿美元约束性订单。终极目标仍在月球，但不必等到那一天才有收入。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">国防价值统一</h3>
+                    <p class="point-desc">a16z American Dynamism 验证：国家安全价值与商业价值不再矛盾。低成本自主化已在真实冲突中把信念变成事实。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">财报读不出 Token</h3>
+                    <p class="point-desc">千亿级 AI 资本支出是否值得？答案更可能藏在云收入曲线里，而非 token 货币化明细。投资者还需再等几个季度。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Kimi K3 的横空出世：中国 AI 的「觉醒时刻」</h3>
+                        <span class="topic-timestamp">00:00:36 — 00:03:39</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">中国 AI 初创公司 Moonshot 发布的 Kimi K3（2.8 万亿参数）在性能上已逼近美国前沿模型，标志着中国在 AI 竞赛中从追赶者转向势均力敌的竞争者。</p>
+                    <div class="topic-detail">
+                        <div class="topic-detail-content">上周五，芯片股进入熊市，市场风起云涌。部分原因正是 Kimi K3 带来的巨大不确定性。这个由 Moonshot 开发的 2.8 万亿参数模型——规模甚至超过当今大多数主流模型——迫使投资者重新审视整个 AI 产业链的价值逻辑。</div>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-content">Bloomberg 亚洲科技编辑 Peter Elstrom 从华盛顿连线指出，上海世界 AI 大会成为中国公司集中亮相的舞台，Moonshot 成了周末最大的明星。阿里巴巴也同步发布 2.4 万亿参数新模型。竞争者数量远超预期：此前焦点多在 DeepSeek 与阿里，Moonshot 的出现意味着更多具备全球竞争力的玩家正在涌现。</div>
+                    </div>
+                    <div class="quote-block">「China AI is much closer behind the U.S. in terms of AI capability than we realize. If you thought China was six to 12 months behind before, it looks like maybe they are only a couple months behind and they are catching up quickly.」— Peter Elstrom「中国在 AI 能力上比我们意识到的更接近美国。如果你之前认为中国落后六到十二个月，现在看来他们可能只落后几个月，而且正在迅速追赶。」[00:03:10]</div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Moonshot 创始人的故事：从 Pink Floyd 到 AI 前沿</h3>
+                        <span class="topic-timestamp">00:03:39 — 00:05:32</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">Moonshot 创始人是一位 33 岁的卡内基梅隆大学毕业生，他刻意选择与 DeepSeek 等同行不同的道路——不计成本追求大模型，试图打造中国最接近美国前沿水平的 AI。</p>
+                    <div class="topic-detail">
+                        <div class="topic-detail-content">这位 33 岁创始人毕业于卡内基梅隆，在美国完成学业后回到中国。在 DeepSeek 声名鹊起之前，他就已是 AI 界公认的明日之星。他不仅是 AI 极客，还是铁杆音乐迷——Moonshot 中文名灵感来自最爱的 Pink Floyd 专辑《月之暗面》（Dark Side of the Moon）。</div>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-content">与 DeepSeek 追求精益高效不同，Moonshot 选择走大模型路线：投入巨量资源，打造尽可能接近美国前沿的产品。Bloomberg 周末还独家报道公司计划上市，为故事增添投资维度。</div>
+                    </div>
+                    <div class="quote-block">「He made a conscious choice rather than trying to make a lean, efficient model, he decided to go very big with his version of Kimi K3 and try to make something that was very close to the frontier edge we are seeing in the U.S.」— Peter Elstrom「他有意识地选择不走精简化模型的路线，而是投入巨大资源打造 Kimi K3，试图做出非常接近美国前沿水平的产品。」[00:04:22]</div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">上市大幕拉开：Moonshot 与 DeepSeek 的资本竞赛</h3>
+                        <span class="topic-timestamp">00:05:32 — 00:08:14</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">Moonshot 计划在未来六个月内于香港上市，估值超过 300 亿美元；DeepSeek 也在考虑 2027 年在中国大陆上市。两条路径反映的是投资者市场格局的根本差异。</p>
+                    <div class="topic-detail">
+                        <div class="topic-detail-content">Bloomberg 记者 Bailey Lipschultz 报道：Moonshot 目前估值约 300 亿美元——与 Anthropic、OpenAI 相比只是零头——但计划半年内在香港上市，定价进程已经开始。香港上市打开面向整个亚洲的投资者市场；DeepSeek 若走大陆上市，则更多面向本地散户、风格更接近「博彩式」交易。</div>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-content">阿里巴巴继 Moonshot 之后也发布最新旗舰模型，声称仅次于 Anthropic 最新系统，并推动港股上涨。中国 AI 开发商竞争持续升温，三家各有绝活，谁也不想被落下。</div>
+                    </div>
+                    <div class="quote-block">「Moonshot is looking at Hong Kong, which opens up an entirely different investing universe — the rest of all of Asia.」— Bailey Lipschultz「Moonshot 考虑在香港上市，这打开了一个完全不同的投资市场——整个亚洲地区。」[00:07:15]</div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">星舰第 13 次试飞：一周之内的卷土重来</h3>
+                        <span class="topic-timestamp">00:09:32 — 00:15:23</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">SpaceX 星舰第 13 次试飞在发射前因引擎点火故障被自动中止；问题在数小时内定位，两台发动机被更换，火箭约一周内重新就位——凸显 SpaceX 执行力，也再次印证星舰对公司战略的极端重要性。</p>
+                    <div class="topic-detail">
+                        <div class="topic-detail-content">上周星舰第三次发射尝试（第三版首飞）在最后一刻被叫停：33 台助推发动机未能全部即时点火，机载安全系统按设计自动中止。SpaceX 股价盘后应声下跌 4%。</div>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">投资逻辑</div>
+                        <div class="topic-detail-content">Mizuho 工业研究主管 Brett Lindsay 维持跑赢大盘评级，目标价 200 美元。他强调：SpaceX 本质上不是火箭公司。猎鹰 9 号是当前主力，真正长期价值在于星舰可重复使用。过去三年全球约 85% 轨道质量载荷由 SpaceX 运送。估值锚定 2029 年，对 AI 平台业务大幅折让；星链与航空合同贡献短期收入，更远期押注 2030 年后的轨道数据中心。关于 Elon Musk 个人风险，Lindsay 承认需考量，但「公司已有清晰蓝图和真正的防御壁垒」。</div>
+                    </div>
+                    <div class="quote-block">「All of these future business lines on the AI side, NEO Cloud side, Starlink, data center, they are all predicated on Starship not just working, but being rapidly reusable.」— Brett Lindsay「所有这些未来的业务线——AI 方面的 NEO Cloud、星链、数据中心——都基于星舰不仅要成功，还要实现快速可重复使用。」[00:10:51]</div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">从月球取氦：Interlune 的疯狂计划与近在眼前的客户</h3>
+                        <span class="topic-timestamp">00:17:51 — 00:22:14</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">太空初创公司 Interlune 发明「冷捕获」技术，可从地球商业级氦气中分离极其稀有的氦-3，用于量子计算机冷却；已获近 5 亿美元约束性采购订单，并计划未来在月球规模化开采。</p>
+                    <div class="topic-detail">
+                        <div class="topic-detail-content">氦-3 是量子计算冷却关键物质，地球上极其稀缺。过去几十年全球供应主要依赖美国核武库氚的衰变，但氚已不再大规模生产——供应链缺口成为产业化瓶颈。</div>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-content">创始人兼 CEO Rob Meyerson 表示，团队从第一性原理发明冷捕获，首次证明从商业氦气中蒸馏氦-3 可行。终极目标是月球开采（月表蕴藏超 100 万吨氦-3）；在登月前，已将月球技术降维应用于地球，获近 5 亿美元约束性订单（2028 年起，合同期 7–10 年），地球端预计年产约 2.5 公斤。登月计划将借助 NASA Artemis 及 SpaceX、Blue Origin 等发射基础设施。</div>
+                    </div>
+                    <div class="quote-block">「We have devised a technique. Our team has gone back to first principles and invented a way to distill Helium-3 from Helium on Earth.」— Rob Meyerson「我们开发了一项技术。团队回归基本原理，发明了一种从氦气中分离出氦-3 的方法。」[00:18:17]</div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">估值难题：当 200 亿美元的模型挑战万亿估值</h3>
+                        <span class="topic-timestamp">00:22:37 — 00:30:23</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">Kimi K3 引发 AI 估值新一轮辩论。低成本开源模型是否意味着算力需求减少？答案可能恰恰相反——更便宜的推理成本将加速应用迁移与需求释放。对 OpenAI、Anthropic 的万亿估值，「还没有人知道答案」。</p>
+                    <div class="topic-detail">
+                        <div class="topic-detail-content">Crosslink Capital 合伙人 Mary D'Onofrio 冷静拆解：K3 验证开源权重模型正快速缩小与封闭前沿的差距，对企业级普及是长期利好。「成本已经下降了 95%」——但这不意味着总支出减少；工作负载将从最贵前沿模型迁向「足够好且更便宜」的替代方案，本质是需求释放。</div>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">估值正反方</div>
+                        <div class="topic-detail-content">正方：若一家估值 200 亿美元的中国初创能做出 2.8 万亿参数模型，OpenAI/Anthropic 凭什么值一万亿？反方：二者年入数十亿、业务多元，开源权重 ≠ 免费运行。D'Onofrio 坦言：「坦白说，我还不知道，我想也没有人真正知道。」她观察：最近成功 IPO（如 SK 海力士）虽都是 AI 相关，却是拥有数十亿营收、成立数十年的成熟企业——「投资者并不投机，他们在寻找相对安全的东西。」</div>
+                    </div>
+                    <div class="quote-block">「I think it demonstrates the cost at the model layer is compressing. Cost has gone down by 95%. Does that displace the total dollar value expended by customers? I would argue it probably won't because the migration will just be from workloads that are at the frontier that are most expensive...to cheaper models that still provide the same requisite amount of compute.」— Mary D'Onofrio「我认为这说明了模型层成本正在压缩。成本已经下降了 95%。这是否会减少客户的总支出？我认为可能不会——工作负载会从最昂贵的前沿模型迁移到能提供同等算力的更便宜模型。」[00:27:09]</div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">台积电 2650 亿美元的美国赌注</h3>
+                        <span class="topic-timestamp">00:30:55 — 00:32:34</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">台积电承诺投入创纪录的 2650 亿美元用于美国扩张，但 CFO 表示更倾向于用运营现金流自给自足，仅在时机合适时才考虑发债。随着美元融资成本上升，台积电正审慎权衡资本结构。</p>
+                    <div class="topic-detail">
+                        <div class="topic-detail-content">在 AI 驱动的巨大资本需求下，台积电如何为美国扩张筹资成为焦点。CFO 明确坚持财务纪律：用运营现金流自我维持，并保持稳定股东回报。三年前曾进行 300 亿美元融资（一半美元、一半新台币）；如今美元融资成本上升，发债时机微妙——「不排除再次进入债券市场，但前提是时机合适」。新台币债券市场深度有限，意味着无法完全依赖本地廉价资金支撑庞大美国扩张。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">硅谷的国防大转向：a16z 的 American Dynamism</h3>
+                        <span class="topic-timestamp">00:32:51 — 00:40:03</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">Andreessen Horowitz 高调聘请退伍军人 Connor Love 加入 American Dynamism 团队。硅谷顶级风投正把国防科技从「小众良心赛道」提升为核心战略——重新定义为既能保卫国家、又能创造世界级价值的投资品类。</p>
+                    <div class="topic-detail">
+                        <div class="topic-detail-content">Connor Love 曾在伊拉克服役。七年前与 American Dynamism 联合创始人 Katherine Boyle 的一次联系，让他第一次接触硅谷。此后他确信：技术将成为国防根基，更是美国工业基础不可或缺的力量。「American Dynamism」被解读为「美国例外主义」的行动版——涵盖国防、能源、制造与太空。关键逻辑链：「没有工业基础，就不可能有国防工业基础。」</div>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">低成本自主化</div>
+                        <div class="topic-detail-content">谈及 Anduril，Love 审慎地说：「当你觉得他们已经做到了上一款产品时，你就错了——这个市场太大了，问题太多了。」核心趋势是「低成本自主化」（low-cost autonomy），已在伊朗与乌克兰冲突中得到验证。历史洞察：波音曾对美国极其重要，却不是当时最有价值的公司；技术正在改写方程——可以既对美国及盟国重要，又成为全球最有价值公司之一。</div>
+                    </div>
+                    <div class="quote-block">「When you can introduce something 10 times cheaper and as performant, it changes the game.」— Connor Love「当你能够以十分之一的成本提供同样性能的产品时，游戏规则就变了。」[00:38:31]</div>
+                    <div class="quote-block">「Technology is saying you can be important to America and allies and be some of the most valuable companies in the world.」— Connor Love「技术意味着你既可以成为对美国及其盟国重要的公司，也可以成为世界上最有价值的公司之一。」[00:37:23]</div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">财报前瞻：千亿 AI 支出的回报之问</h3>
+                        <span class="topic-timestamp">00:40:19 — 00:43:14</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">本周 Alphabet、特斯拉和英特尔等科技巨头财报将聚焦：数千亿美元 AI 基础设施支出是否正在产生可量化回报？分析师的答案是——关注云收入增长，但 token 级直接货币化可能仍为时过早。</p>
+                    <div class="topic-detail">
+                        <div class="topic-detail-content">Bloomberg Intelligence 分析师 Mandeep Singh 指出：对超大规模云厂商，云收入仍是衡量 AI 支出的最直接指标。「大家都在期待这些数字继续上升。」真正悬念在于资本支出节奏：2027 年是增长 30%–40%，还是继续 50% 以上？年化数字已相当庞大，「能走多远是有限度的」。</div>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-content">以 Alphabet 为例：整体营收增长预计约 20%，Google Cloud 可能实现 60% 同比增长；Cloud 增速已超过 Azure，而 OpenAI 同时在 Amazon 与 Azure 上的部署也让微软业务更复杂。Singh 的冷静预判：尽管所有前沿实验室都在通过 token 货币化，要从这些巨头财报中直接读出 AI token 收入贡献，可能还为时过早。</div>
+                    </div>
+                    <div class="quote-block">「There is no doubt cloud infrastructure is where the monetization will be evident. All the frontier labs are monetizing tokens. We will not be able to glean that from the earnings of companies. It is too early to see that token monetization be visible.」— Mandeep Singh「毫无疑问，云基础设施将是货币化最为明显的地方。所有前沿实验室都在通过 token 进行货币化。但我们可能无法从这些公司的财报中直接看出这一点——现在看到 token 货币化还为时过早。」[00:42:26]</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">差距归零</h3>
+                    <p class="takeaway-desc">中国 AI 与美国前沿的差距可能已从「6–12 个月」缩小至「几个月」。Moonshot、DeepSeek、阿里巴巴三线并进，竞争格局比多数人预期的更广阔、更复杂。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📉</div>
+                    <h3 class="takeaway-title">成本崩溃 ≠ 总支出下降</h3>
+                    <p class="takeaway-desc">AI 推理成本已下降 95%。但更便宜的模型不会减少行业总支出——而是释放了此前因成本过高而被压抑的需求。工作负载的迁移本身就是一个巨大的增长引擎。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🚀</div>
+                    <h3 class="takeaway-title">星舰是 SpaceX 估值的一切</h3>
+                    <p class="takeaway-desc">SpaceX 不是火箭公司，而是连接和数据中心公司。所有远期业务线——星链、NEO Cloud、轨道数据中心——都依赖于星舰的可重复使用。一周内定位→换引擎→重新就位，比任何 PPT 都更能说明执行力。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🌙</div>
+                    <h3 class="takeaway-title">氦-3：先赚地球钱，再登月</h3>
+                    <p class="takeaway-desc">Interlune 展现巧妙商业路径：为登月开发的冷捕获技术先在地球落地，获取近 5 亿美元约束性采购订单。登月采氦仍是终极目标，但企业不必等到那一天才产生收入。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🛡️</div>
+                    <h3 class="takeaway-title">国防科技走向「价值统一」</h3>
+                    <p class="takeaway-desc">a16z 的 American Dynamism 正在验证：国家安全价值与商业价值不再矛盾。低成本自主化在战场上的真实表现（伊朗、乌克兰冲突）正在将这一认知从信念转化为事实。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📊</div>
+                    <h3 class="takeaway-title">财报不能说明一切</h3>
+                    <p class="takeaway-desc">数千亿美元的 AI 资本支出是否值得？答案可能藏在云收入的增长曲线中，而不是 token 货币化的数字里。从超大规模云厂商财报中读懂 AI 真实回报，可能还需要几个季度。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">Bloomberg Tech</h3>
+            <p class="footer-desc">Bloomberg 每日科技节目，聚焦技术、创新与商业未来，由 Ed Ludlow（旧金山）与 Caroline Hyde（纽约）主持。</p>
+            <div class="footer-quote">
+                "When you can introduce something 10 times cheaper and as performant, it changes the game."
+            </div>
+            <p class="footer-note">内容基于 YouTube 视频 AI 生成中文总结，仅供学习参考。</p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
