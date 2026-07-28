@@ -7,7 +7,7 @@
  * @returns {string} - 卡片 HTML 字符串
  */
 function createArticleCard(article) {
-    const tagsHtml = article.tags.map(tag => `<span class="card-tag">${tag}</span>`).join('');
+    const tagsHtml = article.tags.slice(0, 3).map(tag => `<span class="card-tag">${tag}</span>`).join('');
     // 只保留 category 的第一个词（在" · "之前）
     const singleWordCategory = article.category.split(' · ')[0];
 
