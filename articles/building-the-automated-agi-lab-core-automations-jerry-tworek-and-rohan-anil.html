@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>构建自动化 AGI 实验室：Core Automation 创始人 Jerry Tworek 和 Rohan Anil</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <!-- 配色方案：紫黄 -->
+    <style>
+        :root {
+            --accent-primary: #a855f7;
+            --accent-secondary: #FFC107;
+            --accent-primary-rgb: 168, 85, 247;
+            --accent-secondary-rgb: 255, 193, 7;
+        }
+    </style>
+
+    <style>
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/building-the-automated-agi-lab-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">红杉资本 · AI 架构 · AGI · 创业</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">Core Automation 创始人</span>
+                    <span class="title-line-2">构建自动化 AGI 实验室</span>
+                </h1>
+                <p class="subtitle">
+                    Jerry Tworek 和 Rohan Anil 联手做了一个极度反主流的选择：他们相信 Transformer 已经带我们走到了尽头，瓶颈不再是规模，而是架构本身。这是一份来自两位 OpenAI 和 Google Brain 最核心位置的前研究领袖对 AI 基础的深刻诊断。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Sonya Huang、Pat Grady</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Jerry Tworek、Rohan Anil</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 49 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=2RJiaf0SY8s" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心洞察</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">架构瓶颈</h3>
+                    <p class="point-desc">Transformer 的容量天花板已经可见。继续堆参数和算力的边际收益在递减，下一个突破必须在架构层面——核心缺陷是部署后无法持续学习。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">RL 不是全部</h3>
+                    <p class="point-desc">"从经验中学习"远远不止强化学习。大脑同时运行多种学习算法——踢足球式 RL 和学数学式深度推理完全不同，AI 不应押注单一范式。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">经济学决定一切</h3>
+                    <p class="point-desc">Transformer 的胜利本质上是经济学的胜利——训练成本低于商业回报。大实验室不探索替代架构不是因为技术不行，而是市场竞争容不下长期赌博。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">端到端联合优化</h3>
+                    <p class="point-desc">预训练和强化学习需要联合优化。割裂看待两者是当前效率低下的根源。把两者当作整体训练流程设计，是数量级改进的来源。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">内核是守门员</h3>
+                    <p class="point-desc">自动化内核生成是一切架构创新的先决条件。前沿模型在高性能内核生成上远不及人类专家——QR 分解竞赛中人类方案比标准库快 60 倍。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">"度假测试"</h3>
+                    <p class="point-desc">AGI 的信号是"团队度假时实验室还在产出"。Jerry 定义 AGI 为无需人类即可自我改进的系统，而"度假测试"是判断 AGI 是否来临的朴素标准。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">欣赏 Transformer：理解它有多好，才知道它多差</h3>
+                        <span class="topic-timestamp">00:01:46 - 00:04:54</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        替换 Transformer 的第一步是深刻理解它做对了什么。当前大多数替代架构的研究目标是"让 Transformer 更便宜"，而非"让架构更强大"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">优缺点是同一件事</div>
+                        <p class="topic-detail-content">Jerry 指出，大多数替代架构研究都在做同一件事：让 Transformer 更便宜、更高效。很少有人思考如何让架构更强大、更具表达能力。他认为理解一个系统的优点和缺点几乎是同一件事——都是对架构形态的深度理解。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">规模化已到天花板</div>
+                        <p class="topic-detail-content">Jerry 提出了一个困扰他的问题：为什么有了 Codex 和 Claude Code，他每天仍然需要自己来上班？过去六年深度学习只重复了两种操作——MoE 和注意力机制。瓶颈不是算力，是架构。下一步机器学习的方向，是思考什么样的新能力才能实现真正的完全自动化。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "What is the bottleneck to better models and to smarter systems is the architecture itself." — "通向更好模型和更智能系统的瓶颈，就是架构本身。" <cite>00:03:13</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">强化学习的现实检验</h3>
+                        <span class="topic-timestamp">00:05:32 - 00:07:32</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Jerry 曾是"强化学习极端主义者"，但亲手规模化 RL 后，他发现基准测试全线上涨，现实世界问题一个都没解决。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">满怀信心的开始</div>
+                        <p class="topic-detail-content">Jerry 在 OpenAI 一直相信扩展强化学习是通往 AGI 的钥匙。他曾说"如果你在 2024 年问我什么时候实现 AGI，我会说 2025 年"。然后他亲眼看着模型一个接一个地变强——基准测试分数节节攀升，但现实世界的问题一个都没少。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">基准测试的幻觉</div>
+                        <p class="topic-detail-content">他意识到一个深层问题：所有基准测试和训练任务是同一枚硬币的两面，但现实世界的分布完全不同——更混乱、更模糊。训练数据复制不了真实世界的使用场景。有趣的是，训练模型的人最大的问题是"没有足够难的任务"，然而模型在现实中仍然频频碰壁。这说明基准测试已经与现实严重脱节。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "All the evals and training side tasks are the same sides of the coin. But the real-world distribution and real-world task is much messier, much murkier." — "所有的评估和训练任务是同一枚硬币的两面。但现实世界的分布和任务要混乱、模糊得多。" <cite>00:06:48</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">测试时学习：Transformer 做不到的事</h3>
+                        <span class="topic-timestamp">00:07:32 - 00:09:52</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Transformer 不能在部署后继续学习——这是它的致命缺陷。我们需要在架构层面嵌入一种元学习算法。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两种现有方式的局限</div>
+                        <p class="topic-detail-content">Jerry 区分了两种测试时学习的方式。上下文学习（In-Context Learning）没有灾难性遗忘问题且数据效率高，但容量极其有限——他使用 Codex 约 20 分钟后就不得不压缩上下文。微调（Fine-Tuning）理论上可以，但有灾难性遗忘和数据效率低的问题。如果容易解决，早就有人搞定了。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">解决方案的方向</div>
+                        <p class="topic-detail-content">Jerry 的结论是需要在架构层面表达一种元学习（Meta Learning）算法——让模型学会"如何学习"。这种学习方式必须能在更长的时间跨度上运作，而不是被锁死在几十个 Token 的上下文窗口里。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "We need to have models that learn at test time. We need to have models that learn with users on their data, on their real-world task, on the real-world distribution." — "我们需要能在测试时学习的模型。需要能随用户一起、在他们的数据上、在他们现实世界任务上学习的模型。" <cite>00:07:32</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">规模化的经济学与创业时机</h3>
+                        <span class="topic-timestamp">00:09:52 - 00:14:24</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Transformer 的统治来自经济规律——训练成本低于收益。而大实验室深陷编程智能体竞赛，给了新公司探索替代架构的生存空间。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Transformer 的经济奇迹</div>
+                        <p class="topic-detail-content">Jerry 给出了一个鲜有人谈及的视角：技术上也可以扩展 LSTM，但 LSTM 的规模定律（Scaling Law）比 Transformer 差。这意味着它的训练成本不会低于商业收益——没有人会为此投入大量资金。Transformer 的"魔力"在于训练成本低于它产生的收入。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">大实验室的囚徒困境</div>
+                        <p class="topic-detail-content">当被问及"既然需要大规模算力为什么不留在大型实验室"，Jerry 的回答揭示了一个结构性矛盾：所有大实验室都处在历史上最激烈的竞争之中。如果 Transformer 仍在盈利、堆算力就能赢下下一季度，为什么要冒险研究一两年后才可能见效的新架构？Jerry 说所有大实验室都聊过——"它们对尝试替代品没有兴趣。"而那些不够大的实验室则在拼命模仿最大的——"看看上周的发布，每个人都在发编程智能体。"</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "If Transformer is profitable and if you can spend more efforts and more resources scaling Transformer to win in the next quarter, it's very hard to put attention and energy to work on something that will maybe redefine the field in a year or two." — "如果 Transformer 是盈利的，你可以投入更多精力扩展它来赢得下个季度的竞争，就很难去关注那些可能一两年后重新定义整个领域的事情。" <cite>00:13:06</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Rohan 论 Transformer 的计算深度困境</h3>
+                        <span class="topic-timestamp">00:14:24 - 00:20:32</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Transformer 的计算深度很差——最多约 100 层。思维链推理只是对天生浅层架构的一种权宜之计。优化器和架构应该一体设计。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">计算深度问题</div>
+                        <p class="topic-detail-content">Rohan 是 Transformer 诞生时就在 Google Brain 的人。他指出大多数 Transformer 其实很浅，最多约 100 层。当前的做法是让模型通过思维链（Chain of Thought）生成更多 Token 来"假装"增加深度——每多一个 Token 就相当于多一条计算路径。但这只是对架构天生浅层的一种打补丁式方案。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">自回归解码的低效</div>
+                        <p class="topic-detail-content">Transformer 一次只能生成一个 Token，推理时的大量计算卡在这个瓶颈上。业界主流方案——推测解码（Speculative Decoding）——本质上是对此问题的一种"创可贴"。Rohan 强调，提出"如何增加计算深度"这个问题本身，就打开了 20 个新方向。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">优化器与架构的协同进化</div>
+                        <p class="topic-detail-content">Rohan 用自己创造 Shampoo 优化器的经验说明：更强的优化器可以训练更难优化的模型，获得更好性能。优化器和架构是一枚硬币的两面。Shampoo 比 Adam 好约 2 倍，但仍然只用了训练中可用信息的一小部分。当前业界几乎没有人认真对待优化器设计——全世界可能只有约 4 个人在深入这个方向。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "The computational depth is poor. How do we increase computational depth? Just posing that question opens up 20 new directions." — "计算深度很差。我们如何增加计算深度？提出这个问题本身就打开了 20 个新方向。" <cite>00:16:28</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Transformer 的极限与超越 RL</h3>
+                        <span class="topic-timestamp">00:20:32 - 00:26:41</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Transformer 存储知识的能力极强，但一旦世界变化就无法适应。强化学习不是从经验中学习的唯一方式——大脑用了多种算法。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">思想实验：停止训练会怎样</div>
+                        <p class="topic-detail-content">Jerry 设想了一个思想实验：如果 OpenAI 和 Anthropic 明天停止训练新模型，手里只有今天最好的 Transformer。几个月过去，它越来越没用——因为世界上出现了新事件、新任务、新代码库。Transformer 的几乎所有能力来自训练数据，它有一些适应能力但非常有限。这个循环必须经过实验室——这就是它与"持续学习"之间的根本矛盾。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">学习方式的多样性</div>
+                        <p class="topic-detail-content">对于 Rich Sutton 的《经验的时代》，Jerry 表达了共鸣但指出关键差异：强化学习只是"从经验中学习"的一种数学形式化，它依赖并行展开来降低方差——让模型在世界的平行版本中同时尝试，但这根本不是人类真实的经验学习方式。他用自己的亲身经历区分了两者：踢足球像 RL——反复尝试、微调、验证；学数学完全不同——阅读抽象概念、在脑海中反复推演直到"咔哒"一声连接起来。大脑中没有单一的学习算法，而是多种算法协同工作。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Reinforcement learning is not the only way to learn from experience." — "强化学习不是从经验中学习的唯一方式。" <cite>00:25:24</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">端到端优化：数量级效率提升的来源</h3>
+                        <span class="topic-timestamp">00:26:41 - 00:34:24</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        预训练和强化学习必须联合优化——这是一个完全不同的优化问题，也是数量级效率提升的来源。当前的做法是割裂的。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">度量有问题</div>
+                        <p class="topic-detail-content">Rohan 批评了当前以困惑度（Perplexity）为目标的预训练范式："我们看困惑度，发现规模越大越好——但这只是构建一个不错的先验。问题是，你训练这个模型是为了什么？"他举了一个生动的例子："我训练好一个模型交给 Jerry，Jerry 用 RL 把我所有的困惑度指标毁掉了。"所以困惑度在端到端目标面前根本不重要。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">为什么要联合优化</div>
+                        <p class="topic-detail-content">预训练是大批次、高并行的，强化学习是高方差、低反馈密度的——两者的优化性质完全不同，简单的"组合"行不通。即便大实验室最优秀的研究人员也认为应该探索这个方向，但在每周都有发布压力的竞争环境中，6 个月的长期研究都很难推进。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">超越生物学习效率？</div>
+                        <p class="topic-detail-content">对于是否可能接近或超越生物学习效率，Rohan 的回答是否定的——至少在当前硬件条件下。因为人脑是"模型计算"——我们在成长中自己构建了电路和学习算法。而神经网络在固定硬件上做固定模型的学习，效率低得多。除非设计更像人脑的模拟硬件。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "We have to combine pre-training and RL together and that's where one order of magnitude improvement would come from." — "我们必须把预训练和强化学习结合起来——一个数量级的改进就来自这里。" <cite>00:27:31</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">构建自动化实验室与 AGI 的定义</h3>
+                        <span class="topic-timestamp">00:34:24 - 00:39:33</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Core Automation 不是用 AI 取代研究人员，而是用自动化给每个人最大程度的行动力。Jerry 定义 AGI 为"无需人类即可自我改进的模型"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">自动化的真正含义</div>
+                        <p class="topic-detail-content">Jerry 用了一个比喻：步行能走一定距离，骑自行车更远，开车更远，农耕从人力到机器的飞跃也是如此。自动化不是取代人类，而是扩展人类的能力边界。Core Automation 的使命不是把人类踢出循环，而是让每个人在单位时间内能做更多事情。他们的核心抓手是迭代速度——如果你能以天为单位运行架构实验，而不是以月为单位，你的搜索效率就是传统方式的数十倍。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Jerry 的 AGI 定义</div>
+                        <p class="topic-detail-content">他给出的定义非常具体：AGI 是能在没有人类的情况下自我改进的模型。因为改进 AI 模型本身就是人类可以做的工作。但他说人机混合目前非常成功，没有人类的 LLM 则完全不成功。当前路径——即使加上推理时扩展——也无法带我们到达 AGI。必须要有新的架构突破。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "The human LLM hybrid is really really successful right now, but LLMs without humans not so much, not at all." — "人机混合现在非常成功，但没有人类的 LLM 则不然——一点都不。" <cite>00:38:56</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">内核自动化路线图：6 个月的硬仗</h3>
+                        <span class="topic-timestamp">00:39:45 - 00:48:17</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Core Automation 未来 6 个月的核心是自动化 GPU 内核生成——这是突破 Transformer 架构瓶颈的"内部循环"。没有这个，一切新的架构想法都无法落地。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">QR 分解竞赛的启示</div>
+                        <p class="topic-detail-content">Rohan 以 QR 分解内核竞赛为例：这个古老的线性代数操作用于 Shampoo 优化器等场景。标准库 CuSolver 的 QR 性能平平。一个高品位程序员配合搜索循环，花费 10 万美元的智能体编程成本、历经 4 周，获得 7 倍加速。但竞赛最终获胜的方案——比标准库快 60 倍。而当前任何一个前沿模型（包括 Gemini）都远远无法解决这个问题。"现代的模型甚至不接近。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">五年的教训</div>
+                        <p class="topic-detail-content">Rohan 分享了一个五年的教训：他的项目 N-gram Memory（用额外内存替代 Transformer 中的部分参数）早在 2020 年就在 Google 内部部署了小版本。但这需要稀疏操作的硬件加速——涉及与 TPU 团队的协调。它从未真正落地。六个月前，DeepSeek 写了一篇论文做了改进版本，证明了可以替代 MoE。Rohan 等待了五年的事情，在一个没有历史包袱的团队手中成真了。他的结论："如果不写内核，甚至不可能。"</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"度假测试"</div>
+                        <p class="topic-detail-content">在结尾，Jerry 给这个宏伟计划一个充满诗意的目标信号：当他们作为一个团队去度假回来，发现实验室在一周内自动产出了更好的东西——那就是 AGI 真正实现的时刻。然后他们会延长假期，再延长，直到永远放假。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Kernel automation is a lab created to build models that continually learn and then learn from deployment." — "Core Automation 是一个为构建持续学习并在部署中持续学习的模型而创建的实验室。" <cite>00:45:02</cite>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧱</div>
+                    <h3 class="takeaway-title">架构瓶颈</h3>
+                    <p class="takeaway-desc">Transformer 的容量天花板已经可见。两位创始人从不同路径得出了相同结论：核心缺陷是 Transformer 无法在部署后持续学习——只能通过实验室循环更新。下一个突破必须在架构层面。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧠</div>
+                    <h3 class="takeaway-title">RL ≠ 全部</h3>
+                    <p class="takeaway-desc">"从经验中学习"远远不止强化学习。大脑同时运行多种学习算法——踢足球式（RL）和学数学式（深度推理）完全不同。当前 AI 押注单一范式，未来必有新范式出现。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💰</div>
+                    <h3 class="takeaway-title">经济学驱动创新</h3>
+                    <p class="takeaway-desc">Transformer 的胜利本质上是经济学的胜利。大实验室不探索替代架构不是因为技术不行——而是在公开市场竞争中，堆 Transformer 赢下下一季度比赌两年后的架构革命更"划算"。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔗</div>
+                    <h3 class="takeaway-title">端到端优化</h3>
+                    <p class="takeaway-desc">预训练和强化学习需要联合优化。割裂看待两者是当前效率低下的根源。把两者当作整体训练流程设计，是数量级改进的来源——但实现难度巨大。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">内核是守门员</h3>
+                    <p class="takeaway-desc">自动化内核生成是一切架构创新的先决条件。任何新颖的算法想法如果不能以最高效率在 GPU 上运行就毫无意义。前沿模型在高性能内核生成上甚至不是人类专家的对手。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏖️</div>
+                    <h3 class="takeaway-title">"度假测试"</h3>
+                    <p class="takeaway-desc">AGI 的信号是"团队度假时实验室还在产出"。Jerry 定义 AGI 为"无需人类即可自我改进的系统"——"度假测试"是他判断 AGI 是否来临的朴素标准。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">关于 Core Automation</h3>
+            <p class="footer-desc">
+                Jerry Tworek 和 Rohan Anil 于 2025 年创立的 AI 研究实验室，目标是寻找 Transformer 的替代架构，构建能够持续学习并在部署中不断适应的下一代 AI 系统。命名中的"自动化"既指其研究工作流程的自动化，也指模型本身的自我改进能力。
+            </p>
+            <div class="footer-quote">
+                "我们想度假一周，看看实验室能否做出更好的东西。"
+            </div>
+            <p class="footer-note">
+                本文基于 Sequoia Capital 播客对话整理。<br>
+                视频链接：<a href="https://www.youtube.com/watch?v=2RJiaf0SY8s" target="_blank">https://www.youtube.com/watch?v=2RJiaf0SY8s</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
