@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeff Dean 的 AI 构建法则 — Y Combinator 深度对话</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <!-- 配色方案：橙青（Y Combinator 橙 + 科技青） -->
+    <style>
+        :root {
+            --accent-primary: #ff6b35;
+            --accent-secondary: #00d4ff;
+            --accent-primary-rgb: 255, 107, 53;
+            --accent-secondary-rgb: 0, 212, 255;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/jeff-dean-the-1-rule-for-building-in-ai-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">Y Combinator · Startup School 2026</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">Jeff Dean 的</span>
+                    <span class="title-line-2">AI 构建法则</span>
+                </h1>
+                <p class="subtitle">
+                    Google 首席科学家把 30 年基础设施经验（MapReduce、Bigtable、TPU、Gemini）压成一份写给 AI 时代创始人的作战手册：1% 法则、千倍能量鸿沟、跑数周的智能体，以及"写技能胜过调参数"。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Diana Hu（YC 合伙人）</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Jeff Dean（Google 首席科学家）</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">57 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=CxXgV54KzpQ" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">1% 法则</h3>
+                    <p class="point-desc">选方向要看通用模型在你领域的成功率：0% 或 1% 是机会（未被覆盖），20% 是陷阱（能力正在萌芽，更大模型马上吃掉你）。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">千倍鸿沟</h3>
+                    <p class="point-desc">移动一次数据比做一次计算贵 1000 倍。用"能量"而非"延迟"度量系统，你会发现很多"模型问题"其实是数据 I/O 问题。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">智能体跑数周</h3>
+                    <p class="point-desc">配强底层模型，智能体可连续工作数天甚至数周完成极复杂任务——绝大多数人还没真正内化这件事的分量。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">上下文工程</h3>
+                    <p class="point-desc">AI 重心从"更大的模型"转向"模型周围的系统"——检索、工具、记忆、编排。无需 GPU 也能深度参与的高杠杆领域。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">写技能胜过调参</h3>
+                    <p class="point-desc">模型从外部改不了，但你能给它写"技能"——把专家流程显式化。30 页《Performance Hints》就是普通人获得超能力的模板。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">AI 构建 AI</h3>
+                    <p class="point-desc">科学方法循环正被压成极低延迟的自动循环；一个快 30 万倍的"学习型验证器"就能把六个月的筛选变成一顿午饭。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">预测的一年之后：AI 已是"初级工程师"，而且进步快于预期</h3>
+                        <span class="topic-timestamp">00:07 - 02:40</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        2025 年"AI 达到初级工程师水平"的判断不仅准确，且模型在长期复杂任务上的进步速度超出了迪恩本人的预期——他坦承自己低估了。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"初级工程师"为何贴切</div>
+                        <p class="topic-detail-content">基于智能体的长时编码任务，模型的完成度已相当可观。迪恩主动承认两点低估：模型处理越来越复杂任务的能力增速超预期；编码之外，基于智能体的系统也开始在其他领域闪光。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">2027 年版预测</div>
+                        <p class="topic-detail-content">核心命题是让机器学习系统通过自动运行大量实验来提升自己——把问题分解、在紧凑的自动化实验循环里求解子问题、再拼回改进后系统。这套"自动分解+自动实验"不仅适用于 ML，也适用于任何有可量化目标的科学与工程领域。</p>
+                    </div>
+                    <div class="quote-block">
+                        "让机器学习系统通过运行大量实验来提升自己的能力……这种完全自动化的'问题分解+自动化实验'，我认为会非常令人兴奋。" — [00:01:44]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">"装进内存"的时刻：2001 年的教训在 2026 年重演</h3>
+                        <span class="topic-timestamp">02:40 - 04:38</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        2001 年"搜索索引装进 RAM"的量级跃迁，将在 2026 年的推理硬件上重演——专门化是同时降低延迟和能耗的关键。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">谷歌搜索的"量级跃迁"</div>
+                        <p class="topic-detail-content">2001 年搜索还跑在硬盘上，迪恩与桑杰算清"整个索引终将能装进内存"，几天内上线新版本——索引驻留内存、告别硬盘寻道，搜索因此"变得快"。这不是优化，而是换一种介质、移除慢几个数量级的环节。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">2026 年的对应物</div>
+                        <p class="topic-detail-content">高性能、低能耗的推理硬件正对应"装进内存"那一跃。推理体验被延迟卡住，而硬件专门化比 GPU/TPU 更省电、更低延迟。"等待"本身，就是今天所有 AI 产品共同忍受的隐性税。</p>
+                    </div>
+                    <div class="quote-block">
+                        "想象一下，如果延迟能提升 50 倍，你能用它做出什么。" — [00:04:27]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">智能体将运行数周：一个被普遍低估的事实</h3>
+                        <span class="topic-timestamp">04:38 - 05:58</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        在场大多数人仍把智能体当"跑一两小时的脚本"，但配强底层模型时，智能体已能连续工作数天甚至数周完成极复杂任务。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">一个认知差</div>
+                        <p class="topic-detail-content">迪恩说，人们还没真正内化"智能体可以长时间运行"——不是一小时两小时，而是在某些问题域、配上有能力的底层模型，运行几天、几周，完成真正复杂的任务。他说有人看到苗头，但绝大多数人没意识到这是"相当大的事"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">真实的工作方式</div>
+                        <p class="topic-detail-content">他举的例子：让智能体用不同编程语言重写整个软件版本，以获得更好的安全或性能属性——"以相当认真的方式真正完成"。这不是 demo，而是他已在内部用真实系统验证过的工作方式。</p>
+                    </div>
+                    <div class="quote-block">
+                        "人们还没完全意识到：在某些问题领域、底层模型足够强大时，你可以让智能体运行几天甚至几周，去完成非常非常复杂的任务。" — [00:04:38]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">餐巾纸数学：从"三分钟语音"到 TPU，以及找点子的方法</h3>
+                        <span class="topic-timestamp">05:58 - 10:25</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        2013 年"每用户每天语音 3 分钟就要让服务器翻倍"的粗略估算，催生了专门做低精度稠密线性代数的 TPU，能效高 30–80 倍、延迟低 20–30 倍。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">信封背面的计算</div>
+                        <p class="topic-detail-content">2013 年语音识别错误率骤降，效果越好人们越常用。粗略一算：每用户每天只用语音 3 分钟，光语音识别就要让整个服务器集群翻倍，成本高得离谱。结论：不能在 CPU 上硬扛。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">专门化的程度</div>
+                        <p class="topic-detail-content">他们为"低精度稠密线性代数"造了颗跑不了 Chrome 的芯片，却以 30–80 倍能效、20–30 倍低延迟服务 ML 推理。关键在于"愿意专门化到拿巨大收益，又保留足够通用性"——它后来能无缝承接晚诞生多年的 Transformer，正因如此。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">怎么找突破点子</div>
+                        <p class="topic-detail-content">方法论：盯住你领域的瓶颈，问"有没有一种非常不同的解法，能让性能/能力提升一两个数量级"。关键是"不要被今天这个问题是怎么解决的所锚定"，从第一性原理重设计。数量级的跳跃永远来自换一套坐标系。</p>
+                    </div>
+                    <div class="quote-block">
+                        "如果你不去紧盯一个问题、不被'今天这个问题是怎么解决的'所锚定，而是从第一性原理出发去想，你就能想出那些恰恰是其他人没有在想的点子。" — [00:09:39]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 时代的"延迟数字"：度量单位换成了能量</h3>
+                        <span class="topic-timestamp">10:25 - 12:33</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        迪恩那张《每个程序员都应知道的延迟数字》清单需要 AI 版更新：衡量系统的新标尺是"做一次运算花多少能量、搬一次数据花多少能量"。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">新清单里有什么</div>
+                        <p class="topic-detail-content">加速器主存到片上内存再到乘法单元的带宽；完成一次乘法运算的能耗；芯片间互联带宽及在该带宽下能连多少芯片；从 500 颗扩展到 1 万颗时网络带宽如何衰减。这些数字"真的会影响你怎么思考解决某类特定问题"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">度量革命</div>
+                        <p class="topic-detail-content">一次数学运算约花费一皮焦（10⁻¹² 焦）；而把数据从 HBM 搬进处理器让它参与计算，代价是那一千倍。理解 AI 系统的瓶颈，不再是"算得快不快"，而是"数据动不动得起"。</p>
+                    </div>
+                    <div class="quote-block">
+                        "做一次计算大约花费一皮焦。但移动数据、做数据 I/O 的花费，是那个的一千倍。" — [00:11:30]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">能源问题：一千倍的鸿沟如何塑造整个 AI 技术栈</h3>
+                        <span class="topic-timestamp">12:33 - 16:11</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        "模型问题"往往是伪装的"数据 I/O 问题"。批处理、训练 epoch 都是为摊薄一千倍搬运成本而做的系统工程；推理硬件的主战场是极低精度与最小化数据移动。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">批处理为何存在</div>
+                        <p class="topic-detail-content">因为搬运贵，必须一次喂很多样本/ token 来摊薄——"你付的不是一千倍的慢，而是一千倍除以批大小"。而低延迟场景用不了大批次，于是形成"要效率就牺牲延迟"的张力。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">模型问题 vs 系统问题</div>
+                        <p class="topic-detail-content">很多创始人叫它"模型问题"，其实是"系统/数据 I/O 问题"。训练时的批处理、跑 epoch，本质是在迁就硬件效率而非学习理论。理想状态是"批大小等于 1"的训练，但效率不允许，于是用大 batch。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">推理专用硬件的方向</div>
+                        <p class="topic-detail-content">训练不需要极低延迟，但推理需要，因此推理是硬件专门化的最佳切口。激进的设计方向：最小化数据搬运、只支持极少数几种精度——"如果你对需要哪种精度有很好的答案，就把那种精度直接做进硬件里，别的都不做"。</p>
+                    </div>
+                    <div class="quote-block">
+                        "如果没有那一千倍的差距，你就不需要做批处理；但正因为有这个差距，你必须一次处理很多样本或很多 token，才能摊薄数据搬运的成本。" — [00:12:35]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">上下文工程：模型之外的下一个前沿</h3>
+                        <span class="topic-timestamp">16:11 - 19:46</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 进步重心正从"更大的模型"转向"模型周围的系统"——检索、工具、记忆、智能体编排。这是普通人唯一不需要 GPU 和数据资源也能深度参与的高杠杆领域。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">信息清晰度是根基</div>
+                        <p class="topic-detail-content">模型只是系统的一块，真正解决问题需要"会用工具的模型"——检索相关信息、保有历史、把信息放进当前上下文。训练数据像数万亿 token 搅拌成的一锅汤，理解是模糊的；而上下文里为当前问题直接放入的信息则清清楚楚。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">最迷人的特质：民主化</div>
+                        <p class="topic-detail-content">以前训练模型需天量 GPU 和数据；上下文工程只需一个 Gemini 这类 API，自己搭检索、自己写工具调用，在场每个学生都能参与。精进方法是"用模型解决问题→观察它失败→不调参（外部也调不了）而是写更好的指南和技能→再解决"，形成自我改进循环。</p>
+                    </div>
+                    <div class="quote-block">
+                        "训练数据就像数万亿个 token 搅拌成的一锅汤……远不如模型针对当前问题直接看到的上下文那么清晰。" — [00:16:29]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">把专家方法论写成"技能"：让 AI 像杰夫·迪恩一样做优化</h3>
+                        <span class="topic-timestamp">19:46 - 22:13</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        迪恩和桑杰把人类专家的性能优化流程（测基准→改代码→复测→迭代）写成可复用"技能"交给模型，相关方法论已公开成 30 页论文《Performance Hints》，免费可得。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">上下文工程的实战案例</div>
+                        <p class="topic-detail-content">底层库被谷歌数百万进程使用。过去标准做法：测当前性能、改代码、重跑基准、测缓存足迹、反复迭代。如今整条流程（测量序列、缓存足迹分析）写成"技能"，让模型学会"自我改进式"优化。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">超能力已免费开放</div>
+                        <p class="topic-detail-content">迪恩爆料：他和桑杰写的约 30 页《Performance Hints》早就公开；已有人把它摘要喂给模型，模型"现在能更好地推理代码中的性能问题"。他当场号召全场："它完全免费开放，你们都应该去试试。"</p>
+                    </div>
+                    <div class="quote-block">
+                        "我们把自己作为人类会用的方法，以模型可用的形式交给了它……对某些类型的问题，效果相当不错。" — [00:20:32]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">长期运行的智能体为何失败：开环的误差累积</h3>
+                        <span class="topic-timestamp">22:13 - 25:21</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        智能体约 10 次工具交互后开始走偏，根因是"偏离训练分布"：一旦超出模型熟悉范围，性能像所有 ML 模型一样骤降。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">统计规律，不是 bug</div>
+                        <p class="topic-detail-content">每个构建过智能体的人都见过：第 10 步前出色，第 30、40 步失控，第 50 步脱轨。归因很冷静——模型在做没经验的事，一旦稍微偏离训练分布，性能就突然退化，偏离越远越糟。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三条处方</div>
+                        <p class="topic-detail-content">① 技能与提示：把模型约束在它"确实知道怎么做的那条更明亮的小路"上；② 多智能体+评估器：让多个智能体分头探索，由另一个模型筛选有希望的方向；③ 推理时计算：把"搜索"的钱花在推理阶段，对解法空间做搜索——"非常非常通用的技术"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">谷歌内部的实现</div>
+                        <p class="topic-detail-content">内部开发环境里有一整套技能教智能体用内部工具——编码、代码评审、测性能、拉日志。即使模型没被专门训练过"拉日志的方式"，只要技能定义正确就能做到。"正确的技能定义"就是让基础模型不重训就变强的杠杆。</p>
+                    </div>
+                    <div class="quote-block">
+                        "一旦你稍微偏离它所知道的那套分布，就像大多数机器学习模型一样，它的性能就会开始骤降。你越远离它熟悉的舒适区，它就越可能运转不良。" — [00:23:07]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">初创公司仍能击败谷歌的地方：找 0% 成功率的问题</h3>
+                        <span class="topic-timestamp">25:21 - 31:19</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        谷歌通用模型"什么都能做一点"却对垂直领域不够专注；两三人团队的机会在于深耕"通用模型成功率 0% 或 1%"的领域——前提是该能力未来 6–12 个月内不会被前沿模型追上。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三类切口</div>
+                        <p class="topic-detail-content">① 产品能访问通用模型碰不到的专有数据（如整理用户个人信息）；② 垂直模型（如 AlphaFold 专做蛋白质折叠，材料科学、芯片设计同理）；③ 关键是训练这类模型"可能并不需要那么多算力"就能获得高准确率。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">反向筛选标准</div>
+                        <p class="topic-detail-content">迪恩警告：测试通用模型在你目标领域的能力。如果它完全失败，那多半是好信号；如果它能做一点但做得不好，反而是坏信号——说明能力正在萌芽，更大模型随时会吃掉你。判断标准是一个具体数字：找 0% 或 1%，而非 20%。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">评估耐久性</div>
+                        <p class="topic-detail-content">你要做的事，是通用模型 6–12 个月内就会做好的，还是它们两三年都碰不到的？这决定了你的窗口期。</p>
+                    </div>
+                    <div class="quote-block">
+                        "要找的是'模型只有 0% 或 1% 成功率'的东西，而不是 20% 成功率的。" — [00:28:26]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 11 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">11</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 原生创始人：品味与规格，才是稀缺技能</h3>
+                        <span class="topic-timestamp">31:19 - 36:36</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        当几百个智能体替你写完全部代码，稀缺的不再是工程能力，而是两件事：把"你想要什么"写成清晰规格的写作能力，以及挑选"让智能体做什么"的品味——两者都需要刻意训练。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">规格写作</div>
+                        <p class="topic-detail-content">写代码前先说明软件要做什么——如今这个训诫的权重大幅上升，因为智能体不会像聪明人类那样追问，只会"推断"且常常偏到你没想象过的地方。示范案例：让模型把 Python 翻译成 Go 极其成功，因为"你拥有一份极其详细的规格说明"——整套软件及测试就是规格。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">品味</div>
+                        <p class="topic-detail-content">一个人能拥有所有工具，但"战斗的很大一部分在于你要把时间花在哪个问题上"。挑对问题并解决它，远胜把无聊问题研究得精彩绝伦。这种"该做什么"的高层智慧，模型短期内学不来——方向盘上那个人靠的是品味。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">怎么训练品味</div>
+                        <p class="topic-detail-content">① 经验积累：在大量不同问题上磨出的直觉；② 12 个月预测复盘：写下未来一年你认为重要的 10 个想法，做其中一个，一年后回看其余的——哪些被世界实现了？这份复盘就是训练品味判断力的样本集；③ 做疯狂的思想实验。</p>
+                    </div>
+                    <div class="quote-block">
+                        "如果模型替你把所有代码写完，稀缺的是拥有极好的品味，知道该让你的智能体去做什么。" — [00:34:02]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 12 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">12</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">质疑最大的假设：从"不可靠晶体管"到 MapReduce</h3>
+                        <span class="topic-timestamp">36:36 - 42:08</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        迪恩用"每天出错 20 次的晶体管"思想实验展示质疑假设的力量：分布式系统早已学会用不可靠部件构建可靠系统，把冗余编码下沉到更低尺度，可能开启全新设计点。MapReduce 和 TPU 都诞生于"换个坐标系看问题"。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">一个深层双重标准</div>
+                        <p class="topic-detail-content">宏观尺度我们坦然接受"用不可靠部件构建可靠系统"——分布式文件系统假设单盘会坏，存三份副本、用里德-所罗门纠错，数据照样安全；但在晶体管尺度，芯片业 60 年的圣旨却是"每颗芯片必须与其他任何一颗完全相同"，任何比特都不许翻转。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">思想实验</div>
+                        <p class="topic-detail-content">如果反其道而行，用"每天约 20 个错误"的晶体管构建系统——把纠错责任从物理层上移——会是一个完全不同的设计点：信号沿多条冗余路径发送，制造端可能解锁今天无法想象的工艺自由度。迪恩也冷静补充反方：大多数思想实验最终不成立，但"时不时重新审视它们"本身就是价值。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两个真实产出</div>
+                        <p class="topic-detail-content">TPU：在"语音识别"显得重要前就把硬件专门化到那个垂直领域。MapReduce：谷歌爬虫/索引代码里"把网页内容映射到语言"被淹没在海量"并行化+检查点+可靠性"代码中，迪恩凭着函数式训练"眯眼看"抽出抽象层，把容错沉进公共库，成就了海量计算基石。</p>
+                    </div>
+                    <div class="quote-block">
+                        "我们用不可靠的零件构建可靠的分布式文件系统……但我们似乎没有把这种哲学以极端的程度用在晶体管尺度上。" — [00:37:33]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 13 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">13</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">构建 AI 的 AI：自动化实验循环与"30 万倍加速"的验证器</h3>
+                        <span class="topic-timestamp">42:08 - 50:02</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        科学方法的完整循环正被自动化压缩成极低延迟的循环，覆盖 ML 模型设计、芯片设计与科学发现。快 30 万倍的"学习型验证器"改变了实验经济学；而被拒稿的"知识蒸馏"论文则说明：真正的判断来自你对问题的理解，而非评审。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">自动化科学方法</div>
+                        <p class="topic-detail-content">科学方法即"提出实验→实现→评估→获结果"。过去这个循环成本高昂，现在越来越多问题能把它自动化、把延迟压到极低，从"跑几个实验"变成"跑成千上万个"。配上编排框架——接收高层目标、拆子问题、每子问题内嵌自动探索循环、再拼装——就能同时加速 ML、科学与工程。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">评估器本身也要被加速</div>
+                        <p class="topic-detail-content">同事用昂贵 DFT 模拟器评估分子性质一次算一整夜，他们收集输入输出对训练出神经网络近似，得到快 30 万倍、准确度几乎等同的验证工具——"现在你有一千万个东西要筛选，吃个午饭就筛完了"。任何领域能造出快 30 万倍的近似验证器，实验循环就进入全新转速。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">被拒稿的论文</div>
+                        <p class="topic-detail-content">2014 年迪恩与辛顿、文亚尔斯的"知识蒸馏"论文被 ICLR 拒稿，理由是"不太可能产生显著影响"。如今蒸馏是业界标配，Gemini Flash 正从 Pro 蒸馏而来。他留给全场一句话："即使被拒绝，也要继续前进。"</p>
+                    </div>
+                    <div class="quote-block">
+                        "科学方法的循环正在被自动化，让这个循环的延迟极低……它将让我们能同时加速机器学习、加速科学、加速工程。" — [00:42:27]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 14 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">14</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">构建真正重要的事物：25 岁的杰夫会做什么</h3>
+                        <span class="topic-timestamp">50:02 - 57:07</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        无论加入大厂还是创办小公司，判断一件事是否值得做，只需问：如果最好的结果发生了，世界会因此好很多吗？与聪明、低自我、技能互补的人共事，本身就是职业发展核心机制。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">一套判断框架</div>
+                        <p class="topic-detail-content">你是否在做真正在乎的事？能否与喜欢的人一起推进？这件事成功后，会不会以某种方式让世界变得更好？——"如果最好的可能结果发生了，世界会因此好很多吗，还是世界会说'哦挺酷的，不过随便啦'？后者不是你该花时间做的事。"</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两条路都成立</div>
+                        <p class="topic-detail-content">大组织优势是结构、无数懂你所不知的同事、以及"工作已能影响千万人"的现成平台；小公司优势是极致热情，代价是承担相当大的风险。取决于个人品味。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">带团队三十年的心得</div>
+                        <p class="topic-detail-content">选人标准：专业上要有团队需要的高超技能；人格上要"低自我、有团队精神、技能互补"。职业建议是漂亮比喻：把工程/研究生涯看作一条工具箱，永远不知道下个问题需要哪四个专门工具，所以要不断往里加工具。他自己的心愿单包括：更高效推理硬件、数据效率高得多的 ML（continual learning）、多智能体交互、让对话更文明。</p>
+                    </div>
+                    <div class="quote-block">
+                        "如果我在这个问题上工作、并且最好的可能结果发生了，世界会因此好很多吗？还是世界会说'哦挺酷的，不过随便啦'？后者不是你该花时间做的事。" — [00:52:09]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">1% 法则</h3>
+                    <p class="takeaway-desc">找问题要看通用模型的成功率——0% 或 1% 是机会（说明还没被覆盖），20% 是陷阱（说明能力正在萌芽，很快会被更大模型吃掉）。这是标题核心，也是创始人选方向最锋利的一把尺子。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">千倍鸿沟</h3>
+                    <p class="takeaway-desc">搬一次数据比算一次数贵 1000 倍（1 皮焦 vs 1000 皮焦）。用"能量"而非"延迟"作为度量单位，你会发现很多"模型问题"其实是数据 I/O 问题——批处理、epoch、低精度推理硬件，都是这个鸿沟的副产品。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🛠️</div>
+                    <h3 class="takeaway-title">写技能胜过调参数</h3>
+                    <p class="takeaway-desc">模型从外部改不了，但你能给它写"技能"——把专家流程显式化。迪恩和桑杰把性能优化方法论写成技能 + 30 页《Performance Hints》公开文档，就是普通人获得"专家超能力"的现成模板。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📝</div>
+                    <h3 class="takeaway-title">规格越清晰，智能体越强</h3>
+                    <p class="takeaway-desc">智能体不会追问你。Python 翻译成 Go 之所以极其成功，是因为整份软件加测试就是一份完美规格。把"你想要什么"写成清晰的 spec，是 AI 原生时代最重要的写作能力。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔁</div>
+                    <h3 class="takeaway-title">自动化实验循环</h3>
+                    <p class="takeaway-desc">科学方法（提出→实现→评估）正在被压缩成极低延迟的自动循环。一个快 30 万倍的"学习型验证器"就能把六个月的科学筛选变成一顿午饭——评估器本身，往往才是瓶颈。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧩</div>
+                    <h3 class="takeaway-title">质疑"理所当然"</h3>
+                    <p class="takeaway-desc">芯片业花 60 年追求"每颗芯片完全相同"，而分布式系统早就接受"部件会坏，用冗余兜底"。用"每天出错 20 次的晶体管"这类思想实验重审假设，TPU 与 MapReduce 都诞生于此。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">给未来创始人的作战手册</h3>
+            <p class="footer-desc">
+                迪恩用 30 年基础设施史给出的答案朴素却锋利：方向比蛮力重要（1% 法则），坐标系比优化重要（换一套看问题的方式），把专家流程写成技能比调参数重要，而让世界变得更好的问题，永远值得你投入。在模型能力突飞猛进的时代，真正稀缺的不是工程，而是品味、规格与质疑假设的勇气。
+            </p>
+            <div class="footer-quote">
+                "如果最好的可能结果发生了，世界会因此好很多吗？否则那不是你该花时间做的事。" — Jeff Dean
+            </div>
+            <p class="footer-note">
+                内容来源于 Y Combinator（Startup School 2026），仅供学习参考。
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

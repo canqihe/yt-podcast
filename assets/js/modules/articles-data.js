@@ -1,6 +1,24 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/jeff-dean-the-1-rule-for-building-in-ai.html",
+    card_class: "card-ai",
+    category: "Y Combinator · Startup School 2026 · AI 方法论 · 智能体",
+    date: "2026-08-01",
+    title: "Jeff Dean 的 AI 构建法则",
+    excerpt: "Google 首席科学家把 30 年基础设施经验（MapReduce、Bigtable、TPU、Gemini）压成一份写给 AI 时代创始人的作战手册：1% 法则、千倍能量鸿沟、跑数周的智能体，以及「写技能胜过调参数」。",
+    tags: ["#JeffDean", "#AI方法论", "#智能体", "#上下文工程", "#1%法则"],
+  },
+  {
+    url: "articles/decagons-playbook-for-building-enterprise-ai-applications.html",
+    card_class: "card-ai",
+    category: "a16z · 企业 AI · 智能体 · 开源模型",
+    date: "2026-08-01",
+    title: "Decagon 的企业级 AI 应用方法论",
+    excerpt: "当所有人都在说 OpenAI 和 Anthropic 是最后的创业公司时，Decagon 正用 90% 开源模型、Duet Autopilot 和'玻璃盒'部署模式，快速拿下全球最大的银行、航空公司和电信公司。Jesse Zhang 与 Ashwin Sreenivas 完整拆解：微调小模型如何全面胜过大模型、前沿部署工程师陷阱、以及如何击败 Sierra。",
+    tags: ["#Decagon", "#企业AI", "#智能体", "#开源模型", "#客户支持"],
+  },
+  {
     url: "articles/ep-021-the-ai-project-trinity-capital-offtake-data-center.html",
     card_class: "card-ai",
     category: "SemiAnalysis · AI 金融 · 数据中心 · 英伟达",
