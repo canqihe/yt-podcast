@@ -1,6 +1,15 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/physics-says-now-isnt-real-so-do-your-choices-even-matter-jo-marchant.html",
+    card_class: "card-future",
+    category: "The Royal Institution · 物理 · 意识 · 时间",
+    date: "2026-08-03",
+    title: "物理学说「现在」并不真实——那你的选择还重要吗？",
+    excerpt: "此刻正在发生的「现在」到底是什么？它既是一切，又仿佛什么都不是。科普作家乔·马钱特把宇宙学、量子物理、神经科学和心理学放在同一张桌子上：从爱因斯坦的四维时空与块宇宙，到费德勒领先 8 英尺的「预测」，再到没有预先写好的剧本的 QBism——如果「现在」只是意识制造的幻觉，你的每一个选择真的改变过任何东西吗？最终答案比想象中乐观：宇宙像即兴爵士乐，在演奏之前什么都不会被决定，而「现在」就藏在你与世界相遇之处。",
+    tags: ["#物理", "#意识", "#时间", "#量子物理", "#自由意志"],
+  },
+  {
     url: "articles/jeff-dean-the-1-rule-for-building-in-ai.html",
     card_class: "card-ai",
     category: "Y Combinator · Startup School 2026 · AI 方法论 · 智能体",
