@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chai Discovery 的苦涩教训：药物设计是另一个规模化问题 | Josh Meier · Matt McPartlon</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <!-- 配色方案：绿黄（生物医药的青 + 实验室的金） -->
+    <style>
+        :root {
+            --accent-primary: #22c55e;
+            --accent-secondary: #eab308;
+            --accent-primary-rgb: 34, 197, 94;
+            --accent-secondary-rgb: 234, 179, 8;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/chai-discovery-bitter-lesson-drug-design-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">Sequoia Capital · AI · 生物医药 · 药物设计</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">Chai Discovery 的苦涩教训</span>
+                    <span class="title-line-2">药物设计是规模化问题</span>
+                </h1>
+                <p class="subtitle">
+                    大多数药企仍在干一件"大海捞针"的苦差事：筛掉数亿个分子，只为找到一个恰好能结合靶点的候选物，命中率不到 0.1%。而 Chai Discovery 的两位创始人，一个出身理论计算机科学、一个来自 OpenAI 早期团队，把生物学彻底当成一个工程问题。他们用 Chai-2 把抗体从头设计的结合命中率推到 15%，并坚信"苦涩的教训"——放大数据、模型与算力，模型自会学会手工规则永远捕捉不到的东西。更反直觉的是，他们认为生物学其实是比代码更容易验证的领域。他们的赌注：一套把药物发现从 9 个月压缩到 9 天的"分子 CAD"，并且是赋能整个制药行业，而非与之竞争。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Josh Meier · Matt McPartlon</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">频道</div>
+                        <div class="meta-value">Sequoia Capital</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">47 分 22 秒</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=wv53mDmY-k0" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">苦涩教训</h3>
+                    <p class="point-desc">药物设计与代码生成、自动驾驶遵循同一规模化定律——放大数据、模型与算力，模型自会学到手工搭建的流水线无法捕捉的知识。识别规模化方向的指南针是"简单性"：不断问"什么才是真正重要的"，而不是堆更多模块。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">命中率质变</h3>
+                    <p class="point-desc">Chai-2 把抗体从头设计的结合命中率从行业最先进的 0.1%（千分之一）提升到约 15%（千分之 150）。这不止是效率提升，更是范式跃迁：从"筛不到"跨越到"有统计、可迭代、可爬山优化"。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">反直觉验证观</h3>
+                    <p class="point-desc">生物学因湿实验室误差棒大而更难自欺，但分子设计的具体可测性质（能否结合、能否制造）在客观上比代码生成里的"代码品味"更容易验证——只是验证周期从秒级变成天/周级。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">分子 CAD</h3>
+                    <p class="point-desc">公司的终极目标不是做一两个分子或几条疗法管线，而是打造"用于分子的计算机辅助设计套件"：把"想法到可检验假设"的循环从 9 个月压缩到 9 周、9 天，用设计取代筛选，改变药物被发现的底层方式。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">平台飞轮</h3>
+                    <p class="point-desc">Chai 选择做行业基础设施而非亲自做药：模型越好→客户结果越好→回报越多→继续投资模型，加上实验室实验的"尾气"数据反哺，形成自我强化的复利循环。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">last-in-class</h3>
+                    <p class="point-desc">药物设计的终极目标既不是"同类首创"也不是"同类最佳"，而是成为"最终答案"——让药物精确针对目标疾病、剔除负面相互作用，做以前不可能做出的突破性药物，而非"快 10 倍的老鼠"。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">大想法：把药物"发现"变成药物"设计"</h3>
+                        <span class="topic-timestamp">00:00 - 03:26</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Chai 的核心使命，是让药物发现过程从充满偶然性的试错，变成像现代工程一样拥有抽象层、可以快速迭代的设计过程——"发现"意味着大海捞针，"设计"意味着按需物化。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">代码是工程化的范本</div>
+                        <p class="topic-detail-content">Josh 用一个类比开场：大语言模型（LLM，Large Language Model）在代码生成上之所以成功，是因为代码是一个非常简单的抽象，能准确传达你想让程序做什么。而今天的生物学完全不是这样——现代生物技术早期的很多药物，都是相当随机地、带点运气地被"撞"出来的。Chai 想做的，是给生物学装上现代工程里那套抽象层，让研究人员能像写代码一样快速迭代想法。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">一条移动的边界</div>
+                        <p class="topic-detail-content">主持人提出一个贯穿全场的框架：药物开发中存在一条边界，一边是"可以被工程化"的部分，一边是"必须拿到现实世界测试"的部分，而这条边界一直在向工程化一侧移动。Matt 给出更精细的回答：实验室永远是不可或缺的验证环节——在 AI 里这叫"可评估、可验证，才能爬山式改进"。真正的问题不是减少实验，而是改变范式。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">设计 = 输入梦想状态</div>
+                        <p class="topic-detail-content">今天药物叫"发现"，是因为我们往往先筛掉数百万、数十亿个分子，才找到一两个有效的；如果能反过来，把"理想分子的状态"输入给模型、让模型直接把它"物化"出来，那才叫设计。一个非常反直觉的推论随之抛出：也许未来实验室测试不是变少，而是变多——就像软件工程师生产力提高后，市场对软件工程师的需求反而增加了一样，设计成功率大幅上升后，每一次实验室验证的投资回报率也会飙升。</p>
+                    </div>
+                    <div class="quote-block">
+                        "如果我们能反过来输入你想要的理想分子状态，让模型把它物化出来，那将会非常强大。"—— [00:02:39]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">十年演进：从折叠竞赛到扩散模型</h3>
+                        <span class="topic-timestamp">03:25 - 06:05</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        蛋白质 AI 的路线图清晰可循：2018、2020 年两次蛋白质折叠竞赛的跃变奠定结构预测能力，2021-2022 年转向"设计序列"子问题，最终由扩散模型将"结构+序列"的联合生成推向成熟。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两年一度的折叠竞赛</div>
+                        <p class="topic-detail-content">Matt 以一场两年一度的"蛋白质折叠竞赛"（CASP）为时间轴起点：组织者隐藏一批从未公开的蛋白靶点，全球学术团队竞争谁预测得最好。真正的拐点出现在 2018 年，随后是 2020 年的 AlphaFold 2，而这一切的开端是深度学习的降临。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从模糊到高清</div>
+                        <p class="topic-detail-content">Matt 回忆起自己在导师实验室的早期工作——做最早用深度学习预测蛋白质结构的系统之一：预测蛋白质内氨基酸之间的距离，再用渲染器把"噪声大、不完整"的距离信息还原成完整蛋白质。用极少量信息就能构建出"看起来像蛋白质、大体上正确"的输出，只是分辨率远不如今天——就像早期图像生成模型颗粒感重、画面模糊，而今天几秒钟就能生成超高分辨率图像。蛋白质生成领域恰好经历了同样的进化。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">扩散模型合流</div>
+                        <p class="topic-detail-content">折叠问题解决后，新的子问题随之而来：给定一个结构，能否设计出会折叠成该结构的序列？这正是药物设计问题的雏形，相关研究集中在 2021-2022 年。真正的转折点是扩散模型——它让模型能同时生成结构和序列，也让"提示"越来越真实：你可以给模型一个特定形状的靶点，附加"我想结合在这里"这样的现实约束。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">为什么在 2024 年创办公司</h3>
+                        <span class="topic-timestamp">06:04 - 10:13</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        2024 年成立的决定源于一个被长期判了"死刑"的问题出现转机：抗体设计此前被认为数据不足、不可行，而两位创始人看到扩散模型等新架构让抗体-抗原结构预测"第一次有了生命迹象"。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">被判死刑的抗体设计</div>
+                        <p class="topic-detail-content">Josh 回忆了一场在 Matt 家中进行的早期讨论：Matt 正在展示抗体-抗原结构预测的结果。长期以来，抗体在蛋白质数据库（PDB，Protein Data Bank）中的结构数据太少，业界据此判定抗体设计遥不可及。更麻烦的是，早期用深度学习做的蛋白质设计大多集中在"迷你蛋白"（miniprotein）这类小众类别上——它们本身有趣，却不是制药行业真正关心的对象。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"害怕生物学"的局外人</div>
+                        <p class="topic-detail-content">真正的圣杯是：能否在计算机上直接设计出具备完整治疗功能的抗体？逻辑很朴素——如果你连一个抗体长什么样都预测不出来，又怎么可能设计出一个？对话在此处出现了一段很有个人色彩的交锋：主持人自嘲"我对生物学感到恐惧"，Matt 坦言自己同样恐惧——他的学术背景是纯数学和理论计算机科学，直到博士第三年才转向深度学习。但正是这种"局外人"视角让他看清了一个关键事实：抗体、迷你蛋白这些名词听着吓人，归根结底都只是氨基酸序列——它们只是模型的不同类型"提示"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从 GPT 到蛋白质</div>
+                        <p class="topic-detail-content">Josh 的履历则从另一头汇入：他从小就对 AI 和生物学着迷，职业生涯始于 OpenAI 早期团队——那时还是非营利组织，他们做了 GPT1、GPT2 的规模化定律（scaling laws）研究。他当时的研究议程上写着一个问题：如果模型能学会英语、德语、法语，为什么不能学会"DNA 和蛋白质的语言"？2024 年被认定为正确时机的依据，正是扩散模型这类新架构让抗体类问题出现了最初的生命迹象。</p>
+                    </div>
+                    <div class="quote-block">
+                        "如果模型能学会说英语、德语、法语，为什么它们不能学会说 DNA 和蛋白质的语言？"—— [00:08:37]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">扩散模型的直觉：把它拆成"好一点点"</h3>
+                        <span class="topic-timestamp">10:13 - 11:41</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        扩散模型之所以有效，在于它把一个难以一步完成的生成任务，分解成无数步"让它稍微好一点"的小改进——这种思路在生物学上意外地好用。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">为什么变分自编码器不够</div>
+                        <p class="topic-detail-content">Matt 给出了扩散模型有效的直觉解释。它之前的主流生成范式是变分自编码器（VAE，Variational Autoencoder），其思路是"把输入分布压缩成模糊的高斯向量"，这个任务极其困难——至少在当时的技术条件下难以在蛋白质问题上落地。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">把蛋白质一点点弄坏</div>
+                        <p class="topic-detail-content">扩散模型选择了截然不同的路径：给模型更多思考时间，并给它看大量渐进示例。具体来说，把蛋白质一点点"弄坏"，让它越来越有噪声、越来越破损，然后训练模型学一些"小捷径"——"这里，这是让它稍微好一点的方法"，然后一遍遍地问：再让它好一点，再好一点。把一个宏大难题拆解到这种"微步"尺度，对生物学来说效果出奇地好。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">最强独角兽</div>
+                        <p class="topic-detail-content">主持人用一个生活化的比喻回应：他和女儿们玩一个游戏，让 ChatGPT 生成一只独角兽，然后不断要求"让它更强"，最后得到世界上最强壮的独角兽。Matt 笑着承认：原理差不多。这个类比其实精准刻画了扩散模型的精髓——自回归式地、一小步一小步地把"噪声"雕琢成目标。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">组建"复仇者联盟"团队</h3>
+                        <span class="topic-timestamp">11:41 - 15:22</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Chai 的团队构成随每一代模型动态演化：创始期以 AI 研究员为核心，Chai-2 阶段引入全球顶级的抗体工程师，规模化阶段又补进产品和基础设施人才——始终刻意保持小团队，让每个人都略微超载以倒逼优先级。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">每代模型换一批人才</div>
+                        <p class="topic-detail-content">构建一个横跨化学、生物学、AI 的"四语"团队是领域公认的难题，但 Chai 处理得非常务实。创始团队绝大多数是 AI 研究员；关键在于，每代模型所需的下一批人才都会变化、扩张。到了 Chai-2，他们开始招世界上最顶尖的抗体工程师和科学家。Andy Young 被招进来时，外界甚至以为 Chai 转向了"全栈药物管线"——因为他太资深了。实际上 Andy 在过去几个月里跑的抗体项目数量，可能超过他此前整个职业生涯之和。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从 14 岁到 GPU 专家</div>
+                        <p class="topic-detail-content">还有 Nathan Roland：14 岁就加入因蛋白质设计获诺贝尔奖的 David Baker 实验室，18 岁开始读博，为团队贡献了大量创意。产品侧则有在 Stripe 工作过的联合创始人 Jack、Stripe 代码贡献量前十的 Munaz，以及自营过网络安全公司的 Neil。规模化阶段，团队又引入大量"GPU 破解"专家——一位云服务商曾发来消息说"你们的 GPU 太热了，你们跑得太多了"，Josh 的回应是："这不就是目的吗？我们正在干活。"</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">归根结底是软件公司</div>
+                        <p class="topic-detail-content">关于"如何说服这些人加入"，答案仍然是结果本身。有个诚实的插曲：某些下一代抗体格式（如双特异性抗体）在 Chai-2 初期根本跑不通，新加入的抗体工程师们最初几周甚至无事可做，直到模型进步才接上这些有趣的案例。另一个细节是创始工程师 Kevin Woo 做出了史上第一个蛋白质扩散模型——Chai 对"工程能力"的重视从第一天就根植于文化：研究员们都是优秀的工程师。</p>
+                    </div>
+                    <div class="quote-block">
+                        "归根结底，我们技术上是一家软件公司……我们的交付物是一段软件。"—— [00:14:55]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">命中率：从 0.1% 到 15% 的规模化定律</h3>
+                        <span class="topic-timestamp">15:22 - 20:48</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Chai-2 把抗体从头设计的结合命中率从行业水平的 0.1% 提升到约 15%——这不仅是效率提升，更是方法论质变：它靠的不是修修补补，而是"苦涩的教训"式的规模化数据、模型与算力，并用"简单性"作为识别规模化方向的指南针。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">0.1% 的双重可怕</div>
+                        <p class="topic-detail-content">先看基线：创办时，抗体设计的最先进水平约 0.1% 结合率——设计 1000 个分子，只有 1 个会在实验室里真正结合。低命中率的可怕之处是双重的：既要筛海量分子才能找到好的，又意味着流程上"梯度太弱"——对大多数靶点一无所获，对少数有命中的靶点又凑不够样本去判断是否具备药物样性质。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">全部在计算机上完成</div>
+                        <p class="topic-detail-content">Chai 当时的做法和行业主流形成鲜明对比：多数药物发现 AI 走的是"实验室在环"（lab-in-the-loop）路线——拿一个分子，在实验室反馈下让"它好一点点"。Chai 想的是：能不能全部在计算机上完成？于是他们的第一个目标是设计出成功率极高的分子。结果超出预期：Chai-2 达到约 15% 成功率——筛 1000 个分子能拿回 150 个，这才让分子性质有了可统计、可迭代、可爬山优化的意义。Matt 坦言连他们自己都惊讶于速度：最初预算认为三四年才能到 20%，他们当时真正瞄准的其实是 1%——"百分之一就已经是开创性的了"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">苦涩教训的三条信条</div>
+                        <p class="topic-detail-content">这套方法论与机器学习其他领域毫无二致：把生物学当"定制问题"是错的，它与自动驾驶、大语言模型遵循同样的规模化原则。Josh 给出了"苦涩的教训"公司的三个信条：规模化数据、规模化模型、规模化算力。而这一切的前提是识别出规模化定律——否则只是浪费资源。识别的方法论是"简单性"：Chai-1 有 23 个独立子模块，每迭代一次都要理解全部 23 个的行为与动态，这根本无法规模化。因此他们不断问：怎么简化？什么才是真正重要的？</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">正负 5% 的严谨门槛</div>
+                        <p class="topic-detail-content">此外，Chai 的模型完全从零构建，不是在现成大模型上微调（fine-tuning）蛋白质数据。而在生物学里保持严谨格外困难：湿实验室（wet lab）的误差棒非常大——在代码生成领域（如 SWE-bench）16%、17%、18% 是显著进步，但在生物学里正负 5% 的误差可能让这些差异毫无意义。这既抬高了模型"台阶式跃进"的门槛，也要求创始人对"是否真的在进步"极其诚实。</p>
+                    </div>
+                    <div class="quote-block">
+                        "我们是一家非常信奉'苦涩的教训'的公司，我们真正相信要规模化数据、规模化模型、规模化算力。"—— [00:18:00]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">反直觉：生物学比代码更可验证</h3>
+                        <span class="topic-timestamp">20:48 - 25:01</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        表面上看生物学"不可验证"，但 Josh 论证恰恰相反：分子设计有客观、可测量的具体性质（结合、可制造性等），比代码生成里模糊的"代码品味"更容易被严格评估——只是读数需要几天几周，而非几秒。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">对比代码生成</div>
+                        <p class="topic-detail-content">主持人点出：生物学是"本质上不那么容易验证"的领域，而 Chai 却能向客户、向外行展示进展。Josh 给出了一个精彩的反转：这其实是最可验证的领域之一。对比代码生成——"我的代码编译了吗？通过单元测试了吗？"这些可测，但"代码品味"呢？你写的代码是不是一团糟、没人能维护？这很难定义。而设计分子时，大量性质可以被非常具体地指定：它结合了靶点，但能被制造出来吗？——"能不能造出来"就像代码里的"技术债"，但它是可以测量的。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">不可成药靶点怎么解</div>
+                        <p class="topic-detail-content">因此，正是这些评估让领域更可验证。代价只是时间尺度不同：不是 5 秒跑个单元测试，而是要花几天、几周在实验室里拿到读数，但至少能对自己诚实。随后话题转向"不可成药靶点"（undruggable targets）：一类靶点用传统筛选方法能处理（但极慢、极笨拙），另一类则完全无法用现有方法触及。Chai 的哲学是：不靠"加第 24 个模块"去解锁新靶点——那是增量式修补，不构成复利式改进。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">模型必须自己学会</div>
+                        <p class="topic-detail-content">他们相信，如果模型能把损失（loss）继续压下去，它就不得不理解靶点上某种本质的东西。Josh 举了个例子：蛋白质上有糖基化位点（glycosylation sites），团队曾考虑要不要用特殊方式表示它们，但结论是——即使不特殊表示，模型为了把损失压低，也必须自己学会"这里应该有一个糖基化位点"的序列规律。如果你真的相信规模化定律，你就相信更好的模型会自动解锁这类靶点。</p>
+                    </div>
+                    <div class="quote-block">
+                        "实际上，我认为这是更可验证的领域之一，它有一个非常客观的读数。"—— [00:21:00]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">分子 CAD：从 9 个月到 9 天，从"最佳"到"终局"</h3>
+                        <span class="topic-timestamp">25:01 - 28:37</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        公司的终极愿景是打造"用于分子的计算机辅助设计套件"（分子 CAD）——把"想法到可检验假设"的循环从 9 个月压缩到 9 周、9 天，用设计取代筛选；而当它成为标配，药物质量将整体抬升，原本过难或不合算的疾病也变得可及。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">分子的 CAD</div>
+                        <p class="topic-detail-content">Josh 明确公司的最终目标：一套用于分子的计算机辅助设计套件（computer-aided design suite，类比 CAD 之于机械工程）。不是做一两个分子，不是拿五条疗法上市，而是改变药物被发现的底层方式——因此无论你如何定义"硬"，公司都得攻克所有硬靶点。具体含义是：事先明确写清设计分子的原理，然后由引擎把它实现成一个可去实验室合成的分子。当然，假设可能错误，仍需在实验室和模型间迭代——但加速的正是"从想法到可检验假设"这一环。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">每个数量级放大想法</div>
+                        <p class="topic-detail-content">Matt 给出了一组震撼的数量级对比：如果这个循环现在要 9 个月，压缩到 9 周、9 天，每提升一个数量级，你能筛过的想法数量都会以极大倍率放大——这正是行业收敛到更好药物的路径。还有一个漂亮的收敛论点：人们常争论"我们该在乎速度还是靶点难度"，但两者终将收敛——一个硬靶点，如果迭代假设的速度快得多，也许就更容易被攻克。速度本身，就是攻克难度的手段。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">十年后的行业图景</div>
+                        <p class="topic-detail-content">被要求用"从未来往回看"的视角描绘 2035-2040 的行业图景时，Matt 给出了三个维度：第一是质量——今天大量进入临床的分子是"做到 80% 就凑合推进"，一年后被别人击败，这是行业资源最不高效的用法；第二是可及性——阿尔茨海默病这类"太难"的疾病、个性化药物和罕见病这类"不合算"的方向，只要迭代更快、成本更低，都会进入可及范围；第三是目的性——Josh 补了一个精炼的判断：过去做药要么"同类首创"（first-in-class），要么"同类最佳"（best-in-class），未来你想做"同类终局"（last-in-class）——因为你想要的不是第一个答案，而是最终答案。这些性质大多已经能在计算上建模。</p>
+                    </div>
+                    <div class="quote-block">
+                        "过去你要么做同类首创，要么做同类最佳；现在你想做同类终局——因为你其实想成为最终答案。"—— [00:28:07]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">平台商业模式：赋能行业，而非与之竞争</h3>
+                        <span class="topic-timestamp">28:37 - 33:44</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        与 Isomorphic Labs 亲自做药不同，Chai 选择做行业基础设施：随着模型变好，商业回报反过来支持继续投入模型，形成自我强化的可规模化业务；同时"给巨头客户交付"的硬约束迫使团队无法自欺欺人。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三层理由</div>
+                        <p class="topic-detail-content">主持人直指商业模式分野：Isomorphic Labs 在开发药物，Chai 却在赋能整个行业更高效地开发药物——为什么选后者？Josh 的回答有三层。第一层是赌注：他们创办时的核心判断是"未来大多数药物将这样被发现"——如果这是真的，就必须要有人去建设这套基础设施。第二层来自创始团队的亲身经历：包括 Matt 和 Josh 在内，核心成员此前都建过全栈药物管线——建 AI 模型、把药推进临床。作为"苦涩的教训"的信徒，他们的结论是：随着模型变好，钱应该更多花在造更好的模型上，而不是被临床试验之类的事稀释。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">自我强化的商业模式</div>
+                        <p class="topic-detail-content">第三层是商业模式的自我强化：模型越好→给客户的结果越好→客户付的钱越多→反过来支撑继续投资模型——这是比"自研管线"可规模化得多的结构。Josh 补充了终极价值判断：做药的冲击可能被"见树不见林"限制——如果你只做 5 个靶点，你的模型可能无法泛化到行业那年要做的另外 500 个分子；而广泛合作则让你无法自欺欺人。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">巨头客户不将就</div>
+                        <p class="topic-detail-content">最令人印象深刻的，是他列举合作伙伴的方式：礼来（Eli Lilly）、诺华（Novartis）、辉瑞（Pfizer）——"这些公司不会想当然地接受任何东西"。当 Chai 发布模型，它们必须真有效、必须交付价值，而不是"做出来个凑合的分子，让化学家后面再清理一下"。正因如此，这个模式在商业上几乎更难——你自己做管线，还有后来修补的余地；做平台，模型不灵，合作伙伴根本不会上门。这也是很少有人走这条路的原因。但 Josh 认为这是更有回报的路。</p>
+                    </div>
+                    <div class="quote-block">
+                        "当我们在 Chai 发布模型时，它们必须真的有效，必须为合作伙伴交付价值。"—— [00:30:39]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">数据飞轮与竞争格局：对抗自然，而非同行</h3>
+                        <span class="topic-timestamp">33:44 - 39:44</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        数据来自蛋白质数据库与海量序列库，模型一旦够好就能"跑"出更多结构、再喂给下一代模型，形成复利飞轮；而 Chai 的真正对手不是其他模型提供商，而是"自然"——人类用传统湿实验室方法积累了几十年的标杆。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两大数据来源</div>
+                        <p class="topic-detail-content">数据的两大来源：一是黄金标准的蛋白质数据库（PDB）——自 1970 年以来全球实验室科学家持续存放的蛋白质及分子晶体结构，没有它，结构预测和设计根本不会存在；二是海量的序列数据库——可能达到数万亿 token 量级，甚至超过互联网上的英文文本。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">结构路线 vs 序列路线</div>
+                        <p class="topic-detail-content">有意思的是，两位创始人曾走完全相反的技术路线：Matt 从"结构预测"切入（模型直接输出 3D 坐标，这既不像语言模型也不像图像模型，自成一类）；Josh 则是语言模型路线，他是 ESM（Evolutionary Scale Modeling）的原创作者之一——只要模型能学好"预测蛋白质中的下一个氨基酸"，它就会为了准确预测而被迫在内部表示出蛋白质的 3D 形状，结构"自然涌现"。Chai 的务实结论是：两个范式都要，不在乎标签，只在乎解决问题。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">尾气反哺的复利</div>
+                        <p class="topic-detail-content">飞轮的完整闭环是：模型足够好之后，可以拿它们去序列数据库上"跑"出新结构预测，得到更多训练数据给下一代模型；模型能设计新靶点后，实验室实验本身又产生大量"尾气"（exhaust）数据反哺模型。Josh 用 OpenAI 的经历类比：当年给 GPT1 做强化学习根本不工作，因为基础模型不够好；一旦基础模型够好，那类实验才可行。现在生物学领域正处于这个"基础模型够好、数据重新变得重要"的临界点。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 的天花板更高</div>
+                        <p class="topic-detail-content">关于竞争，Josh 的应对哲学回到原点：看结果、不欺骗自己、保持严谨。一个精彩的定位转变：Chai 不是在和别的模型提供商"头对头"——所有人都在对抗自然，而自然是相当强的基准：人们用某种方式做药物发现已经很久了，湿实验室协议被调优了几十年（"别给 Chai 加第 24 个模块，但人们给湿实验室协议加了第 240 个模块"）。Andy Young 就是标杆的具象化：这位科学家二十年前就在 MIT 做酵母展示（yeast display），在辉瑞、基因泰克（Genentech）有 20 年打磨经验、名下有一个获批的抗体药物——"那才是我们必须跨越的基准线。"但 AI 的天花板必然更高——"否则做这件事还有什么意义？我们创办公司不是为了造一只快 10 倍的'老鼠'。"他判断，公司几个月前已经越过"采纳拐点"，所以才有密集的大型药企合作公告。</p>
+                    </div>
+                    <div class="quote-block">
+                        "我们并不是和其他模型提供商针锋相对……我们对抗的是自然，而自然其实一直是个相当不错的基准线。"—— [00:38:20]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 11 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">11</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">文化与下一步：成长的痛苦、结果的兴奋</h3>
+                        <span class="topic-timestamp">39:44 - 46:52</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Chai 文化最宝贵的是使命驱动与全员投入；最痛苦的是规模化运维与"交付不容出错"的责任。两位创始人对未来 6-12 个月最兴奋的是：模型已让"零样本设计→进入临床"在一年内走完全程。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">最好与最糟</div>
+                        <p class="topic-detail-content">被问到"在 Chai 工作最好和最糟的事"，Matt 给出双面答案。最好的一面：所有人都是使命驱动，那种投入程度他只在博士实验室里见过；大家有个清晰可见的共同目标，而这份专注源于公司从一开始就有的清晰哲学与路线图。最糟的一面：让东西在规模化下工作。刚创业时 128 块 GPU 在他眼里已是"实验室的极限"——他博士时是四个人共用 8 块 GPU；而今天 Chai 要维护庞大基础设施：让集群长期健康、让大训练任务连续跑几个月、任务崩溃后自动恢复、压低通信开销、优化资源利用。主持人用 Frank Slootman 的名言收束："你要么拥有失败的痛苦，要么拥有成长的痛苦——你宁愿要成长的痛苦。"</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从论文到病人</div>
+                        <p class="topic-detail-content">Josh 的最爱是"结果"：他和 Matt 在这个问题上已经工作了约十年，几年前还在写"大家都会庆祝的酷论文"时自我怀疑——"我们真的在让世界变得更好吗？这会影响到病人吗？"而现在答案是肯定的：模型真正进入真实项目、真实的合作，分子开始走向临床。压力的另一面也随之而来：发布新一代模型时不能有 bug、不能有回归，因为"世界上一些最大的公司正在依赖我们"。联合创始人 Jack 的处世哲学是：想长期快速前进，有时必须短期慢一点，确保在建设可持续的东西——这与"不加第 25 个模块"的复利哲学一脉相承。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">关于名字与未来</div>
+                        <p class="topic-detail-content">结尾的信息量很大。关于公司名：Chai = Chemistry + AI，同时也因为办公室满是茶（Chai）主题的东西——"生物技术公司的名字总是那么复杂，我们想让它简单，就要配一个简单的名字。"关于未来 6-12 个月，Matt 最兴奋的是正在落地的部署：合作伙伴正把模型用在真实项目上，"人们试图攻克毁灭性的疾病，如果 Chai 能给一个有效的分子，就可能真正改变病人的生活。"Josh 的兴奋点则是可控性：当客户带着靶点而来，不再"祈祷"能得到好的亲和力（affinity），而是能明确指定"要一个恰好 10 纳摩尔的结合物"——这些技术关口正处于突破的边缘。</p>
+                    </div>
+                    <div class="quote-block">
+                        "一年前，你不可能零样本生成一个分子，还能确信你的项目会成功。现在那已经改变了。"—— [00:44:52]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧬</div>
+                    <h3 class="takeaway-title">苦涩教训</h3>
+                    <p class="takeaway-desc">药物设计与其他机器学习领域遵循同一规模化定律——扩大数据、模型与算力，模型自会学到手工规则捕捉不到的知识；识别出正确的规模化方向（靠"简单性"做减法），比堆更多模块更有效。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">命中率即质变</h3>
+                    <p class="takeaway-desc">抗体设计命中率从 0.1%（千分之一）提到 15%（千分之 150），看似只是数字变化，实则从"筛不到"跨越到"有统计、可迭代、可爬山优化"——它是整个设计范式成立的起点。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧪</div>
+                    <h3 class="takeaway-title">反直觉验证观</h3>
+                    <p class="takeaway-desc">生物学因误差棒大而更难自欺，但分子设计的具体可测性质（结合、可制造性）让它在客观上比代码生成更可验证——只是验证周期从秒级变成天/周级。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">9个月→9天</h3>
+                    <p class="takeaway-desc">每把"想法到可检验假设"的循环缩短一个数量级，能筛过的想法数量就放大一个数量级；速度本身就是攻克硬靶点的手段。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🌀</div>
+                    <h3 class="takeaway-title">平台飞轮</h3>
+                    <p class="takeaway-desc">模型越好→客户结果越好→回报越多→模型更好，加上实验室"尾气"数据反哺，形成自我强化的复利循环；选"赋能行业"而非"亲自做药"，是为了把资源全部投向造更好的模型。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔑</div>
+                    <h3 class="takeaway-title">last-in-class</h3>
+                    <p class="takeaway-desc">药物设计的最终目标不是"同类首创"或"同类最佳"，而是成为"最终答案"——让药物精确针对目标疾病、剔除负面相互作用，做前所未有的突破性药物，而非"快 10 倍的老鼠"。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">把"大海捞针"变成"配一把钥匙"</h3>
+            <p class="footer-desc">
+                从蛋白质折叠竞赛到扩散模型，从 0.1% 的命中率到 15%，从 9 个月到 9 天——这场对话把生物学从一门"定制化的混乱科学"重新定义为一项工程问题。两位创始人相信"苦涩的教训"：规模化的数据、模型与算力，会让模型学会手工规则永远无法捕捉的东西。而最动人的部分在于反直觉的立场——他们没有减少实验室测试的野心，反而想为更多实验创造投资回报率；他们不做药，却要武装整个制药行业。当礼来、诺华、辉瑞都成为客户，当零样本设计的分子开始进入临床，"配钥匙"的时代也许真的到来了。
+            </p>
+            <div class="footer-quote">
+                "这是大多数未来药物将被发现的方式。"
+            </div>
+            <p class="footer-note">
+                内容来源于 Sequoia Capital（红杉资本）播客栏目，由 Pat Grady 与 Sonali Singh 主持，仅供学习参考。
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

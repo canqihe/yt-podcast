@@ -1,6 +1,33 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/the-ai-selloff-doesnt-match-the-data-top-ai-investor-explains.html",
+    card_class: "card-ai",
+    category: "Invest Like The Best · AI 投资 · 半导体 · 英伟达",
+    date: "2026-08-04",
+    title: "AI 抛售与数据背道而驰 | 顶级 AI 投资人解读",
+    excerpt: "2026年7月，大量AI股一个月内下跌40%-60%，市场恐慌得像「把2022年压缩进一个月」。但硅谷地面数据完全相反：GPU现货租金半年暴涨50%-60%、内存现货价飙升、token增长全面加速。顶级AI投资人 Gavin Baker 拆解这场「抛售与基本面背离」的真相——为什么GPU涨价才是看多信号、1.3到2万亿美元经营现金流如何抹掉7000亿信贷需求、开源为何是算力需求的催化剂、打破LTA可能毁掉整家公司，以及监管作为最大风险的分水岭。",
+    tags: ["#GavinBaker", "#AI投资", "#半导体", "#英伟达", "#GPU"],
+  },
+  {
+    url: "articles/chai-discovery-bitter-lesson-drug-design.html",
+    card_class: "card-ai",
+    category: "Sequoia Capital · AI · 生物医药 · 药物设计",
+    date: "2026-08-04",
+    title: "Chai Discovery 的苦涩教训：药物设计是另一个规模化问题",
+    excerpt: "Chai-2 把抗体从头设计的结合命中率从 0.1% 推到 15%，把「大海捞针」变成「配钥匙」。两位创始人——一个出身理论计算机科学、一个来自 OpenAI 早期团队——坚信「苦涩的教训」：放大数据、模型与算力，模型自会学会手工规则永远捕捉不到的知识。更反直觉的是，他们认为生物学比代码更容易验证。他们的赌注：一套把药物发现从 9 个月压缩到 9 天的「分子 CAD」，赋能礼来、诺华、辉瑞，而非与之竞争。",
+    tags: ["#ChaiDiscovery", "#AI制药", "#药物设计", "#规模化", "#蛋白质"],
+  },
+  {
+    url: "articles/arena-ceo-100bn-open-source-model-data-trillion-market.html",
+    card_class: "card-ai",
+    category: "20VC · AI 评测 · 开源模型 · 数据市场",
+    date: "2026-08-04",
+    title: "Arena CEO：万亿美元级美国开源模型与数据市场",
+    excerpt: "当美国排名第一的开源模型只能排第十、前九名全是中国的——Kimi K3 打破「中国只会蒸馏」的叙事。Arena CEO Anastasios Angelopoulos 给出两个大胆判断：美国将诞生万亿美元级开源模型公司；数据是下一个万亿美元市场。从芯片管制的「世界 A/世界 B」、企业 AI 主权、Neo Labs 的 2/3 归零，到 AI 假候选人渗透企业与「守护者模型」——一场关于 AI 产业洗牌的完整透视。",
+    tags: ["#Arena", "#开源模型", "#数据市场", "#AI评测", "#KimiK3"],
+  },
+  {
     url: "articles/physics-says-now-isnt-real-so-do-your-choices-even-matter-jo-marchant.html",
     card_class: "card-future",
     category: "The Royal Institution · 物理 · 意识 · 时间",
