@@ -1,6 +1,24 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/what-the-hell-happened-with-agi-timelines-in-2026.html",
+    card_class: "card-ai",
+    category: "80,000 Hours · AGI 时间线 · AI 智能体 · 数学",
+    date: "2026-08-05",
+    title: "2026 年 AGI 时间线到底发生了什么？ | 80,000 Hours",
+    excerpt: "去年十月 Andrej Karpathy 还痛批 AI 智能体是「一坨屎」，两个月后却称之为正在「撼动整个行业」的「外星工具」。主持人 Rob Wiblin 逐条拆解 2026 年关于 AGI 的七大新证据：Anthropic 年化 8400% 的收入暴涨、METR 那条每四个月翻一番的曲线、AI 写出 80% 的公司代码、让模型推翻著名数学猜想——再逐一指出每条证据「看起来强、实则没那么强」之处，给出被刷新一年的 AGI 时间线，以及支持长期时间线的四大理由。",
+    tags: ["#AGI", "#时间线", "#80KHours", "#AI智能体", "#METR"],
+  },
+  {
+    url: "articles/how-the-white-house-plans-to-10x-scientific-productivity-michael-kratsios-ep-276.html",
+    card_class: "card-future",
+    category: "Peter H. Diamandis · Moonshots · 白宫科技政策 · 科研体制",
+    date: "2026-08-05",
+    title: "白宫的科学雄心：把科学生产力提升 10 倍 | Michael Kratsios",
+    excerpt: "白宫科技政策办公室主任 Michael Kratsios 是《美国 AI 行动计划》、曼哈顿计划式「创世纪任务」与《科学新黄金时代》报告的设计者。在这期白宫专访中，他直面科研生产力下降的病灶（NIH 内部科学家中位年龄 71 岁、研究人员 45% 时间耗在行政上），给出「四把手术刀」式的体制变革方案：五年期全额资助、快速资助、评审人单方拍板的「黄金门票」与元科学；描绘悬赏市场 + AI 智能体 + DAO + 智能合约的机器速度科学市场；并在被追问时坦率承认：2 倍只是公开话术，他们私下已把目标悄悄调到 10 倍。",
+    tags: ["#白宫", "#科学政策", "#科研改革", "#AI", "#创世纪任务"],
+  },
+  {
     url: "articles/the-ai-selloff-doesnt-match-the-data-top-ai-investor-explains.html",
     card_class: "card-ai",
     category: "Invest Like The Best · AI 投资 · 半导体 · 英伟达",
