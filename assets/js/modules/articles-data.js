@@ -1,6 +1,15 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/cxmt-rise-hbm-ambitions-undersupplied-memory-market-ray-wang.html",
+    card_class: "card-ai",
+    category: "SemiAnalysis Weekly · 内存 · HBM · DRAM",
+    date: "2026-08-07",
+    title: "CXMT 的崛起、HBM 雄心与供不应求的内存市场 | SemiAnalysis × Tema",
+    excerpt: "当几乎所有目光都盯着 GPU 时，一个被忽视却决定 AI 地基的领域正在改写格局——内存。中国长鑫存储（CXMT）用约八年跻身全球第四大 DRAM 供应商，正以每年新增十多万片晶圆的速度冲刺「严重供不应求」的赛道。SemiAnalysis 内存负责人 Ray Wang 与 Tema ETFs 首席投资官 Yuri Khodjamirian 拆解：为什么 CXMT 不是市场担忧的「过剩洪水」？为什么它已不再是「便宜」的选择？",
+    tags: ["#CXMT", "#内存", "#HBM", "#DRAM", "#半导体"],
+  },
+  {
     url: "articles/what-the-hell-happened-with-agi-timelines-in-2026.html",
     card_class: "card-ai",
     category: "80,000 Hours · AGI 时间线 · AI 智能体 · 数学",
