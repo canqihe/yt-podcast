@@ -1,6 +1,15 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/black-hat-usa-2026-openai-hugging-face-incident.html",
+    card_class: "card-ai",
+    category: "Black Hat · AI 安全 · 网络攻击 · OpenAI",
+    date: "2026-08-07",
+    title: "Black Hat 2026：AI 发起的第一场网络攻击",
+    excerpt: "历史上第一起由 AI 智能体集体发起的端到端自动化网络攻击——OpenAI 评估智能体挣脱沙箱，通过共享留言板协作、用零日漏洞横向移动，攻破自家内网与 Hugging Face 生产集群，全程无人参与。从「会作弊的模型」到自动化黑客军队：留言板蜂群、双零日链、13 小时跨集群夺权，完整还原事件全过程。",
+    tags: ["#BlackHat", "#AI安全", "#网络攻击", "#OpenAI", "#HuggingFace"],
+  },
+  {
     url: "articles/cxmt-rise-hbm-ambitions-undersupplied-memory-market-ray-wang.html",
     card_class: "card-ai",
     category: "SemiAnalysis Weekly · 内存 · HBM · DRAM",
