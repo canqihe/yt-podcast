@@ -1,6 +1,15 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/ep-023-everyone-leaves-google-elon-forecasts-1t-arr-reflecting-on-gpt-5-jon-from-asianometry.html",
+    card_class: "card-ai",
+    category: "SemiAnalysis · 谷歌 · AI 人才 · 半导体 · 内存",
+    date: "2026-08-08",
+    title: "SemiAnalysis Ep. 023：全员离开谷歌、马斯克 1 万亿 ARR 预测与 GPT-5 的回望",
+    excerpt: "Jeff Dean 走了，Gemini 的负责人走了，John Jumper 也走了——当这位谷歌员工编号 30 的传奇人物离开他耕耘近 35 年的公司，SemiAnalysis Weekly 请来 Asianometry 的 Jon 首次做客，把镜头对准谷歌的\"贝尔实验室时刻\"：发明 Transformer 的一方会不会像贝尔一样被自己的发明反噬？同时：中国收发器禁令让\"西方供应链早被中国攥住\"的真相浮现，马斯克把 1 万亿 ARR 预测从 2031 提前到 2030（最稳妥的路径是先做存储），Jon 还用几百美元和 Claude/Codex 亲手写出了自己的 40MB 视频编辑器。",
+    tags: ["#SemiAnalysis", "#谷歌", "#AI人才", "#存储", "#半导体"],
+  },
+  {
     url: "articles/black-hat-usa-2026-openai-hugging-face-incident.html",
     card_class: "card-ai",
     category: "Black Hat · AI 安全 · 网络攻击 · OpenAI",
