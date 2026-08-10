@@ -1,6 +1,15 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/ep-024-spacexs-10gw-plan-drives-300b-arr-by-2027-datacenter-energy.html",
+    card_class: "card-ai",
+    category: "SemiAnalysis · 数据中心 · 能源 · 芯片 · AI 算力",
+    date: "2026-08-10",
+    title: "SemiAnalysis Ep. 024：SpaceX 的 10GW 计划推动 2027 年 3000 亿美元 ARR",
+    excerpt: "OpenAI 与 Anthropic 每月合计新增近 300 亿美元 ARR——驱动力不是新算力，而是毛利率的持续扩张。SemiAnalysis 顺着「每兆瓦每年 1 亿美元」这条数字链，拆解 SpaceX 的 10 吉瓦豪赌：Google 用市场均价近 5 倍的价格抢购「应急兆瓦」、密西西比仓库与燃气轮机如何绕过环评、微软为何将成为最大承购方——以及藏在结尾、真正令人脊背发凉的 Hugging Face 智能体攻击事件。",
+    tags: ["#SemiAnalysis", "#SpaceX", "#数据中心", "#能源", "#AI算力"],
+  },
+  {
     url: "articles/ep-023-everyone-leaves-google-elon-forecasts-1t-arr-reflecting-on-gpt-5-jon-from-asianometry.html",
     card_class: "card-ai",
     category: "SemiAnalysis · 谷歌 · AI 人才 · 半导体 · 内存",
