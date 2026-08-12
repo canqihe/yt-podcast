@@ -1,6 +1,15 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/we-have-3-years-to-solve-alignment-before-superintelligence.html",
+    card_class: "card-future",
+    category: "80,000 Hours · AI 对齐 · 超级智能 · 安全政策",
+    date: "2026-08-12",
+    title: "超级智能来临前，我们只有 3 年时间解决对齐 | Geoffrey Irving",
+    excerpt: "当最前沿的实验室用几千亿美元竞逐超级智能时，没有人能给出一个有力论证，证明那套「品格训练 + 可扩展监督 + 严格监控」的组合真的能控制住比人类更聪明的机器。前 OpenAI/DeepMind 安全研究员、英国 AI 安全研究所前首席科学家 Geoffrey Irving 的判断是：超级智能将在两到三年内到来，而「何时该放缓竞赛」这个问题的精确答案是「已经晚了」。从「混淆论证」击穿所有可扩展监督方案，到跨过人类水平后的「相变」，再到能力可迭代、对齐不可重来的根本不对称——这是一份写给所有人的 AI 安全全景推演。",
+    tags: ["#GeoffreyIrving", "#AI对齐", "#超级智能", "#80KHours", "#AI安全"],
+  },
+  {
     url: "articles/how-companies-are-building-their-own-intelligence-sonya-huang-sequoia-capital.html",
     card_class: "card-ai",
     category: "Sequoia Capital · 主权 AI · 企业智能 · 开源模型",
