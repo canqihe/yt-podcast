@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企业如何构建自己的智能 | Sonya Huang - Sequoia Capital</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <!-- 配色方案：珊瑚金（主权 AI / 红杉资本主题） -->
+    <style>
+        :root {
+            --accent-primary: #f97066;
+            --accent-secondary: #fbbf24;
+            --accent-primary-rgb: 249, 112, 102;
+            --accent-secondary-rgb: 251, 191, 36;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/how-companies-are-building-their-own-intelligence-sonya-huang-sequoia-capital-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">Sequoia Capital</span>
+                    <span class="badge">主权 AI · 企业智能</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">企业如何构建</span>
+                    <span class="title-line-2">自己的智能？</span>
+                </h1>
+                <p class="subtitle">
+                    你的 AI 产品做得越成功，你的成本反而越高——这是红杉资本合伙人 Sonya Huang 抛给台下 80 位创始人、AI 领袖的第一个"反常识"。越来越多公司正在放弃"租模型"，转向"拥有模型"，从产品界面一路握到权重。这不止是一场动员，而是红杉基于数十家被投公司实践给出的一套从 0 到 1 的实操框架：四个驱动力、一个"拥有 vs 租用"的决策模型、四条实施步骤，以及 2026 年最关键的一个论断——开源权重模型已逼近前沿，拥有自己的技术栈不再意味着牺牲性能，反而可能是你的性能优势。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">频道</div>
+                        <div class="meta-value">Sequoia Capital</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Sonya Huang（红杉资本合伙人）</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">17 分 29 秒</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=bMMv0bZzONg" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">权重即主权</h3>
+                    <p class="point-desc">加密圈的"不是你的私钥，就不是你的加密货币"，在 AI 时代变成"不是你的权重，就不是你的产品"。产品真正的护城河正在从应用层下沉到智能层——谁拥有并控制权重，谁才真正拥有产品。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">四大驱动力</h3>
+                    <p class="point-desc">成本、速度、性能、命运。最反直觉的是第一点——AI 产品越成功、COGS 越高，所以最先自持模型的往往是部署最领先的公司。自持不再是情怀，而是盈亏表的硬逻辑。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">拥有 vs 租用</h3>
+                    <p class="point-desc">主权AI 不是 0/100 的二元选择，而是逐能力画线。用四个因素判断：成本占比、延迟是否 P0、自持是否性能更优、数据是否专有。示例逻辑：编码智能体租用、Tab 补全自持。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">评测先行</h3>
+                    <p class="point-desc">技术路线图里最关键也最不风光的起步动作是"定义评测"——前期评测投入越多，后面的一切越有优势。它是从 0 到 1 旅程的第一块地基，别跳过它。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">超越前沿</h3>
+                    <p class="point-desc">2026 年的新事实：开源权重模型（如 Kimi K3、GLM 4.5）已接近前沿且可塑性远超闭源 API。从接近前沿的基线出发，配合后训练、训练框架工程与在线学习，自持技术栈可以超越前沿性能。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">可读性即竞争力</h3>
+                    <p class="point-desc">每个买家都在选"AI 冠军"。拿出自己的研究、做好技术营销、成立独立品牌实验室，是你从"又一个供应商"变成"懂行的人"的入场券。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">什么是主权 AI（以及它不是什么）</h3>
+                        <span class="topic-timestamp">00:00:00 — 00:01:24</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        主权AI（Sovereign AI）指企业拥有自己的智能、直到权重层面，不依赖外部。但红杉绝不是让企业扔掉 Claude Opus 或 GPT——闭源 API 在编码、桌面端、前沿任务上依然很好用；主权AI 是针对产品里的部分能力做垂直整合。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"主权"一词的政治学本义</div>
+                        <p class="topic-detail-content">Sonya 用"主权"的政治学本义开题：主权是一个独立国家拥有的完全自治权。迁移到 AI 语境，就是企业对自己的智能拥有完全的掌控。开场最重要的一个澄清是边界感：这不是"非此即彼"的意识形态，而是"在哪些地方自己拥有、在哪些地方继续租用"的务实选择。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">一半动员、一半实操</div>
+                        <p class="topic-detail-content">演讲者的观察是，越来越多的被投公司正在产品的一部分中构建自己的 AI 能力，并沿着"拥有更多智能"的方向做垂直整合。这场活动因此被定位成"一半动员号召、一半技术实操指南"——既解决"为什么"，也解决"怎么做"。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "我们绝对不是让我们的被投公司扔掉 Opus 或 GPT 不用。"
+                        <cite>Sonya Huang [00:00:45]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">中心化与去中心化智能</h3>
+                        <span class="topic-timestamp">00:01:24 — 00:02:54</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        一场关于"智能应该属于谁"的路线之争正在展开：中心化路径里，一个全能AI黑箱驱动全球 GDP 并吸走所有数据；去中心化路径里，全世界共享一个坚实的核心，但每个人、每家公司在这个核心之上构建属于自己的智能。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">标志性事件与朴素逻辑</div>
+                        <p class="topic-detail-content">Sonya 列举了近期标志性事件：Alex Karp、Satya Nadella 公开支持企业拥有智能；黄仁勋上周带头推动开源权重模型在美国持续可用，并获得近乎一致的支持浪潮。她点明背后的朴素逻辑：智能太核心、太根本，不适合外包。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两种路径的鲜明对照</div>
+                        <p class="topic-detail-content">中心化智能是"单点全能"，一个黑箱越做越大，把全世界的"数据废料"和数据飞轮都吸进去；去中心化智能则是"共享地基 + 个性上层"，每个个体基于自己的数据、行业、个性化、工作方式、品味构建独特智能。Sonya 明确表态：这是更乐观的世界观——生态繁荣、个性胜出，这也是红杉与几十家公司同行这条路径的原因。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "没有哪一家公司能吞掉其他所有人。我觉得这是对世界乐观得多的看法。"
+                        <cite>Sonya Huang [00:02:43]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">四大驱动力：成本、速度、性能、命运</h3>
+                        <span class="topic-timestamp">00:02:54 — 00:04:22</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        企业选择自持模型的理由归结为四个：成本（AI 越成功、COGS 越高）、速度（小蒸馏模型能赢大模型）、性能（开源模型在垂直领域反超闭源）、以及掌控自己的命运。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">成本：最反直觉的洞察</div>
+                        <p class="topic-detail-content">对低毛利甚至负毛利公司，主权AI 是生存必需而非可选；讽刺的是 AI 产品越成功，AI 销售成本越高——所以最先走上自持之路的，恰恰是AI部署最领先的公司。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">速度与性能</div>
+                        <p class="topic-detail-content">速度指向编码、安全等延迟敏感领域，一个小巧的蒸馏定制模型可以击败大型通用模型。性能是相对较新的理由：去年还没有公司为了更好性能而自持模型，但现在开源模型可以在你的领域打败闭源——这是整场活动要重点解决的技术议题。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">命运：对平台依赖的回应</div>
+                        <p class="topic-detail-content">Anthropic 和 OpenAI 虽是很好的合作伙伴，但企业越来越想拥有自己的独立支柱。最后她用一个加密时代的老梗过渡——DeFi 圈流传"不是你的私钥，就不是你的加密货币"，为下一段埋下伏笔。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "你的AI产品越成功，你的AI销售成本往往越高。"
+                        <cite>Sonya Huang [00:03:22]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">"不是你的权重，就不是你的产品"</h3>
+                        <span class="topic-timestamp">00:04:22 — 00:05:32</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        加密世界的"不是你的私钥，就不是你的加密货币"，被翻写成 AI 版："不是你的权重，就不是你的产品"。战场正在从"应用层之争"升级为"智能层之争"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">战场正在下沉</div>
+                        <p class="topic-detail-content">Sonya 把上一段埋的梗揭晓，正式提出这句传播力极强的口号。她援引红杉合伙人 Pat Grady 在 AI Ascent 上的幻灯片：AGI 实验室从模型端向下打、应用公司从用户端向上打，双方都在冲向"面向用户的产品"。但她指出，一个新的动态正在浮现——这个战场正在从应用层下沉到智能层本身。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">产品就是智能</div>
+                        <p class="topic-detail-content">过去争夺的是产品、UI、市场打法、包装，现在争夺的是谁能在产品里塑造出更优的智能。结论是一句值得玩味的判断：产品就是智能，谁拥有智能层，谁就拥有真正的护城河。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "不是你的权重，就不是你的产品。"
+                        <cite>Sonya Huang [00:04:22]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">应用公司成为最新一代"Neo 实验室"</h3>
+                        <span class="topic-timestamp">00:05:32 — 00:07:05</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        最火热的"Neo 实验室"不是那些基础模型公司，而是应用公司——Harvey、Factory、Glean、OpenEvidence 等正在产出从评测、训练框架工程到微调算法的前沿研究。Sonya 由此给出四步实施框架的预告：战略、团队、可读性、技术路线图。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">应用现场就是研究第一现场</div>
+                        <p class="topic-detail-content">"应用公司就是最新一代 Neo 实验室"是全篇最响亮的口号之一。在去中心化智能世界里，应用公司的内部研究（applied research）已经横跨评测与基准测试、训练框架（harness）工程、微调的新算法技术等领域。Sonya 的潜台词是：你不必是 Anthropic 才能做前沿研究，应用场景本身就是研究的第一现场。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">四步框架预告</div>
+                        <p class="topic-detail-content">随后她交代今天方法论的定位——"一个带有强烈个人观点的框架和技术路线图"，并自嘲自己不是技术出身，请听众抱着极大的保留态度看待。但她相信这能提供一个有用的思考起点。四步框架就此铺开：第一步战略（拥有什么、租用什么），第二步团队（怎么组织人员生产智能），第三步可读性（被严重低估），第四步技术路线图（需要哪些积木）。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "我甚至认为，应用公司就是最新一代的 Neo 实验室。"
+                        <cite>Sonya Huang [00:05:37]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">第一步：拥有还是租用</h3>
+                        <span class="topic-timestamp">00:07:05 — 00:09:51</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        主权AI 不是二元选项，而是逐能力画线。四个决策因素：成本占比、速度/延迟是否 P0、开源模型在你的领域是否性能更优、数据是否专有。示例：编程智能体仍以租为主，Tab 补全模型因速度和频率转向自持。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">四个决策因素</div>
+                        <p class="topic-detail-content">这是全文最有操作价值的框架。Sonya 强调主权AI 不是 0% 或 100%——关键是"在哪些能力上画线"。四个因素依次是：成本（这个成本项在你的 COGS 里占多大）、速度与延迟（是不是 P0）、性能（过去选开源是因为不在乎性能，现在在某些领域用自己的数据微调反而更强）、专有数据（用于改进模型的数据对业务是否高度专有）。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两个实例</div>
+                        <p class="topic-detail-content">编程领域里，智能体（agent）今天大多仍选择租用，因为要开箱即用的强性能、延迟又不是 P0；但 Tab 补全模型因为极度在意速度、调用频率高成本飙升，多数已跑在主权智能上。南湾一家网络安全公司自持模型，是为了速度、性能以及极定制化的后训练能力；生物医药公司转向自持，则是因为该领域专有数据价值极高。一整套"该拥有什么"的判断逻辑由此成型。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "主权AI不是二元的。你不是 0% 或 100% 主权。"
+                        <cite>Sonya Huang [00:07:17]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">第二步：组建团队</h3>
+                        <span class="topic-timestamp">00:09:51 — 00:11:17</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        不要用"枢纽—辐条"的平台团队硬塞主权AI工作。从零组建一支小而精、能打进攻战的前沿研究团队——Harvey 只有七个人，却发表了一大堆研究。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">组织设计是最易被忽视的一步</div>
+                        <p class="topic-detail-content">传统 AI 团队多是"一个平台团队支撑多个应用产品团队"的枢纽—辐条结构，很多公司在里面硬塞主权AI的活。Sonya 明确反对：主权AI 从根本上不是平台服务型能力，你需要的是能在前沿思考、产出前沿研究的人，研究风格完全不同，而且要做进攻而非服务。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">多条路径通罗马</div>
+                        <p class="topic-detail-content">她给了两位实验室领导者的画像作为例证：Nico 偏研究侧（苹果研究 → Google Brain），Alex 偏工程侧（微软 → Ramp），两者都能带好实验室，取决于公司研究偏基础还是应用。落地建议很具体：从小处开始、从零开始，把它当成你自己的实验室来建——Harvey 的例子最有说服力，七人团队支撑起了大量对外研究。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "从小处开始。我建议从零组建，可以考虑把它做成你自己的实验室。"
+                        <cite>Sonya Huang [00:10:46]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">第三步：可读性——研究必须被看见</h3>
+                        <span class="topic-timestamp">00:11:17 — 00:12:33</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        可读性（legibility）被严重低估：每个买家都在挑选"AI 冠军"，只有拿出自己的研究、做好技术营销，才能证明你足够懂行、值得托付。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">CEO 的双重职责</div>
+                        <p class="topic-detail-content">这一步是 Sonya 明确点出"被严重低估、极其重要"的环节。她引用 Winston Weinberg 的观点：CEO 的职责有二，一是驱动实质性成果，二是掌控叙事与可读性。落到 AI 技术栈语境，可读性直接关系到商业成败——眼下每一个买家都在选择他们的"AI 冠军"，他们听够了雷同的推销，正在分辨哪个供应商足够老练、能带他们到"应许之地"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">行动清单</div>
+                        <p class="topic-detail-content">做优秀的技术营销、成立独立品牌的实验室或研究组、以高品味发布研究。对在座的红杉系公司，她特别强调要认真对待这件事。言下之意：在研究内卷的 AI 赛道，你不会被"看见"，就不会被"选择"。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "现在每一个买家都在挑选他们的'AI 冠军'。"
+                        <cite>Sonya Huang [00:11:18]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">第四步：技术路线图</h3>
+                        <span class="topic-timestamp">00:12:33 — 00:13:56</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        从 0 到 1 的路线：定战略 → 定义评测（最不被看好却最重要）→ 玩模型路由和训练框架 → 后训练 →（罕见时）中期训练/预训练 → 搭建真实客户数据反馈闭环。2026 年的新变化：开源权重模型已接近前沿，拥有自己的技术栈反而能超越前沿性能。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">评测是起步阶段最关键的一步</div>
+                        <p class="topic-detail-content">技术路线图是四步的收尾，Sonya 给出了"粗略旅程"：先定战略，再定义评测（eval）。她强调评测是"不风光、不好玩"的工作，但前期做得越多，后面一切越顺——这是起步阶段最关键的一步。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">旅程的中间与终点</div>
+                        <p class="topic-detail-content">接着，公司会开始玩模型路由（model router）和训练框架；有些公司开箱即用就有好性能，另一些从后训练（post-training）中收获强劲提升；更罕见的公司才需要进入中期训练甚至预训练。旅程终点是把真实客户数据变成反馈闭环，让智能随每次交互变好。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">2026 年最重要的新事实</div>
+                        <p class="topic-detail-content">新一代开源权重模型（她点名 Kimi K3、GLM 4.5）极其出色，由于权重开放、可塑性远超闭源 API，你从"已接近前沿"的基线出发，配合强劲的后训练、提示词与训练框架工程、在线学习，可以拥有比前沿更高的性能。这是"拥有自己的智能"从口号变成商业理性决策的关键转折。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "通过拥有自己的技术栈，你实际上可以达到超越前沿的性能。这是 2026 年的新现象。"
+                        <cite>Sonya Huang [00:13:37]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">技术栈地图：生产 vs 开发</h3>
+                        <span class="topic-timestamp">00:13:56 — 00:15:16</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        闭源技术栈是"地板高、天花板低"：API 开箱即用，但没有自己的数据就无法持续改进。拥有自己技术栈则像打开潘多拉魔盒：从选开源基础模型、大量后训练，到配置训练框架的每一环，全部要自己动手——换来的是数据反馈带来的成长可能。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">生产栈与开发栈</div>
+                        <p class="topic-detail-content">Sonya 用一张基础设施视角的图收束全场。左侧是生产栈：面向用户、驱动用户看到的每个 token，本质是"模型之上套一个训练框架"。右侧是开发栈：让智能变好的工具与供应商。在闭源生态里，这套栈极简——Opus、GPT 加开箱自带的训练框架，自己写提示词、喂上下文、做评测就够了，几乎不用收集数据、训练模型。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">更高的地板，更低的天花板</div>
+                        <p class="topic-detail-content">她给出精辟的总结：更高的地板，但更低的天花板，因为你没有能力用线上生产数据改进自己的智能。一旦转向自持，"那个干净漂亮的 API 调用"就变成你必须自己训练模型——选开源基础模型、做大量后训练、配置训练框架。潘多拉魔盒打开了，复杂度全部前置，但换来的是一条持续上升的曲线。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "这是更高的地板，但它是更低的天花板。"
+                        <cite>Sonya Huang [00:14:18]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 11 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">11</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">打开潘多拉魔盒：基础模型、训练框架、上下文</h3>
+                        <span class="topic-timestamp">00:15:16 — 00:17:26</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        自持栈的四个抓手：选开源基础模型、配置开源训练框架、管理多种上下文形态（向量库、知识图谱、MCP 连接器，乃至把上下文编码进权重），并重点建设开发栈的评测监控、高质量数据与在线学习。演讲以当天工作坊阵容收尾。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">上下文驱动性能</div>
+                        <p class="topic-detail-content">最后这段是"全景拼图"的收口。自持意味着从"开箱即用的智能体"变成"自己配置训练框架、逻辑、工具、上下文"。Sonya 特别强调上下文对性能的驱动作用，并列举了几种形态：向量数据库（如 Turbopuffer）、企业知识图谱（如 Glean）、MCP（模型上下文协议）开源连接器，还有前沿探索——Engram 的 Dan Beerman 团队在做"把上下文编码进权重本身"的记忆研究。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">开发栈的三件要事</div>
+                        <p class="topic-detail-content">当拥有自己的 AI，开发栈的重要性骤升：要监控评测、盯住模型在生产中的性能漂移；要准备高质量领域数据（专家轨迹、合成数据、强化学习环境）；还要搭建在线学习，让智能随每次用户交互进化。结尾她预告了当天的系列工作坊：Fireworks 讲后训练、LangChain 讲训练框架与评测、Meror 讲强化学习环境与合成数据、Trajectory 讲在线学习，最后 Harvey 串讲完整技术栈战略——而 Harvey 昨天刚发布了 Harvey Research，其技术合伙人今天也在场。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "上下文对驱动性能真的极其重要。"
+                        <cite>Sonya Huang [00:15:18]</cite>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔑</div>
+                    <h3 class="takeaway-title">权重即主权</h3>
+                    <p class="takeaway-desc">加密圈的"不是你的私钥，就不是你的加密货币"，在 AI 时代变成"不是你的权重，就不是你的产品"。产品真正的护城河正在从应用层下沉到智能层——谁拥有并控制权重，谁才真正拥有产品。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">💰</div>
+                    <h3 class="takeaway-title">四大驱动力</h3>
+                    <p class="takeaway-desc">成本、速度、性能、命运。最反直觉的是第一点——AI 产品越成功、COGS 越高，所以最先自持模型的往往是部署最领先的公司。自持不再是情怀，而是盈亏表的硬逻辑。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚖️</div>
+                    <h3 class="takeaway-title">拥有还是租用</h3>
+                    <p class="takeaway-desc">主权AI 不是 0/100 的二元选择，而是逐能力画线。用四个因素判断：成本占比、延迟是否 P0、自持是否性能更优、数据是否专有。示例逻辑：编码智能体租用、Tab 补全自持。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧪</div>
+                    <h3 class="takeaway-title">评测先行</h3>
+                    <p class="takeaway-desc">技术路线图里最关键也最不风光的起步动作是"定义评测"——前期评测投入越多，后面的一切越有优势。别跳过它。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🚀</div>
+                    <h3 class="takeaway-title">2026 的新事实</h3>
+                    <p class="takeaway-desc">开源权重模型（如 Kimi K3、GLM 4.5）已接近前沿且可塑性远超闭源 API。从接近前沿的基线出发，配合后训练、训练框架工程和在线学习，拥有自己的技术栈可以超越前沿性能——自持不再是性能牺牲，而可能是性能优势。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔭</div>
+                    <h3 class="takeaway-title">可读性即竞争力</h3>
+                    <p class="takeaway-desc">每个买家都在选"AI 冠军"。拿出自己的研究、做好技术营销、成立独立品牌实验室，是你从"又一个供应商"变成"懂行的人"的入场券。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">关于本文</h3>
+            <p class="footer-desc">
+                本文基于 Sequoia Capital 的 "Own Your Intelligence" 活动开场演讲制作。红杉资本合伙人 Sonya Huang 面向台下 80 位创始人、AI 领袖，论证为什么越来越多公司选择"拥有自己的智能"直到权重层面——四个驱动力、一个"拥有 vs 租用"的决策模型、四步实施框架，以及 2026 年"开源权重模型已逼近前沿、自持即性能优势"的关键转折。
+            </p>
+            <div class="footer-quote">
+                "不是你的权重，就不是你的产品。"
+            </div>
+            <p class="footer-note">
+                本文基于演讲内容整理翻译，仅作学习交流。视频来源：<a href="https://www.youtube.com/watch?v=bMMv0bZzONg" target="_blank">YouTube</a> · 频道：Sequoia Capital
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

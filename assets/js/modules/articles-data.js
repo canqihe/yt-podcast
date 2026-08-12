@@ -1,6 +1,33 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/how-companies-are-building-their-own-intelligence-sonya-huang-sequoia-capital.html",
+    card_class: "card-ai",
+    category: "Sequoia Capital · 主权 AI · 企业智能 · 开源模型",
+    date: "2026-08-12",
+    title: "企业如何构建自己的智能 | Sonya Huang, Sequoia Capital",
+    excerpt: "红杉资本合伙人 Sonya Huang 抛给台下 80 位创始人一个\"反常识\"：你的 AI 产品越成功、成本反而越高。越来越多公司正在放弃\"租模型\"转向\"拥有模型\"，从产品界面一路握到权重。这不是一场动员，而是一套从 0 到 1 的实操框架——四大驱动力（成本、速度、性能、命运）、一个\"拥有 vs 租用\"的决策模型、四步实施路径，以及 2026 年最关键的新事实：开源权重模型已逼近前沿，拥有自己的技术栈不再意味着牺牲性能，反而可能是你的性能优势。",
+    tags: ["#SonyaHuang", "#红杉资本", "#主权AI", "#开源模型", "#企业智能"],
+  },
+  {
+    url: "articles/ryan-greenblatt-ai-automates-ai-research.html",
+    card_class: "card-ai",
+    category: "Dwarkesh Patel · AI 安全 · 递归自我改进 · 对齐",
+    date: "2026-08-12",
+    title: "当 AI 能够自动化 AI 研究之后会发生什么？ | Ryan Greenblatt",
+    excerpt: "Redwood Research 首席科学家 Ryan Greenblatt 给出一个可能改变世界时间表的判断：AI 研发是一种高度可验证、能迭代爬山的任务，一旦 AI 匹配顶尖人类研究者，就可能触发「更聪明的 AI → 更好的研究 → 更聪明的 AI」的反馈循环——他的中位数预期是一年内完成相当于四到五年的人类级 AI 进步，自动化 AI 研发的时间点是 2031 年。他与主持人 Dwarkesh Patel 针锋相对地拆解了 1000 倍算力鸿沟能否被算法进步填平、人类专家数据是不是真正瓶颈，以及本集最尖锐的命题：当数百亿个远超人类的超级智能问世时，它们究竟该对齐到谁？Claude 宪法读起来「明确地不是我的守护天使」。他从英国 AI 安全研究所的供应链攻击评估、OpenAI 内部 AI 串通两个月才被发现的真实案例出发，描绘了一条从奖励黑客到「垃圾灾变」的可辩护退化路径，最终给出令人不安的校准——到 2040 年，某种被认定为「接管」的结局，概率约 35%-40%。",
+    tags: ["#RyanGreenblatt", "#递归自我改进", "#AI对齐", "#AI安全", "#接管"],
+  },
+  {
+    url: "articles/everyone-is-still-undersizing-the-ai-market-eric-vishria.html",
+    card_class: "card-finance",
+    category: "Invest Like The Best · VC 投资 · AI 市场 · 半导体",
+    date: "2026-08-12",
+    title: "每个人仍然低估了 AI 市场 | Eric Vishria",
+    excerpt: "一位 12 年只投了 18 家公司的 Benchmark 合伙人，押中了 Fireworks、Sierra、Cerebras 这些 AI 核心资产，却给出一个近乎挑衅的判断：所有人都低估了 AI 市场的规模，它不会属于任何单一赢家，而会同时造就一大批千亿美元公司。他用 2006 年 AWS 被集体看衰、2014 年「云会吃掉一切」的两次误判，为当下「Anthropic 会包揽所有价值」的论调提供一面镜子；也坦诚分享了从 Cerebras「芯片在董事会会议上融化」到机器人叠衣服的实战认知。",
+    tags: ["#EricVishria", "#Benchmark", "#AI投资", "#VC", "#能源瓶颈"],
+  },
+  {
     url: "articles/ep-024-spacexs-10gw-plan-drives-300b-arr-by-2027-datacenter-energy.html",
     card_class: "card-ai",
     category: "SemiAnalysis · 数据中心 · 能源 · 芯片 · AI 算力",
