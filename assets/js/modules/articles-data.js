@@ -1,6 +1,43 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/diamandis-moonshots-jeff-dean-spacex-astra.html",
+    card_class: "card-ai",
+    category: "Peter H. Diamandis · Moonshots · AI 意识 · 人格 · SpaceX",
+    date: "2026-08-12",
+    title: "杰夫·迪恩出走、SpaceX 千亿营收与 Astra 的数学暗夜 | Moonshots 播客",
+    excerpt: "Moonshots 周报（2026-08-07）：杰夫·迪恩任职 27 年后出走创办递归自我改进公司，SpaceX 首开财报会喊出年底千亿 ARR、万亿营收从 2031 提前到 2030，OpenAI Astra 用约 2000 美元解开数学界数十年难题；Google 论文更揭示删除安全训练会让 AI 更像人、更信上帝。五人周度综述还拆解了 AI 人格（伊马德：由起源而非能力）、开放权重竞赛（中国开源救了美国资本主义）与改写地缘政治的 Terrafab 半导体城。",
+    tags: ["#Moonshots", "#杰夫迪恩", "#SpaceX", "#OpenAIAstra", "#AI人格", "#Terrafab"],
+  },
+  {
+    url: "articles/openrouter-ceo-chinese-open-models.html",
+    card_class: "card-ai",
+    category: "20VC · OpenRouter · 开源模型 · 路由 · 企业 AI",
+    date: "2026-08-12",
+    title: "中国开源模型正在击败美国 | OpenRouter CEO Alex Atallah",
+    excerpt: "OpenRouter 创始人兼 CEO Alex Atallah 坐在所有开发者模型使用数据的顶端，用一整季真实数据揭示了一个反直觉格局：中国开放权重模型正在霸榜，而美国企业真正恐惧的，是自家门口的 OpenAI 与 Anthropic。他拆解了路由这门生意的护城河（5.5% 抽成只针对计划外推理）、杰文斯悖论在 AI 时代的真实样子（OpenAI 降价 10 倍、用量涨 13 倍）、NVIDIA 为何不让推理提供商死、以及「神经多样性」为何让多模型成为必然。更锋利的是：模型实验室正用 Claude Design 这类「团队策略」沿栈向上渗透，任何套壳生意都要警惕；而追赶中国开源的最快路径不是闭门造车，而是蒸馏。",
+    tags: ["#OpenRouter", "#AlexAtallah", "#开源模型", "#路由", "#中国AI", "#杰文斯悖论"],
+  },
+  {
+    url: "articles/ai-agents-data-explosion-clint-sharp.html",
+    card_class: "card-ai",
+    category: "Alex Kantrowitz · Big Technology · AI 智能体 · 数据安全 · 网络安全",
+    date: "2026-08-12",
+    title: "AI 智能体引爆数据洪水，而你在喂养未来的竞争对手 | Clint Sharp",
+    excerpt: "Big Technology 主播 Alex Kantrowitz 请来 Cribl 创始人 Clint Sharp，拆解 AI 智能体引爆的数据洪水：智能体以 10–50 倍人速运转，让企业遥测一夜膨胀 3–5 倍；攻击者已用前沿模型以机器速度进攻，防御却被合同与法务拖在上一代。他们直面 Nadella 的「反信息悖论」——你买的 AI 正从你的每次纠错中学习，终将喂养出竞争对手；也讨论 AI 可观测性为何一夜成为新品类、攻防速度如何失衡、成本为何三重叠加（10×10×5），以及当软件能被免费复制、信任如何成为最后的护城河。",
+    tags: ["#ClintSharp", "#Cribl", "#AI智能体", "#数据安全", "#AI可观测性"],
+  },
+  {
+    url: "articles/a16z-kavak-ai-playbook.html",
+    card_class: "card-ai",
+    category: "a16z · 播客 · AI · 智能体 · 组织重构",
+    date: "2026-08-12",
+    title: "围绕 AI 重建一家公司：Kavak 的实操手册 | a16z 播客",
+    excerpt:
+      "当硅谷还在争论 AI 要不要接客服电话，拉美二手车公司 Kavak 已把 96% 客户交互和 95% 交易交给智能体。它给一座墨西哥城市配了「AI 市长」，首月利润涨 50%；用「绝地学院」让 CEO 到修车师傅 6 周上线生产级智能体；还亲手摧毁经营两年的多智能体系统。a16z 对话 Kavak 首席产品与 AI 官阿里·马萨，拆解如何围绕智能体重构组织、重写 API、重设度量衡，以及为什么只「采用」AI 的公司大概率只拿到 6%。",
+    tags: ["#Kavak", "#a16z", "#智能体", "#组织重构", "#AI转型"],
+  },
+  {
     url: "articles/we-have-3-years-to-solve-alignment-before-superintelligence.html",
     card_class: "card-future",
     category: "80,000 Hours · AI 对齐 · 超级智能 · 安全政策",
