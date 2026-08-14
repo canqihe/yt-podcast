@@ -1,6 +1,24 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/microsoft-kevin-scott-agentic-web.html",
+    card_class: "card-ai",
+    category: "Every · AI & I · agentic web · 智能体 · 微软",
+    date: "2026-08-14",
+    title: "为智能体打造的互联网：微软 CTO Kevin Scott 的 agentic web 蓝图",
+    excerpt: "微软 CTO Kevin Scott 押下大赌注：agentic web（智能体网络）将成为 AI 的下一件大事。智能体要真正有用，就必须能代表你采取行动——这意味着它们需要访问构成互联网的庞杂工具、数据与系统。本期 AI & I 拆解了他三层判断：技术协议（MCP 如同 HTTP、NLWeb 如同 HTML、安全模型靠身份与权限预协商）、商业模式（微软作为平台公司为何坚持开放、康威定律如何逼出内部协议统一），以及一个 41 年程序员的个人哲学（为何他用 VI、后悔没早学 3D 打印机）。还直面了「封闭换安全、开放换创新」这一虚假二元对立，并推演人与智能体从同步走向异步委托的终局。",
+    tags: ["#KevinScott", "#微软", "#agenticweb", "#MCP", "#智能体"],
+  },
+  {
+    url: "articles/garry-tan-new-rules-for-founders.html",
+    card_class: "card-ai",
+    category: "a16z · 播客 · AI · 创业 · YC · 创始人",
+    date: "2026-08-14",
+    title: "Garry Tan：创始人的新规则 | a16z 播客",
+    excerpt: "Y Combinator 总裁 Garry Tan 罕见地把二十年来最贵的错误摆上桌面——错过 Palantir、追逐热点、离开 Web——并提炼出与直觉相反的新规则：真诚是勇气而非天真，一个人可以是过去的 400 倍，一个 markdown 文件就是一个员工，而 AI 的颠覆远比硅谷想象得慢，那恰恰是白色药丸。他与 a16z 的 Anish Acharya 拆解 vibe coding、Token Maxing、业务循环与「缰绳之战」，以及为什么修好本地城市，全国自会变好。",
+    tags: ["#GarryTan", "#a16z", "#YC", "#AI创业", "#智能体", "#Markdown即员工"],
+  },
+  {
     url: "articles/diamandis-moonshots-jeff-dean-spacex-astra.html",
     card_class: "card-ai",
     category: "Peter H. Diamandis · Moonshots · AI 意识 · 人格 · SpaceX",
