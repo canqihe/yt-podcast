@@ -1,6 +1,24 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/ramez-naam-200gw-grid-sodium-batteries-wave-datacenters.html",
+    card_class: "card-ai",
+    category: "Peter H. Diamandis · Moonshots · 能源 · AI 算力 · 电网 · 聚变",
+    date: "2026-08-16",
+    title: "电网里藏着 200GW、钠电池便宜 10 倍、波浪驱动数据中心 | Ramez Naam",
+    excerpt: "当微软 CEO 纳德拉坦言\"我们买了芯片，却没有装芯片的机箱\"，人类历史上最贵的一场赛跑正式拉开帷幕。前微软高管、Planetary VC 管理合伙人 Ramez Naam 给出整套反直觉判断：AI 的真正瓶颈不是成本而是\"供电速度\"——大型燃气轮机已售罄七年，科技公司只能自己造电；美国电网日常在 400~600GW 间波动，约 200GW 缺口可用\"可中断负载 + 电池错峰\"撬动，电池就是电子的缓存。他还拆解太阳能从 100 美元/瓦到 8 美分/瓦的赖特定律、核裂变的\"冲压与供应链\"复兴、聚变从\"50 年\"缩到\"5 年\"（Helion 目标 2028），以及通往\"一太瓦 AI\"仅有的四条路：沙漠太阳能+电池、核能、太空、海洋——人类正史无前例地同时押注全部四条。",
+    tags: ["#RamezNaam", "#能源", "#AI算力", "#电网", "#钠电池", "#聚变", "#太空数据中心"],
+  },
+  {
+    url: "articles/allin-anthropic-2t-ipo-zucks-ai-manifesto.html",
+    card_class: "card-ai",
+    category: "All-In Podcast · AI · IPO · 开源 · 数据中心",
+    date: "2026-08-15",
+    title: "Anthropic 冲刺 2 万亿 IPO，扎克伯格宣言与英伟达的 5000 亿豪赌 | All-In Podcast",
+    excerpt: "一家尚未上市的公司，从 10 亿美元年收入干到 4000 亿美元，只用 10 个月。本周，Anthropic 以 2 万亿美元估值筹备 10 月 IPO，扎克伯格发表 6500 字 AI 宣言公开'接棒'富足愿景，英伟达联手华尔街六大机构把 GPU 变成可证券化的金融资产，马斯克用 6 个月把 Grok 追平到前沿水平。All-In 请来 AI 投资人 Gavin Baker，围绕这场改写资本市场的 IPO，拆解 AI 产业的需求、供给、能源、定价权与地缘政治——包括'引导车'逻辑（Anthropic 每吉瓦算力创造 1000 亿美元收入，养活了 SpaceX 到台积电的每一环）、'AI 的美联储'（Nvidia 用残值担保把 GPU 变成可融资资产）、开源如何让前沿更值钱，以及'技术太危险不能分发 vs 太危险不能集中'的去中心化之争。",
+    tags: ["#Anthropic", "#IPO", "#扎克伯格", "#英伟达", "#Grok", "#开源AI"],
+  },
+  {
     url: "articles/microsoft-kevin-scott-agentic-web.html",
     card_class: "card-ai",
     category: "Every · AI & I · agentic web · 智能体 · 微软",
