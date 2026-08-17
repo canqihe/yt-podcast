@@ -1,6 +1,15 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/openais-head-of-design-this-is-the-best-time-in-history-to-be-a-designer-ian-silber.html",
+    card_class: "card-ai",
+    category: "Lenny's Podcast · OpenAI · 产品设计 · AI 智能体 · 设计师",
+    date: "2026-08-17",
+    title: "OpenAI 设计负责人：这是历史上成为设计师的最佳时机 | Ian Silber",
+    excerpt: "设计师是 AI 时代最焦虑的群体？OpenAI 产品设计负责人伊恩·西尔伯却斩钉截铁地宣称：这是历史上成为设计师的最佳时机。他深度拆解了为什么工程师被 AI 放大 10 倍而设计师没有、为什么 AI 已是出色的设计师仍需人类留在回路中、为什么他的核心建议竟是'做得更少'，以及 ChatGPT 如何一步步走向超级应用——涵盖招聘标准、系统思维、十亿用户平衡术、失败教训与 Groupon 的 DNA 遗产。",
+    tags: ["#OpenAI", "#产品设计", "#IanSilber", "#ChatGPT", "#设计师", "#超级应用", "#LennyPodcast"],
+  },
+  {
     url: "articles/ramez-naam-200gw-grid-sodium-batteries-wave-datacenters.html",
     card_class: "card-ai",
     category: "Peter H. Diamandis · Moonshots · 能源 · AI 算力 · 电网 · 聚变",
