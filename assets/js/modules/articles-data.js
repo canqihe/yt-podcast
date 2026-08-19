@@ -1,6 +1,15 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/from-18b-to-300b-nikesh-arora-palo-alto-networks.html",
+    card_class: "card-tech",
+    category: "Sourcery · Palo Alto · 网络安全 · 平台化 · 并购",
+    date: "2026-08-19",
+    title: "从 180 亿到 3000 亿：Nikesh 如何重建 Palo Alto | Nikesh Arora",
+    excerpt: "当零日漏洞从被发现到被利用只剩几分钟，而传统修复仍以天甚至周计，网络安全比拼的不再是“谁的产品更多”，而是“谁能把防御闭环压得更快”。Palo Alto Networks 董事长兼 CEO Nikesh Arora 用市值从约 180 亿美元走到约 3000 亿美元的经历给出答案：把安全做成平台，把并购写进产品地图，用对两年后增长的偏执替代对下个季度的焦虑。他拆解了 55 天到 4 小时的修复目标、8 年 40 多笔收购为何难在整合、以及为何模型排行榜远不如上下文、护栏和责任机制重要。",
+    tags: ["#NikeshArora", "#PaloAlto", "#网络安全", "#平台化", "#并购"],
+  },
+  {
     url: "articles/tokens-are-the-new-dollars-stripes-will-gaybrick-david-george.html",
     card_class: "card-ai",
     category: "a16z · Stripe · AI 支付 · Token 经济 · 智能体商务",
