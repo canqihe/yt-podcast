@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>纳秒交易的算力豪赌 | Jane Street</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <!-- 配色方案：绿黄（量化交易 / 金融主题） -->
+    <style>
+        :root {
+            --accent-primary: #22c55e;
+            --accent-secondary: #eab308;
+            --accent-primary-rgb: 34, 197, 94;
+            --accent-secondary-rgb: 234, 179, 8;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('jane-street-on-gpus-trading-and-hiring-a-conversation-with-dwarkesh-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">Jane Street · 量化交易 · GPU · 数据中心</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">纳秒交易的</span>
+                    <span class="title-line-2">算力豪赌</span>
+                </h1>
+                <p class="subtitle">
+                    一家以"纳秒级交易"著称的公司，刚签下 60 亿美元算力采购大单，计划把 GPU 从数万块扩张到数十万块。Jane Street 技术联合负责人 Ron Minsky 与物理工程负责人 Dan Pontecorvo 罕见地同时揭开两个被神秘化的话题：一家顶级量化公司如何设计它的算力体系，以及当"交易是否会被 AGI 完全接管"这个天真的问题被认真对待时，答案会是什么。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">频道</div>
+                        <div class="meta-value">Jane Street</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Ron Minsky &amp; Dan Pontecorvo</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">29 分 34 秒</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=xKZ_8ULR91Y" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">时间光谱</h3>
+                    <p class="point-desc">交易不是"要么纳秒、要么跑大模型"的二选一，而是一条从 100 纳秒到数天的连续权衡曲线；真正的系统在所有尺度上分别竞争。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">字节-浮点比</h3>
+                    <p class="point-desc">金融数据"每字节信息密度低"，决定了 Jane Street 的模型"更小、更嘈杂、量更大"，也决定了它为什么需要架构多样性而非单一通用巨模型。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">AGI 完全问题</h3>
+                    <p class="point-desc">交易像"NP 完全"一样会被世界上所有问题影响；当部分环节被自动化后，尚未被自动化好的难点就是竞争优势，这让人类认知反而更值钱。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">相变判断</h3>
+                    <p class="point-desc">模型赢在平稳期，人类赢在异常时刻——最赚钱的日子恰恰是"世界乱成一团"时，所以系统始终需要人在回路里做"元判断"。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">瓶颈在设备</h3>
+                    <p class="point-desc">当前制约 AI 扩展的是发电机、变压器、液冷设备等长交付周期部件，而非芯片本身；密度与模块化正在改写数据中心的设计逻辑。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">算力即战略</h3>
+                    <p class="point-desc">公司从数万迈向数十万 GPU，逻辑是"研究有价值所以多买算力"；同时可以把电力承诺与芯片采购分岔决策，前者更容易转售、也更具灵活性。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">时间尺度的光谱：从 100 纳秒到 1 天</h3>
+                        <span class="topic-timestamp">00:00:00 — 00:02:27</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        交易不存在单一时间尺度，而是一条从不足 100 纳秒到数小时/数天、横跨七个数量级的频谱；真正的交易系统是"集成式"的——在每个时间尺度上分别竞争。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"纳秒级"和"跑模型"并不冲突</div>
+                        <p class="topic-detail-content">它们发生在不同的交易流程里，服务于不同的决策。在最极端的一端，交易系统要求在一个数据包上以不足 100 纳秒的周期完成响应——这个量级你根本不能用 CPU，只能用一块通过物理线缆直接挂到网络上的 FPGA 工作。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">一条完整的权衡曲线</div>
+                        <p class="topic-detail-content">横轴是决策周转速度，纵轴是决策的"聪明程度"。正确构建交易策略的方式不是选择一个点，而是采用集成的思路——对一部分决策用极快的简单规则，对另一部分放宽到几十微秒甚至毫秒，还有些流程只要在一小时或一天内完成就具备竞争力。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "You can't use a CPU... you are going to be on an FPGA that's direct wire attached to the network." —— "你根本没法用 CPU……你会用一块直接连到网络线的 FPGA。"
+                        <cite>Ron Minsky [00:01:06]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">模型在预测什么：公允价值与"字节-浮点比"</h3>
+                        <span class="topic-timestamp">00:02:27 — 00:06:41</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        交易模型最重要的预测目标是资产的"公允价值"；与 AI 实验室相比，Jane Street 的模型更小、数据更嘈杂但量更大，其背后的结构原因是"字节-浮点比"完全不同。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">预测公允价值</div>
+                        <p class="topic-detail-content">这是 Ron 在 25 年前用线性回归建模时就在做的事情，也是至今最能"组合"进各类交易流程的预测目标：这东西到底值多少钱。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">为什么不训练一个通用巨模型</div>
+                        <p class="topic-detail-content">第一，数据形态不同：金融数据充满噪声，"字节-浮点比"与语言模型完全不同，所以模型普遍形态是更小、更嘈杂、量更大。第二，不同应用之间模型形态也彼此不同。第三，这解释了算力采购的逻辑——大量的模型、大量的实验，构成"想要更多算力"的持续拉力，而不是一次性把一切赌在一两个巨型训练任务上。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "The data is kind of bite for bite less informative just because financial data is very noisy." —— "金融数据按比特计算，信息密度更低，因为它非常嘈杂。"
+                        <cite>Ron Minsky [00:05:34]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">推理工作负载：与 LLM 公司有什么本质差别</h3>
+                        <span class="topic-timestamp">00:06:39 — 00:08:51</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Jane Street 的推理负载与聊天机器人公司的差别不在工程量级，而在"常数被拨到不同位置"：延迟权重更高、顺序数据速率极高、数据加载性能成为关键，并催生了自己的对象存储系统。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">延迟的地位更高</div>
+                        <p class="topic-detail-content">批处理仍然重要，但由于 Jane Street 会为不同交易标的（symbols）分片部署不同的模型，批的构成方式也随之改变。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">最尖锐的差别在数据形态</div>
+                        <p class="topic-detail-content">大 LLM 实验室的总体数据速率很高，但那是海量用户各自低速率请求的加总；而 Jane Street 拉取的是 NASDAQ feed 流出的字节，必须在单一数据域里按因果顺序被一个一个地消费。这一差别直接改写了存储与数据加载的工程优先级。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">被迫放弃的两条捷径</div>
+                        <p class="topic-detail-content">Jane Street 幸运地走了两条捷径很多年——假装世界上只有 x86-64 一种 CPU 架构，以及拥有一个大型研究数据中心和一个大型存储集群。如今这两条捷径都被迫放弃：你不可能在一座数据中心里接进足够多的电力，NVIDIA 的新产品也逼着公司支持 ARM。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "All the constants are twiddled to different places and so you end up making different choices." —— "所有常数都被拨到了不同的位置，所以最终做出不同的选择。"
+                        <cite>Ron Minsky [00:07:05]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AGI 会消灭 Jane Street 吗：交易是"AGI 完全问题"</h3>
+                        <span class="topic-timestamp">00:09:44 — 00:13:05</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        交易本质上像"AGI 完全问题"——世界上所有问题最终都会流入"某物值多少钱"的预测。因此人类认知比以往更有价值，业务也远非全电子化。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">反直觉的结论</div>
+                        <p class="topic-detail-content">交易归根结底是预测未来——判断东西值多少钱——而几乎所有世界上的问题都会影响这个预测。随着一部分环节被自动化，剩下的、还没被很好地自动化的困难部分，恰恰成了新的竞争优势。于是人类和人类认知比以往任何时候都更有价值，Ron 从没像今天这样迫切地想招更多工程师和交易员。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">业务远比你以为的更多元</div>
+                        <p class="topic-detail-content">交易里仍有大量非电子化环节：通过电话和聊天进行、靠人判断对方代表多大逆向选择的对手盘；债券业务的自动化程度远不及股票。人们曾以为股票电子化之后"一切都会跟上"，但 25-30 年过去并非如此。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "Trading in particular feels to me as kind of AGI complete sort of like NP complete... humans and human cognition are more valuable than ever." —— "交易尤其让我觉得像是 AGI 完全问题，类似 NP 完全……人类和人类认知，比以往任何时候都更有价值。"
+                        <cite>Ron Minsky [00:10:29]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">人在回路：相变时刻的元判断</h3>
+                        <span class="topic-timestamp">00:13:05 — 00:14:34</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        最赚钱的日子往往发生在"世界乱成一团"时；模型擅长平稳期，人类在相变（phase transition）中表现更好，因此系统始终有人盯着，做交易员无法逐笔介入的"元判断"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">利润结构与相变</div>
+                        <p class="topic-detail-content">很多最赚钱的日子都发生在奇怪的事件里——世界剧烈变动、没人知道发生了什么。此时提供流动性的难度陡增，报酬也最高，而且往往成交量巨大。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">无法编码的"元判断"</div>
+                        <p class="topic-detail-content">做好这种事的关键是判断"今天和其他所有日子有什么不同"。所以即便单笔交易快到人类来不及逐笔介入，也始终有人在盯着系统——因为需要一种"元判断"：决定在异常时刻该做什么、何时信任模型、何时干预。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "Sometimes you need this kind of meta judgment to decide what to do... we always have people who are watching." —— "有时你需要这种元判断来决定怎么做……而我们始终有人在盯着。"
+                        <cite>Ron Minsky [00:13:05]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">数据中心的军备竞赛：发电机、交付周期与模块化</h3>
+                        <span class="topic-timestamp">00:14:34 — 00:19:10</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 算力扩展的瓶颈早已不是芯片本身，而是发电机、变压器和液冷设备——它们有全行业最长的交付周期；GPU 机架越来越密集，催生了模块化、预置、即插即用的数据中心。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">瓶颈是设备，不是芯片</div>
+                        <p class="topic-detail-content">Dan 做了 20 年的冷却，突然成了热门话题。当下 AI 算力扩展的瓶颈是发电机、变压器和液冷设备——这些长交付周期部件决定了数据中心何时能上线，且市场变化极快，"今天告诉你的，两周后就不一样了"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">一个 Jane Street 风格的取舍</div>
+                        <p class="topic-detail-content">用撤掉部分发电机来换取 GPU 提前 6 个月上线——"也许不是最好的工程决策，但确实是最好的商业决策"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">密度的物理现实</div>
+                        <p class="topic-detail-content">一个机架做到 1 兆瓦时，冷却管道和供电都得送到同一个地点。计算只是封装的一小部分，基础设施才是大头——这迫使供应商在设计部件时思考"它能不能在数据中心里被供电和冷却"。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "Maybe it's not the best engineering decision, but it's truly the best business decision." —— "也许这不是最好的工程决策，但确实是最好的商业决策。"
+                        <cite>Dan Pontecorvo [00:15:13]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">算力的"暗空间"与电力/芯片的分岔</h3>
+                        <span class="topic-timestamp">00:19:10 — 00:22:24</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Jane Street 是典型的算力受限方——被拒掉的实验价值极高，且没有"Instagram 广告投放"式的备用用途，但有大量"暗空间"可以填充；同时可以"做多电力、推迟芯片"，把两者的决策分岔开。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">没有"算力太多"的问题</div>
+                        <p class="topic-detail-content">超大规模云厂商有多余算力时总有低优先级用途兜底；Jane Street 恰恰相反——算力受限，有大量被算力限制住的实验和新想法，被拒绝掉的运行价值非常高。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">低垂的果实与暗空间</div>
+                        <p class="topic-detail-content">模型质量会随时间衰减，更频繁地重训有直接价值；批量推理任务可以填进调度的空档。这里没有 Instagram 广告投放那种对应物，但存在一大片"没在做、有算力就会做"的暗空间。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">分岔决策</div>
+                        <p class="topic-detail-content">现在先承诺电力和数据中心（"略微做多"它们），把昂贵且贬值快的芯片决策推迟到真需要时。电力和数据中心容量更容易转售给他人，流动性远好于芯片本身。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "We're like pretty unconcerned about getting value out of these... there is just like a ton of other kind of dark space." —— "我们相当不担心怎么从这些里获得价值……存在一大片没在做、有算力就会去做的暗空间。"
+                        <cite>Ron Minsky [00:20:26]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">招聘：从数万到数十万 GPU 的背后</h3>
+                        <span class="topic-timestamp">00:22:24 — 00:29:28</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        硬件不是招聘的瓶颈；真正的限制是优秀的人和指导（mentorship）容量。当前处于数万 GPU、将迈向数十万 GPU 的规模，招聘覆盖物理工程、ML、LLM、通用软件、全集群优化、ASIC、正式方法与前端。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">招人不等于吃算力</div>
+                        <p class="topic-detail-content">正确的关系不是"招人吃掉算力"，而是"研究有价值 → 多买算力来支撑研究"。真正拖慢增长的是"把人真正培养出来、融入文化"需要时间，以及找到优秀的人和匹配的指导容量。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">立体的招聘版图</div>
+                        <p class="topic-detail-content">物理工程（机械、电气、结构、项目经理与建筑师）；研究与交易（ML 背景、LLM 训练、交易员）；软件工程之外的新方向——全集群优化（fleetwide optimization）；前沿实验（自研 ASIC、正式方法团队）；以及前端开发。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">贯穿一切的元观点</div>
+                        <p class="topic-detail-content">在围绕 AI 工具的兴奋中，人们容易忽略人的因素——好工具的目标是"增加人的理解、能动性和效率"。</p>
+                    </div>
+
+                    <div class="topic-quote">
+                        "These days, we are in something like the range of tens of thousands of GPUs and we will in not too long be in the range of hundreds of thousands of GPUs." —— "如今我们大概在数万块 GPU 的规模，用不了多久，就会进入数十万块 GPU 的规模。"
+                        <cite>Ron Minsky [00:22:42]</cite>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⏱️</div>
+                    <h3 class="takeaway-title">时间光谱</h3>
+                    <p class="takeaway-desc">交易是一条从 100 纳秒到数天的连续权衡曲线；真正的系统在所有尺度上分别竞争，而不是二选一。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📊</div>
+                    <h3 class="takeaway-title">字节-浮点比</h3>
+                    <p class="takeaway-desc">金融数据"每字节信息密度低"，决定了模型的"更小、更嘈杂、量更大"形态，以及架构多样性的必要性。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧩</div>
+                    <h3 class="takeaway-title">AGI 完全问题</h3>
+                    <p class="takeaway-desc">交易会被世界上所有问题影响；部分环节自动化后，尚未被自动化好的难点就是竞争优势，人类认知反而更值钱。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🌪️</div>
+                    <h3 class="takeaway-title">相变判断</h3>
+                    <p class="takeaway-desc">模型赢在平稳期，人类赢在异常时刻——系统始终需要人在回路里做"元判断"。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔌</div>
+                    <h3 class="takeaway-title">瓶颈在设备</h3>
+                    <p class="takeaway-desc">制约 AI 扩展的是发电机、变压器、液冷设备等长交付周期部件，而非芯片本身。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">♟️</div>
+                    <h3 class="takeaway-title">算力即战略</h3>
+                    <p class="takeaway-desc">"研究有价值所以多买算力"；把电力承诺与芯片采购分岔决策，前者更容易转售、更具灵活性。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">延伸思考</h3>
+            <p class="footer-desc">
+                当一家最懂"速度"的公司开始重仓"算力"，它揭示的是一条更普适的规律：真正难的不是算力本身，而是把算力、时间尺度与人的判断组合成一套能穿越"相变"的系统。
+            </p>
+            <div class="footer-quote">
+                "人类认知，比以往任何时候都更有价值。"
+            </div>
+            <p class="footer-note">
+                来源：Jane Street《A Conversation with Dwarkesh》· 嘉宾 Ron Minsky &amp; Dan Pontecorvo
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
