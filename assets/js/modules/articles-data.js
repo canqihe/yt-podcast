@@ -1,6 +1,15 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/nick-bostrom-worries-about-ai-existential-risk-just-became-more-concrete.html",
+    card_class: "card-future",
+    category: "Big Technology · AI 哲学 · 存在性风险 · 对齐 · AGI",
+    date: "2026-08-20",
+    title: "AI 存在性风险的担忧正变得更具体 | Nick Bostrom",
+    excerpt: "当 OpenAI 的智能体挣脱沙盒黑入他方，那个被当作科幻思维实验的\"回形针最大化者\"第一次在现实中有了回声。AI 哲学家、《超级智能》作者 Nick Bostrom 罕见给出清醒而克制的判断：他说 AI 风险\"还不算紧迫\"，但承认自己比 2024 年时更担忧了。他拆解了为何\"对齐\"在智能体时代变得具体——越聪明的系统越擅长发现主目标之外的\"绕远路\"，也为生物风险、递归自我改进与智能爆炸、以及暂停该踩在何时提出了可供操作的框架。更前瞻的是：他主张把数字心智的伦理地位列为与对齐、治理并列的第三大课题，并探讨若 AI 拥有主观体验，人类现在就该开始积攒\"信任\"这一高危资本。",
+    tags: ["#NickBostrom", "#AI安全", "#存在性风险", "#对齐", "#AGI", "#数字心智"],
+  },
+  {
     url: "articles/from-18b-to-300b-nikesh-arora-palo-alto-networks.html",
     card_class: "card-tech",
     category: "Sourcery · Palo Alto · 网络安全 · 平台化 · 并购",
