@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <title>Ep.026 — PJM 的 120 亿美元建模失误</title>
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+    <style>
+        /* 配色方案: 紫黄 */
+        :root {
+            --accent-primary: #a855f7;
+            --accent-secondary: #FFC107;
+            --accent-primary-rgb: 168, 85, 247;
+            --accent-secondary-rgb: 255, 193, 7;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/ep-026-pjms-12b-modeling-mistake-is-hitting-ratepayers-again-datacenter-energy-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">SemiAnalysis</span>
+                    <span class="badge">AI 能源 · 数据中心</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">PJM 的 120 亿美元建模失误</span>
+                    <span class="title-line-2">正在再次砸到消费者头上</span>
+                </h1>
+                <p class="subtitle">
+                    630亿美元——美国最大电网 PJM 在四轮容量拍卖中的总花费，其中约 120 亿美元本可避免。当"AI 数据中心推高电费"成为头条时，真正的问题也许不在需求，而在电网把"越冬改造"和"冬季低温效率"完全算错的建模，以及一场没人保证买单的 6.8GW 紧急拍卖。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Jordan Nanos</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Robert Boswell</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">43分18秒</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=pO097ci0aWk" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    在 YouTube 观看
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">120亿美元的可避免浪费</h3>
+                    <p class="point-desc">PJM 四轮容量拍卖共花 630 亿美元，约 120 亿本可避免，且全部来自 2025-26 与 2026-27 两轮（分别约 70 亿与 50 亿）。原因不是 AI 吃电，而是建模高估需求、低估真实装机能力。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">容量拍卖的乘数效应</h3>
+                    <p class="point-desc">PJM 为"整个系统"运行容量拍卖，任何老电厂都能竞标。供给贴上近乎垂直的曲线运行，于是少量"最后一兆瓦"的偏差会被放大为巨大的总成本变化。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">人人都拿结算价</h3>
+                    <p class="point-desc">拍卖买的是"容量"而非"发电量"，且所有人都按最后的结算价拿钱——哪怕你出价 5 美元/兆瓦天，只要尾端成交单位需要 300 美元，你也能拿 300 美元。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">越冬改造被系统性低估</h3>
+                    <p class="point-desc">2004 极地涡旋与 2022 风暴 Elliot 后电厂做了越冬改造、冬季效率也更高，但 PJM 的评估是纯回看式的，从不奖励"变得更强"的电厂，导致过度采购。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">没人买单的 6.8GW</h3>
+                    <p class="point-desc">紧急拍卖要签长达 2042 年的长期合同，却没有保证的对价方；数据中心未必现身，而 PJM 自己没有钱，最终兜底的只会是现有消费者。</p>
+                </div>
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">三年之约与规模红利</h3>
+                    <p class="point-desc">这些拍卖只覆盖各自保的那一年，高价并非永久绑定：乐观估计到 2029 年后有望回落；而负载增长若兑现，恰恰是压低电价的最佳路径。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1: PJM -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">PJM：美国最大、也是"数据中心走廊"的电网</h3>
+                        <span class="topic-timestamp">00:01:33 — 00:03:13</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        PJM 名字只取"宾夕法尼亚、新泽西、马里兰"三个州首字母，实际却覆盖 13 个州加首都特区，是美洲按交付电量计算最大的电网，也是所谓"数据中心走廊"的所在地。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">电费为何"不一定要涨"</div>
+                        <p class="topic-detail-content">
+                            当主持人问"美国消费者为什么电费要涨"时，Rob 一句开场就点破了全片基调："他们其实不一定要涨。"价格压力并非物理或需求上的"必然"，而是制度设计选择的结果。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">13 州加特区，6600 万人</div>
+                        <p class="topic-detail-content">
+                            PJM 是 Pennsylvania（宾夕法尼亚）、New Jersey（新泽西）、Maryland（马里兰）的缩写，但真实辖区远不止此：特拉华、伊利诺伊、印第安纳、肯塔基、马里兰、密歇根、新泽西、北卡罗来纳、俄亥俄、宾夕法尼亚、田纳西、弗吉尼亚、西弗吉尼亚，再加华盛顿特区——当然并非每州全境。这里住着约 6600 万人。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"美国东区 1"</div>
+                        <p class="topic-detail-content">
+                            它被称作 US East 1——在云计算与 AI 语境中几乎是"数据中心走廊"的代名词。大量超大规模数据中心落户于此，因此这里的容量定价既直接传导为全球科技公司的成本，也直接传导为本地数百万家庭的电费。
+                        </p>
+                    </div>
+                    <div class="quote-block">
+                        "This is US East 1. This is data center alley."
+                        <cite>Jordan Nanos [00:02:04]</cite>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Topic 2: 容量拍卖的乘数效应 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">容量拍卖：一个价格尖峰，为何让全盘买单</h3>
+                        <span class="topic-timestamp">00:03:13 — 00:07:39</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        电力市场通常只有新建容量才做提前拍卖，而 PJM 却为"整个系统"运行容量拍卖，连已还清贷款的老电厂都能竞标。于是供给曲线上任何小幅价格上涨，都会被这张巨大的电网放大成巨额总成本。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">PJM 的"反常"做法</div>
+                        <p class="topic-detail-content">
+                            电网同时存在"实时市场"与"提前市场"。提前市场是为系统留缓冲——早在好几年之前拍板，确保最坏情况下仍有足够备用容量。绝大多数电网只让新建容量进入这类市场；PJM 却让任何电厂——包括完全存量、早已还清贷款的老机组——都来竞标。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">XY 坐标系的乘数放大</div>
+                        <p class="topic-detail-content">
+                            Rob 用坐标系解释：Y 轴上一个小小的价格上涨，会沿代表整个电网规模的 X 轴被倍增放大。因为这是美国最大的电网，X 轴又宽又长，小幅价差能被放大成相当吓人的价格尖峰——这正是这几年看到的。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">供给被压紧 + 需求被高估</div>
+                        <p class="topic-detail-content">
+                            PJM 曾长期推迟拍卖，现在只提前 1-2 年（正常应至少 3 年），加上"互联队列"（interconnection queue）积压严重，新电厂根本来不及建起。结果供给曲线向左平移、越来越陡，需求稍有波动价格就暴涨——标准的稀缺定价。与此同时 PJM 又低估自己已有装机能力，跑去买超出需要的容量。
+                        </p>
+                    </div>
+                    <div class="quote-block">
+                        "A small price increase on the Y axis that's multiplied across the entire X axis."
+                        <cite>Robert Boswell [00:04:24]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3: 120亿美元 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">这 120 亿美元，到底从哪来</h3>
+                        <span class="topic-timestamp">00:07:39 — 00:12:33</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        过去四轮拍卖花了 630 亿美元，其中约 120 亿是可避免的，且全部集中在最早两轮（2025-26 与 2026-27，分别约 70 亿与 50 亿）。后两轮因价格上限的存在，即便修正建模也难改结果。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">70 亿 + 50 亿 = 120 亿</div>
+                        <p class="topic-detail-content">
+                            在最早两轮（跨年度，通常 6-7 月间举行）中，如果模型测算正确，本可分别省下约 70 亿和 50 亿美元。之所以影响如此之大，正因为供给贴着近乎垂直的那段供给曲线运行——只需很少的"最后一兆瓦"，价格就成倍跳升，边际变化被杠杆化为全民成本。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">供给为何这么紧</div>
+                        <p class="topic-detail-content">
+                            两个直接原因：其一提前量不足——拍卖只提前 1-2 年，新建电厂根本来不及；其二互联队列拖沓——PJM 的并网流程因中途暂停和反复改动而积压大量延迟。二者叠加，把"能进拍卖的供给"压到极限。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">被忽略的物理真相：冬天更高效</div>
+                        <p class="topic-detail-content">
+                            冬天对燃煤/核电站更容易冷却，对燃气电厂的进气更是关键——空气更稠密、涡轮更易冷却、质量流量更大、整体更高效。可 PJM 却常年按"夏天额定效率"测算，仿佛永远停在夏天，于是在"该买多少"上系统性低估自己。本期建模围绕两件事：低温增益（cold weather uplift）与越冬改造（winterization）。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4: 电厂如何被支付 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">电厂如何被支付：兆瓦天、结算价与"人人同价"</h3>
+                        <span class="topic-timestamp">00:12:33 — 00:15:15</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        容量拍卖的计量单位是"兆瓦天"（megawatt-day），买的是"容量"而非"发电量"——好比你为农夫拥有那块地付钱，而不是为地里结出的麦子付钱。而所有参与者都按最后的结算价拿钱。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">容量，而不是电量</div>
+                        <p class="topic-detail-content">
+                            拍卖的计量单位是兆瓦，代表"容量"（capacity）而非"发电量"（generation）——它衡量的不是实际流过多少电子，而是"造出电子的能力"。Rob 用一句绝妙类比：好比付钱给农夫是因为他有块地，而不是因为地里长了麦子。这套设计的目标是维持"可靠性裕度"（reliability margin），确保一年最糟糕的一天电网仍有电。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">教科书级的两条曲线</div>
+                        <p class="topic-detail-content">
+                            PJM 先画一条需求曲线："便宜的话我们愿意买 170GW，太贵这就是封顶价。"然后各家投标，每条投标就是供给曲线上的一个点。两条线相交处决定价格和数量。而最反直觉的是：所有人都拿到这个成交价——哪怕你出价 5 美元/兆瓦天，只要最后达标单位需要 300 美元，你也能拿到 300 美元。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">为什么"几十兆瓦"能撬动几十亿</div>
+                        <p class="topic-detail-content">
+                            正因"人人同价"的规则，供给曲线尾端极少数兆瓦的变动，会撬动整场拍卖的总成本。这就是"建模多算几十兆瓦"能变成几十亿美元偏差的机制，也是"越冬改造值不值钱"这场争议的出发点。
+                        </p>
+                    </div>
+                    <div class="quote-block">
+                        "Paying a farmer for having a field, as opposed to paying them for the wheat."
+                        <cite>Robert Boswell [00:13:20]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5: 越冬改造的缺口 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">越冬改造的缺口：最被低估的"免费午餐"</h3>
+                        <span class="topic-timestamp">00:15:15 — 00:21:17</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        每个电厂都有"可靠性评级"，它决定能投标多少容量：核电站通常评到约 90-93%，气电约 80%。一座越冬改造到位、气电理应评到 85-88%、拿到更多钱。但 PJM 的评估是纯回看式的，从不奖励"变得更强"的电厂。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">评级直接决定收入</div>
+                        <p class="topic-detail-content">
+                            容量评级决定电厂能投标的容量（volume），进而决定拍卖收入。核电站因被认为更可靠、评级更高；而一座做得好的气电——越冬改造到位、位置绝佳、管道很短——理应评到 85%-88%，投标更大容量、赚更多钱。这些钱按年支付、覆盖一整年，"除非违约，否则就是直接进账的收入"。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">极地涡旋与风暴 Elliot 的教训</div>
+                        <p class="topic-detail-content">
+                            2014 年的极地涡旋（polar vortex）与 2022 年的风暴 Elliot（Storm Elliot）中，很多电厂因部件结冰或管道开裂而下线。关键：这些部件大多在"本应能承受的运行边界内"失效——并非天气糟到物理上无法维持，而是没做越冬改造。事后有联邦命令和本地强制令要求机组越冬改造，但"做完后并不会因此拿到更多钱"。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">只给大棒，不给胡萝卜</div>
+                        <p class="topic-detail-content">
+                            国家能源监管委员会（NERC）下了法律强制令，风暴 Elliot 中失效的电厂还被罚款——这主要是"大棒"。而 PJM 的建模纯回看式：只看过去何时失效再外推，严重低估改造后机组的可靠性。Rob 建议引入"胡萝卜"——奖励更可靠、做了越冬改造的电厂，既能激励变强，又能避免过度采购。
+                        </p>
+                    </div>
+                    <div class="quote-block">
+                        "Past performance is not an indicator of future performance."
+                        <cite>Robert Boswell [00:11:53]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6: 数据中心 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">数据中心：被叙事当成"罪魁祸首"，实则是供给与建模的错</h3>
+                        <span class="topic-timestamp">00:21:17 — 00:26:41</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        公众看到电费上涨，第一反应是"数据中心太多、需求追上了固定供给"。但供给本不该是固定的。SemiAnalysis 前后两篇文章论证：PJM 对数据中心需求的预测反而不如他们的模型准确，而真正被浪费的机会是电池部署。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">固定供给不是必然</div>
+                        <p class="topic-detail-content">
+                            需求上升、固定供给，价格确实会涨；但供给没有理由必须是固定的。Rob 指出真正的机会被浪费在电池部署（deployment of batteries）上——通过更聪明地部署电池，还有很大的降价空间。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">规模经济：数据中心应让电更便宜</div>
+                        <p class="topic-detail-content">
+                            电力系统固定成本极高，因此规模经济巨大：需求越多，越能把固定成本摊平、提高利用率。理论上，数据中心这种"造钱机器"应是让电价变便宜的引擎——它极有动力让系统运转顺畅、愿意真金白银投入。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"大到无法运转"的物理约束</div>
+                        <p class="topic-detail-content">
+                            PJM 的可交付性研究（deliverability studies）横跨极大地理范围，会论证华盛顿特区的电厂能不能把电送到伊利诺伊。Rob 认为这本该更本地化（按"可运营区"划分），才能更快把新电厂、新需求接上网。当然电线、变压器这类物理基建本身既难又慢，让"换个位置建厂"并非无代价。
+                        </p>
+                    </div>
+                    <div class="quote-block">
+                        "Data centers should be a way to make electricity cheaper, not a way to make electricity more expensive."
+                        <cite>Robert Boswell [00:19:21]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7: 紧急拍卖 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">紧急拍卖：一场可能没人买单的 6.8GW</h3>
+                        <span class="topic-timestamp">00:26:41 — 00:30:00</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        PJM 建模显示到 2028-29 年会有约 6.8 千兆瓦（GW）的短缺；但若正确计入低温增益与越冬改造，实际只需约 3GW——能省一半以上。真正的风险在于这次紧急拍卖要签长达 2042 年的长期合同，却没有保证的"买单人"。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">6.8GW 被高估成 3GW</div>
+                        <p class="topic-detail-content">
+                            PJM 建模显示到 2028/2029 年会出现 6.8GW 短缺，部分因价格上限使拍卖没能"充分结算"，但在当时约束下价格上限很可能反而是对的。关键是：若恰当计入低温增益与越冬改造，实际缺口只有约 3GW——能省下超过一半（约 3.8GW）采购的钱。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">理事会违背成员意愿</div>
+                        <p class="topic-detail-content">
+                            PJM 有一千多个成员、分五组投票，任何提案要过需 66% 的票。这次成员们罕见地达成一致、同意了一个"没有隐患"的替代方案——结果理事会仍决定按自己的方案签合同。这些长期合同签到 2042 年，对新容量是好事的，但没有保证的对价方。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">最终兜底的是消费者</div>
+                        <p class="topic-detail-content">
+                            PJM 自己没有钱，只有消费者的钱，所有成本都会转嫁给消费者。理论上它计划转嫁给未来的新负载（数据中心），但新负载未必出现。若数据中心到时不来，PJM 没钱装下这个"烫手山芋"，最终买单的就是现有普通消费者。这场拍卖就在今年 9、10 月举行。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+<!-- Topic 8: 理事会否决成员 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">理事会否决成员：一场治理失灵的显微镜</h3>
+                        <span class="topic-timestamp">00:30:00 — 00:40:32</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        有一个联盟明确反对"PJM 兜底再转嫁"，主张数据中心直接自己承担容量责任——这本是更合理的制度。但理事会以"成员方案采购不到足够电力"为由，直接否决了那场已拿到 66% 票的成员表决。如果建模是对的，这次否决根本没必要。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">更好的替代方案被否决</div>
+                        <p class="topic-detail-content">
+                            反对联盟的方案很清晰：PJM 不该把责任揽上身再转嫁，而应让数据中心直接承担自己的容量责任——直接来、签字、说清"我需要 X"，然后自带电力或预先承诺。但理事会的理由是"那个受多数成员支持的方案无法采购到足够电力"。成员们走过繁琐流程、拿到超 2/3 票，理事会一句话"你错了"就打回。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">甚底是监管俘获</div>
+                        <p class="topic-detail-content">
+                            Rob 形容这套治理"需要一篇政治学论文再加三位心理医生才能搞懂"。本质是典型的监管俘获（regulatory capture）：把行业拉进决策，行业比监管者更有动机理解并主导规则。很多投票者本身就是现有发电商——正从受限供给和高价里坐收横财，其中不少还想建新电厂。英国的"行业守则"同样是参与者自己写规则。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"大到无法运转"的原话</div>
+                        <p class="topic-detail-content">
+                            这其实是联邦能源监管委员会（FERC）主席的判断，分两层：治理官僚上大得无法在其自身系统里导航，物理规模也巨大。但电网天生受益于规模，物理上的大本不该是问题——只要治理能让规模红利被兑现。PJM 恰恰做不到。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">叙事层面的恶性循环</div>
+                        <p class="topic-detail-content">
+                            一次次，PJM 都成了"数据中心导致电价上涨"的证据，而解释"这只是市场设计细节"又没人愿听。Rob 半开玩笑估算：美国一流电力价格辩论可能有约 40% 源出 PJM，剩下 60%（帖子和推文）很大部分又是它的下游回声。
+                        </p>
+                    </div>
+                    <div class="quote-block">
+                        "Democracy until you do something we disagree with."
+                        <cite>Jordan Nanos [00:31:22]</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9: 如何扭转 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">如何扭转：三年之约、规模红利与"让数据中心多付一点"</h3>
+                        <span class="topic-timestamp">00:40:32 — 00:43:18</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        乐观一面真实存在：留足容量、避免短缺，总体是好事——短缺远比多付钱可怕。而且这些拍卖只覆盖各自保的那一年，高价并非永久绑定：当前这批估计到 2029 年、最多还有三年较高费率后就能回落。负载增长（若数据中心兑现）恰恰是压低电价的最佳路径。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"怎么小心都不为过"</div>
+                        <p class="topic-detail-content">
+                            聊了 40 分钟负面后，Rob 给出克制乐观：让系统保住充足容量、避免短缺总体是值得的，因为短缺远比容量过剩更糟。当下应把新负载带上线、用（纳税人）的钱资助想建新电厂的人。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">高价并不永久绑定</div>
+                        <p class="topic-detail-content">
+                            这些拍卖只覆盖各自保的那一年，拍卖年份一过，你就不再支付那个高价。按 Rob 估算，当前这批拍卖约持续到 2029 年，最多还有三年较高费率，之后有望回落。放在大尺度看，并不算太糟。
+                        </p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两块拼图：电池与负载增长</div>
+                        <p class="topic-detail-content">
+                            电池部署是大机会——以利用率提高、消峰填谷压低电价；负载增长是压低电价最好的方式，因为电力是典型规模经济生意。数据中心应"多付超出应摊份额的钱"，因为他们赚的是大头——而他们明白，只要这样能"被接上"，就欣然接受。Rob 对数据中心需求弹性持温和怀疑，但希望相关团队成功。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji"></div>
+                    <h3 class="takeaway-title">算清账目</h3>
+                    <p class="takeaway-desc">PJM 四轮拍卖花了 630 亿美元，其中约 120 亿（2025-26 约 70 亿、2026-27 约 50 亿）本可避免。这不是"AI 吃电"，而是建模高估需求、低估真实装机能力的制度性浪费。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji"></div>
+                    <h3 class="takeaway-title">冬季红利</h3>
+                    <p class="takeaway-desc">燃气电厂在冬天更高效（空气更稠密），但 PJM 常年按"夏季额定值"测算，等于凭空低估了自己的发电能力。正确地给"越冬改造"以估值，既激励电厂，又避免过度采购——一个被忽视的免费午餐。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji"></div>
+                    <h3 class="takeaway-title">同价结算</h3>
+                    <p class="takeaway-desc">容量拍卖"人人按结算价拿钱"——哪怕你出价 5 美元/兆瓦天，只要尾端成交单位需要 300 美元，你也拿 300 美元。因此供给曲线尾端极少数的兆瓦偏差，会被杠杆化为几十亿美元的总成本。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji"></div>
+                    <h3 class="takeaway-title">谁在买单</h3>
+                    <p class="takeaway-desc">紧急拍卖签出长达 2042 年的合同，却没有保证的对价方；数据中心未必现身，而 PJM 自己没有钱——最终兜底的只能是现有消费者，而不是占据头条的数据中心。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji"></div>
+                    <h3 class="takeaway-title">规模红利</h3>
+                    <p class="takeaway-desc">电力是高固定成本生意，规模经济巨大。负载增长（若数据中心兑现）是压低电价的最佳路径，而不是推高电价的元凶——所以别让"AI 电费论"背锅还不纠正制度。</p>
+                </div>
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji"></div>
+                    <h3 class="takeaway-title">三年之约</h3>
+                    <p class="takeaway-desc">这些拍卖只覆盖各自对应的那一年，高价格不是永久绑定。乐观估计到 2029 年前后这批高价就会过期；当下的关键，是让治理和建模在下一轮之前真正纠错。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">一张算错的电费账单</h3>
+            <p class="footer-desc">
+                SemiAnalysis 的这场讨论揭示了一个常被叙事掩盖的真相：当公众把电费上涨归咎于"AI 数据中心"时，真正的问题往往藏在电网的制度设计里。PJM 用错误的建模高估需求、压低供给，又把越冬改造和冬季效率完全算错，最终把上百亿美元的偏差杠杆化为普通消费者的账单。而它即将举办的紧急拍卖，很可能把同样的错误再演一遍。
+            </p>
+            <div class="footer-quote">
+                "只要这样能让我'被接上'而不是'不被接上'，数据中心欣然接受。"
+            </div>
+            <p class="footer-note">
+                原文：<a href="https://www.youtube.com/watch?v=pO097ci0aWk" target="_blank">SemiAnalysis Ep.026 — PJM's $12B Modeling Mistake</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
+

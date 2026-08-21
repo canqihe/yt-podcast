@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 为什么救不了生物学：智能不是瓶颈，物理才是 | Eryney Marrogi × Abhishaike Mahajan</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <!-- 配色方案：青紫（科学的冷峻 + 怀疑的锐度） -->
+    <style>
+        :root {
+            --accent-primary: #06b6d4;
+            --accent-secondary: #8b5cf6;
+            --accent-primary-rgb: 6, 182, 212;
+            --accent-secondary-rgb: 139, 92, 246;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/two-scientists-ai-biology-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">Core Memory Podcast · AI · 生物医药 · 生物安全</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">AI 为什么救不了生物学</span>
+                    <span class="title-line-2">智能不是瓶颈，物理才是</span>
+                </h1>
+                <p class="subtitle">
+                    硅谷有约 47,000 家 AI 生物技术公司，都在讲同一个故事：AI 将治愈一切疾病。但真正在药物发现一线摸过移液枪的人怎么看？本期 Core Memory 做了一次罕见安排：主持人 Ashlee Vance 把话筒交给医学博士在读的科学家 Eryney Marrogi，与曾任职 Dyno Therapeutics、Noetik、现就职于 OpenAI 基金会的 Abhishaike Mahajan 展开两小时对谈。从三期临床全灭的明星靶点 TIGIT（"超级智能也无法预判，且就算预判对了也没人会听"），到"150 个大学生用 ChatGPT 造病毒成功率仅 5%"的生物安全研究，再到"重度监管下中国将碾压美国生物科技"的推演——这场对话几乎拆解了 AI 制药叙事的每一块地基。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Eryney Marrogi × Abhishaike Mahajan</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">频道</div>
+                        <div class="meta-value">Core Memory Podcast</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">1 小时 59 分</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=73Il7LF2u7Q" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">瓶颈因阶段而异</h3>
+                    <p class="point-desc">临床前阶段智能与实验各有立足点；临床阶段本质是人类协调问题（"瓶颈是芝加哥到 MD Anderson 有多少趟火车"）；药物上市后的警戒数据反而是超级智能最能发挥的场景——人类根本没有足够的流行病学家翻查 FAERS。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">反馈回路定律</h3>
+                    <p class="point-desc">数学能被 AI 快速攻克，不是因为聪明，而是因为可即时验证；生物学的实验反馈回路五年间毫无改善。真正带来飞跃的不是自动化移液枪，而是 NGS 式的测量方式跃迁。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">TIGIT 惨案</h3>
+                    <p class="point-desc">2010 年代的明星抗癌靶点 TIGIT 临床前数据漂亮、大药企全力押注，所有三期试验全部失败。即使把全部数据喂给最强模型也预测不出来；更残酷的是激励结构——没人会因为模型的判断而撤回已下的赌注。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">发明仪器 > 分析数据</h3>
+                    <p class="point-desc">两人罕见达成共识：AI 最该被砸无限 token 的地方，是帮科学家发明下一代检测仪器——就像 NGS 当年打开基因组学大门。且此事可验证：让模型仅凭 5 年前的知识预测后来的仪器突破。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">5% vs 6%</h3>
+                    <p class="point-desc">150 个大学生用 ChatGPT 造病毒的成功率（5%）与用谷歌（6%）无显著差异。目前没有实证证据表明 LLM 加速生物威胁，而全美对付螺旋锥蝇的实验室只有十几个人和 50 万美元资助。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">中国赢下生物学？</h3>
+                    <p class="point-desc">最大化监管情景的未来图景：中国根本不在乎 AI 生物安全叙事，拥有大量顶尖科学家且模型快速逼近——一旦美国用监管把本已跛脚的生物科技进一步打残，领跑者自然易主。解药是日落条款：立法五年有效，有用续期，没用废止。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">瓶颈之问：智能还是实验？</h3>
+                        <span class="topic-timestamp">00:04 - 00:07</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        生物学的瓶颈因阶段而异：临床前阶段智能与物理实验各有立足点；临床阶段本质是人类的协调问题；药物上市后的药物警戒反而是超级智能最能发挥的场景。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三个阶段的拆解</div>
+                        <p class="topic-detail-content">Mahajan 用药物发现的三个阶段拆解了这个问题。临床前阶段：智能至上主义者可以说"物理世界需要时间和人手，智能无法替代"，但反过来，超级智能可以指出哪些实验最值得做，优化研究配置。临床阶段：这主要是一个人类协调问题——他举了一个耐人寻味的例子，朋友去中国考察后发现，在中国跑临床试验的一大优势是高铁网络可以把全国任何地方的受试者送到主要医疗中心。"所谓物理约束，就相当于芝加哥到德州 MD Anderson 之间有多少趟火车。"</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">被忽视的真机会</div>
+                        <p class="topic-detail-content">获批后阶段才是智能真正的用武之地。他以 Vioxx（一款上市后被发现引发严重心血管事件的降压药）为例：FDA 的不良事件自我报告系统 FAERS 里堆积着海量数据，人类根本没有足够的流行病学家去翻查，而模型恰好擅长这种大规模筛查。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">"一千个冯·诺依曼"为什么算不动生物学</h3>
+                        <span class="topic-timestamp">00:07 - 00:12</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        数学之所以能被大模型快速突破，是因为反馈回路极紧且可验证；生物学的实验反馈回路五年间毫无改善，而且大多数实验根本不值得自动化。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">反馈回路定律</div>
+                        <p class="topic-detail-content">Marrogi 提出疑问：GPT-5.7 据称解决了多个可能达到菲尔兹奖级别的定理，这不就是"数据中心里放一千个冯·诺依曼"吗？如果智能真是瓶颈，生物学应该明天就开始提速才对。Mahajan 引用了前同事 Stephen Malina 的文章《Fast Feedback Loops》：数学是一个可验证性极强的领域，模型给出答案立刻知道对错，所以"智能确实是唯一的瓶颈"。而生物学里，即便想象实验室机器人自己规划实验的理想场景，今天的现实是反馈回路和五年前一样慢。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">自动化 vs 测量跃迁</div>
+                        <p class="topic-detail-content">关于实验室自动化，他指出两个关键事实：只有少数标准化流程值得自动化，但信息量并不高；信息量最大的实验恰恰是科学家手工"捣鼓尝试"的过程。真正的革命是测量方式的跃迁——他在 Dyno 做病毒定向进化时的经历是明证：NGS 出现之前一次只能做几十个病毒，之后一个文库池可以容纳几十亿个病毒。但瓶颈随即移动：小鼠的血脑屏障受体与非人灵长类不同，后者又与人类不同，把动物实验放大一万倍也解决不了人体递送问题。</p>
+                    </div>
+                    <div class="quote-block">
+                        "更好的方法每天都能胜过放大烂方法。" —— [00:48:00]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">TIGIT 惨案：超级智能能预判失败吗？</h3>
+                        <span class="topic-timestamp">00:12 - 00:21</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        即使把全部临床前数据交给最强的前沿模型，它大概率也无法预测 TIGIT 会失败；更残酷的是，就算预测对了，也没有人会听。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">全灭的三期试验</div>
+                        <p class="topic-detail-content">2010 年代中期，抗癌靶点 TIGIT 被视为下一个检查点抑制剂的接班人：临床前数据漂亮，大型药企纷纷押注管线，结果所有三期临床试验全部失败。Mahajan 自己做过几乎一样的实验——o3 preview 发布时，他选了一款 2010 年代初失败的药物，要求模型"假装不知道未来"，仅凭当时证据预测成败。结果并不令人信服："这个药失败了"本身就在预训练数据里，模型的回答带有事后诸葛式的迎合。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">没人会撤回赌注</div>
+                        <p class="topic-detail-content">更深一层的是激励结构问题。制药业本质上是风投式押注：一旦发现有前景的临床前信号就必须全力下注。Mahajan 采访过大量临床试验顾问，结论一致——没有人会因为模型的判断而撤回已经开出的赌注，这些试验往往靠情感信念而非科学论证推动。保护美国公司的唯一机制是验证层：中国的试验数据不能直接用于美国上市，必须重跑一遍。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">缺的就是人类数据</div>
+                        <p class="topic-detail-content">指望体外或动物实验魔法般地迁移到人体，是一种"塞壬之歌"——PD-1 和化疗算是少数例外，TIGIT 只是又一个被歌声诱惑的水手。而在关键论文发表前你去搜 TIGIT，会发现一堆"TIGIT 还参与这些免疫过程"的研究——你眼睛里冒出美元符号，然后就往前冲了。重磅药很少有特别干净利落的故事。</p>
+                    </div>
+                    <div class="quote-block">
+                        "我不认为超级智能能预测出 TIGIT 会失败；即使预测出来了，也不会有人因为相信它而获得回报，试验照样会开。" —— [00:16:47]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 能读懂肿瘤吗？Noetik 的路线与困境</h3>
+                        <span class="topic-timestamp">00:21 - 00:31</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Noetik 的思路是用自监督学习构建肿瘤嵌入空间，再用最稀有的临床试验响应数据微调——但对全新靶点的效果本质上不可验证。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">四步技术路线</div>
+                        <p class="topic-detail-content">Mahajan 详细还原了 Noetik 的技术路线：收集真实癌症患者的活检样本，采集空间蛋白组学、空间转录组学等高维数据；以自监督方式训练模型形成肿瘤嵌入空间；用临床试验响应数据微调（例如 7 个响应者、6 个非响应者，看模型能否在嵌入空间中清晰分开）；最后要么建议药企加入新入组标准以提高客观缓解率，要么买下被放弃的失败药物重新设计高胜率试验。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">不可知的命中率</div>
+                        <p class="topic-detail-content">Marrogi 追问关键问题：对没有任何既有临床数据的全新靶点，命中率能提升多少？Mahajan 诚实回答：不可知。蛋白质和小分子领域的人很幸运——他们找到了明确可攀的山峰（如体内活性指标）；免疫类药物的计算机模拟模型要爬的山根本没被定义，只能"看茶叶占卜"。他的底线是：反事实是没有模型，最坏情况也就是零收益。但他也承认存在窄域胜利：蛋白质结合子生成的命中率已从十年前的 0.1% 提升到 10%，"第一次让我相信这个问题被解决了"。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">文本是一切吗？人类直觉作为正则化器</h3>
+                        <span class="topic-timestamp">00:31 - 00:44</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        把顶级药物化学家的推理轨迹编码进语言模型可能是超人化学家的路径；虚拟细胞输给线性基线的原因是测量维度太少，而非方向错误。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">推理轨迹编码</div>
+                        <p class="topic-detail-content">Mahajan 提出一个未被人认真实践的想法：如果能把这些天才化学家的推理轨迹编码进语言模型——从一个 SMILES 分子串出发，附上"为什么要换下一个分子"的自然语言理由——也许能造出超人药物化学家。经过 LLM 过滤的人类智能本身就是一种正则化：小分子基础模型极易在局部化学空间过拟合，而 LLM 天生倾向广博。支持性证据是一项变异效应基准测试：特意构建的简单线性基线仍输给语言模型，说明模型确实学到了某种模糊的蛋白质质量直觉。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两盆冷水</div>
+                        <p class="topic-detail-content">但他同时泼了两盆冷水：其一，酶设计远未突破——静态结构预测不等于动态行为预测，还没有人能零样本造出"丢进桶里就把木头变成塑料"的酶；Nabla、Chai 这类抗体公司优化的目标离真正重要的 PK/PD 性质还隔了好几步。其二，虚拟细胞论文输给线性基线是真的，但不能证明方向错误：输入只是细胞系加一种扰动，输出只是单细胞 RNA 读数——它们"几乎没测量到细胞"。完整刻画一个细胞需要 RNA 测序、ATAC 测序、表面与胞内蛋白组、糖基组、分泌组……这些维度凑齐之前，悲观为时尚早。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">没人造出来的机器：AI 最该干的一件事</h3>
+                        <span class="topic-timestamp">00:44 - 00:54</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        两人罕见达成共识：AI 在生物学中最激动人心的应用不是分析已有数据，而是帮助发明下一代检测仪器——就像 NGS 当年打开基因组学大门那样。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">必输的堆机器策略</div>
+                        <p class="topic-detail-content">Marrogi 提出：同一颗细胞能同时测量的东西天然有限，RNA、DNA、活细胞成像必须分批进行。历史上真正的飞跃从来不是"多买几台 OT-2 移液机器人跑 7×24 小时"——在他看来那是必输策略——而是像 NGS 这样一种具体的新型检测方法的发明。Mahajan 方向上完全同意"更好的仪器是最重要的一件事"，但对今天的大模型是否有此能力存疑：仪器发明属于"黑魔法"领域，他唯一深研过的案例是利用酵母雌雄接合特性做的蛋白互作筛选——这种巧思能否从模型中涌现，无人知晓。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">可验证的检验方案</div>
+                        <p class="topic-detail-content">不过他提出了一个可验证的检验方案：拿过去 5-10 年的真实仪器突破，看前沿模型能否仅凭 5 年前的全部公开知识预测出下一步。这个想法不难做，却几乎没人在严肃推进。而 PCR 的例子说明了难度上限：发明 PCR 不只需要"找一种耐热聚合酶"的建议，还需要先理解聚合酶才是连接 DNA 的分子、以及模板化合成的整套概念链条——很难确定从哪里按下"开始"键。</p>
+                    </div>
+                    <div class="quote-block">
+                        "如果你能往某个东西上砸无限 token，那就该砸在发明新仪器上。" —— [00:47:30]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">万亿美元的类器官问题</h3>
+                        <span class="topic-timestamp">00:54 - 01:02</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        完美预测类器官行为可能确实是万亿级生意；但前提是把超级智能的重负拆解成离散任务，并为每个代理数据集建立黄金标准。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">条件肯定的回答</div>
+                        <p class="topic-detail-content">当 Marrogi 问"完美预测类器官行为值不值一家万亿美元公司"时，Mahajan 给出了条件肯定的回答。癌症患者来源的类器官确实已被证明对药物响应有预测力，之所以未被广泛使用，是因为采样到出结果需要数周到数月，无法支撑临床决策。真正的惊喜来自扁桃体类器官：斯坦福 Mark Davis 实验室用它建模免疫激活——如果把这个也算进去，万亿美元公司的判断成立。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两端之间缺一座桥</div>
+                        <p class="topic-detail-content">对话随后上升到方法论层面：与其"把海量数据倒进最大模型祈祷它悟道"，不如把问题分解成离散层级逐层攀登。Mahajan 正在写的文章《信任生物学指数》的核心论断是：当前人们只在两端摇摆——要么在人体上做超粗糙的读数，要么在小鼠/类器官等代理系统上做超深的测量，中间从来没有连接。例如 PDB 数据库的生化知识极深，却完全不了解人类常见的异构体和多聚体。每个代理数据集都需要黄金标准对照，而这正是缺失的那块拼图。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">生物安全丢了主线：红队烧钱 vs 锥蝇实验室吃土</h3>
+                        <span class="topic-timestamp">01:02 - 01:06</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Marrogi 认为生物安全领域已经走偏：数亿美元资金流向 AI 红队测试，而全美对付螺旋锥蝇的只有一个十几人实验室和 50 万美元资助。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">重新定义生物安全</div>
+                        <p class="topic-detail-content">Marrogi 抛出了他对生物安全的重新定义：不应只是"防止坏人做坏事"，而应是"人类拥有阻止生物学伤害自己的能动性"——无论伤害来自恶意行为者、自然演化的病毒、毁掉牲畜的螺旋锥蝇，还是摧毁森林的真菌。AI 占据了这个话题的全部氧气，挤掉了真正要紧的事。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">亲历者的愤懑</div>
+                        <p class="topic-detail-content">他本人的实战经历佐证了这一点：他曾从事基因驱动研究，目标是消灭疟疾，科学上可行，却因监管障碍未能转化为实际影响。相比之下，"往房间里塞多少大学生让他们试着造病毒"的红队项目动辄融资数千万美元。这个不对称是他整场讨论中最愤懑的地方。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">ChatGPT 对阵病毒：数据站在怀疑者一边</h3>
+                        <span class="topic-timestamp">01:06 - 01:19</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        实证研究表明 LLM 对生物恐怖主义的加速作用接近于零；真正拦住坏人的是物理现实、实验室失误率和国家行为体的不可控性。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">5% 与 6% 的差距</div>
+                        <p class="topic-detail-content">Mahajan 文章中引用的研究成为争论焦点：150 个大学生新手分成两组造病毒，LLM 组成功率 5%，纯搜索引擎组 6%——差异可以忽略。Marrogi 据此主张核酸合成筛查已经是已解决的问题，资源应该转向别处。他还引用布基纳法索恐怖组织使用 ChatGPT 的报道：他们问模型如何改进袭击手法，事后承认"不管用，就是聊着好玩"。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">奥姆真理教的思想实验</div>
+                        <p class="topic-detail-content">Mahajan 部分反驳：AI 辅助通常最适合领域专家使用，因为他们能识别模型何时在带偏方向。他还提出一个思想实验：奥姆真理教当年释放病毒失败，原因包括封装不当和大白天释放导致紫外线灭活毒株——如果有 LLM 辅助，一句"晚上释放而不是下午"就可能改变结局。他真正担心的是出手次数有限的组织：每次行动都可能暴露，因此每一发子弹都必须精准，这正是 LLM 能提供边际改进的场景。双方最终收敛于两点共识：人在实验室里天天搞砸，再训练有素也不例外；国家行为体想做什么就做什么，谁也拦不住。</p>
+                    </div>
+                    <div class="quote-block">
+                        "人们在实验室里天天搞砸……归根结底，国家行为体想做什么就能做什么。" —— [01:13:40]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">谁来监管 DNA？日落条款与瑞士奶酪模型</h3>
+                        <span class="topic-timestamp">01:19 - 01:42</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        两人逐步逼近中间立场：现有企业自发筛查已够用；酶法合成成熟后台式合成仪可能需要联网硬件锁；所有新立法都应带五年日落条款。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">作用不大的监管就是坏监管</div>
+                        <p class="topic-detail-content">Marrogi 的第一原则是：作用不大的监管就是坏监管。DNA 合成公司（如 Twist）已经在自愿执行筛查，不需要政府命令。他举铀的例子反讽全球管控的荒谬延伸——难道引物丢失也要全球通缉？Mahajan 承认马痘病毒拼接事件削弱了他对台式合成仪监管的信心，但"瑞士奶酪式安全模型"说服了他一部分：让人难以执行计划中最愚蠢的版本，本身就能避免大量悲剧。他的具体方案是：一旦酶法 DNA 合成成熟，台式设备应强制联网并经 SecureDNA 类数据库筛查，合规责任落在厂商身上，对正经研究者负担很小。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">纽约州教训与日落条款</div>
+                        <p class="topic-detail-content">Marrogi 补充了从业者视角的真实痛点：问题不在当下的筛查，而在法律条文在 10 年后触碰新技术时的样子。纽约州活检样本相关法律的落后导致大量临床试验直接排除纽约——尽管这里有斯隆凯特林和 NYU。他主张的核心改革是日落条款：立法有效期五年，有用续期，没用就让它死。当联邦政府限制 Claude 访问时全体 AI 从业者的愤怒，恰是生物学家面对监管时愤怒的镜像。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 11 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">11</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">中国赢下生物学？</h3>
+                        <span class="topic-timestamp">01:42 - 01:53</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        最大化监管情景下中国将碾压美国生物科技；但新冠应对显示中国在公共卫生执行力上有优势，而美国或许只能靠"想得更多"弥补制度短板。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">极端图景</div>
+                        <p class="topic-detail-content">Mahajan 给出他预期的极端图景：中国根本不在乎 AI 生物安全叙事，拥有大量顶尖技术科学家，模型能力快速逼近美国——一旦美国用监管把本已跛脚的生物科技行业进一步打残，领跑者自然易主。有意思的是随后的东西方制度比较：Marrogi 承认新冠期间中国的封控执行力至少说明"问题出现后知道怎么快速处置"；美国的劣势在于机构失能与公共卫生话语的政治化。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">防御经济学</div>
+                        <p class="topic-detail-content">最终落点是防御经济学：如果在室内环境全面部署气溶胶消毒与远紫外（far-UVC），让环境对病原体持续敌对，攻击方的成本将被抬到天文数字——防御建成之日，就是监管失去必要性之时。这也是加速主义者的终极答案。一位受访者的话点出另一重要害：感谢老天新冠没有主攻儿童，否则劳动力会被实质性削减——Dyno 150 名员工中只有约 10% 有孩子，而疫情对劳动力的削减不分科学家还是 GMP 车间工人。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 12 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">12</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">收尾：给 Max Scott 实验室捐钱</h3>
+                        <span class="topic-timestamp">01:53 - 01:59</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        对话留下三条行动倡议：投入产生数据的工具与仪器研发、关注环境危害防控、资助 NC State 的螺旋锥蝇研究。
+                    </p>
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">跨学科的傲慢最危险</div>
+                        <p class="topic-detail-content">Mahajan 坦言策划时没料到生物安全占了这么大篇幅，但他很高兴聊透了，因为他常和 AI 圈的人讨论这些话题，而后者"对生物学的了解，就像我对前沿 LLM 基础设施的了解一样——零"。他观察到积极变化：2022-2024 年间前沿实验室的人对所有事都莫名恐慌，随着生命科学团队增强，观点正变得更接地气，学着分辨真问题和假问题。最后的警告意味深长：AI 圈流行一种危险的心态——"我们对 scaling 判断对了，所以对你们的领域也对"。这种既讨嫌又危险的傲慢，恰恰是跨学科对话最需要警惕的东西。</p>
+                    </div>
+                    <div class="quote-block">
+                        "请关注并资助 Max Scott 在北卡州立大学的螺旋锥蝇实验室——极其重要，极其缺钱。" —— [01:54:00]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔄</div>
+                    <h3 class="takeaway-title">反馈回路定律</h3>
+                    <p class="takeaway-desc">数学能被 AI 攻克不是因为聪明，而是因为可即时验证；生物学实验反馈回路五年未变，这才是智能无法直接兑换成进展的根本原因。任何"AI 加速生物学"的评估都应先问：反馈回路在哪里。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🛡️</div>
+                    <h3 class="takeaway-title">验证层即护城河</h3>
+                    <p class="takeaway-desc">TIGIT 全线失败证明临床前数据不可信，而保护系统的不是更强的预测，而是必须用人体重跑的验证机制——这也是中国试验数据不能直接在美国上市的原因。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔬</div>
+                    <h3 class="takeaway-title">发明仪器 > 分析数据</h3>
+                    <p class="takeaway-desc">NGS 式的新型检测方法曾一次性打开基因组学大门；AI 最该被砸无限 token 的地方是帮科学家发明下一代仪器，而非咀嚼已有数据。且此事可用"模型能否从 5 年前知识预测出后来的突破"来严格验证。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📊</div>
+                    <h3 class="takeaway-title">5% vs 6%</h3>
+                    <p class="takeaway-desc">新手用 ChatGPT 造病毒的成功率（5%）与用谷歌（6%）无显著差异——目前没有实证证据表明 LLM 显著加速生物威胁，生物安全资金应更多流向两用防御技术与被忽视的真实病原体。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🌉</div>
+                    <h3 class="takeaway-title">两端之间缺一座桥</h3>
+                    <p class="takeaway-desc">生物 AI 的真正困境：要么在人体做超粗糙读数，要么在小鼠/类器官做超深测量，中间缺乏黄金标准的连接数据集。谁造出这座桥，谁就可能拿到万亿美元级答案。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⏳</div>
+                    <h3 class="takeaway-title">日落条款</h3>
+                    <p class="takeaway-desc">对待一切新兴技术监管的最优姿势：立法有效期五年，有用续期，没用废止——既防最蠢的悲剧，也不至于在 30 年后扼杀尚未出生的技术。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">智能可以买到，但时间买不到</h3>
+            <p class="footer-desc">
+                从三期全灭的 TIGIT 到 5% vs 6% 的造病毒成功率，从"大多数实验不值得自动化"到"没人造出来的那台机器"——这场对话的价值在于诚实：两位一线科学家既不否认 AI 的窄域胜利（结合子命中率从 0.1% 到 10%），也拒绝为宏大叙事背书。生物学的瓶颈不在数据中心里，而在移液枪尖上、在高铁时刻表里、在那些没人愿意资助的螺旋锥蝇实验室中。也许真正的启示是：在智能变得极度廉价的时代，稀缺的反而是知道该问什么问题的专家，和愿意等待物理现实的耐心。
+            </p>
+            <div class="footer-quote">
+                "他们对生物学的了解，就像我对前沿大语言模型基础设施的了解一样——一无所知。"
+            </div>
+            <p class="footer-note">
+                内容来源于 Core Memory Podcast（主持人 Ashlee Vance），仅供学习参考。嘉宾观点不代表 OpenAI 基金会或其所属机构立场。
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

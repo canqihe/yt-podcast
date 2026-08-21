@@ -1,6 +1,35 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/why-the-next-great-founders-will-be-borderless.html",
+    card_class: "card-ai",
+    category: "a16z · 播客 · AI · 全球投资 · 创始人",
+    date: "2026-08-21",
+    title: "为什么下一代伟大的创始人将是无国界的 | a16z 播客",
+    excerpt: "风投历史上高度集中在硅谷，但 a16z 近期投资中已有 40% 投给了国际创始人。为什么？因为 AI 制造了一个看似矛盾的格局：它把技术能力分布到全球每个角落，却又把发展最快的中心重新汇聚到湾区。a16z 全球投资战略的两位架构师 Angela Strange 与 Gabriel Vasquez 拆解：如何用一个 WhatsApp 群开启拉美布局、以「无国界晚宴」织起覆盖全球的创始人网络，以及为什么那些能把本土洞察与硅谷速度焊接在一起的「无国界创始人」，正手握比美国本土创业者更多的杠杆——从差异化人才池、国家骄傲式品牌，到跨国的首批大客户与「优先附着」飞轮。",
+    tags: ["#a16z", "#无国界创始人", "#全球投资", "#海外社群", "#AI"],
+  },
+
+  {
+    url: "articles/ep-026-pjms-12b-modeling-mistake-is-hitting-ratepayers-again-datacenter-energy.html",
+    card_class: "card-ai",
+    category: "SemiAnalysis · 数据中心 · 能源 · 容量拍卖 · 电网治理",
+    date: "2026-08-21",
+    title: "PJM 的 120 亿美元建模失误：AI 电费论背后的制度真相 | SemiAnalysis Ep.026",
+    excerpt: "630 亿美元——美国最大电网 PJM 在四轮容量拍卖中的总花费，其中约 120 亿本可避免，且全部来自 2025-26 与 2026-27 两轮。当\"AI 数据中心推高电费\"成为头条时，SemiAnalysis 特邀 Robert Boswell 拆解：容量拍卖\"人人按结算价拿钱\"的乘数机制、被 PJM 常年按\"夏季额定值\"算错的冬季效率与越冬改造——燃气电厂在冬天更高效，而老旧评估让系统高估需求、压低供给，把边际偏差杠杆化为全民账单。更麻烦的是，一场没人保证买单的 6.8GW 紧急拍卖正要把同样的错误重演一遍：签出长达 2042 年的合同，最终兜底的只会是现有消费者，而不是占据头条的数据中心。",
+    tags: ["#SemiAnalysis", "#容量拍卖", "#数据中心", "#能源", "#电网治理", "#RobertBoswell"],
+  },
+
+  {
+    url: "articles/two-scientists-what-ai-cant-do-fix-biology.html",
+    card_class: "card-future",
+    category: "Core Memory · AI × 生物医药 · 生物安全 · 药物发现",
+    date: "2026-08-21",
+    title: "AI 为什么救不了生物学：智能不是瓶颈，物理才是 | Eryney Marrogi × Abhishaike Mahajan",
+    excerpt: "硅谷有约 47,000 家 AI 生物技术公司，但真正摸过移液枪的人怎么看？科学家 Eryney Marrogi 与 OpenAI 基金会的 Abhishaike Mahajan 展开两小时对谈，拆解 AI 制药叙事的每一块地基：三期全灭的明星靶点 TIGIT（超级智能也无法预判，预判对了也没人会听）、数学能被攻克而生物学不能的反馈回路定律、AI 最该做的其实是发明新检测仪器而非分析旧数据、150 个大学生用 ChatGPT 造病毒成功率仅 5% 的生物安全实证、以及\"重度监管下中国将碾压美国生物科技\"的推演。",
+    tags: ["#AIBio", "#药物发现", "#生物安全", "#TIGIT", "#类器官", "#CoreMemory"],
+  },
+  {
     url: "articles/nick-bostrom-worries-about-ai-existential-risk-just-became-more-concrete.html",
     card_class: "card-future",
     category: "Big Technology · AI 哲学 · 存在性风险 · 对齐 · AGI",
