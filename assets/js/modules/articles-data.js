@@ -1,6 +1,17 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/race-to-save-humanity-colossal-astromech.html",
+    card_class: "card-ai",
+    category: "Sourcery · 合成生物学 · 复活 · AI制药",
+    date: "2026-08-22",
+    title: "拯救人类的赛跑：120亿 Colossal 与 38亿 Astromech 内幕 | Ben Lamm",
+    excerpt: "未来 25 年或失去 50% 生物多样性，而一家 120 亿美元的“复活公司”与 38 亿的 AI 分拆正把猛犸、冰原狼与长毛小鼠写进现实。Sourcery 探访德州秘密总部，Ben Lamm 首次披露 30 天最多重编辑验证、自然数字孪生的野心、ViaGen 垂直整合与 Astromech 进化制药的 38 亿逻辑——复活只是文明科技的起点。",
+    tags: ["#Colossal", "#Astromech", "#合成生物学", "#复活", "#基因驱动", "#BenLamm", "#Sourcery"],
+  },
+
+
+  {
     url: "articles/why-the-next-great-founders-will-be-borderless.html",
     card_class: "card-ai",
     category: "a16z · 播客 · AI · 全球投资 · 创始人",
