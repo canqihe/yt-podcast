@@ -1,6 +1,15 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/sam-altman-on-building-openai-betting-on-the-impossible.html",
+    card_class: "card-ai",
+    category: "David Senra · 播客 · OpenAI · AI · 创业",
+    date: "2026-08-23",
+    title: "萨姆·奥特曼谈打造 OpenAI 与押注不可能之事 | David Senra 播客",
+    excerpt: "从圣路易斯那个被告知\"深度学习行不通\"的少年，到 OpenAI 成立第一天在公寓里面面相觑的十二个人，再到今天十亿用户——萨姆·奥特曼罕见地从头讲起\"如何押注不可能\"。他解释了为什么社会采用 AI 会比技术专家预期的慢得多、为什么人的联结在 AI 时代反而更值钱、他最大的两个恐惧是失控与权力集中，以及彼得·蒂尔那句让他全力押注 ChatGPT 的话。还有那个最反直觉的创业教训：OpenAI 花了四年半没有发布任何产品，靠\"混乱摸索\"孕育出了 GPT。",
+    tags: ["#SamAltman", "#OpenAI", "#AGI", "#创业", "#AI", "#DavidSenra"],
+  },
+  {
     url: "articles/race-to-save-humanity-colossal-astromech.html",
     card_class: "card-ai",
     category: "Sourcery · 合成生物学 · 复活 · AI制药",
