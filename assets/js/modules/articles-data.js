@@ -1,6 +1,15 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/what-happens-when-the-ai-boom-runs-out-of-money.html",
+    card_class: "card-ai",
+    category: "Invest Like The Best · 播客 · AI · 算力 · 半导体",
+    date: "2026-08-24",
+    title: "当 AI 热潮烧完钱之后会发生什么 | Invest Like The Best 播客",
+    excerpt: "2026 年，科技行业正以每年 8000 亿美元、明年预计 1.3 万亿美元的速度烧钱建设 AI 基础设施。Stratechery 创始人 Ben Thompson 抛出一个比算力、电力更尖锐的问题：我们有没有足够的钱？他给出的判断一个比一个反直觉：美国在 AI 上\"赢\"反而危险（中国的最优反应是炸掉台积电）；谷歌正在变成伯克希尔·哈撒韦（搜索是喜诗糖果，AI 是 BNSF 铁路）；消费者不想为软件付钱所以 AI 消费者市场必须靠广告；台积电把产能过剩风险转嫁给大型科技公司，而稀缺最终拯救了英特尔；智能将像带宽一样商品化，英伟达的位置\"不自然\"；AI 泡沫之后能留下的持久之物是电力。",
+    tags: ["#BenThompson", "#AI", "#算力", "#半导体", "#英伟达", "#台积电", "#Stratechery"],
+  },
+  {
     url: "articles/sam-altman-on-building-openai-betting-on-the-impossible.html",
     card_class: "card-ai",
     category: "David Senra · 播客 · OpenAI · AI · 创业",
