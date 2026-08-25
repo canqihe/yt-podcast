@@ -1,6 +1,16 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/a16z-evolution-of-computers-abdication-of-reasoning.html",
+    card_class: "card-ai",
+    category: "a16z · 播客 · AI · 数学 · 计算历史",
+    type: "AI",
+    date: "2026-08-25",
+    title: "计算机的演进与推理的让渡 | a16z 深度对话",
+    excerpt: "当 AI 开始挑战黎曼猜想这样的世纪难题，最兴奋的群体恰恰是数学家自己。a16z 三位合伙人马丁·卡萨多、埃里克·托伦伯格与史蒂文·西诺夫斯基从这条推文出发，一路聊到数学突破到底意味着什么、AI 是否正在让人类\"让渡推理能力\"、以及为什么 Cursor、Anthropic、OpenAI 能以惊人速度崛起。他们用 IBM 1953 年的宣传册、四色定理和图形计算器的历史掌故，论证了一个核心判断：行业已经从\"受工程约束的问题\"变成了\"资本问题\"——20 人加十亿美元能真正用出价值，这是几十年来从未有过的全新物理定律。",
+    tags: ["#a16z", "#AI", "#数学", "#资本", "#StevenSinofsky", "#MartinCasado"],
+  },
+  {
     url: "articles/how-to-understand-the-next-wave-of-ai-before-everyone-else-tibo-interview.html",
     card_class: "card-ai",
     category: "Matthew Berman · 播客 · OpenAI · AI · 智能体",
