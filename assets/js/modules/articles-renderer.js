@@ -8,8 +8,10 @@
  */
 function createArticleCard(article) {
     const tagsHtml = article.tags.slice(0, 3).map(tag => `<span class="card-tag">${tag}</span>`).join('');
-    // 只保留 category 的第一个词（在" · "之前）
-    const singleWordCategory = article.category.split(' · ')[0];
+    // 卡片左上角显示文章类型（优先 type 字段，无则回退 category 首词）
+    const singleWordCategory = article.type || article.category.split(' · ')[0];
+    // 卡片标题去掉 " | 频道名/嘉宾名" 后缀
+    const cleanTitle = article.title.replace(/\s*[|｜]\s*.*$/, '').trim();
 
     return `
         <a href="${article.url}" class="article-card ${article.card_class}" target="_blank" rel="noopener">
@@ -17,7 +19,7 @@ function createArticleCard(article) {
                 <span class="card-category">${singleWordCategory}</span>
                 <span class="card-meta">${article.date}</span>
             </div>
-            <h3 class="card-title">${article.title}</h3>
+            <h3 class="card-title">${cleanTitle}</h3>
             <p class="card-excerpt">
                 ${article.excerpt}
             </p>
