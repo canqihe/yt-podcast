@@ -1,6 +1,26 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/how-to-10x-your-trading-by-surfing-market-rotation-w-pro-trader-shake-pryzby.html",
+    card_class: "card-finance",
+    category: "TraderLion · 播客 · 交易 · 市场轮动 · 风险管理",
+    type: "量化交易",
+    date: "2026-08-26",
+    title: "如何通过把握市场轮动让你的交易放大 10 倍 | Shake Pryzby",
+    excerpt: "全美投资锦标赛百万美元组别顶尖选手 Shake Pryzby 罕见地逐个复盘真实亏损：高贝塔 AI 股上的连续 5 笔失误如何指向\"环境已变\"、一笔\"毫不起眼\"的 QQQ 空单为何比教科书式入场多赚 10 倍、PLTR 上因一夜失眠把 80% 仓位砍到 8% 的执行失败。他交出整套可复制的打法——用财报\"气质转变\"名单读懂市场轮动、永远贴着关键区域而非穿越区域入场、周线选股 + 最短周期执行，以及那个贯穿全片的观点：先等环境，再进攻。并以电影《盗火线》讲透\"犹豫就是自慰\"的交易纪律哲学。",
+    tags: ["#ShakePryzby", "#交易", "#市场轮动", "#风险管理", "#TraderLion", "#波段交易"],
+  },
+  {
+    url: "articles/five-reasons-the-bubble-will-burst-in-2027.html",
+    card_class: "card-finance",
+    category: "The Compound · 播客 · 投资 · AI · 泡沫 · 半导体",
+    type: "投资",
+    date: "2026-08-26",
+    title: "2027 年泡沫会破裂的五个理由 | WAYT?",
+    excerpt: "前纽约联储主席 Bill Dudley 公开给出时间点——AI 泡沫将在 2027 年底破裂。Josh Brown 与 Michael Batnick 逐条拆解他的五个理由,并指出其中真正的洞见:股票定价的是未来而非当下,等到繁荣显而易见时市场早已转向 2027 和 2028。本集还涵盖:为什么 EPS 增速约 99% 的英伟达股价却横盘,一个\"需求前移\"式盈利泡沫的真相,\"资本料理\"从国库券到一小时调杠杆 ETF 的光谱,以及爱彼迎、达美如何用 AI 让标普\"其余 493 家\"成为牛市的下一条腿。一张\"沃尔玛 vs 塔吉特\"的神秘图表,讲清了预期在定价中的分量。",
+    tags: ["#TheCompound", "#JoshBrown", "#MichaelBatnick", "#AI", "#泡沫", "#英伟达", "#投资"],
+  },
+  {
     url: "articles/dwarkesh-dylan-patel-two-labs-workforce.html",
     card_class: "card-ai",
     category: "Dwarkesh Patel · 播客 · AI · 算力 · 经济",
