@@ -1,6 +1,16 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/dwarkesh-dylan-patel-two-labs-workforce.html",
+    card_class: "card-ai",
+    category: "Dwarkesh Patel · 播客 · AI · 算力 · 经济",
+    type: "AI",
+    date: "2026-08-26",
+    title: "两家实验室将掌控全球大部分劳动力 | Dwarkesh Patel 深度对话",
+    excerpt: "SemiAnalysis 创始人迪伦·帕特尔与主持人德瓦克什·帕特尔用大量一手数据推演：OpenAI 和 Anthropic 正以每年 3 倍速度扩张算力，到 2028 年底将控制全球大部分可用算力、掌握比全人类还多的\"有效劳动力\"。60 亿美元晶圆厂资本支出能撬动 1 万亿美元终端收入，但当 AI 资本支出逼近每年 10 万亿美元时，利率会被推高多少？会不会引发第二次\"沃尔克冲击\"式的主权债务危机？这是一场关于算力、资本与权力集中化的硬核推演。",
+    tags: ["#DwarkeshPatel", "#DylanPatel", "#AI", "#算力", "#SemiAnalysis", "#主权债务"],
+  },
+  {
     url: "articles/a16z-evolution-of-computers-abdication-of-reasoning.html",
     card_class: "card-ai",
     category: "a16z · 播客 · AI · 数学 · 计算历史",
