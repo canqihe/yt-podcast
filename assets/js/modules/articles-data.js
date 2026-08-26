@@ -1,6 +1,16 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/yuval-noah-harari-full-interview.html",
+    card_class: "card-future",
+    category: "The Economist · 播客 · AI · 哲学 · 未来 · 意识",
+    type: "AI 哲学",
+    date: "2026-08-26",
+    title: "赫拉利：AI 是\"人类历史上最大的心理与社会实验\" | The Economist 完整访谈",
+    excerpt: "《经济学人》主编扎尼·明顿·贝多斯与《人类简史》作者尤瓦尔·赫拉利展开 67 分钟完整对谈。赫拉利把 AI 称作\"人类历史上最重大的心理和社会实验\"：他同意按当前轨迹十年后 AI 将比人类更聪明并掌控世界，但坚决反对\"不可避免\"的说法——那是掌权者卸下责任的叙事。他拆解了信任如何从人类迁移到 AI（加密货币、社交算法、每五个美国年轻人就有一人拥有 AI 亲密关系）、智能与意识的关键区分、\"零人员公司\"与阿根廷 AI 法律人格提案的危险、战争中的\"人在回路上\"、以及\"AI 移民\"理论——当今世界最大、最危险的移民潮来自美国和中国的 AI。他还以\"瓶中精灵的最后一个愿望\"隐喻人类处境：现在放慢速度，是人类唯一还剩的选择。",
+    tags: ["#YuvalNoahHarari", "#赫拉利", "#AI", "#意识", "#TheEconomist", "#AI安全"],
+  },
+  {
     url: "articles/how-to-10x-your-trading-by-surfing-market-rotation-w-pro-trader-shake-pryzby.html",
     card_class: "card-finance",
     category: "TraderLion · 播客 · 交易 · 市场轮动 · 风险管理",
