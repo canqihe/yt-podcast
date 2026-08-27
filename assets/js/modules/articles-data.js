@@ -1,6 +1,16 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/dhh-future-of-programming-ai-agentic-engineering-vibe-coding-linux.html",
+    card_class: "card-ai",
+    category: "Lex Fridman · 播客 · AI · 编程 · 智能体 · Linux",
+    type: "AI",
+    date: "2026-08-27",
+    title: "DHH：编程的未来、AI、智能体工程与 Linux | Lex Fridman 播客",
+    excerpt: "\"有的年代十年如一日，有的年代一周就抵得上十年。\"Ruby on Rails 创造者、37signals CTO、Omarchy Linux 缔造者 DHH 与 Lex Fridman 展开 5 小时 16 分钟马拉松式对谈。他把 2025 年 11 月 24 日（Opus 4.5 发布日）称作\"分水岭\"：此后他公开从逐行雕琢 Ruby 代码的传统程序员，转身成为最狂热的智能体工程布道者。本期覆盖他亲手构建 Omarchy Quattro（一行代码都没手写）、开源社区三个月合并超 1000 个 AI 拉取请求、60 秒内装完操作系统（45 秒世界纪录）、模型横评中 Fable 与 DeepSeek 相差 24 倍的成本（550 美元 vs 23 美元）、\"现在的编程语言是英语\"、Linux 缺点即智能体时代最大卖点，以及政治、移民、为人父、死亡与永恒轮回的宏大命题。",
+    tags: ["#DHH", "#LexFridman", "#AI", "#智能体", "#VibeCoding", "#Linux", "#Omarchy"],
+  },
+  {
     url: "articles/yuval-noah-harari-full-interview.html",
     card_class: "card-future",
     category: "The Economist · 播客 · AI · 哲学 · 未来 · 意识",
