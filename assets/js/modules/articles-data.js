@@ -1,6 +1,16 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/why-top-founders-are-racing-into-ai-infrastructure.html",
+    card_class: "card-ai",
+    category: "a16z · 播客 · AI · 基础设施 · 硬件",
+    type: "AI",
+    date: "2026-08-28",
+    title: "顶级创始人为何竞相涌入 AI 基础设施 | a16z 深度对话",
+    excerpt: "\"这是我一生中最大的技术革命，显然比互联网更宏大。\"带着 Mark Andreessen 的判断，a16z 正式推出\"机器时代基金\"（Machine Age Fund），专门押注模型脚下的一切——芯片、内存、网络、电力、冷却与数据中心。Ben Horowitz、Martin Casado 与 Raghu Raghuram 把 AI 基础设施的供需真相摊开在桌面上：超大规模云厂商资本开支明年将达 1 万亿美元、供应售罄到 2028 年、创始人硬核硬件交易占比从 5% 暴涨到 30%、\"人月神话\"失效——砸 30 亿美元点亮集群就能造出 Grok 或 Kimi。还有 44 吉瓦电力缺口、800 伏直流配电、每模型一颗 ASIC 的资本逻辑，以及 Nvidia 为什么也通吃不了这个市场。",
+    tags: ["#a16z", "#BenHorowitz", "#MartinCasado", "#RaghuRaghuram", "#AI基础设施", "#机器时代基金", "#数据中心"],
+  },
+  {
     url: "articles/ai-could-take-over-in-2029-is-it-already-too-late.html",
     card_class: "card-ai",
     category: "The MAD Podcast · 播客 · AI 安全 · 超级智能 · AI 对齐",
