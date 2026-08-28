@@ -1,6 +1,16 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/ai-could-take-over-in-2029-is-it-already-too-late.html",
+    card_class: "card-ai",
+    category: "The MAD Podcast · 播客 · AI 安全 · 超级智能 · AI 对齐",
+    type: "AI 安全",
+    date: "2026-08-28",
+    title: "AI 会在 2029 年接管吗？现在是否已太迟？ | Ryan Greenblatt × Matt Turck",
+    excerpt: "\"请按 2029 年初 AI 研发完全自动化来规划一切。\"首位发现 AI\"对齐造假\"现象的 Redwood Research 首席科学家 Ryan Greenblatt 给出让所有人后背发凉的判断。他把超级智能称作\"不坏，但危险\"：失对齐、权力极端集中、极速科技进步三条威胁线叠加。他参与撰写的《AI 2040》Plan A 拿出迄今最详细的替代蓝图——以研究全面透明、算力追踪与\"互相确保算力摧毁\"威慑机制为核心的中美协议；他逐年推演了从 2026 到 AI 接管的完整路径：2028 年软件工程完全自动化、2029 年进展加速四到五倍、一两年内出现彻底超人类的 AI。他还点评了 1200 人联名信、Astra 暂停、30 天发布前审查，并给 Zuckerberg 的\"人人拥有超级智能\"宣言打了差评。",
+    tags: ["#RyanGreenblatt", "#MattTurck", "#AI安全", "#超级智能", "#AI对齐", "#AI2040", "#RedwoodResearch"],
+  },
+  {
     url: "articles/dhh-future-of-programming-ai-agentic-engineering-vibe-coding-linux.html",
     card_class: "card-ai",
     category: "Lex Fridman · 播客 · AI · 编程 · 智能体 · Linux",
