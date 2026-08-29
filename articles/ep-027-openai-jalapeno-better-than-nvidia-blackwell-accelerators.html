@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="e8ychAylUAda26Gzbtbj2E">
+<head data-page-node-id="UPMtBZqIRdiTUECKVJUQV6">
+    <meta charset="UTF-8" data-page-node-id="4iH400gACA2FFL7Wv0VwL3">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="XdMjRFdVYHHmTbMHVTU2oj">
+    <title>OpenAI Jalapeño：比英伟达 Blackwell 更强 | SemiAnalysis 深度解读</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" data-page-node-id="caiu0m9KTETFZydWttKoPe" />
+    <link rel="stylesheet" href="../design-system/design-tokens.css" data-page-node-id="xqmfQGmwo5AkTfviT9DKXc">
+    <link rel="stylesheet" href="../design-system/article-styles.css" data-page-node-id="PpZ665UAP3YK1LfbxxWKWn">
+    <style>
+        :root {
+            --accent-primary: #f97066;
+            --accent-secondary: #fbbf24;
+            --accent-primary-rgb: 249, 112, 102;
+            --accent-secondary-rgb: 251, 191, 36;
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/ep-027-openai-jalapeno-better-than-nvidia-blackwell-accelerators-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .meta-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .meta-item {
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .meta-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
+            .meta-item {
+                white-space: normal;
+            }
+        }
+    </style>
+</head>
+<body data-page-node-id="PK0PZVe7QVsUwm0AnFf2oM">
+    <!-- Header -->
+    <header class="header" data-page-node-id="61Z8kNq0Pmq6RYu5rKE7dJ">
+        <div class="container" data-page-node-id="KCoSyBEDXjDrfZyaQC6vgA">
+            <div class="header-content" data-page-node-id="EHjcEIz8pMHJls1m9h5xG4">
+                <div class="badge-wrapper" data-page-node-id="bQuQT3b8R3e1CnMkPVk8ZQ">
+                    <span class="badge" data-page-node-id="RG5cZ6BhmOuzyRt6BBxWY9">SemiAnalysis · 播客</span>
+                </div>
+                <h1 class="title" data-page-node-id="mh1y0v8mHIbPmUsljGx8Tx">
+                    <span class="title-line-1" data-page-node-id="RzdKzABbIxRwr1qiiEFkCr">OpenAI Jalapeño</span>
+                    <span class="title-line-2" data-page-node-id="rOOiyOlmGc6o4NY8bKjdLS">比英伟达 Blackwell 更强</span>
+                </h1>
+                <p class="subtitle" data-page-node-id="rkl180D2H3y4ZZyVEGRLM5">
+                    2026 年 Hot Chips 大会最后一天，一个几乎所有人都预料到、却几乎没有人预料到性能的芯片亮相了——OpenAI 自研 ASIC「Jalapeño」。这颗由博通代工、以辣椒命名的芯片，在每兆瓦 Token 产出与每 TCO 性能上，直接击败了英伟达最新一代 Vera Rubin 与上一代 GB300。更令人震惊的不是它赢了，而是它怎么赢的：从概念到真实基准测试不到两年，流片仅 9 个月，期间大量借助 AI 完成芯片设计与内核编程。SemiAnalysis 的三位分析师 Bryan、Myron 和 Jordan 拆解了这颗芯片的性能曲线、微架构、编程模型，以及它对英伟达 CUDA 护城河的真正含义。
+                </p>
+                <div class="meta-grid" data-page-node-id="1KpcKnE641UjsLwKBj9FnR">
+                    <div class="meta-item" data-page-node-id="e5NzMRU7Nx89QPApV58RpJ">
+                        <div class="meta-label" data-page-node-id="PiPAwbFP15AvfkbxAlk8lP">主播</div>
+                        <div class="meta-value" data-page-node-id="m6NWIUl27275Ukf23u37bf">Bryan · Myron</div>
+                    </div>
+                    <div class="meta-item" data-page-node-id="piFMmib70kUd8XiUYeV8p4">
+                        <div class="meta-label" data-page-node-id="v3C1fVg9rPIFrDSEuidDdC">嘉宾</div>
+                        <div class="meta-value" data-page-node-id="IEXQdhtAKrNs3a6O7HUqM4">Jordan (@JordanNanos)</div>
+                    </div>
+                    <div class="meta-item" data-page-node-id="v2yka7SLi2iawzGFMzH72u">
+                        <div class="meta-label" data-page-node-id="pg6BHFChxfEHOwjUC46D5e">时长</div>
+                        <div class="meta-value" data-page-node-id="oN1nRqs6jzKAV7Q8I46ztW">约 63 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=hj_ffVldQZA" class="cta-button" target="_blank" data-page-node-id="rsYQuvPVu2zHsMx6wEHn2k">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" data-page-node-id="4eWX0A97CgFXZ6yxDf8GwW">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" data-page-node-id="E7v1YqFBTOS2w4haBu3Re7"/>
+                    </svg>
+                    观看原视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section" data-page-node-id="KlMf5AgDpUgkDivyRT7OQg">
+        <div class="container" data-page-node-id="iu9C9KgJNkTmnLcnbEPLLK">
+            <h2 class="section-title" data-page-node-id="cIuPVlCrHHTYCeKSgD7m7n">核心要点</h2>
+            <div class="points-grid" data-page-node-id="ryOijs3X5F6MPxH6IxVgKN">
+                <div class="point-card" data-page-node-id="0RKlbWoG0ordghd2omC7ND">
+                    <div class="point-number" data-page-node-id="GCES9suwhFd4E39t8f9Oa5">01</div>
+                    <h3 class="point-title" data-page-node-id="VyU3EnYa4PXCBndG8KMEuC">指标陷阱</h3>
+                    <p class="point-desc" data-page-node-id="v4qt2IwEA7umuKtByOGhfr">规格表上的算力/带宽是"保证你不会超过的上限"，不是可达到的数字；真实基准才是唯一可信的尺子。"每芯片性能"可通过胶水芯片轻松操纵，比"每兆瓦 Token"等场景化指标更易误导。</p>
+                </div>
+
+                <div class="point-card" data-page-node-id="T1JVnuc9bRF1RwAdZFPkGs">
+                    <div class="point-number" data-page-node-id="aSbCJCw5jl0RlHgxq7Gpn9">02</div>
+                    <h3 class="point-title" data-page-node-id="aDZIx4UL4gyCMYIB1JMWQi">电力为王</h3>
+                    <p class="point-desc" data-page-node-id="I5m0NJWpv3a6rEIlMTrwVh">数据中心正从算力受限转向电力受限，谁在"每兆瓦 Token 产出"上领先，谁就在推理经济的单位成本上领先——Jalapeño 对 GB300 是两倍。</p>
+                </div>
+
+                <div class="point-card" data-page-node-id="Gd1nKBBlMECzMXnnw7AiPe">
+                    <div class="point-number" data-page-node-id="AdBO2HLkrkHW0NpaAzgq3j">03</div>
+                    <h3 class="point-title" data-page-node-id="HQL7cs3DvfD20tfpUEWOnj">CUDA 神话动摇</h3>
+                    <p class="point-desc" data-page-node-id="xYIoCOtcLOyAi9kHe56Lsu">Jalapeño 是第一个在真实 Pareto 曲线上每一点都击败英伟达的芯片（快与便宜兼得），但"英伟达模式"（供应链、生态、运维）仍是更大的护城河。</p>
+                </div>
+
+                <div class="point-card" data-page-node-id="Zie6Ijw5yZCzR1zzMUmDTj">
+                    <div class="point-number" data-page-node-id="1dQ2U0z4wDvsTCqFBwgG7s">04</div>
+                    <h3 class="point-title" data-page-node-id="12PgPGdp9ZN2vsk4R76wMX">AI 造芯成真</h3>
+                    <p class="point-desc" data-page-node-id="ixBfnfBzm8uA18deWizPYv">用 GPT-5 之前的模型即可在 RTL 阶段省下 8%-10% 面积；3 万行 AI 生成汇编内核无人能读懂却性能出色——"先拥有最强模型"的优势正转化为硬件优势。</p>
+                </div>
+
+                <div class="point-card" data-page-node-id="7FOq527Ke4ZHUCSI0DxVdA">
+                    <div class="point-number" data-page-node-id="Eyia1WVvyE49zWmonrXM1a">05</div>
+                    <h3 class="point-title" data-page-node-id="XaqHB9OD6S9kCsCcuCPPwS">隐藏的实力</h3>
+                    <p class="point-desc" data-page-node-id="AeqWKwYqLlV0hJ4moBo9E1">OpenAI 用单 Token 预测参战（弃用 MTP），还藏着 3-5 倍提升的内部投机解码；Jalapeño 的真实实力被显著低估。</p>
+                </div>
+
+                <div class="point-card" data-page-node-id="EwntCZIAsZsTlTm0Sfgvgw">
+                    <div class="point-number" data-page-node-id="JlndCdS76uhnvP58lOzRuk">06</div>
+                    <h3 class="point-title" data-page-node-id="nJajdaV7RQ7L048HyZURU7">三星逆袭</h3>
+                    <p class="point-desc" data-page-node-id="rR3GWOZ3OZblnAhDjbIvO2">HBM4 世代三星凭 1c 工艺 + 4 纳米逻辑基底反超海力士，700 瓦 TDP 实现 15.4 TB/s 带宽（每瓦带宽为 Rubin 两倍）——硬件供应链的胜负手往往在芯片之外。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider" data-page-node-id="zFYfOaeDGOehbJCUq0dEHw"></div>
+
+    <!-- Topics Section -->
+    <section class="section" data-page-node-id="nmOgpeFv78g8niLfUPYUcE">
+        <div class="container" data-page-node-id="OAav3YUtuenmOjMBqoADUC">
+            <h2 class="section-title" data-page-node-id="gBDdZLqsYORkukwzDnFx7t">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic" data-page-node-id="ogxwYobmog4geswABGiVE2">
+                <div class="topic-header" data-page-node-id="PZ8Np82bYjxqdpxaopZwqc">
+                    <span class="topic-number" data-page-node-id="rawkx2W1DumBZPNMLv9Rad">01</span>
+                    <div class="topic-info" data-page-node-id="5XIOCIY8tIFHakaLQPhkTh">
+                        <h3 class="topic-title" data-page-node-id="awDu3y4B9zMlDk2rr5AHEP">Jalapeño 亮相：性能全面碾压，但对比需要"对齐"</h3>
+                        <span class="topic-timestamp" data-page-node-id="U8YOdFLdspvKPBCs1zgk4a">01:05 - 04:22</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="RCKOinuFbW3MwMPfnTBpaM">
+                    <div class="topic-section-title" data-page-node-id="elG61XaGGC0YcYRcwcdFSY">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="sUD1OGfBE8w37CmdWIEy5T">
+                        OpenAI 自研 ASIC Jalapeño 在每兆瓦与每 TCO 性能上击败 Vera Rubin 的 7 月测试结果，对 GB300 更是完全碾压；但跨代对比 HBM3 与 HBM4 并不公平，且双方软件成熟度需要对齐。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="0roaxQmEOuFFlRteinKCa3">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="UFhL7WAk4QailxOu23AH4s">
+                        <p class="topic-detail-content" data-page-node-id="9RQZDLqHESE5AajaK4ZCnU">Hot Chips 大会最后一天的这场演讲，被 SemiAnalysis 称为"最令人意外的演讲之一"。所有人都知道 OpenAI 的芯片项目在推进、并已宣布与博通（Broadcom）合作，但性能数据首次公布时，依然让全场吃惊。主持人特意强调了一个公平性前提：他们对比的是 Vera Rubin 的 7 月测试结果，而非最新状态——因为在那个时间点，双方软件的优化程度是相似的，这样对比才成立。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="5icjSjCjf0BgvPFEwaBXD7">
+                        <p class="topic-detail-content" data-page-node-id="yeSXSgtNt107LWuxMmB0EP">与 GB300 相比，Jalapeño 在几乎所有维度上都"完全碾压"，但 Myron 指出这并不公平：GB300 用的是 HBM3，而 Jalapeño 用的是 HBM4，跨代内存对比会让结果失真，因此分析师选择以 Rubin 为参照系。Jordan 补充了一个关键细节：这些基准跑的是 DeepSeek R1（8K 输入、1K 输出），既不是绝对最大的模型，也不是最严苛的推理负载——仅仅是随机数据，而非智能体（Agent）工作流。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="MZKF8BMPnms5tfsZZlZVAF">
+                        <div class="topic-detail-label" data-page-node-id="DxBau4h4TSs3xMGsncFqoy">以周为单位的迭代速度</div>
+                        <p class="topic-detail-content" data-page-node-id="65JqQICtes53rvoIN3n6Vi">另一个值得注意的现象是迭代速度：Jalapeño 的性能以周为单位、甚至以天为单位在提升。从首次公布到现在短短 25 天，性能曲线已经显著上移，这种快速迭代能力本身就是信号——它意味着软件栈已经相当成熟，芯片的潜力远未释放完。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="jAc7MGuPNJFoVHriR8ysPk">
+                        "Jalapeño 在每兆瓦性能和每 TCO 性能上，实际上击败了 Vera Rubin 的 7 月测试结果……对 GB300 来说，它完全碾压了对方。" [02:29]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic" data-page-node-id="qZOZyOWWXowYxPHUcjNFie">
+                <div class="topic-header" data-page-node-id="ZDo6Rl1T4iOlMdmASX0Yit">
+                    <span class="topic-number" data-page-node-id="dSERQrH1DzFdSA6p4MpGxB">02</span>
+                    <div class="topic-info" data-page-node-id="pRTGbV2TzqvpSsm2QpkFC9">
+                        <h3 class="topic-title" data-page-node-id="bvqcIKEoo8N2j8Vjtm6TYb">每兆瓦 Token：电力才是数据中心真正的约束</h3>
+                        <span class="topic-timestamp" data-page-node-id="a8Qdwg3ngNlm1lC3ekCk0R">04:22 - 09:15</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="co9fBzUSqRaa0GACk7pbpT">
+                    <div class="topic-section-title" data-page-node-id="wviUgbq6229ual5kLyRmGy">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="AcM5FEoQjjQcJAzqcng6AB">
+                        当数据中心受电力而非算力限制时，"每兆瓦 Token 产出"成为比"每芯片 Token 吞吐"更有意义的指标；OpenAI 自用芯片，因此只关心前者。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="QmNfrWXDyDAm1arJBOnQYQ">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="GUgXf70sgXPUD45KqdH511">
+                        <p class="topic-detail-content" data-page-node-id="tvkhp0747pKCWSuoRUVmDl">黄仁勋在 2026 年 Computex 主题演讲中提出了一个判断：数据中心正在变得电力受限，电力正成为瓶颈。你有钱就能买到更多服务器和芯片，但一座数据中心的电力容量是物理上限——100 兆瓦就是 100 兆瓦，只能装下那么多芯片。各公司尝试过表后计量（BTM，behind-the-meter）电力等办法，但归根结底，电力才是约束。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="3IiRViy5lL3BhyEvxIGTff">
+                        <div class="topic-detail-label" data-page-node-id="iQAC8GaLQwXcOacsR8CRAi">"每芯片性能"是可以被操纵的指标</div>
+                        <p class="topic-detail-content" data-page-node-id="uHN6xGY3cphqFfa1g1YP0k">行业最常见的比较方式是每 GPU（每个封装）的 Token 吞吐量，但 SemiAnalysis 指出，"每芯片性能"本质上是一个可以被操纵的指标——把两颗芯片粘在一起，每芯片性能就翻倍了，Vera Rubin Ultra 和 Blackwell Ultra 正是这么做的；Cerebras 甚至可以把三片晶圆放进一个机架，然后声称"三比一好"。因此，对不同的玩家应该用不同的尺子。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="mHfvD3kioBMRCSZPYREqUa">
+                        <div class="topic-detail-label" data-page-node-id="r7yHp84DfiGTUqVuVtr7CU">自研芯片的核心理由</div>
+                        <p class="topic-detail-content" data-page-node-id="1RH2m1HaJuAJPG19VBNHZZ">OpenAI 的独特之处在于：Jalapeño 没有外部客户，只为自用，所以他们不关心每封装 Token，只关心"每兆瓦进入系统的 Token"。SemiAnalysis 做了 TCO 测算，假设 OpenAI 自购自营（而非按当前 NeoCloud 每小时 6 美元的市价），成本假设为：GB300 每小时 279 美元、Vera Rubin 每小时 361 美元、Jalapeño 每小时 156 美元——这正体现了自研芯片的核心理由：只付博通的代工利润，而不是英伟达的整机利润。即便按每 TCO 性能计算，Jalapeño 也依然胜出或非常接近。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="0167BymPfHizTlLHA5DKFm">
+                        "如果你有 100 兆瓦的电力，你只能装下那么多芯片。如果这些芯片每兆瓦更贵，其实并不重要——只要它们每兆瓦产出更多 Token。" [05:07]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic" data-page-node-id="nNnHEvtUucqScjMfLoPHG1">
+                <div class="topic-header" data-page-node-id="0382aiBSUfv3BARguHk1oJ">
+                    <span class="topic-number" data-page-node-id="t8vNl8mxw65OEWfmHkZSwp">03</span>
+                    <div class="topic-info" data-page-node-id="PNDvClWwmRU3mi0wBDr0RB">
+                        <h3 class="topic-title" data-page-node-id="4AQv1bQANz4hGp6AYU9wzd">基准测试的注意事项：一只手背在身后作战</h3>
+                        <span class="topic-timestamp" data-page-node-id="08ydSf6VJdzxBv1ADDDcSR">09:15 - 13:48</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="hzVGcZleBOO9EQNCBJx5Gf">
+                    <div class="topic-section-title" data-page-node-id="aoI7glmpm34rEd7ZGCYSka">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="HbeDMHxT5kMUa3B5f98diY">
+                        Jalapeño 用单 Token 预测（STP）击败了使用多 Token 预测（MTP）的 Vera Rubin；OpenAI 还隐藏了内部投机解码技术（3-5 倍提升），实际实力被严重低估。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="Bt4S5FZ1qkrh0ktCJwAgaK">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="j7OiEWHoVLEWpZCPDZWo5p">
+                        <p class="topic-detail-content" data-page-node-id="0CcHSHUdcJEIwcIUJ2wHk6">基准测试覆盖了三个模型：基于 V3 架构的 DeepSeek V3.1（6000 亿总参数）、Kimi K2.5（约 1 万亿参数）、以及 OpenAI 自家开源模型 GPT-OSS 12B（相对较小）。三个模型上，Jalapeño 都击败了 Vera Rubin——而且是在一个关键不利条件下做到的。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="bBRQDADhffkztinkv2ihZj">
+                        <div class="topic-detail-label" data-page-node-id="GNVRofpG2TUNhKcLKa4AdO">单 Token 预测 vs 多 Token 预测</div>
+                        <p class="topic-detail-content" data-page-node-id="V1MfRfIKkiUkVNdRFySZc0">MTP（Multi-Token Prediction，多 Token 预测）是一种投机解码形式：模型在一次前向传播中同时猜测并验证多个未来 Token（因为语言模型实际上会输出每个 Token 位置的概率分布）。英伟达的 Rubin 使用 MTP，而 OpenAI 提交的 Jalapeño 结果用的是单 Token 预测（STP），这相当于"一只手背在身后战斗"——MTP 对交互延迟是巨大的优化。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="gUPjgGtr0I27pLbIpWdckC">
+                        <div class="topic-detail-label" data-page-node-id="6DQRBb4NSs8lqcZNWs1D6E">被隐藏的内部投机解码</div>
+                        <p class="topic-detail-content" data-page-node-id="0FDCWzPZWcbk16RNev1dho">Jordan 进一步披露了一个令人玩味的细节：有传言称 OpenAI 和 Anthropic 内部很可能有类似 MLA（Multi-head Latent Attention，多头潜在注意力）的实现，但 OpenAI 明确表示没有任何内部 MLA 内核——这意味着 OpenAI 没有任何模型使用 MLA 这种 DeepSeek 的标志性架构。此外，OpenAI 没有提供投机解码的基准结果，Jordan 的个人猜测是：他们有一套既非 MTP、也非开源方案的内部投机解码技术，因为无法通过开源实现验证，所以干脆不公开。而据团队透露，这套内部技术在生产模型上能带来 3 到 5 倍的性能提升——如果属实，Jalapeño 对 Vera Rubin 的对比将再次被拉大数倍。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="PBwzebjWpSgLIQN1RCMnuh">
+                        <p class="topic-detail-content" data-page-node-id="BbMkQ0sVOiRaHUGEmNfz0E">SemiAnalysis 还提到，他们曾邀请 OpenAI 团队在自家 Agent X 基准上运行测试（能衡量前缀缓存等更多优化空间），但时机不佳未能成行。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="vyytnefQvBAnBTXN47qw4r">
+                        "我们被告知，他们内部的投机解码方法在量产模型上能带来 3 到 5 倍的提升。这会让 Jalapeño 对 Vera Rubin 的对比再次被碾压。" [13:26]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic" data-page-node-id="J4Fm30ALhHON8vcx97zG8U">
+                <div class="topic-header" data-page-node-id="7RMKCKnYY9iCqQ33lQ4hZ3">
+                    <span class="topic-number" data-page-node-id="l9FVP2UpzuQf0XOiZrtkyh">04</span>
+                    <div class="topic-info" data-page-node-id="PpKE69IQGBxRFmrEcMYSMS">
+                        <h3 class="topic-title" data-page-node-id="b0lRG2c7nAFRtjDaINFMgp">CUDA 护城河：第一颗真正构成威胁的芯片</h3>
+                        <span class="topic-timestamp" data-page-node-id="M3Wnvcn1v37SaZXGsAD5QG">13:48 - 21:12</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="eyAjNFY2y6v5cVXnwMzrv2">
+                    <div class="topic-section-title" data-page-node-id="7GaaWam4nIKNR0rCDdjfNG">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="Ao3O45wJh1rR0tJ4Wp1NIh">
+                        Jalapeño 是首个在真实基准的 Pareto 曲线上每一点都击败英伟达的非英伟达芯片——既快又便宜，这是此前所有挑战者都没做到的。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="Wk32wRMN9xKCT5itPd6W7u">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="xv0BhmP4cn681TlUaNIbyC">
+                        <p class="topic-detail-content" data-page-node-id="6S0SZThWdQ1BDpGPgcSfdY">面对"它只是个 ASIC，没什么稀奇"的论调，SemiAnalysis 的回应是：如果软件足够好，能让一颗芯片快速跑起来，那么"ASIC 与 GPGPU"这条界线就不再重要。关键在于证据——此前从未有任何公司拿出一张图，显示自己在真实测试曲线上每一点都击败英伟达。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="nbz5jVGcmrcaXXxEIgbpnO">
+                        <div class="topic-detail-label" data-page-node-id="wlB3iBOKEptwZFfVU5rrjZ">Pareto 曲线：两端都赢</div>
+                        <p class="topic-detail-content" data-page-node-id="X4RIHFXFBHWFMj2FHViZ3h">分析师用 Pareto（帕累托）曲线解释性能声明：Y 轴是每兆瓦电力产出的 Token 数（决定成本效率），X 轴是每个用户看到的 Token 速度（决定交互体验）。结论是 Jalapeño 在曲线两端都赢了：固定交互性（如每用户每秒 50-100 Token）下，Jalapeño 每兆瓦产出的 Token 数是 GB300 的两倍——意味着推理服务商的收入与利润直接翻倍；在极低批处理、最高交互场景下，Jalapeño 可达每用户每秒 700 Token，而其他竞品峰值仅 350，又是两倍。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="7HERGKC84fc8EI0Tip4Emb">
+                        <div class="topic-detail-label" data-page-node-id="MPxkAhr2aDepCel0dxefLE">挑战者们的分水岭</div>
+                        <p class="topic-detail-content" data-page-node-id="f7pss3vx0u7tPiQvVcKLDv">这正是过去挑战者们的分水岭：Groq、Cerebras、D-Matrix、SambaNova 等押注 SRAM 与快速解码的玩家只追求"快 Token"，放弃吞吐量；AMD、TPU、Trainium 等追求吞吐量的玩家则承认在高交互性上无法竞争。OpenAI 是第一个两者兼得的。Jordan 还点出了一个里程碑意义：Jalapeño 是第一个登上 SemiAnalysis 公开 Inferentia X 基准的非英伟达、非 AMD 芯片——此前他们本以为会是 SambaNova 或 Cerebras。他们曾公开邀请 Etched 来跑基准，但对方没有回应。至于黄仁勋本人的回应，在 Mad Money 节目上他的态度是"我不担心"。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="AQFm7bOZELNuxkIKMsh4dM">
+                        <div class="topic-detail-label" data-page-node-id="gUbwAwRIqTKZazf6uT9U0M">真正的护城河</div>
+                        <p class="topic-detail-content" data-page-node-id="dx1VqCcVNe4xjt2cOENtDT">Bryan 提醒，真正的护城河不止是 CUDA 软件生态，而是"英伟达模式"：包括供应链、购买渠道、部署物流、监控运维在内的整个体系。OpenAI 接下来要面对的是如何点亮 100 兆瓦的这类芯片，而不仅是三台测试机架——从概念到实验室真实芯片不到两年、流片不到 9 个月，这个速度本身就令人咋舌。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="0SiM0TAFi7zvKB4HqcssRi">
+                        "我们从未见过任何其他人拿出一张图，显示他们在曲线上每一点都击败了英伟达，而且是在真实测试中。" [14:36]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic" data-page-node-id="jsgR7HiR49akv3VbhsSUn0">
+                <div class="topic-header" data-page-node-id="icDchVcBrp2nAqi5vDvXqG">
+                    <span class="topic-number" data-page-node-id="brdmAOlRnUxtZFlWDNkHi3">05</span>
+                    <div class="topic-info" data-page-node-id="u6QfbtH5F0bvIPLdsSsUQb">
+                        <h3 class="topic-title" data-page-node-id="mwqE9QjKedl2AfBtiy6bQT">OpenAI 是怎么做到的：AI 辅助设计 + TPU 班底</h3>
+                        <span class="topic-timestamp" data-page-node-id="kOKHBcQ22q7zFmtwptHbqC">21:12 - 32:13</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="YeQ9EmpFsi8egU6XYhsD5u">
+                    <div class="topic-section-title" data-page-node-id="GYxznhSB8wRqeGtcaZHtED">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="NLz5KSxe3KeAjAwAqnqApK">
+                        Jalapeño 的规格在纸面上并不亮眼（FP4 算力不到 Rubin 一半、TDP 约三分之一），却能大幅超越对手——关键在于减少数据搬运的微架构哲学与 AI 辅助的软硬件协同。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="jDnbo9X1QUcP1WEYM5Rzno">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="C97zqNi5yyRICyiaDAzCRq">
+                        <p class="topic-detail-content" data-page-node-id="DDHa1k1iKhVLlcx5cwXu6T">Myron 提出了一个极具讽刺意味的观察：正是英伟达的硬件，让摆脱英伟达的硬件成为可能。OpenAI 用英伟达 GPU 训练出足够强的模型，让 AI 能够编写内核、辅助芯片设计，从而降低了采用替代性硬件栈的门槛。Anthropic 引入 AMD 作为硬件供应商，也是因为 Triton 编程能绕开 AMD 软件栈的挑战。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="Mws5nRNCy92DYT14Jvfzgt">
+                        <div class="topic-detail-label" data-page-node-id="5D7Tcg5gPxrFFFws1ZLqKS">几乎全是前 TPU 成员的团队</div>
+                        <p class="topic-detail-content" data-page-node-id="ZdiZzPgQYZnSa2ZWtKwhqU">团队背景方面，OpenAI 硬件团队中有大量前 TPU 成员——Jordan 指出一个行业现象：几乎所有 AI 加速器初创公司都出自谷歌 TPU 团队，几乎没有前英伟达团队，这本身就很值得玩味。有了这样的班底，第一代产品"不错"是预期，但"比英伟达最好的产品还好"就远超预期了。这同时让 Meta（MTIA）和微软（Maia）的芯片团队显得尴尬——他们同样投入多年，却没有产出同等成果。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="77chDV91M2VNgwpKlAF2w8">
+                        <div class="topic-detail-label" data-page-node-id="XagBThp0Gqdz5W4jjMnzNc">反直觉的规格对比</div>
+                        <p class="topic-detail-content" data-page-node-id="6tOEGAaEDfyMOaBP7LWyMt">规格对比是这篇文章最反直觉的部分：Jalapeño 是 HBM4 芯片，拥有出色的 HBM 带宽，但 FP4 算力不到 Rubin 的一半，HBM 容量更少，单芯片 TDP 约 700 瓦（Rubin 可达 1800 瓦，约为其三倍）。过去 AMD 的看多者论证 MI450 的方式就是列规格：更高算力、更大容量、更高带宽、更高 TDP，所以更好——但他们从不愿意看真实基准结果。Jalapeño 证明了：规格表上的数字不是"你能达到的数字"，而是"制造商保证你永远不会超过的数字"（Jordan 引用了一句出处不明的名言）。大多数工作负载根本碰不到 Roofline 模型（屋顶线模型）的上限，因此算力数字在很大程度上是营销产物。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="UrgEoKTMnZaFpVq7LyZhYe">
+                        <div class="topic-detail-label" data-page-node-id="QRUodQzSprD9W0ZUrGz19C">核心设计哲学：减少数据搬运</div>
+                        <p class="topic-detail-content" data-page-node-id="oRaKSJqAifFvw03yor4k61">SemiAnalysis 总结出的核心设计哲学是：任何人都能买到最好的 HBM 然后堆更多层，真正难的是在微架构中减少数据搬运，让芯片实际兑现 HBM 带宽。很多芯片卡在复杂的内存子系统和大量数据搬运上，无法接近理论带宽。Jalapeño 正是靠"降低数据搬运的微架构"兑现了海量 HBM 带宽——这才是真正的护城河。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="5LMtKYQyBPjtjCTLW7EbbU">
+                        "这些数字不是你能达到的数字，而是制造商能保证你永远不会超过的数字。" [30:37]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic" data-page-node-id="lWHNTGryrMO1UWGTrWWz6r">
+                <div class="topic-header" data-page-node-id="d2NuFWNDdtTijvFTHuGrUp">
+                    <span class="topic-number" data-page-node-id="GNAok3HkDj9Alnni8mYsD5">06</span>
+                    <div class="topic-info" data-page-node-id="SNCMijaiTQ2bqzFGQsbl9D">
+                        <h3 class="topic-title" data-page-node-id="iSO3IQtP0EhhWIPE3XsbLo">三星 HBM4：带宽/瓦特之王</h3>
+                        <span class="topic-timestamp" data-page-node-id="BM3iWk2Xj3uBr5XOIBhS03">32:13 - 42:10</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="FmJPUZRKTUfyt8TSobf9b3">
+                    <div class="topic-section-title" data-page-node-id="MrypSHMfmdr7A0OzfmTERV">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="8btO2BE8AbEg0MT7Zst4n2">
+                        三星凭借 1c DRAM 工艺与 SF4 4 纳米逻辑基底，在 HBM4 上反超海力士；Jalapeño 以 700 瓦 TDP 实现 15.4 TB/s 带宽，每瓦带宽是 Rubin 的两倍，这是其每瓦 Token 优势的物理来源。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="Oaq57WciXv45BQCirVtjzM">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="3CWoMJo3aweO4uz0YQJsAI">
+                        <p class="topic-detail-content" data-page-node-id="BmdhSkXzEH7xpIHuAycfWB">历史充满了反转。SK 海力士与 AMD 联合发明了 HBM（最初是为游戏 GPU 设计的，后来才被 AI 这个"内存带宽极度饥渴"的应用捡走），并长期主导市场；三星在 HBM3/HBM3E 时代则因工艺劣势表现糟糕。但到了 HBM4，局势逆转：三星的 DRAM 芯片采用更先进的 1c 工艺，HBM 立方体中的逻辑基底芯片（集成 PHY 物理层接口）采用 SF4（三星代工 4 纳米节点）先进逻辑工艺；海力士的基底芯片用台积电 12 纳米，DRAM 仍用与 HBM3E 相同的 1b 工艺；美光的基底芯片仍用自家 DRAM 工艺，导致在 HBM4 最高速度上遇到困难，需要重新设计基底，也因此推迟了向英伟达 Rubin 的 HBM4 交付。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="mJsp3jJ0ouex4kniQ4A4ti">
+                        <p class="topic-detail-content" data-page-node-id="R9lmOlF9x6LBzyA6YIz8Z1">Jalapeño 正是这一技术红利的受益者：实现 15.4 TB/s 的 HBM4 带宽（每引脚 10 Gbps），高于外界预期英伟达 Rubin 将采用的 9.6 Gbps。这究竟是运气还是决策？Myron 指出，博通的 HBM 传统上主要来自三星，这算是一种"运气"，但在 HBM4 时代变成了优势。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="BiJHhBvlVfglyyXmkg40BL">
+                        <div class="topic-detail-label" data-page-node-id="ATpOreFmd9Am3diLI2vpYG">堆叠层数的反直觉讨论</div>
+                        <p class="topic-detail-content" data-page-node-id="NOdNqec2DT2m653GW0nWKy">关于堆叠层数的讨论同样反直觉：8 层、12 层还是 4 层高，带宽其实相同，付钱买的是容量。随着 HBM 晶圆供应紧张、价格上升，越来越多公司开始选择更低的堆叠层数（6-high、4-high）以优化"每美元带宽"——尤其是在超大规模（rack-scale）架构下，容量已不再是主要瓶颈。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="MxDR50oEUx5Fa17YjdZK1O">
+                        <div class="topic-detail-label" data-page-node-id="dSOpQdFImfRE6OdDGiS0Ne">震撼的带宽/瓦特数据</div>
+                        <p class="topic-detail-content" data-page-node-id="2DFxhWFDpi1uSkEzWBeMsj">但最震撼的数据是带宽/瓦特：以 700 瓦 TDP 实现 15.4 TB/s，换算后该比率（任意单位 22）是 Rubin 的整整两倍。即使把 Rubin 降到 1800 瓦低功耗模式，其带宽也只多约 25%（20 vs 15 TB/s），功耗却是两倍多。这个"带宽每瓦"优势，正是每瓦 Token 产出优势的直接来源。至于下一代 B0 步进（目前结果均出自 A0 步进），Jordan 认为 HBM 带宽已接近内存本身的物理极限，但 B0 应在相同功耗下提供更高算力。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="25zwsxYjL6IpTNZkhaqddd">
+                        "他们在 700 瓦 TDP 的芯片上实现了每秒 15.4 TB 的带宽……这个带宽-功率比是 Rubin 的两倍。你的每瓦 Token 产出优势就来自这里。" [39:08]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic" data-page-node-id="FFqNGAmKHJngYvKrPD6usH">
+                <div class="topic-header" data-page-node-id="Lh6pYluJOOGo94yyao7FTw">
+                    <span class="topic-number" data-page-node-id="fhaG6OyQCzlftp21GNZDe1">07</span>
+                    <div class="topic-info" data-page-node-id="HAyu1eszAEAw3sO73CwE9Z">
+                        <h3 class="topic-title" data-page-node-id="O8pdDHsEa7O4efyayM3hwy">AI 设计的芯片：从 RTL 到内核的全栈 AI</h3>
+                        <span class="topic-timestamp" data-page-node-id="gHZuLRQljs8dOK49tACWzo">42:10 - 49:24</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="mfTxxvEmeaw0Fj9x9w8z0t">
+                    <div class="topic-section-title" data-page-node-id="csQdQnNvINhkxAfVWju7JT">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="5KzijxHrpQiE5fpyGk4oZt">
+                        AI 在两个阶段深度参与：设计阶段（RTL 冻结前，用 GPT-5 之前的模型将 SIMD 面积减 8%、矩阵引擎面积减 10%）与启动阶段（用强化学习循环迭代优化内核）；OpenAI 把"比对手更早用上最强模型"的优势留给了自己。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="IZjQ1eLgNrLzpYIi8deANj">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="8azwoWK0OxcKWbqVZQBTpZ">
+                        <p class="topic-detail-content" data-page-node-id="32x7PW9YZzer502daUu9DT">Jordan 将 AI 参与分为"设计"与"启动（bring-up）"两个阶段，并纠正了一个常见误解：设计阶段的 AI 辅助发生在 GPT-5 之前。Jalapeño 的 RTL（寄存器传输级设计）冻结于去年 7 月，从 2 月到 7 月间，AI 辅助帮助团队将 SIMD 面积缩减 8%、矩阵引擎面积缩减 10%。这本身就是一个惊人的声明——很多人能理解 AI 写内核或软件工程（放入 codex 式循环、自动测试迭代），但很少有人意识到更旧的模型已经足以加速流片前最繁琐的人工 RTL 工作。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="kldyCLHbrIUMVSUTyRf5Sr">
+                        <div class="topic-detail-label" data-page-node-id="cdDmJLx4YS2gC9kA5MzpYH">启动阶段与强化学习的契合</div>
+                        <p class="topic-detail-content" data-page-node-id="LHCYfLrYRKk1P63Ka60RxJ">启动阶段则完美契合强化学习的优势：内核优化是迭代的、可验证的领域——交给模型一个任务（提高内核性能、通过验证脚本），让模型放手去试，构建 RL 环境、投入足够的 Token、推理时间与 rollout（采样尝试），就能得到好结果。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="qgVU7BvyWPyFxbNlpd3ENF">
+                        <div class="topic-detail-label" data-page-node-id="BXg031M53xR6isBk5D9NMM">从 AI 中获益最大的不是 AI 公司</div>
+                        <p class="topic-detail-content" data-page-node-id="EydKVnRjFRFtfgEAvE3Mxl">由此引出一个更宏观的判断：从 AI 中获得最大价值的，从来不是提供 AI 的公司本身。OpenAI 和 Anthropic 长期不盈利，而 Jane Street 一个季度靠 AI 交易赚 150 亿美元。Jalapeño 是一个绝佳的例证——OpenAI 把"先于所有人用上最强模型"的能力留给了自己：他们能流片出这颗芯片，而竞争对手不能。这就是未来趋势的缩影：前沿模型公司将进入所有"与软件间接相关、模型需要控制计算机"的领域。Anthropic 也在做同样的事——开始招聘芯片人才，并让语言模型控制显微镜、深入生物科学。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="2zYZNyBERiKKVetqWIQZd5">
+                        "OpenAI 把比其他人更早拥有模型的优势留给了自己，这是一个非常明显的例子。他们可以流片出一颗芯片，而他们的竞争对手不能。" [46:06]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic" data-page-node-id="hzt3TcdMNlmMg9QPptt1We">
+                <div class="topic-header" data-page-node-id="4w7KoKyGpOyXt5lX8HiuD1">
+                    <span class="topic-number" data-page-node-id="6iMUXZWftIOBl9PkpcpAhq">08</span>
+                    <div class="topic-info" data-page-node-id="TCDBvaEiWXU8Z7lRKWdfYg">
+                        <h3 class="topic-title" data-page-node-id="G121PkhU1nw2vQFssVaKc4">架构深度解析：小脉动阵列 + 硬件缓存 + AI 生成的汇编</h3>
+                        <span class="topic-timestamp" data-page-node-id="zz0pzIGyq3hfk01wifEtIQ">49:24 - 56:58</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="ZKKBkX8KD1Q90HNecCRTMU">
+                    <div class="topic-section-title" data-page-node-id="bLdmFkZnrd7aEycGOuG4al">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="ZbQCgPJahCsREtZxWcC5c5">
+                        Jalapeño 采用"TPU 式但更小的脉动阵列"设计，规避了大脉动阵列在瘦矩阵上的效率悬崖；用硬件 L1 缓存而非软件管理暂存器；内核是 AI 生成的 Gluon 汇编——人类工程师一行也看不懂，但它就是跑得又快又对。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="w09mMJvgBgJHHySwGVficw">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="Nzm7pERmeZRkH1pIBmcRwG">
+                        <p class="topic-detail-content" data-page-node-id="LQ6lAvLb34Qrrd0HxpV0nQ">先说一个"愤世嫉俗"的视角：对 OpenAI、Anthropic、Meta、微软而言，自研芯片项目可能是一种"假动作"——花几亿美元、一两年时间流片，就可能在数千亿美元规模的 GPU 采购谈判中获得折扣，项目轻松回本。但非愤世嫉俗的视角是：这是真东西，未来只会更深入，RTL 到流片的时间也只会比 9 个月更短。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="i2tVbAnkmbsFxYiQEOKFp3">
+                        <div class="topic-detail-label" data-page-node-id="IEqkbNbw0YGKOsOu5cGhmj">小脉动阵列：规避效率悬崖</div>
+                        <p class="topic-detail-content" data-page-node-id="loF4614na4JHVSZmmL5gyZ">架构上，Jalapeño 的高层形态是"小脉动阵列的 TPU"。脉动阵列（systolic array）是 TPU 处理单元的经典排布方式，但 TPU、Trainium、Etched、MatX 等采用大脉动阵列的芯片有一个通病：瘦矩阵（skinny GEMM）效率悬崖——当 M 维度很小（如低并发、多专家场景），或维度略超 128/256 的边界时，会为跑一个瘦矩阵乘法而发起整个内核启动，大量处理单元闲置，算力无法最大化。解决方案就是用更小的脉动阵列配合高效分块（tiling），减少填充与对齐开销——代价是需要更多小单元，可能损失部分能效。OpenAI 的解法是：智能放置权重与内核（KB），选择性进行核间同步，极其节约地使用连接 HBM 切片与计算单元的收集网络（collective network，即片上网络 NoC）。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="L2qWUFrMNTAs6yVGB75X72">
+                        <div class="topic-detail-label" data-page-node-id="Q5ml3SW6oBB92nYEM8WaWD">反其道而行的 L1 缓存</div>
+                        <p class="topic-detail-content" data-page-node-id="JwliO1f4H6vNIv0f496j1y">结果是一颗"比 GPU 更容易推理、比 TPU 更灵活"的芯片：GPU 编程经验（OpenAI 极擅长）与 TPU 设计经验（团队背景）的结合产物。一个有趣的细节是它拥有 L1 缓存——几乎所有现代加速器都放弃了 L1，只靠 L2/SRAM 软件管理暂存器（scratchpad）。OpenAI 反其道而行，用硬件缓存降低编程难度，代价是需要靠 CPU 端的工作来掩盖数据搬运延迟。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="6pz8ILCpZbxQFPokogAGkC">
+                        <div class="topic-detail-label" data-page-node-id="WTwB1bzIpnRa371MHsqQdc">3 万行 AI 生成的汇编</div>
+                        <p class="topic-detail-content" data-page-node-id="p1BCAPkzOcPyBwbAVhHln8">最后的震撼来自软件侧：与 OpenAI 工程师实地考察时，SemiAnalysis 团队浏览了一个 3 万行的内核文件——完全是 AI 生成的汇编代码，用 Gluon（基于 Triton 构建的低级内核编程语言）"吐"出来的。工程师们懂硬件、懂系统概念，但对那个 DeepSeek MLA 内核的实际工作原理一无所知，逐行看过去全是"不知道、不知道"。但这并不重要：AI 理解它，AI 测试它，它产出正确且性能出色的内核。这再次印证了趋势——当 AI 懂得操纵硬件上的数据搬运与处理单元时，人类是否逐行理解代码已不再重要。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="ORggpxFG6BtYeMziWg4Ns8">
+                        "这个 3 万行的文件，完全是 AI 生成的汇编……工程师们逐行看过去：不知道、不知道、不知道。但这并不重要，AI 理解它，它测试它，它产出正确且性能出色的内核。" [55:40]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic" data-page-node-id="Lmsmk5T440fY0aEgKq4fBP">
+                <div class="topic-header" data-page-node-id="jHFUwyLnRLygQoHfNOCJJq">
+                    <span class="topic-number" data-page-node-id="r8p1XYpH9a0y0szqCn75ak">09</span>
+                    <div class="topic-info" data-page-node-id="OM8lpyxv1oGyLnd7bITJf7">
+                        <h3 class="topic-title" data-page-node-id="swxNRkNuNl8kesgmN1zrtv">通用推理芯片与行业展望</h3>
+                        <span class="topic-timestamp" data-page-node-id="NpH2QmL6Y8eDJlCaigIlki">56:58 - 63:06</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="yxRFtApyD0ChLT6GN0wUFG">
+                    <div class="topic-section-title" data-page-node-id="FDjvfUVHG32xrESBeMAfdY">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="0oPPMJb0wVbr1CCekBr0O1">
+                        Jalapeño 是通用推理芯片而非模型协同设计产物（证据：能以 36 FPS 跑《毁灭战士》）；它对 Anthropic 的芯片项目设定了极高基准；人类语言的能量效率目前仍是机器的 20 倍以上。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="2o400kXhZZXmJbAAKkTCbh">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="WitCVgc8brXBvfvgoUGSF6">
+                        <p class="topic-detail-content" data-page-node-id="hNbUNhEP4OIeJHBhNWxonn">收尾部分抛出三个未展开的话题：其一，Jalapeño 不做预填充/解码分离（PD 分离）——Bryan 表示这正是他最想吐槽的（他常年调试 PD 分离），意味着这仍是可大幅优化的空间；其二，系统的扩展（scale-up/scale-out）架构复杂到"播客上讲不清楚，请读原文"；其三，它是一颗通用推理芯片，并未与 OpenAI 自家模型协同设计——最有力的证据是它能以每秒 36 帧运行《毁灭战士》（Doom）。OpenAI 团队在展示这颗"开创性芯片"时，被问"它能跑 Agent X 吗？"——答案是"不能"（Agent X 测试得分 96%）。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="vSYQpyZdbbiVFABXRDXFMT">
+                        <div class="topic-detail-label" data-page-node-id="CoyKfzgs6IOp2wSnMKXTCg">Anthropic 的九个月之约</div>
+                        <p class="topic-detail-content" data-page-node-id="iGBggQwwUsBeVnM4yKA0ip">展望层面，Anthropic 已开始组建芯片团队。按 OpenAI 的时间线推算（约一个半月到 RTL 冻结、再四五个月流片），一个 9 个月周期后，Anthropic 定制芯片的 Token 就可能问世——主持人用"一次孕期"的比喻调侃了这一节奏。Bryan 认为，Jalapeño 为 Anthropic 设定了一个极高的基准，但 Anthropic 完全有理由达成类似结果。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="OC8BKYIbAzjdu12r0mf2sP">
+                        <div class="topic-detail-label" data-page-node-id="6oeIoqjAPAUTgt45WeE9SK">卡路里对比与杰文斯悖论</div>
+                        <p class="topic-detail-content" data-page-node-id="apEPWz4T3P9LYp2XhK9QHM">最后的彩蛋是"卡路里对比"：把推理效率换算成人类语言能量效率，人类语言（每秒 3.3 Token）的能量效率约为并发 GB300 配置（每秒 180 Token）的 20-22 倍。Caveat 是："不是所有人类说出的 Token 都是高质量的。" 主持人以杰文斯悖论（效率提升反而刺激更多需求）收尾：希望每个生产芯片的公司都因效率提升而消费更多 Token、生产更多芯片、雇佣更多人。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="3ERgeFrxq57aEuQyFuxfYE">
+                        "它是一颗通用推理芯片，并没有与他们的模型协同设计——证据就是它能以每秒 36 帧运行《毁灭战士》。" [57:02]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider" data-page-node-id="pZWFGohoHCQNCTy5M5RCVo"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section" data-page-node-id="HNnfbHh5HdpxYdFU6OYgkp">
+        <div class="container" data-page-node-id="Whn2Wr3nE1Aaml3xmpjFOH">
+            <h2 class="section-title" data-page-node-id="VE7RlRfZSA8Omca8iN5kMD">精华收获</h2>
+            <div class="takeaways-grid" data-page-node-id="CClQdYJGH2HLJrZAjmruEr">
+                <div class="takeaway-card" data-page-node-id="w0TBiuIpz9eZqaOxooWL1Q">
+                    <div class="takeaway-emoji" data-page-node-id="uyj8C03Astyfo3FdlQxAAO">📏</div>
+                    <h3 class="takeaway-title" data-page-node-id="A5Ai17SwBy0OvhU0A9HihL">指标陷阱</h3>
+                    <p class="takeaway-desc" data-page-node-id="Ol0KdZbz7yVJcEAlObadoJ">规格表上的算力/带宽是"保证你不会超过的上限"，不是可达到的数字；"每芯片性能"可被胶水芯片操纵，比"每兆瓦 Token"等场景化指标更易误导。真实基准才是唯一可信的尺子。</p>
+                </div>
+
+                <div class="takeaway-card" data-page-node-id="78ZiwdSQE9KNlbCiG7H8Hr">
+                    <div class="takeaway-emoji" data-page-node-id="7Y0axvTzr8WXTX5fnEU5IT">⚡</div>
+                    <h3 class="takeaway-title" data-page-node-id="YHdYtuUte581jYIE8PDXMA">电力为王</h3>
+                    <p class="takeaway-desc" data-page-node-id="afcPoFvvi4tXHbrPNihA78">数据中心正从算力受限转向电力受限，谁在"每兆瓦 Token 产出"上领先，谁就在推理经济的单位成本上领先——Jalapeño 对 GB300 是两倍，推理服务商的利润直接翻倍。</p>
+                </div>
+
+                <div class="takeaway-card" data-page-node-id="JCSkFSU6PdYRB4TPW4KIKH">
+                    <div class="takeaway-emoji" data-page-node-id="oIWL4r0BAMcsISmUiU5OYF">🧱</div>
+                    <h3 class="takeaway-title" data-page-node-id="BxeNq1eJchC2sz5MrrihKY">CUDA 神话动摇</h3>
+                    <p class="takeaway-desc" data-page-node-id="7221hOCSBhcKCBrMtc4sPu">Jalapeño 是第一个在真实 Pareto 曲线上每一点都击败英伟达的芯片（快与便宜兼得），但"英伟达模式"——供应链、购买渠道、部署物流、监控运维——仍是更大的护城河。</p>
+                </div>
+
+                <div class="takeaway-card" data-page-node-id="5MMtT1XLMLY4Fev0DMaTMQ">
+                    <div class="takeaway-emoji" data-page-node-id="fLHtfZLI3FmYCTLPRKLEqU">🤖</div>
+                    <h3 class="takeaway-title" data-page-node-id="MwHBFqyzWo2Zl5B0knYWHw">AI 造芯成真</h3>
+                    <p class="takeaway-desc" data-page-node-id="26DSSIf9MgGzYrXeAWoknx">用 GPT-5 之前的模型即可在 RTL 阶段省下 8%-10% 面积；3 万行 AI 生成汇编内核无人能读懂却性能出色——"先拥有最强模型"的优势，正变成"先流片出最强芯片"的硬件优势。</p>
+                </div>
+
+                <div class="takeaway-card" data-page-node-id="aTFTR0OU8yDmjUD2QlrPpF">
+                    <div class="takeaway-emoji" data-page-node-id="6fAFFo73xo9QWQNeoFuAcD">🎭</div>
+                    <h3 class="takeaway-title" data-page-node-id="aKxZ4xAtC1EAONMhdYnGAU">隐藏的实力</h3>
+                    <p class="takeaway-desc" data-page-node-id="qSh8JPUCdVihCZ7jFAU4OG">OpenAI 用单 Token 预测参战（弃用 MTP 这一巨大延迟优化），还藏着 3-5 倍提升的内部投机解码——Jalapeño 的真实实力被显著低估，性能潜力远未释放完。</p>
+                </div>
+
+                <div class="takeaway-card" data-page-node-id="mmYA43waOiC5ulmaTmGR1F">
+                    <div class="takeaway-emoji" data-page-node-id="EtwytaRPUBn9JcekdXH35U">🏭</div>
+                    <h3 class="takeaway-title" data-page-node-id="NeaqRinIMtoJRC0FGIbMU7">三星逆袭</h3>
+                    <p class="takeaway-desc" data-page-node-id="eYQWuo0Zcbe5UB1PoSGec4">HBM4 世代三星凭 1c 工艺 + 4 纳米逻辑基底反超海力士，700 瓦 TDP 实现 15.4 TB/s 带宽（每瓦带宽为 Rubin 两倍）——硬件供应链的胜负手往往在芯片之外。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" data-page-node-id="wTQgJTjssT3bGWCGzkYJmA">
+        <div class="container" data-page-node-id="OJCW8jfiyYU5vROdTOqe3y">
+            <h3 class="footer-title" data-page-node-id="XHIZEbVcIZPWbCpzHIStN9">OpenAI Jalapeño：AI 芯片的新纪元</h3>
+            <p class="footer-desc" data-page-node-id="AaH4hvkBzxANwL5BLTKFiF">
+                这场对话的核心洞见是：规格表上的数字是"保证你不会超过的上限"，真实基准才是唯一可信的尺子；数据中心从算力受限转向电力受限，"每兆瓦 Token"成为新的胜负手；AI 已经能设计芯片、编写无人能懂的内核汇编——"先拥有最强模型"的优势正在变成硬件优势。Jalapeño 或许不是英伟达的终结，但它第一次证明：CUDA 护城河并非不可逾越。
+            </p>
+            <div class="footer-quote" data-page-node-id="GBaTSaxBSaIFajcf4rG97n">
+                "先于所有人用上最强模型的能力，正在变成硬件优势"
+            </div>
+            <p class="footer-note" data-page-node-id="EKxDsdlrvS5tN3GjaF4bvM">
+                内容基于 SemiAnalysis 播客 Ep. 027（<a href="https://www.youtube.com/watch?v=hj_ffVldQZA" target="_blank" data-page-node-id="20bzVs3fMlcgmamFlk7WJ8">YouTube</a>），原文见 <a href="https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia" target="_blank" data-page-node-id="WaOteRfkCamcRnLkgF7yBB">SemiAnalysis 通讯</a>。本内容仅供参考，不构成任何投资建议。
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

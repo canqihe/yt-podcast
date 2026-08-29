@@ -1,6 +1,17 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/ep-027-openai-jalapeno-better-than-nvidia-blackwell-accelerators.html",
+    card_class: "card-ai",
+    category: "SemiAnalysis · 播客 · AI · 芯片 · 半导体",
+    type: "AI",
+    date: "2026-08-30",
+    title: "OpenAI Jalapeño：比英伟达 Blackwell 更强的自研芯片 | SemiAnalysis",
+    excerpt:
+      "OpenAI 自研 ASIC「Jalapeño」在每兆瓦 Token 产出与每 TCO 性能上击败英伟达 Vera Rubin，对 GB300 更是完全碾压——从概念到真实基准不到两年、流片仅 9 个月。SemiAnalysis 三位分析师拆解了这颗芯片如何靠\"降低数据搬运\"的微架构，以 700 瓦 TDP 兑现 15.4 TB/s 的 HBM4 带宽（三星 1c 工艺逆袭海力士）、如何用 AI 辅助设计在 RTL 阶段省下 10% 面积、如何用 3 万行无人能读懂的 AI 汇编内核跑 DeepSeek——以及它藏在单 Token 预测背后、可能 3 到 5 倍于公开性能的真实实力。",
+    tags: ["#SemiAnalysis", "#OpenAI", "#Jalapeño", "#英伟达", "#ASIC", "#HBM4", "#AI芯片"],
+  },
+  {
     url: "articles/why-top-founders-are-racing-into-ai-infrastructure.html",
     card_class: "card-ai",
     category: "a16z · 播客 · AI · 基础设施 · 硬件",
