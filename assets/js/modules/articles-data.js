@@ -1,6 +1,16 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/why-ai-demand-is-outrunning-compute-supply.html",
+    card_class: "card-ai",
+    category: "a16z · 播客 · AI · 算力 · 半导体",
+    type: "AI",
+    date: "2026-09-01",
+    title: "AI 需求为何超出算力供给 | a16z 深度对话",
+    excerpt: "\"你能告诉我一个业务中正在变差的量化数据点吗？就一个。\"前富达明星投资人 Gavin Baker 在 a16z 播客抛出一连串反直觉判断：AI 不是泡沫而是短缺——算力投资回收期仅 9-10 个月、前沿实验室会把所有利润持续投入训练、全球 15 亿知识工作者面前的扩散才刚起步、到 2028 年算力可能严重供不应求。他拆解了英伟达\"AI 美联储\"地位背后的可融资性护城河、SpaceX 的轨道数据中心与\"正面赢反面也赢\"的算力赌注、以及\"自有模型 + 前沿模型\"的多模型架构——为什么真正的风险不是过度建设，而是建设不足。",
+    tags: ["#a16z", "#GavinBaker", "#AI", "#算力", "#英伟达", "#数据中心", "#SpaceX"],
+  },
+  {
     url: "articles/ep-027-openai-jalapeno-better-than-nvidia-blackwell-accelerators.html",
     card_class: "card-ai",
     category: "SemiAnalysis · 播客 · AI · 芯片 · 半导体",
