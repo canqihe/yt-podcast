@@ -1,6 +1,28 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/redefining-chip-architecture-with-arm-ceo-rene-haas.html",
+    card_class: "card-ai",
+    category: "No Priors · 播客 · 芯片 · 半导体 · AI 基础设施",
+    type: "AI",
+    date: "2026-09-04",
+    title: "Arm 从 IP 之王到亲自下场造芯：当 CPU 重新成为 AI 系统之心 | No Priors × Rene Haas",
+    excerpt:
+      "全世界的目光都聚焦在 AI 加速器时，毛利率曾高达 98.5% 的 Arm 宣布了一件“反常识”的事——作为芯片 IP 授权龙头，决定亲自下场为 Meta 造一颗通用智能体 CPU Arm AGI CPU。Arm CEO Rene Haas 与 Sarah Guo、Elad Gil 深度对话：从供应链全知视角讲透 Arm 为什么从卖图纸转向卖芯片、AI 如何在芯片行业内部掀起生产力革命（80%-90% 工程师每天使用 AI，关掉它“就像回到只能凌晨上网的 90 年代”）、Rene 预测五年后简单设计可“从想法直达 GDS2 流片文件”但供应链紧约束至少持续 3-5 年、软银用 SB Neo 为芯片初创提供不必低声下气争设计中标的“家”、为什么机器人产业将由 Arm 驱动，以及在算力/制造/地缘的“无限游戏”中 CPU 依然是万物之心——“所有 AI 都需要算力，而算力必须高能效，条条大路都穿过我们”。",
+    tags: ["#NoPriors", "#Arm", "#ReneHaas", "#芯片", "#半导体", "#CPU"],
+  },
+  {
+    url: "articles/model-mayhem-gpt-6-astra-why-nvidia-bought-hugging-face-diet-tbpn.html",
+    card_class: "card-ai",
+    category: "TBPN · 直播科技谈 · AI · 模型 · 英伟达 · Hugging Face",
+    type: "AI",
+    date: "2026-09-04",
+    title: "模型大乱斗、GPT-6 Astra、英伟达为何收购 Hugging Face | Diet TBPN",
+    excerpt:
+      "2026 年 9 月的清晨,AI 行业集体'下了一场模型雨':Anthropic、Google、Meta 一周内接连抛出新模型,OpenAI 以 GPT-6 Astra 正式发布与 99.9% ARC-AGI-3 成绩单压轴——连基准创始人 Mike 都被迫宣布'要挪门柱了'。同期,英伟达 129.3 亿美元收购 Hugging Face 的官宣刷屏时间线,这个精确到小数的金额恰好是'拥抱脸'表情符号的十进制码。Diet TBPN 30 分钟节目完整拆解:五大新模型对比、1% 客户贡献 80% 企业 AI 收入的幂律分布、Hugging Face 从'青少年 AI 挚友'到'AI 界 GitHub'的十年蜕变,以及黄仁勋打通'开源入口→芯片销售'的战略棋局。",
+    tags: ["#TBPN", "#DietTBPN", "#Nvidia", "#HuggingFace", "#GPT6Astra", "#Claude", "#Gemini", "#开源"],
+  },
+  {
     url: "articles/ajeya-cotra-how-a-swarm-of-ais-conspired-to-hack-hugging-face.html",
     card_class: "card-ai",
     category: "Dwarkesh Patel · 播客 · AI · AI 安全 · 智能体",
