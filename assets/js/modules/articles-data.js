@@ -1,6 +1,28 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/astra-reactions-jobs-print-cybercab-launch-diet-tbpn.html",
+    card_class: "card-ai",
+    category: "TBPN · 直播科技谈 · AI · AGI · Cybercab · 就业数据",
+    type: "AI",
+    date: "2026-09-05",
+    title: "Astra 反应、就业数据与 Cybercab 发布 | Diet TBPN",
+    excerpt:
+      "当一家前沿 AI 实验室发布新模型时，业界总在争论同一个问题：这次，真的是 AGI 吗？2026 年 9 月初，Astra GPT-6 带着一连串惊人的基准测试成绩上线，而真正让硅谷躁动起来的不是分数——是一段段普通人用一句话在 Blender 里搭建出整座建筑的演示视频。与此同时，美国 8 月就业报告以三倍于预期的 162,000 个新增岗位落地，让'AI 失业末日'的说法再次推迟；特斯拉 Cybercab 则把一场 3 万美元的赌局摆上台面，连 MKBHD 都押上了自己的头发。本期 Diet TBPN 30 分钟串起三条主线：通用之问的真相（为什么懂行的人在 3D 建模上看到真正的'AGI 时刻'，AI 又为何偏爱开源 Blender 与 Slack）；评估范式的反转（基准已死，单任务成本登场，按 token 便宜 13 倍的模型按任务反而更贵）；以及自动驾驶从科幻走入'个人化公共交通'的关键跃迁——Cybercab 每英里 20 美分 vs 公交 1 美元。读懂这三条线，你就抓住了 2026 年 9 月硅谷最核心的三件事。",
+    tags: ["#TBPN", "#DietTBPN", "#GPT6Astra", "#Cybercab", "#AGI", "#Blender", "#Slack", "#就业报告"],
+  },
+  {
+    url: "articles/why-world-models-could-change-robotics-3d-and-creativity.html",
+    card_class: "card-ai",
+    category: "a16z · 深度对话 · 世界模型 · 空间智能 · 3D · 机器人",
+    type: "AI",
+    date: "2026-09-05",
+    title: "世界模型为何能改变机器人、3D 与创意产业 | a16z × World Labs",
+    excerpt:
+      "Atlas 不是'又一款更好的视频模型',而是用一个全新的基础原语——新视角预测(new view prediction)——同时统一了分叉半世纪的'生成'与'重建'两条赛道。从《黑客帝国》子弹时间镜头到 3 张 iPhone 重建整个房间,从 300 张密集采集到 50-100 倍缩减,Atlas 用一个模型回答了创意、设计、机器人三件事的共同需求。World Labs 三位创始人李飞飞、Justin Johnson、Ben Mildenhall 与 a16z 合伙人 Martin Casado 完整拆解:为什么新视角预测是 AI 完备原语、为什么机器人当下最大瓶颈是数据而不是芯片、为什么'下一视角预测就是下一个 token 预测'——演化早已证明,移动的生物才需要眼睛。",
+    tags: ["#a16z", "#WorldLabs", "#李飞飞", "#空间智能", "#世界模型", "#Atlas", "#新视角预测", "#机器人"],
+  },
+  {
     url: "articles/redefining-chip-architecture-with-arm-ceo-rene-haas.html",
     card_class: "card-ai",
     category: "No Priors · 播客 · 芯片 · 半导体 · AI 基础设施",
