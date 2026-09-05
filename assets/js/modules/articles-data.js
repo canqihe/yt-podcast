@@ -1,6 +1,17 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/zeng-ming-the-brutal-truth-companies-that-will-disappear.html",
+    card_class: "card-ai",
+    category: "张小珺 Podcast · 深度访谈 · AI 战略 · 产业三阶段 · 组织变革",
+    type: "AI",
+    date: "2026-09-05",
+    title: "曾鸣：残酷的真相——会消亡的公司、「优秀」≠「卓越」与 AI 三阶段 | 张小珺 Podcast",
+    excerpt:
+      "模型竞赛进入「3T 淘汰赛」、智能体应用跌至冰点——曾鸣给出了坐标系：技术产业化必经「基础设施 → 应用爆发 → 原生应用」三阶段，2026 年只是第一阶段（token 定标）收官、第二阶段（智能体阶段）开场的年份，国民级应用或要等到 8 到 10 年后。作为基础设施的大模型公司窗口已关闭；「公司」这种组织形态会被淘汰；「优秀 ≠ 卓越」是反共识的判词；没有巨头是安全的。2 小时 34 分钟深度对谈,帮你建立理解 AI 产业终局的宏观地图。",
+    tags: ["#曾鸣", "#张小珺Podcast", "#阿里", "#智能体", "#产业三阶段", "#战略生成", "#组织先于战略", "#OpenClaw", "#neoLab", "#优秀≠卓越"],
+  },
+  {
     url: "articles/astra-reactions-jobs-print-cybercab-launch-diet-tbpn.html",
     card_class: "card-ai",
     category: "TBPN · 直播科技谈 · AI · AGI · Cybercab · 就业数据",
