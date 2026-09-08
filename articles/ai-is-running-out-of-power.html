@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="GxhChDEFPAyLOiC16RJO6Q">
+<head data-page-node-id="s1siWifBBeXmUHtRiicH8D">
+    <meta charset="UTF-8" data-page-node-id="se5ykRlTzlNBAOzNgoZpaR">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="Qc2DXF1yDa9Jg8z3FoL0Lr">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" data-page-node-id="5Hck9koPWn2qPyQncF75Og" />
+    <title>AI 正在耗尽电力：GPU 集群如何把电网逼到「耗尽」状态 | SemiAnalysis</title>
+
+    <!-- 设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css" data-page-node-id="ARD5aE0sOSlLEYNvcOakxw">
+    <link rel="stylesheet" href="../design-system/article-styles.css" data-page-node-id="5eGRQOoGAST5oDq15kaTGe">
+
+    <!-- 配色方案：橙青（方案 1） -->
+    <style>
+        :root {
+            --accent-primary: #ff6b35;
+            --accent-secondary: #00d4ff;
+            --accent-primary-rgb: 255, 107, 53;
+            --accent-secondary-rgb: 0, 212, 255;
+
+            --font-size-hero: clamp(40px, 6vw, 84px);
+            --font-size-section: clamp(28px, 4.5vw, 48px);
+            --font-size-topic: clamp(20px, 3.5vw, 32px);
+            --font-size-number: clamp(48px, 10vw, 96px);
+        }
+
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.25) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/ai-is-running-out-of-power-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.18) 0%, transparent 55%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.14) 0%, transparent 55%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .topic-detail-label {
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-xs);
+            font-size: var(--font-size-body);
+            letter-spacing: var(--letter-spacing-normal);
+        }
+
+        .topic-detail + .topic-detail { margin-top: var(--spacing-lg); }
+
+        @media (max-width: 768px) {
+            .header-content { padding: 60px 0; }
+            .title { font-size: clamp(32px, 10vw, 44px); }
+            .meta-grid { grid-template-columns: repeat(3, 1fr); }
+            .meta-grid .meta-item:last-child { display: none; }
+            .subtitle { font-size: 17px; line-height: 1.75; }
+        }
+    </style>
+</head>
+<body data-page-node-id="mDjuALrGxxw8mTYS94bU1F">
+
+    <!-- ========== Header ========== -->
+    <header class="header" data-page-node-id="EodZaChVElqKof7FgurFVa">
+        <div class="container" data-page-node-id="kbsW24RgVLaxg4vVdtpnQl">
+            <div class="header-content" data-page-node-id="aa8GGWqr8CbamFrYqpLqFA">
+                <div class="badge-wrapper" data-page-node-id="ZH6FYNHUoPNyotBeHFDqRs">
+                    <span class="badge" data-page-node-id="eDxZeCWreMg6PTqepfQj12">AI 基础设施 · 电力 · 电网</span>
+                </div>
+                <h1 class="title" data-page-node-id="vWCigF1Ye2iM36UDxAupqi">
+                    <span class="title-line-1" data-page-node-id="iOlfF9xJK4U4LGBD11mmxf">AI 正在耗尽电力</span>
+                    <span class="title-line-2" data-page-node-id="BPGYDsy9JxWlpFKfnkWCzQ">电网到了「耗尽」状态</span>
+                </h1>
+                <p class="subtitle" data-page-node-id="6QMFBDZOuSWJyKhIeK73Fc">
+                    当 AI 行业把一切都讲成 GPU 与加速器时，SemiAnalysis 用一组数字把镜头猛然拉远：2023 年全美 AI 电力需求约 3GW，2026 年突破 28GW，2030 年冲向 84GW；而在并网队列里积压的负荷请求已高达约 1 太瓦——超过整个美国电网的峰值。一个 200MW 集群提前 6 个月上线值 80 亿美元，这笔账解释了为何 xAI 会租发电厂、把数据中心建在州界上、甘愿永远多付电费也要抢先通电。本期深度解析「表后电力」、燃气轮机的真实货架、ERCOT 与 PJM 两种市场设计的截然不同结局，以及电力如何成为 AI 项目的「守门人」。
+                </p>
+                <div class="meta-grid" data-page-node-id="jNhtPVIWQUMD17q8Lg6IMa">
+                    <div class="meta-item" data-page-node-id="THkyqxBo1bQxGj2HxGjfEr">
+                        <div class="meta-label" data-page-node-id="DZ5PrXfjoSxSczui7r9Qrn">频道</div>
+                        <div class="meta-value" data-page-node-id="FRQ0CDGHsRRHhBDLGDxtWb">SemiAnalysis</div>
+                    </div>
+                    <div class="meta-item" data-page-node-id="eOwcAjYP2MP1E03zB3G50F">
+                        <div class="meta-label" data-page-node-id="WD5Nb9AJ2d7EM17f3uC9Uh">类型</div>
+                        <div class="meta-value" data-page-node-id="EdPE8nhfaOh5MUFILICYvZ">深度分析</div>
+                    </div>
+                    <div class="meta-item" data-page-node-id="VEcleFFBHidyGysU6AmaH9">
+                        <div class="meta-label" data-page-node-id="E17gXA1cRZBnwwQ6QakWVb">时长</div>
+                        <div class="meta-value" data-page-node-id="nmpVtj92aC1mLC5ToV1Y9T">52分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=nB4wFU43wck" class="cta-button" target="_blank" data-page-node-id="MPqU4vJcfhfKE4Js0PcNuk">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" data-page-node-id="gNv8VVvF0nMaxO98cBVufn">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" data-page-node-id="H2NRDaHab6a9DTriN9a90U"/>
+                    </svg>
+                    观看视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== Core Points ========== -->
+    <section class="section" data-page-node-id="gXIOzbrOlJJHbvCg5sGYYS">
+        <div class="container" data-page-node-id="fcbI9edovaKLwRuYM5g9Ev">
+            <h2 class="section-title" data-page-node-id="HCcQbGMJHk7dOQgyR73TOI">核心要点</h2>
+            <div class="points-grid" data-page-node-id="EruQDVAyeZlScjPC5KVxla">
+                <div class="point-card" data-page-node-id="XRwAbLSMR8B3UIYBxSWKAl">
+                    <div class="point-number" data-page-node-id="gL37QxI7o1LeCMrTCeuRsY">01</div>
+                    <h3 class="point-title" data-page-node-id="cGkg5AJLnblTodsxqwSroX">真正的瓶颈不是芯片</h3>
+                    <p class="point-desc" data-page-node-id="ykAWQB8ZytLlAnCKSTFx3q">GPU 集群本质是「把电力转化为 token 的工业机器」。美国 AI 电力需求从 2023 年 3GW 冲向 2030 年 84GW，而并网队列请求已超 1TW——超过全美电网峰值。瓶颈不在硅片，而在电网。</p>
+                </div>
+                <div class="point-card" data-page-node-id="XLC1gGimRU35cpuFHGwnc1">
+                    <div class="point-number" data-page-node-id="PsERJ0H5BMJyXtRMTHw3LS">02</div>
+                    <h3 class="point-title" data-page-node-id="iQHoAEnthBdA8aCfxVFPXO">时间即算力</h3>
+                    <p class="point-desc" data-page-node-id="xuPyCn9dIJcLl2UdODZoRk">一个 200MW 集群提前 6 个月上线 = 80 亿美元（每吉瓦年 100–120 亿美元收入）。理解这个数字，才能看懂行业里「租电厂、建州界、多付电费」等所有看似非理性的选择——它们都是时间套利。</p>
+                </div>
+                <div class="point-card" data-page-node-id="nHj62VmiDS1hF9YfVZw7WC">
+                    <div class="point-number" data-page-node-id="HTz6gQWdPLbhZrlycXyPG3">03</div>
+                    <h3 class="point-title" data-page-node-id="v1YdhGvrZSm26x76waUXeF">表后不是便宜，是更早</h3>
+                    <p class="point-desc" data-page-node-id="roEfniN5lZEVSgF4G97VkT">电网 99.93% 可用率靠「庞大」实现。表后电厂需靠超配冗余（N+1，Vantage 园区超配 64%）复现可靠性，故结构上更贵——它卖的不是便宜，是 18 个月时间。</p>
+                </div>
+                <div class="point-card" data-page-node-id="hO8jcvJera9mr0WJqjHCLe">
+                    <div class="point-number" data-page-node-id="kdfRyrzmkuxy26YCaU5Lev">04</div>
+                    <h3 class="point-title" data-page-node-id="B92472m0OZll8mDrDrF4L4">电网余量是新的选址地图</h3>
+                    <p class="point-desc" data-page-node-id="CrEUWgTnnLFOXLDjseTvjL">全美并网队列积压约 1TW 请求，超全美峰值；幽灵请求占 68%；可用余量 2027 年转负。靠近电力、气管线与输电走廊的土地，将比地图好看但没电的土地值钱得多。</p>
+                </div>
+                <div class="point-card" data-page-node-id="dghkJUtg1gBa7dsMEutwQQ">
+                    <div class="point-number" data-page-node-id="PRmaL8I9Tf5mFVj43DMnOd">05</div>
+                    <h3 class="point-title" data-page-node-id="FLdYlcfjVY9vj6qDfOvEpl">真正的硬约束是劳动力</h3>
+                    <p class="point-desc" data-page-node-id="98Kd5kHOBHo3kXTKGby91h">燃气轮机行业十年萧条（2001 年 GE 一家年出货超 60GW，2017–2022 全行业不足 10GW/年），叶片上游仅四家西方厂商，单晶镍合金依赖铼等特种材料——多少 AI 资本也变不出熟练工人。</p>
+                </div>
+                <div class="point-card" data-page-node-id="LSkWv4JCNocgIK2XJdfBNi">
+                    <div class="point-number" data-page-node-id="1A7RtIw0EFb4FJnFDHFMkR">06</div>
+                    <h3 class="point-title" data-page-node-id="K2TkMWOQgD3NhRG38B4DWM">市场设计决定电费结局</h3>
+                    <p class="point-desc" data-page-node-id="fQs7RObfeTN4SdQTLQA1Y7">同样吸收 AI 建设，德州电价持平、PJM 家庭月付多 25–30 美元。PJM 由模拟曲线定价的容量市场把预测误差放大成每年 160 亿美元转移。设计激励机制，而非花钱买承诺。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider" data-page-node-id="WeDVgzMyKqqfNWNr1sbI2s"></div>
+
+    <!-- ========== Topics ========== -->
+    <section class="section" data-page-node-id="ZNGXuvU8ZqEjt9ckXVWKcV">
+        <div class="container" data-page-node-id="EMW19ns5EDus2GE3fQETWX">
+            <h2 class="section-title" data-page-node-id="jHKL8j91OFPHnnc0B9HoPr">深度洞察</h2>
+
+            <!-- Topic 01 -->
+            <div class="topic" data-page-node-id="q5dZzY5J7ILEfmPH1p6k3h">
+                <div class="topic-header" data-page-node-id="O2H9PgNVGC69jUD3OL8jDS">
+                    <span class="topic-number" data-page-node-id="s2IEjE31zOAdk1Afh6CH03">01</span>
+                    <div class="topic-info" data-page-node-id="w41aVK351zZM1uAdFZumRD">
+                        <h3 class="topic-title" data-page-node-id="jWuV6BWtjW6M5pgNsiEqaq">AI 真正的瓶颈：从硅片到电网</h3>
+                        <span class="topic-timestamp" data-page-node-id="7JcDtaFmeoZx9Qr4VssvOD">00:00:00 - 00:02:54</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="lV7eFnb7hUiiZGMIcEbDI6">
+                    <div class="topic-section-title" data-page-node-id="cGrogAhPeQmzQ1xlYxmqDn">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="Knd6mdzx9vb1aF9ybYnmQo">
+                        GPU 集群本质是「把电力转化为 token 的工业机器」。AI 训练与推理最终都会变成电力需求。电网的物理增长速度，远远追不上 AI 公司按软件速度扩张的野心。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="UCFvRnPxA8GOqdhWlGl7nk">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="LtXwEfrJmQSec1wkDmmId9">
+                        <div class="topic-detail-label" data-page-node-id="6r8I49DWWQtAZFDOMRNUI3">速度错配</div>
+                        <p class="topic-detail-content" data-page-node-id="SrcusK9IjL6J4xYJuW9oDF">视频开篇给出一个理解全行业的思维模型：如果过度简化，一个 GPU 集群就是一台把电力转化为 token 的工业机器。每一次训练、每一次推理请求，最终都沉淀为电力需求。问题在于速度错配——AI 公司以软件和硅片的速度增长，电网只能以变电站、输电线路、变压器、燃气轮机、许可证的速度爬行。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="IfS44pDy81ixPKlqs6hhc8">
+                        <div class="topic-detail-label" data-page-node-id="GGc6c38BQqyBdZXXfmSOUT">陡峭曲线</div>
+                        <p class="topic-detail-content" data-page-node-id="zLWNQT76OLGBZlYbFRw2m6">SemiAnalysis 的预测数据（2025 年 12 月发布，事后证明「基本准确」）勾勒出陡峭曲线：美国 AI 电力需求从 2023 年的约 3 吉瓦，2026 年超过 28 吉瓦，预计 2030 年新增数据中心电力需求达 84 吉瓦。一个吉瓦级数据中心园区，用电量相当于一座小城市。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="GDzNL0OWhhgaKFDXy4WQEF">
+                        <div class="topic-detail-label" data-page-node-id="oR0kxZR3rhedzuRE8zPUum">决定一切的换算</div>
+                        <p class="topic-detail-content" data-page-node-id="klcg1sgY0mM9iYmNxnzVOy">真正驱动行业非理性行为的，是收入规模与时间价值的换算：一个 AI 云每吉瓦每年可产生 100–120 亿美元收入（每兆瓦每年 1000–1200 万美元）。由此推出全片最关键的数字——一个 200 兆瓦 AI 集群提前 6 个月上线，价值约 80 亿美元。内化这个数字，所有「奇怪」的行业决策都豁然开朗：为何租用而非购买燃气轮机、为何把设施建在州界上、为何甘愿永远为每千瓦时多付钱——都是为了「更早」。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="BSQPmFOxdoeV8iZBPVM9Yo">
+                        6 个月，80 亿美元。一旦你真正理解了这两个数字，这个行业里所有看似奇怪的决定都说得通了。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 02 -->
+            <div class="topic" data-page-node-id="6MQJam23lEUdbnZP072wbS">
+                <div class="topic-header" data-page-node-id="ElN4ymyM4xZ1wESLAcJzK6">
+                    <span class="topic-number" data-page-node-id="3E7zhSmlMaSvoAfEEU8dJN">02</span>
+                    <div class="topic-info" data-page-node-id="A0LTOU2sAN7L9NfanAUXjB">
+                        <h3 class="topic-title" data-page-node-id="UIGWIgbkwYpsCHCnw4VPLO">表后电力（Behind-the-Meter）：自建电厂的「桥梁」逻辑</h3>
+                        <span class="topic-timestamp" data-page-node-id="bZ0Yh3gOmHFPHFOpR7dT2A">00:02:54 - 00:05:14</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="acULOA8DSahuvH1AFNTIbs">
+                    <div class="topic-section-title" data-page-node-id="yJhSDcQOtm3HoySJAgLur0">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="VzjCj43gPaCPepjOI9E1oz">
+                        「表后电力」指数据中心把发电设施建在自己的电表之后、不再完全依赖电网供电（BYOG：自带发电）。多数情况下它不是永久脱网，而是一座连接「现在就要电」与「电网 2030 年才来」之间的桥梁。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="vp8R2uzMIe2WBkRqqRz0lm">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="0WfDKCYOl9TdGEHQ5BAAFS">
+                        <div class="topic-detail-label" data-page-node-id="5rxPwfdlnGB5lNIIASEOBi">改变关系</div>
+                        <p class="topic-detail-content" data-page-node-id="UpPFDWVluqBgkNMfac3dgA">传统模式里，数据中心接入电网，公用事业负责发电与平衡。表后彻底改变这种关系：数据中心把部分甚至大部分发电能力直接搬到场地内——燃气轮机、往复式发动机、燃料电池、电池，或「现场发电+有限电网接入」的混合系统。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="CspvSdy6bvLyBF7KjtZF8e">
+                        <div class="topic-detail-label" data-page-node-id="hURUmRHSyLjxVuiCQpApVL">桥梁而非终态</div>
+                        <p class="topic-detail-content" data-page-node-id="Fu3rm9w1BVxjyo8mtn0uOp">关键认知是：这些站点并不会永远与电网断开。典型时间线是——数据中心 2027/2028 年就要电，完整电网并网却要等到 2030 年。于是开发商索性在 AI 工厂旁边先建一座发电厂，等电网到位后再将其降级为备用设备。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="WCZsxPcmGq2HhgfhYgP5Yq">
+                        <div class="topic-detail-label" data-page-node-id="e97b1zYYUwczeFIDN7Fkyc">AI 工厂 = 制造智能的工业设施</div>
+                        <p class="topic-detail-content" data-page-node-id="G3jcokjGE2DFweJ3IWTCUx">SemiAnalysis 坦言自己曾觉得「AI 工厂」是营销话术，但如今认为这个称呼无比准确：原材料是电力，机器是 GPU 与加速器，产出是模型训练、推理、token、代码、视频与自动化。把数据中心看作「制造智能的工业设施」后，电力供应成为整个 AI 供应链中最有价值的投入便不言自明。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 03 -->
+            <div class="topic" data-page-node-id="BSQAOV5XDAPbARYfKP3DwF">
+                <div class="topic-header" data-page-node-id="esidMpuFMG1TnEPWaLMaef">
+                    <span class="topic-number" data-page-node-id="788KoDjAL9ecg7htYdmMmK">03</span>
+                    <div class="topic-info" data-page-node-id="ya8teOvDBJXQhz4rAwFifx">
+                        <h3 class="topic-title" data-page-node-id="CW9RERIUHKgAy7y6t66uxr">电网的困境：满载、幽灵请求与「电网余量」归零</h3>
+                        <span class="topic-timestamp" data-page-node-id="KTLOQndEKk4tCZu3DgnvG2">00:05:14 - 00:12:24</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="qHhOZQpxWXJlZrDZop9PfR">
+                    <div class="topic-section-title" data-page-node-id="K6Ae3oPtK8Tv1cyoFZTmYi">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="pSRSSGc5UNX69vQ8U0aHhV">
+                        美国电网没有崩溃，但它「满」了：需求以几十吉瓦涌来，获批却以个位吉瓦计。并网队列陷入「囚徒困境」式的投机堵塞，全美负荷请求已超 1TW，超过整个电网峰值。真正的约束不是能量，而是「在正确时间正确地点的硬容量」——电网余量预计 2027 年转负。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="GrMpMz5PpjsfFYD1uddSGO">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="FPHqGhnBlDY1G1jx5aC5Ws">
+                        <div class="topic-detail-label" data-page-node-id="cACZNHcoeMNdWzRzO94umJ">德州切片</div>
+                        <p class="topic-detail-content" data-page-node-id="jMioJiAeOX1hHtD0Cpo9bF">每月有几十吉瓦的数据中心负荷请求涌入 ERCOT，但截至 2026 年 3 月的 12 个月里，仅有约 2 吉瓦发电获批。全美层面，提交给公用事业和电网运营商的负荷请求总计约 1 太瓦——而全美电网峰值只有 700–800 吉瓦。请求量已超过整个系统。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="PUrZqqLf0mk8TwC1gecOaX">
+                        <div class="topic-detail-label" data-page-node-id="FFeOG1VecdMiGl9EHIw2Pw">囚徒困境与幽灵请求</div>
+                        <p class="topic-detail-content" data-page-node-id="vCgfIdD9SfRpZHig8gEiK6">并网队列正在上演教科书级囚徒困境：开发商不敢当「老实人」，于是同时向多个公用事业提交投机性请求。典型案例：2024 年 10 月 AEP Ohio 积压 35GW 负荷请求，其中 68% 连土地都没有——没有地、没有数据中心，只有一份「要电」的请求。这些「幽灵请求」堵住真实项目，加剧全行业焦虑，又催生更多投机请求，循环自我强化。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="tIJiT4QVS87Sm4QCv4yDOa">
+                        <div class="topic-detail-label" data-page-node-id="WlaDWSNl4mvdADksIgT0A0">ELCC：硬容量与铭牌容量的鸿沟</div>
+                        <p class="topic-detail-content" data-page-node-id="Hr8Us0XgWfAGj5XeNRBio2">电网每年净新增约 15GW ELCC（有效负荷承载能力），未来将升至 20GW 以上。ELCC 概念道出真相：铭牌容量 ≠ 有效容量。1GW 铭牌太阳能 ≠ 1GW 关键时刻可用的「硬电力」；太阳能看天吃饭、风能靠天气、4 小时电池只能解决 4 小时问题。AI 数据中心需要的是全天候硬电力。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="ihAoho6y4gz4VTktvDBaaB">
+                        <div class="topic-detail-label" data-page-node-id="UDgbVlvtnil8J1qkNtsxKF">电网余量（Grid Headroom）</div>
+                        <p class="topic-detail-content" data-page-node-id="F1wQa8DDHfKdYt0fN5QFpx">电网余量是电力市场覆盖自身峰值需求和备用裕度后剩余的认证容量。有余量就能接入，没余量就只能「研究、谈判、给暂定日期」。SemiAnalysis 判断：可用电网余量正趋近于零，2027 年转负——不会让全美电网崩溃，但每个新增大型负荷都变成「谁拿容量、谁付升级费、时间表延后谁担风险」的零和争夺。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="E53GjW6SkjGtHjxYf7jPJG">
+                        <div class="topic-detail-label" data-page-node-id="O3wJbzTI29UZwFZPoCtvs0">存在性延误</div>
+                        <p class="topic-detail-content" data-page-node-id="sX4rfWwcs5kor61Uz3OWVx">对 AI 实验室，电力延误是「存在性」打击：两年电力延迟 = 训练延迟、收入延迟、产品延迟、模型进步延迟。在前沿 AI，算力量如此之大，2030 年的便宜电力可能还不如 2027 年的昂贵电力。这句话是理解后面所有「非理性」行为的钥匙。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="FI1jRjPijBo2K6uOCZRHgf">
+                        需求以几十吉瓦的规模到来，获批却只有个位吉瓦。负荷请求超过了整个美国电网。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 04 -->
+            <div class="topic" data-page-node-id="SwgT54Druj2HDtRACDUxUG">
+                <div class="topic-header" data-page-node-id="Bh6A0UPexdChmkUAz0KkX8">
+                    <span class="topic-number" data-page-node-id="nrsjvWbHUQLMZec1EABYpJ">04</span>
+                    <div class="topic-info" data-page-node-id="BGAjfprCRjrvYIRJs1QwyN">
+                        <h3 class="topic-title" data-page-node-id="x3yjQ09UH5Z2BgUDnek0EO">xAI 能源教科书：租赁、轮上发电与州界套利</h3>
+                        <span class="topic-timestamp" data-page-node-id="WMoZWQFHAsOF5dxJjOzNDU">00:12:24 - 00:15:50</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="MZBdG87i1BphyKbl84anav">
+                    <div class="topic-section-title" data-page-node-id="Xrn8cZhIgEAIQcedY0c3uf">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="HGlbVIoBNGlhfH5eagDKav">
+                        xAI 用 4 个月竖起 10 万 GPU 集群，能源策略「简单到近乎冒犯」：不问电网要电，用卡车装载的燃气轮机现场发电；不买而租以绕开交期；把站点选在州界上做「许可套利」。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="uEYGdrhY3tC3cjaJbJBifx">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="YnpCXALpCMMmBXk2qC96MH">
+                        <div class="topic-detail-label" data-page-node-id="0amXr3h2RmwQkyBWYCJPFc">第一手：轮上发电</div>
+                        <p class="topic-detail-content" data-page-node-id="aagFHi0F3gKTfpAz48ysZh">用索拉透平（Solar Turbines，卡特彼勒子公司）的小型模块化 16MW 涡轮机——小到能装进标准长途卡车，运到、放下、几周内发电。16MW 按厂电力标准微不足道，而这正是要点：移动性优先于规模。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="cxGaz6Wok8Fc82rDjx59ze">
+                        <div class="topic-detail-label" data-page-node-id="zkRSgFBowCsCbyRMmU72Lx">第二手：租而非买</div>
+                        <p class="topic-detail-content" data-page-node-id="a3hrmh9Xp2ykUwHDl3zLC5">马斯克没买涡轮机，而是从 Solaris Energy Infrastructure 租赁，纯粹为了绕开设备交期；同时租下 Water Grid 的卡车燃气发动机车队。租电厂不是因为成本，而是因为买太慢。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="vbHohrZXfrA6KJ9aUzWux1">
+                        <div class="topic-detail-label" data-page-node-id="eSuMHo2O4GXMmdIEwvvF7W">第三手：州界选址</div>
+                        <p class="topic-detail-content" data-page-node-id="tVL68lg7AeFaPLblkiyRlR">需要吉瓦级发电许可时，xAI 选在两个州交界处——两个司法辖区、两个许可机构，两次获得快速批准的机会。田纳西州无法按时交付，密西西比州可以。选址即监管套利。如今 xAI 在数据中心附近部署超 500MW 涡轮机。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="i0zpwaobu7EpSRQpnQNnyv">
+                        <div class="topic-detail-label" data-page-node-id="N7gsk170wMPXAZ5QKQlDr5">行业效仿</div>
+                        <p class="topic-detail-content" data-page-node-id="RxwuyKXPbKwhKBVtABBhFD">2025 年 10 月 OpenAI 与甲骨文下了史上最大现场燃气发电订单——德州 2.3GW 电厂。市场进入三位数年增速，SemiAnalysis 逐栋追踪发现：12 家不同供应商各自斩获超 400MW 美国数据中心订单——而 2023 年这个市场几乎不存在。韩国斗山重工卡点推出 H 级涡轮机拿下 1.9GW for xAI；瓦锡兰船机给 AI 集群供电签下 800MW；最荒诞的是超音速客机公司 Boom Supersonic——宣布与 Crusoe 签下 1.2GW 涡轮机合同，把数据中心发电业务的利润当作自家 Mach 2 客机的又一轮融资。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="bg7hCyzVMa04yxYZ2c9tAe">
+                        一家超音速飞机初创公司，靠向 AI 数据中心卖发电设备来给自己融资——这就是这个市场的现状。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 05 -->
+            <div class="topic" data-page-node-id="gVFceDbIIvlDS9itGH0NAR">
+                <div class="topic-header" data-page-node-id="3r7uvv4knLFuF5qLe9ezFm">
+                    <span class="topic-number" data-page-node-id="2ep44heHdehbtrpxZGDFaE">05</span>
+                    <div class="topic-info" data-page-node-id="6xuW3gxyTdp1Id43bHfKxF">
+                        <h3 class="topic-title" data-page-node-id="yTistE9UeSRHFS7fvsloZs">技术货架：燃气轮机、往复式发动机与燃料电池</h3>
+                        <span class="topic-timestamp" data-page-node-id="5LGgkVV5pcRr8pYfVYcSq8">00:15:50 - 00:19:06</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="qrhqmyE4iDEsz2PA4gq94c">
+                    <div class="topic-section-title" data-page-node-id="AvJqe5USY7c9aJqbxFlSrJ">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="cakDd8jUotunci6WdEiuUV">
+                        现场发电设备分三大类：燃气轮机（含航改机与工业机）、往复式发动机（RICE）、燃料电池。它们各有千秋，但市场现状是「谁有货、谁交期可信，谁就赢单」——技术选型几乎让位于供应可得性。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="C9g6yzXdtll3choGw9apgU">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="vUPSh5dnBxZZNtZ8o6f8dL">
+                        <div class="topic-detail-label" data-page-node-id="2HTp7tE6UVZaiBTYYcgbsE">燃气轮机：航改机 vs 工业机</div>
+                        <p class="topic-detail-content" data-page-node-id="xSApF6A5CaCISRAELWLDwJ">燃气轮机基于布雷顿循环工作，核心差异是进口温度：越高效率越高、爬坡越快，但成本与维护也越高。对数据中心最有意思的是航改机（aero derivative）——「一台固定在地上的喷气发动机」：GE Vernova 的源自 GE 喷气发动机、三菱的源自普惠、西门子能源的源自罗尔斯·罗伊斯。航改机单机 30–60MW，5–10 分钟冷态到满负荷，全包成本约每千瓦 1700–2000 美元，交期 18–36 个月且仍在拉长。工业燃气轮机（IGT）则为固定式从零设计：5–50MW、约每瓦 1500–1800 美元、爬坡约 20 分钟。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="DHVzD5sX6V1Uug6vWUI9PO">
+                        <div class="topic-detail-label" data-page-node-id="KPXrBDlAGk89kaVQxcHexZ">往复式发动机：放大版汽车发动机</div>
+                        <p class="topic-detail-content" data-page-node-id="nRSTH7UOEtVpgdEejBZDpz">RICE 听起来好吃，但你没法吃它。一台 11MW 的发动机可超 14 米长。高速型约 1500 转/分、3–5MW；中速型约 750 转/分、7–20MW。爬坡约 10 分钟，每千瓦 1700–2000 美元，比涡轮机更耐受热量、灰尘与脏燃料；运行温度仅 600–700°C（对比涡轮机进口温度），大幅减少特种合金需求——这个细节在后面「上游瓶颈」处会兑现成关键伏笔。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="zooORQ04YeLBEEkBgBP7fc">
+                        <div class="topic-detail-label" data-page-node-id="YzBRGQ0cE0yJrvdjj2NC8T">燃料电池：Bloom Energy 的无燃烧路径</div>
+                        <p class="topic-detail-content" data-page-node-id="qR0XyKR1KjWW8R1bI1mcTa">固体氧化物燃料电池发电时完全没有燃烧：氧离子穿过陶瓷电解质与甲烷剥离的氢结合，产出水、CO2 和电。无燃烧意味着除 CO2 外几乎没有空气污染，EPA 许可大幅简化，可安装在写字楼与人口密集区旁。代价是成本：每千瓦 3000–4000 美元（约为涡轮机两倍），且单个电堆仅 5–6 年寿命、占服务成本约 65%。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="YGCflE1AKu7q1mA9zcjTi4">
+                        <div class="topic-detail-label" data-page-node-id="pSRUAeHnJSBmIC4rneoyeW">杂烩式电厂</div>
+                        <p class="topic-detail-content" data-page-node-id="i9C88LVLih6vKGYbUtbV0G">理论上开发商应精心选型，实际上「谁有敞开的订单簿和可信交期，谁就拿单，几乎无视规格」。Meta 与 Williams 在俄亥俄合建的表后电厂「Socrates South」是活证据：三台 Solar Titan 2050 IGT + 九台 Solar Titan 130 + 三台西门子 SGT-400 + 15 台卡特彼勒 3520 快启发动机——三家制造商、四条产品线的大杂烩。这是「我们只要能按时到货的任何东西」的设计模式。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 06 -->
+            <div class="topic" data-page-node-id="PgVwAS9p0IK6QWf6Yt4UIV">
+                <div class="topic-header" data-page-node-id="Cn9U4ft1C1qJHpPMKCacKQ">
+                    <span class="topic-number" data-page-node-id="aBPa4oZyKbbfzaRZCGR3ex">06</span>
+                    <div class="topic-info" data-page-node-id="Kd8oiq4hUxMQS7j8DAdpsC">
+                        <h3 class="topic-title" data-page-node-id="mHeyJwULEALGwnZCVMxB3h">为什么不更便宜：冗余的超配经济学</h3>
+                        <span class="topic-timestamp" data-page-node-id="5LCSUCYrCiAIE5L62GF3Fg">00:19:06 - 00:25:20</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="87r52Z1RLEsApURfBrpnw3">
+                    <div class="topic-section-title" data-page-node-id="tFe38ueyZPAUOA163ftHVy">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="A0OCGSyNG9Ry5QEhfwmJce">
+                        美国电网 99.93% 的可用率靠「庞大」实现。表后电厂要用一台厂服务一个客户复现这种可靠性，唯一办法是过度建设（至少 N+1），这让表后电力结构性更贵。它卖的不是便宜，是「更早」。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="Fp575wFbIvLxdq3c2CmdsB">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="hDtdVxw9TUM6dFvQ1oq1sT">
+                        <div class="topic-detail-label" data-page-node-id="JDcOM1oLeJeUyWRGK5jIlT">电网的庞大秘密</div>
+                        <p class="topic-detail-content" data-page-node-id="o58Bht1OeUrBbB3sDwgjM7">电网 99.93% 可用率的秘密在于规模：数千台发电机、数百条输电线路、市场机制实时平衡——一台跳闸还有千台顶上。转到表后，唯一途径就是超配：供应商通常坚持 N+1（一台故障不影响出力），更稳妥的 N+1+1（还能轮换计划维护）。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="D0rbPazA8HwkYElcWgJRG8">
+                        <div class="topic-detail-label" data-page-node-id="DrpPgMVDkBYCHeUrhh4M7U">数字说话</div>
+                        <p class="topic-detail-content" data-page-node-id="dH4oEjT3bbTw76T592EJ3U">一个 200MW 数据中心若用 11MW 往复式发动机：部署 26 台共 286MW 铭牌，正常时 23 台跑 80% 负荷，一台故障其余 22 台升到 82%、一切如常，3 台保持空闲。若用 30MW 航改机：9 台共 270MW 铭牌，7 台以 95% 最优效率运行。Vantage 在德州 Shackelford 县 1.4GW 园区部署了 2.3GW 系统——64% 超配，其中约 1.4–1.5 倍是德州并网站点也有的冷却与电力电子标准余量，其余 10–17% 是纯冗余、纯保险。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="rtCdJqIjx1e5fMCfBRuNF4">
+                        <div class="topic-detail-label" data-page-node-id="Grdp5nCEclREZhuQvCZHnZ">AI 训练带来的惯性难题</div>
+                        <p class="topic-detail-content" data-page-node-id="DSejh2ZKfG66qWF7bAD0xL">AI 训练负荷亚秒级兆瓦级波动，电力系统靠惯性（重型旋转物体的稳定效应）吸收波动。表后站点必须自行加装惯性设备：同步调相机、飞轮、电池合成惯性。Water Grid 给发动机舰队配同步调相机，Bergen 捆飞轮，Axiom AI 用特斯拉 Megapack。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="wmkLn8uUxoRMy7jXo7gAIj">
+                        <div class="topic-detail-label" data-page-node-id="7CKJggY4weMfQPLikkFnOD">低可用率的新经济账</div>
+                        <p class="topic-detail-content" data-page-node-id="CsoQloXp33ofAg5MmsNZCL">AI 也在改写传统可用率教条。训练负载可容忍较低可用性——只要系统围绕检查点与恢复设计，且大型 GPU 集群本身足够不可靠；推理系统还能绕开故障节点。冗余恰是表后电力最贵的部分，若租户接受较低可用率，经济账彻底改变。Abilene 与 Memphis 的训练集群完全没有柴油发电机备份——不是减少，是压根没有。桥梁电力模式：先自发电跑起可容忍低可用率的工作负载，电网到位后把电厂降级为备用。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="s2Z1kw0SaiiWz2AgkzLx4d">
+                        表后并不更便宜，而是更早。公司在明知的情况下支付溢价来购买时间。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 07 -->
+            <div class="topic" data-page-node-id="Gte4UHlOZh49VLfyUa1SsD">
+                <div class="topic-header" data-page-node-id="AIFRm8AxpOco2g36nP4wFl">
+                    <span class="topic-number" data-page-node-id="4Dr9QHamIvvlGAcM4lBgBA">07</span>
+                    <div class="topic-info" data-page-node-id="zWXwLVHQJgDVF2CAQViBXW">
+                        <h3 class="topic-title" data-page-node-id="Vbl9WlAv5EcednEtTlpZGz">被低估的硬约束：劳动力</h3>
+                        <span class="topic-timestamp" data-page-node-id="X9wwTyFnDFadwJ6wtfFltj">00:25:20 - 00:32:34</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="hQxww7UQfq2cUHkAaFubg6">
+                    <div class="topic-section-title" data-page-node-id="GYc5TEeIj4BwnYqSFhIhmC">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="lkxQXM6UXXEoOicQaK9Ehw">
+                        反驳「表后逻辑」的最强论据不是排放或资金成本，而是人。发电厂不是买来的产品，而是必须 7×24 运营的组织；燃气轮机行业经历多年萧条后，熟练工人断层无法靠资本快速重建。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="CT375pqhDQRStwhLN6X31x">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="WygwfzDp5HhHFiA53t1M8I">
+                        <div class="topic-detail-label" data-page-node-id="uKXlKOAFVww76BVjkhW7eI">窒息式算账</div>
+                        <p class="topic-detail-content" data-page-node-id="BRMXr6rYZEysPRLkxU86jh">Vantage 的 Shackelford 县项目，2.3GW 高速发动机系统若为 4–5MW 级机组，一扇围栏后约 500 台发动机。按每 2000 运行小时常规小修计算，500 台连续运行 = 每年超 2000 次维修事件 = 每周约 40 次、周周如此。那不是维护合同，是「一支常设工业劳动力大军」。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="wPRlq32EkUfwP4xr1J5Feu">
+                        <div class="topic-detail-label" data-page-node-id="3eujD99TkSQCXrPiauCCaL">进口整支工种</div>
+                        <p class="topic-detail-content" data-page-node-id="EsVdesGHiaSwr6oBLDYt6g">驻扎的地方——德州 Shackelford 县、Abilene、俄亥俄乡下——被选中正因为「空」：地便宜、许可快、没邻居抗议。同样的空，意味着当地没有燃气发动机机械师或高压电工可招，要把整个技术工种进口到一个从未有过这种人才的县。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="nIHfeCpBpXjIx8eNtT4BVU">
+                        <div class="topic-detail-label" data-page-node-id="cfmbW9pKCBCSAbdkydeTC5">十年断层</div>
+                        <p class="topic-detail-content" data-page-node-id="IwjmkVDvp0njHc60iHxvdX">这支劳动力在任何地方都没有盈余。2017–2022 年，整个燃气轮机行业处于年产不足 10GW 的谷底——而 2001 年仅 GE 一家就出货超 60GW。整整一代涡轮机技术员在萧条中退休或转行。制造商承认：GE Vernova 承诺扩产至年产 24GW——不过是回到它 2007–2016 年的水平；西门子计划从约 20GW 扩到 30GW 以上，且不扩大工厂占地——扩张靠人而不是厂房，硬约束是劳动力。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="zFYtM0rQGwpTsw99GwDpBt">
+                        <div class="topic-detail-label" data-page-node-id="7vIOnHlWOncHuvw4plOqxv">叶片上游更紧</div>
+                        <p class="topic-detail-content" data-page-node-id="kvlvhLfmnFVqJUdm6ZwKxt">涡轮机叶片与导流叶片是工业制造皇冠上的明珠：含铼、钴、钽、钨、钇的单晶镍合金，公差极严。西方产能集中在四家公司——Precision Castparts、Howmet Aerospace、Consolidated Precision Products、Doncasters。规模只是客户的一个零头，同时挨了涡轮机萧条与 COVID 航空衰退两记重拳，扩张意味着从零培养专业人员，而它们私下怀疑需求可能是泡沫。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="7TRyG6wxILFvMAm1ufxVLQ">
+                        <div class="topic-detail-label" data-page-node-id="hi63730NFrVajfsAQT9PBh">反驳与诚实的边界</div>
+                        <p class="topic-detail-content" data-page-node-id="yD9UlrmC1D53dFquPv442m">反驳同样有力：劳动力是成本约束而非时间线约束——表后买的就是时间线。每兆瓦年 1000–1200 万美元收入，一个吉瓦级 AI 园区可出价压倒美国任何雇主抢技术员。「能源即服务」让 Water Grid 类公司跨站点分摊劳动力成本。500 台小发动机是噩梦，10 台航改机不是——这正是航改机/IGT 虽效率较低却受优势的真实原因。不过，劳动力约束真正咬人的地方在上游——铸造厂与重型涡轮机装配线，那是整个建设速度的物理上限。结论：表后电力结构性贵于电网，不是暂时的——是结构性的时间套利。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="lBDCXNSjJMPnpSUhfwIRlc">
+                        你也许能绕过电网，却绕不过工人。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 08 -->
+            <div class="topic" data-page-node-id="IEzrIGCGGd9tjL73MusRD5">
+                <div class="topic-header" data-page-node-id="kfKOJQBDQEAqari60o2073">
+                    <span class="topic-number" data-page-node-id="7BiUHCx9WhrYcWBdFg6Wwc">08</span>
+                    <div class="topic-info" data-page-node-id="C6n9S0mLitZJBDAyNhaAQt">
+                        <h3 class="topic-title" data-page-node-id="OaKslonh6b1OE47WDYJ7ak">德州试验场：ERCOT 的制度气质与混合结构</h3>
+                        <span class="topic-timestamp" data-page-node-id="jyMvafz7m8UHPblgAdxfqC">00:32:34 - 00:35:26</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="ZwvjwbXH4sL8f5GeXpjLsh">
+                    <div class="topic-section-title" data-page-node-id="caa0oM8gU79Ds2qKm3nZOH">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="oAFjhHA5OnFu7S524aBTtB">
+                        ERCOT（纯能量市场）正在成为表后-并网混合结构的试验场，核心概念是「站点能从电网取多少电」。面对翻倍暴涨的负荷预测，ERCOT 罕见地对自家数字主动打折——「在铲子动土前，不信开发商声称的数字」。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="SC1fTH2Ca3oPi0Ffqy8qBg">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="y1G88fzMG8Q9S4vWwsLf5n">
+                        <div class="topic-detail-label" data-page-node-id="AhQGpUbT7XlIiVLfXTywF5">混合结构的逻辑</div>
+                        <p class="topic-detail-content" data-page-node-id="JWVwP2hr36Hhjzm19NGIFl">1GW 需求的站点，电网可能只能支撑 100MW，那它就取 100MW、其余现场发电，随发电上线逐步爬坡；发多了可向电网输出盈余，电网紧张时则削减取电。背后是一串市场设计难题：谁能接入、谁能取电、紧急时谁被削减、谁付升级费、为私有数据中心新建的发电能否不伤及其他电网用户——净计量、自带发电、取电受限私用网络等结构名目繁多，底层逻辑统一：电网给不了全额负荷，数据中心自带发电并接受取电规则。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="TMF8YRuzK9x6pGfI9fduJW">
+                        <div class="topic-detail-label" data-page-node-id="7gDHmOH2w04QtAIjRwyla7">不信自己数字的制度气质</div>
+                        <p class="topic-detail-content" data-page-node-id="CxX11IXIGGrJLDxOO6Yqd8">ERCOT 的真正看点在于制度气质。2025 年 4 月，它发布长期负荷预测：2030 年潜在数据中心负荷高达 77.9GW——前年展望还只有 29.6GW，一次修订翻了一倍多。然后它做了一件罕见的事：不信自己的数字。2025 年 5 月的容量报告中主动打折——一般性请求按 49.8% 折算、有官员认证的请求按 55.4% 折算、所有投运日期推后 180 天。潜台词：「在铲子真正动土之前，我们不会按开发商声称的数字做规划。」</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 09 -->
+            <div class="topic" data-page-node-id="Sys7yfXRjijNtyDdbVYqBq">
+                <div class="topic-header" data-page-node-id="fkgMjBkY07oR1h4LiDlCXk">
+                    <span class="topic-number" data-page-node-id="Pk63aNCgEbgYkkcDxSbuSm">09</span>
+                    <div class="topic-info" data-page-node-id="KssNNVtEoILG51boV8HG1L">
+                        <h3 class="topic-title" data-page-node-id="JrCV36582KEjBAnSBAHJCG">电费政治学：ERCOT 与 PJM 的两种命运</h3>
+                        <span class="topic-timestamp" data-page-node-id="eyr4YCEzvs8AQy9GHqCTLN">00:35:26 - 00:45:22</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="NOw1B8acRnBg349WzfVRwG">
+                    <div class="topic-section-title" data-page-node-id="fBp887Hqc3xXEq4clAi8qj">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="5cFzPsP5qAkwLY3099U5JH">
+                        AI 数据中心是否推高家庭电费，取决于你住在哪个市场：吸收同等 AI 建设的德州价格自 2023 年基本持平，而 PJM 区域 2026 年家庭账单预计上涨约 15%。差异不在 AI，而在市场设计——PJM 由模拟曲线定价的容量市场，把预测误差放大成了每年 160 亿美元的转移。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="tvoytClioRo24wL9lPJPZq">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="UFRha0W2anyXdtHM4Dhg5C">
+                        <div class="topic-detail-label" data-page-node-id="S0GUCwt8bCJ2kDPqZ0aTe9">政治背景</div>
+                        <p class="topic-detail-content" data-page-node-id="D2wFKJF4RKBm232RMh1bc5">2025 年 6 月新泽西州电费一夜跳涨约 20%，数据中心成为众矢之的（这个靶子很冤，该设施超 85% 电力自产）。但真实答案高度地域化：PJM 区域 6700 万居民 2026 年账单预计较「前 AI 时代」上涨约 15%，德州价格却基本稳定。同样的技术、同样的需求增长、完全不同的结果——变量不是 AI。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="R77hWtiwECfVOvQqlZGg10">
+                        <div class="topic-detail-label" data-page-node-id="Un1iGfJ7kmuTIj8xBDiwgH">容量市场机制</div>
+                        <p class="topic-detail-content" data-page-node-id="ToxLuYe46jjFgfGLZ2BeCe">电费账单含四部分：能量、输配电、税费附加——以及容量。容量是付给电厂「闲置待命」的钱，为每年可能只持续几小时的尖峰事件。ERCOT 没有容量市场（纯能量型）：备用紧张时实时电价从每兆瓦时 10–50 美元飙向 5000 美元上限，稀缺定价为调峰电厂和电池买单。PJM 则是远期拍卖制：年度「基础剩余拍卖」提前两年定下全区域统一容量价——从每兆瓦天 29 美元涨到 270 美元（一年 9.3 倍），部分地区近 450 美元，若非联邦设 329 美元上限还会更高。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="Up9zqf5ZxxybCDcayGaVxK">
+                        <div class="topic-detail-label" data-page-node-id="BM3csd5wBNH8CCU8KeT35z">每月多付 25–30 美元</div>
+                        <p class="topic-detail-content" data-page-node-id="rqXtg92mvCuD8AgKamSgCE">329 美元/兆瓦天 ÷ 24 小时 × 典型 40% 负荷系数 ≈ 每兆瓦时 34 美元（每千瓦时 3.4 美分）× PJM 家庭月均 880 千瓦时 ≈ 每月 30 美元。且拍卖已成交，不是预测：PJM 家庭将比 2024 年每月多付 25–30 美元；总转移规模 2025–2028 四年每年约 160 亿美元，对比 2024 年的 20 亿。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="Gjc2DTMkDVj2CTejm4jTk5">
+                        <div class="topic-detail-label" data-page-node-id="3z8rkJgTF6vDoyiMHpDbzR">罪魁是模拟</div>
+                        <p class="topic-detail-content" data-page-node-id="aKTMITXcJF8Bj9nUv6OZuP">PJM 独立市场监测的表面数据「吓人」：预测中剔除所有数据中心，峰值负荷降 7927MW、容量支付削减 93.3 亿美元（降 64%）。但注意那句话的构造：「把数据中心从预测中剔除」——因为 PJM 容量价根本不是市场定的，是模拟定的：出清价取决于「可变资源需求曲线」——由 PJM 内部预测模型构建的人工供需曲线，而非竞标者判断，且极度敏感。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="DpLRrv63VUAg0aCUtKrPda">
+                        <div class="topic-detail-label" data-page-node-id="a0HVjbBO4GrzFAHLpwajcp">预测能力欠佳</div>
+                        <p class="topic-detail-content" data-page-node-id="gBwwSVlfLUJNJHNJGM2JJu">PJM 2024 年下调数据中心负荷预测 800MW，2025 年再下调 1.1GW。SemiAnalysis 基于逐季追踪 5000+ 座设施的模型判断 PJM 预测仍偏高——不是因为 AI 需求不真实，而是数据中心总是晚点：施工延期、GPU 交付延期、新硬件平台 bug 多、满利用率比预期慢。交叉验证真实市场：PJM 西部枢纽远期电价 2028/2030 窗口仅涨 12–20%，ERCOT 远期同期涨 11–17%——两个真实能量市场彼此认同，是那个容量模拟成了离群值。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="W99ukQUb4lRVNAuBq5YOlH">
+                        <div class="topic-detail-label" data-page-node-id="oKu9fpT7OxR9VY9FDJfV6i">供给侧的鬼</div>
+                        <p class="topic-detail-content" data-page-node-id="n5N1skabMEF23v0Z9akYvH">PJM 可报容量 4 年降约 35GW，其中近 20GW 来自 PJM 自己的方法论变更——仅仅改变天然气电厂的核算方式，就让 14GW 一夜蒸发，没有一家电厂关闭。纸面变少的供给 + 纸面变多的需求 + 一条把小误差放大成几十亿美元的曲线 = 160 亿美元账单。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="UacV8M0dUxvR0K6RLvAoww">
+                        <div class="topic-detail-label" data-page-node-id="Yz7A9ONQavf4uJ9rGpGfdG">冬季风暴「蕨」的压力测试</div>
+                        <p class="topic-detail-content" data-page-node-id="DMPvzePCWCDXueNuZmhY2W">2026 年 1 月冬季风暴「蕨」完成压力测试，结果充满讽刺：ERCOT 侧需求低于预测、未触发应急程序、实时电价峰值仅约每兆瓦时 300 美元；PJM 侧却损失约 21GW 发电（占拍卖机队 15%）——冻坏设备与燃料交付失败，全系统均价每兆瓦时 700 美元、数据中心密集的弗吉尼亚 Dominion 区域高达 1800 美元，能源部被迫依《联邦电力法》202C 条发布紧急命令，调用约 35GW 位于数据中心与工业场所的备用发电（按规则这些机组本无资格参与拍卖）。9.3 倍的涨价本该买到可靠性，但它没有。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="2RBmzFVt88Hz57zKMmyHaO">
+                        <div class="topic-detail-label" data-page-node-id="iwh980LFIQrJ5sjKPYlRGG">机制设计的教训</div>
+                        <p class="topic-detail-content" data-page-node-id="gBZKIfYTEXYFVS9npcVOOI">结构性原因「简单到尴尬」：PJM 电厂无论是否出力都拿钱，ERCOT 电厂只在稀缺时真正发电交付才赚钱——猜猜哪种安排会让运营商主动防冻改造设备？而那个 35GW 应急来源，很大程度上正是行业自己的表后机队——紧急时刻它成了电网资产。结论：PJM 家庭确实多付了钱、数据中心负荷预测确是最大推手，但把预测变成 9 倍价格飙升的是市场设计，不是物理缺电。问题不是 AI 用了电，而是一个把预测误差变成 160 亿美元家庭账单的模拟，一个为并未获得的可靠性付钱的容量机制。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="CGGHNDMnHzzvYL7KdYa1ed">
+                        在 PJM，电厂无论是否出力都能拿钱；在 ERCOT，电厂只有真正发电交付才赚钱。猜猜哪种安排会让运营商主动防冻设备？
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic" data-page-node-id="0YaXZK5wtIx3aAvimltVAO">
+                <div class="topic-header" data-page-node-id="STOlt6qgoLndg1P2YFXckw">
+                    <span class="topic-number" data-page-node-id="Ek8eFtVe9njvoZYJkFz9sp">10</span>
+                    <div class="topic-info" data-page-node-id="pl9umy7QNX3i2vyJhoFzHk">
+                        <h3 class="topic-title" data-page-node-id="uAl7WQLSyKvEPja2OGdqW8">新的 AI 供应链：从 GPU 到涡轮叶片的约束迁移</h3>
+                        <span class="topic-timestamp" data-page-node-id="0Qmv9oeVtrKInTWwr9d9Id">00:45:22 - 00:50:05</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="GFacC7jTEQQas9QvPBLjwt">
+                    <div class="topic-section-title" data-page-node-id="uLroEzGHVclt4PhHuE5rL5">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="4EKFqyyc9WaJpSiabg5XWm">
+                        AI 供应链已扩展到燃气轮机、变压器、变电站、输电等重工业环节；赢家不只有芯片最好的公司，还有能交付「为芯片供电设备」的公司。约束不断上移：GPU → HBM → 封装 → 电力 → 涡轮机 → 叶片 → 工人 → 特种材料，甚至触及中国稀土出口管制。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="5mYDBRXgrY5eNWFossG9AD">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="NJ2JLulcpsBjUYB1EF6PEX">
+                        <div class="topic-detail-label" data-page-node-id="kVfHPTPBGVK3qOrGRlpWFt">重工业被拉进来</div>
+                        <p class="topic-detail-content" data-page-node-id="FEqWzxxR1zPm6M3CgIwbZE">AI 供应链版图改写：不再只是英伟达、AMD、台积电、SK 海力士与光模块，还包括燃气轮机、燃料电池、往复式发动机、变压器、开关设备、高压断路器、变电站、电力电子、冷却系统、工程、许可专家与并网专家——「AI 正在把重工业经济体拉进来」。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="hVJraSg9d5EpgMCusEaT5Z">
+                        <div class="topic-detail-label" data-page-node-id="SptJDq1M83LdFV2YxjPt5y">约束链一路向陌生处延伸</div>
+                        <p class="topic-detail-content" data-page-node-id="MBMMy8avqTdfSWiUfCQOaX">GPU → HBM → 先进封装 → 电力 → 燃气轮机 → 涡轮叶片 → 熟练工人 → 铼、稀土、单晶镍——视频特别点出：铼就在中国的稀土出口管制清单上。AI 建设如今对中国稀土政策有了依赖——不是为了芯片，而是为了电力。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="CCJBgaDOoMXZdZjGBXb8xF">
+                        <div class="topic-detail-label" data-page-node-id="yjSieuyRplZLShOyo2zlZt">创造性回收</div>
+                        <p class="topic-detail-content" data-page-node-id="i3sGpTeaQpjJQKXA3Yhuxh">Pro Energy 的 PE 6000 项目把退役波音 747 的发动机核心改造成航改涡轮机，规格近乎 GE LM6000——把喷气客机变成 AI 发电厂；鉴于中速发动机多由百年船机厂制造，下一个问题是「何时有人拆退役船舶的发动机」。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="goOFP3icqmA1T2Kp4eayei">
+                        <div class="topic-detail-label" data-page-node-id="NEj7MeC1ifRTF8Tr6Mdenr">电力是过滤器</div>
+                        <p class="topic-detail-content" data-page-node-id="XwneIeWHw9VCrAVjKkHyCI">一家公司宣布 5GW 园区易，真正的问题是「项目有没有可信的电力」——电网路径、现场发电、气管线、涡轮机/变压器锁定、空气许可、并网可信性？连以快著称的德州也已搁置至少一个吉瓦级起步设施。没有这些，一个巨型 AI 园区只是一堆没用的硅。钱重要、GPU 重要、土地重要、冷却重要，但电力是守门人——拿不到电，项目就不会变成算力。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="fdZ8kPlf0vCwmaaMpDaQYm">
+                        <div class="topic-detail-label" data-page-node-id="6TXYtG8M9ZZ936Xz9WwgF5">天然气是桥梁</div>
+                        <p class="topic-detail-content" data-page-node-id="dk73p0SNlxfDGz7qfaTr3f">许多方案涉及天然气，这让有激进气候承诺的公司难堪。「快、可靠、清洁、便宜」四者常互相冲突；可再生能源与电池是答案的一部分，但吉瓦级 7×24 硬电力在近期时间线上仍极难绕开可调度发电。SemiAnalysis 的定位很克制：天然气未必是最终答案，而是——让 AI 基础设施先增长，等电网、输电与更清洁的硬性资源赶上。许多买家会选择「确定性」而非「优雅」。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 11 -->
+            <div class="topic" data-page-node-id="MOgq2u5ezO8RMXSf2W9kK0">
+                <div class="topic-header" data-page-node-id="JwMCm8Oy99RcHPT4iLTcmf">
+                    <span class="topic-number" data-page-node-id="4AdfDDplF0ADy3aITUPpb3">11</span>
+                    <div class="topic-info" data-page-node-id="Hb6JjLq4SMvjBp7XyFqIpR">
+                        <h3 class="topic-title" data-page-node-id="0Z0n00ye8ghEV8OZZ8u15M">AI 的工业化终局：瓶颈从硅片向能源</h3>
+                        <span class="topic-timestamp" data-page-node-id="Nbp4PppAl9d4ZA6UM2x2gu">00:50:05 - 00:52:23</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="9X51kcK8IQVm18QaDQDFRi">
+                    <div class="topic-section-title" data-page-node-id="QTNHa3EIIzPhjCRUUiOGpy">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="wlfk0qJOUFYdJsgDa06uDD">
+                        AI 热潮正从软硬件故事变成产业战略问题：模型能否扩展，取决于物理世界能否同步扩展。预测称 2028 年起美国超半数新增数据中心靠表后供电，表后设备市场 2029 年或超每年 50GW——最大的 AI 玩家正变成能源买家乃至「身不由己的电力公司」。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="5TAaBH7DEYujqtrR3c4dM9">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="slWbDh7bzbqE5eQGAnzGXL">
+                        <div class="topic-detail-label" data-page-node-id="C3QEG6qd3lXtr0NY65XuYj">产业战略拷问</div>
+                        <p class="topic-detail-content" data-page-node-id="Tt7k7XqVJa5Lz2idznB75J">收尾把问题升维成一组「能否」的拷问：能建足够的变电站吗？能采购足够的变压器吗？能批准足够的发电吗？能输送足够的天然气吗？能扩展足够的输电线路吗？能培训足够的人来运营这一切吗？而且——做这一切的同时还能保护电网可靠性与家庭电价吗？世界上最先进的软件，如今依赖世界上最重的部分基础设施：混凝土、钢铁、铜、光纤、水、燃气轮机、变压器、输电线路——以及知道如何让这一切运转的人。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="yRCri6QLm8DJP6IHcttch5">
+                        <div class="topic-detail-label" data-page-node-id="lgXZCxn6Dgd1gzET67wDsf">量级预测</div>
+                        <p class="topic-detail-content" data-page-node-id="5jWkeD8Sk3LazxPWXzTdu8">SemiAnalysis 的预测给出量级感：若判断正确，2028 年起美国超半数新增数据中心将由表后供电，表后设备市场 2029 年或超每年 50GW。巨变在于：最大的 AI 玩家不再只是云客户与芯片买家，而正变成能源买家、基础设施开发商、某些情况下「几乎身不由己的电力公司」。视频抛出留给观众的思考题：劳动力约束是会真正封顶这场建设的东西，还是只是「足够的钱就能解决」的问题？它会对美国劳动力市场产生持久影响吗？</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="iO7piHcJmFIPXwJEZabGkW">
+                        AI 的前沿不只通过算法和芯片推进，它正穿过电力市场推进——瓶颈正从硅片向能源。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Takeaways ========== -->
+    <section class="section" data-page-node-id="F9rGtzkI53lJdXrDwoGm73">
+        <div class="container" data-page-node-id="eHSiMkB7Aeeglu1jIi9pyY">
+            <h2 class="section-title" data-page-node-id="OLdYD4AidkHb2725UlCUal">精华收获</h2>
+            <div class="takeaway-grid" data-page-node-id="egv0Rp5TvOoPfTVelpFM0H">
+                <div class="takeaway-card" data-page-node-id="0n0d3Z2TmFdP6K5EHaogOF">
+                    <div class="takeaway-emoji" data-page-node-id="AW3J7JuPHA2L7sNdBvvJcx">⚡</div>
+                    <h3 class="takeaway-title" data-page-node-id="MDiUz4CmSQnSplsZb0yYjE">时间即算力</h3>
+                    <p class="takeaway-desc" data-page-node-id="2dJhWV6Dg8nubQLRMa1UgP">一个 200MW AI 集群提前 6 个月上线价值约 80 亿美元（每吉瓦年 100–120 亿美元收入）。理解这个数字，才能看懂行业里「租电厂、建州界、多付电费」等所有看似非理性的选择——它们都是时间套利。</p>
+                </div>
+                <div class="takeaway-card" data-page-node-id="sC4egzZ2dSPbwADElwj3Wk">
+                    <div class="takeaway-emoji" data-page-node-id="O0k6JZxPvoe0IaTkGCm1cM">🏭</div>
+                    <h3 class="takeaway-title" data-page-node-id="79ejYt6I96fiJzQ3RTdXgW">表后不是便宜，是更早</h3>
+                    <p class="takeaway-desc" data-page-node-id="oVCltp6CNw4lhhAt9O7Dpr">美国电网 99.93% 可用率靠「庞大」实现，单站自发电必须靠超配冗余（N+1，Vantage 园区超配 64%）复现可靠性，故表后电力结构性更贵——它是花大价钱买 18 个月时间，而这笔账在 AI 行业成立。</p>
+                </div>
+                <div class="takeaway-card" data-page-node-id="YXVfA7lhVEGRffWOHtRfE3">
+                    <div class="takeaway-emoji" data-page-node-id="8c0o4iVsko1ZVqVLqAYrfn">🗺️</div>
+                    <h3 class="takeaway-title" data-page-node-id="Mv7zJIdUqmJkc2zAoZ7OvG">电网余量是新的选址地图</h3>
+                    <p class="takeaway-desc" data-page-node-id="mZ2l69A9gvY96CaKaAJWg7">全美并网队列积压约 1TW 请求（超全美峰值），幽灵请求占 68%；可用余量 2027 年转负。此后「靠近电力、气管线与输电走廊的土地」比地图好看的土地值钱——电力地理将重塑 AI 基建布局。</p>
+                </div>
+                <div class="takeaway-card" data-page-node-id="ZMlNCAX3A0Fo1G3vsy8r29">
+                    <div class="takeaway-emoji" data-page-node-id="NY67kFEycLxx55hNHDKXg4">🧱</div>
+                    <h3 class="takeaway-title" data-page-node-id="hdyMK9m4brtDFndAG0z0Kz">真正的硬约束是劳动力</h3>
+                    <p class="takeaway-desc" data-page-node-id="obqsbbpLHL58kY3CDbni0P">燃气轮机行业萧条十年后人才断层（2001 年 GE 一家年出货超 60GW，2017–2022 全行业不足 10GW/年），叶片上游仅四家西方厂商，单晶镍合金依赖铼等特种材料——「多少 AI 资本开支也变不出熟练工人」。</p>
+                </div>
+                <div class="takeaway-card" data-page-node-id="sltfgsFaL5sIkWyP8PKkN1">
+                    <div class="takeaway-emoji" data-page-node-id="Ox9sxa7EcNghNEFfApus4D">💰</div>
+                    <h3 class="takeaway-title" data-page-node-id="Ejg7jcHW2iElYjM3vO8uiB">市场设计决定电费结局</h3>
+                    <p class="takeaway-desc" data-page-node-id="kPF7wgvKkgyhFR1wwcjcPy">同样吸收 AI 建设，德州电价持平而 PJM 家庭年多付数百美元——PJM 由内部模拟曲线定价的容量市场把预测误差放大成每年 160 亿美元转移，且「为并未获得的可靠性付钱」（风暴中损失 15% 机队）；ERCOT 稀缺定价反而激励运营商防冻设备。</p>
+                </div>
+                <div class="takeaway-card" data-page-node-id="cOlMEZWoUuBZgbyUKzb1aV">
+                    <div class="takeaway-emoji" data-page-node-id="kwkqO4QgYEtd2eVLnGABDG">🌐</div>
+                    <h3 class="takeaway-title" data-page-node-id="F34PB32neDN6DKlsAffDNv">AI 供应链已延伸到重工业与中国稀土</h3>
+                    <p class="takeaway-desc" data-page-node-id="h05W8ODEdyIvh06dySY5s5">约束链从 GPU → HBM → 封装 → 电力 → 涡轮机 → 叶片 → 工人 → 特种材料一路迁移，铼已在中国稀土出口管制清单上——AI 对中国稀土政策的依赖不再因芯片，而是因电力。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Footer ========== -->
+    <footer class="footer" data-page-node-id="5ErHQurntO1wKV49YyS9q9">
+        <div class="container" data-page-node-id="pWYqkVjRHh3BWt8g3qpb3E">
+            <h3 class="footer-title" data-page-node-id="EJFU2uOyGBYUYC9ia8rLW6">关于本文章</h3>
+            <p class="footer-desc" data-page-node-id="s9kYe8WkxNoMTP9vBxh5XO">
+                本文基于 SemiAnalysis 的深度分析视频整理而成。原视频 52 分钟，从 2026 年美国电网的 1TW 请求队列说起，串起 xAI 的能源教科书、燃气轮机的真实货架、ERCOT 与 PJM 两种市场设计的截然不同结局，以及电力如何成为 AI 项目的「守门人」。文中「HBM」即高带宽内存，「ELCC」即有效负荷承载能力，「ERCOT」即德州电力可靠性委员会，「PJM」为美国东部最大容量市场运营机构。
+            </p>
+            <div class="footer-quote" data-page-node-id="CVLYbKfnNgvhAzj31T5QnF">
+                「AI 的前沿不只通过算法和芯片推进，它正穿过电力市场推进——瓶颈正从硅片向能源。」
+            </div>
+            <p class="footer-note" data-page-node-id="oiqS1H6oHCS60lKsTcuC50">
+                来源：SemiAnalysis · 主持：SemiAnalysis 团队 · 时长 52 分钟
+                <br data-page-node-id="j3lpBGYHFEYr7ordssa5S7">观点仅代表原作者分析与嘉宾引用之见解，不构成投资建议。
+                <br data-page-node-id="yS1KRsHF6fYHQzqFehQfq7"><br data-page-node-id="vm8ukNKGwZBNWjguYJjxXG">
+                <a href="https://www.youtube.com/watch?v=nB4wFU43wck" target="_blank" data-page-node-id="H3XJ9rYQJof7aJ4JJLzHqN">观看原视频</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

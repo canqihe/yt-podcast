@@ -1,6 +1,17 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/ai-is-running-out-of-power.html",
+    card_class: "card-ai",
+    category: "SemiAnalysis · 视频深度 · AI 基础设施 · 电力 · 电网",
+    type: "AI",
+    date: "2026-09-08",
+    title: "AI 正在耗尽电力：GPU 集群吞掉了所有电网的余量 | SemiAnalysis",
+    excerpt:
+      "当 AI 行业把一切都讲成 GPU 与加速器时，SemiAnalysis 用一组数字把镜头猛然拉远：2023 年全美 AI 电力需求约 3GW，2026 年突破 28GW，2030 年冲向 84GW，而并网队列里积压的负荷请求已超 1TW——超过整个美国电网的峰值。一个 200MW 集群提前 6 个月上线值 80 亿美元，这笔账解释了 xAI 为何租发电厂、把数据中心建在州界上、永远甘愿多付电费也要抢先通电。本期深度解析「表后电力」、燃气轮机的真实货架、xAI 的州界套利、64% 超配的冗余经济学、被低估的劳动力短缺、ERCOT 与 PJM 两种市场设计截然不同的家庭账单结局，以及电力如何成为 AI 项目的「守门人」。52 分钟读完，决定你理解 AI 基建的关键转换点——瓶颈不在硅片，而在电网。",
+    tags: ["#SemiAnalysis", "#AI电力", "#表后电力", "#燃气轮机", "#ERCOT", "#PJM", "#劳动力短缺", "#电网余量", "#xAI", "#BehindTheMeter"],
+  },
+  {
     url: "articles/zeng-ming-the-brutal-truth-companies-that-will-disappear.html",
     card_class: "card-ai",
     category: "张小珺 Podcast · 深度访谈 · AI 战略 · 产业三阶段 · 组织变革",
