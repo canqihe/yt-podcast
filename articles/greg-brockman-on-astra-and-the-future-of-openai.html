@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="nFyeG4jxlnGB8fnHf8DIe3">
+<head data-page-node-id="njKR1QHbRW3zfOIuXxfW5w">
+    <meta charset="UTF-8" data-page-node-id="d9lTR2ODTtEZGBEI2XD7Dt">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="ITkSPL0ouxuhRA2vTEjBcz">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" data-page-node-id="9U2OVSo1WBFHHxxjh7FkOF" />
+    <title>Greg Brockman 谈 Astra 与 OpenAI 的未来 | TBPN</title>
+    <style>
+/**
+ * Design Tokens - 深色渐变风格设计系统
+ * 用途：视频总结文章网页
+ * 创建日期：2025-01-25
+ *
+ * ========== 配色方案 ==========
+ *
+ * 生成文章时，随机选择一套配色方案，替换 :root 中的强调色变量。
+ * 只需要替换 5 个变量，其余样式自动继承。
+ *
+ * ┌─────────────┬────────────────┬────────────────┐
+ * │ 方案        │ --accent-primary │ --accent-secondary │
+ * ├─────────────┼────────────────┼────────────────┤
+ * │ 1. 橙青     │ #ff6b35        │ #00d4ff        │
+ * │ 2. 紫黄     │ #a855f7        │ #FFC107        │
+ * │ 3. 绿黄     │ #22c55e        │ #eab308        │
+ * │ 4. 蓝粉     │ #ff4081        │ #3b82f6        │
+ * │ 5. 珊瑚金   │ #f97066        │ #fbbf24        │
+ * └─────────────┴────────────────┴────────────────┘
+ *
+ * 每套方案对应的 rgba 值（用于 glow / quote-bg / shadow）：
+ * 见下方各方案的注释。
+ */
+
+:root {
+  /* ========== Colors ========== */
+
+  /* Background Colors */
+  --bg-primary: #0a0a0b;
+  --bg-card: #141416;
+
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --text-tertiary: #666666;
+
+  /*
+   * ========== 配色方案（随机选一套，替换下面 5 个变量） ==========
+   *
+   * 方案 1: 橙青（默认）
+   */
+  /* 方案 1: 橙青 */
+  --accent-primary: #ff6b35;
+  --accent-secondary: #00d4ff;
+  --accent-primary-rgb: 255, 107, 53;
+  --accent-secondary-rgb: 0, 212, 255;
+
+  /*
+   * 方案 2: 紫黄
+   * --accent-primary: #a855f7;
+   * --accent-secondary: #FFC107;
+   * --accent-primary-rgb: 168, 85, 247;
+   * --accent-secondary-rgb: 255, 193, 7;
+   */
+
+  /*
+   * 方案 3: 绿黄
+   * --accent-primary: #22c55e;
+   * --accent-secondary: #eab308;
+   * --accent-primary-rgb: 34, 197, 94;
+   * --accent-secondary-rgb: 234, 179, 8;
+   */
+
+  /*
+   * 方案 4: 蓝粉
+   * --accent-primary: #ff4081;
+   * --accent-secondary: #3b82f6;
+   * --accent-primary-rgb: 255, 64, 129;
+   * --accent-secondary-rgb: 59, 130, 246;
+   */
+
+  /*
+   * 方案 5: 珊瑚金
+   * --accent-primary: #f97066;
+   * --accent-secondary: #fbbf24;
+   * --accent-primary-rgb: 249, 112, 102;
+   * --accent-secondary-rgb: 251, 191, 36;
+   */
+
+  /* Accent Colors（自动继承，不需要手动改） */
+  --accent-gradient: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+
+  /* UI Colors */
+  --border: #2a2a2e;
+  --border-hover: var(--accent-primary);
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+  --gradient-accent: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  --gradient-number: linear-gradient(180deg, var(--border) 0%, transparent 100%);
+
+  /* Background Effects（自动继承 rgb 变量，不需要手动改） */
+  --bg-glow-primary: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.1) 0%, transparent 50%);
+  --bg-glow-secondary: radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.08) 0%, transparent 50%);
+  --quote-bg: rgba(var(--accent-primary-rgb), 0.05);
+
+  /* ========== Typography ========== */
+
+  /* Font Families */
+  --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+
+  /* Font Sizes */
+  --font-size-hero: clamp(48px, 10vw, 120px);
+  --font-size-section: clamp(32px, 5vw, 56px);
+  --font-size-topic: clamp(24px, 4vw, 36px);
+  --font-size-number: clamp(64px, 15vw, 120px);
+  --font-size-body: 16px;
+  --font-size-small: 12px;
+  --font-size-tiny: 11px;
+
+  /* Font Weights */
+  --font-weight-normal: 300;
+  --font-weight-medium: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-heavy: 800;
+
+  /* Letter Spacing */
+  --letter-spacing-tight: -0.03em;
+  --letter-spacing-normal: -0.02em;
+  --letter-spacing-wide: 1.5px;
+  --letter-spacing-wider: 2px;
+
+  /* Line Heights */
+  --line-height-tight: 0.95;
+  --line-height-normal: 1.2;
+  --line-height-relaxed: 1.6;
+  --line-height-loose: 1.7;
+
+  /* ========== Spacing ========== */
+
+  /* Container */
+  --container-max-width: 1400px;
+  --container-padding: 24px;
+  --container-padding-mobile: 20px;
+
+  /* Section Padding */
+  --section-padding-vertical: 120px;
+  --section-padding-vertical-mobile: 80px;
+
+  /* Component Spacing */
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+
+  /* Card Spacing */
+  --card-padding: 40px;
+  --card-gap: 24px;
+
+  /* Content Spacing */
+  --content-margin-bottom: 32px;
+  --detail-margin-bottom: 24px;
+
+  /* ========== Borders & Radius ========== */
+
+  /* Border Widths */
+  --border-thin: 1px;
+  --border-medium: 2px;
+  --border-thick: 3px;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 100px;
+
+  /* ========== Shadows ========== */
+
+  --shadow-sm: 0 4px 20px rgba(var(--accent-primary-rgb), 0.3);
+  --shadow-md: 0 8px 30px rgba(var(--accent-primary-rgb), 0.5);
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.3);
+
+  /* ========== Transitions ========== */
+
+  --transition-fast: 0.3s ease;
+  --transition-normal: 0.6s ease;
+
+  /* ========== Animation Delays ========== */
+
+  --delay-1: 0.1s;
+  --delay-2: 0.2s;
+  --delay-3: 0.3s;
+  --delay-4: 0.4s;
+
+  /* ========== Transform ========== */
+
+  --hover-lift: translateY(-4px);
+  --hover-lift-sm: translateY(-2px);
+
+  /* ========== Z-Index ========== */
+
+  --z-base: 1;
+  --z-overlay: 10;
+  --z-modal: 100;
+}
+
+/**
+ * 文章页面样式 - 深色渐变风格
+ *
+ * 使用方法：
+ * 1. 先引入 design-tokens.css（定义配色方案和设计变量）
+ * 2. 再引入此文件（定义组件样式）
+ *
+ * 生成文章时，只需在 <head> 中添加：
+ *   <link rel="stylesheet" href="../design-system/design-tokens.css">
+ *   <link rel="stylesheet" href="../design-system/article-styles.css">
+ *
+ * 配色方案：随机选择一套，替换 design-tokens.css 中的 :root 强调色变量
+ *
+ * ┌─────────────┬────────────────┬────────────────┐
+ * │ 方案        │ --accent-primary │ --accent-secondary │
+ * ├─────────────┼────────────────┼────────────────┤
+ * │ 1. 橙青     │ #ff6b35        │ #00d4ff        │
+ * │ 2. 紫黄     │ #a855f7        │ #FFC107        │
+ * │ 3. 绿黄     │ #22c55e        │ #eab308        │
+ * │ 4. 蓝粉     │ #ff4081        │ #3b82f6        │
+ * │ 5. 珊瑚金   │ #f97066        │ #fbbf24        │
+ * └─────────────┴────────────────┴────────────────┘
+ */
+
+/* ========== Reset & Base ========== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-system);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: var(--line-height-loose);
+  overflow-x: hidden;
+}
+
+/* ========== Scrollbar ========== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* ========== Container ========== */
+
+.container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+  position: relative;
+  z-index: var(--z-base);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--container-padding-mobile);
+  }
+}
+
+/* ========== Header ========== */
+
+.header {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.95) 40%, var(--bg-primary) 70%),
+    var(--bg-glow-primary),
+    var(--bg-glow-secondary);
+  pointer-events: none;
+}
+
+/* 有背景图时启用以下样式（在 HTML 中取消注释） */
+/*
+.header::before {
+  background:
+    linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+    url('images/文章名-bg.jpg') no-repeat right center / cover;
+  opacity: 0.6;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+              radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+*/
+
+.header-content {
+  position: relative;
+  z-index: var(--z-base);
+  padding: var(--spacing-2xl) 0;
+}
+
+/* ========== Badge ========== */
+
+.badge-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xl);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: var(--bg-card);
+  border: var(--border-thin) solid var(--border);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.badge:hover {
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
+/* ========== Title ========== */
+
+.title {
+  font-size: var(--font-size-hero);
+  font-weight: var(--font-heavy);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  margin-bottom: var(--spacing-lg);
+}
+
+.title-line-1 {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.title-line-2 {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========== Subtitle ========== */
+
+.subtitle {
+  font-size: var(--font-size-body);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-normal);
+  max-width: 700px;
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* ========== Meta Grid ========== */
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-lg);
+  max-width: 700px;
+  margin-bottom: var(--spacing-xl);
+}
+
+@media (max-width: 768px) {
+  .meta-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+}
+
+.meta-item {
+  padding: var(--spacing-md) 0;
+  border-top: var(--border-thin) solid var(--border);
+  white-space: nowrap;
+}
+
+.meta-label {
+  font-size: var(--font-size-tiny);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--text-tertiary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.meta-value {
+  font-size: var(--font-size-body);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ========== CTA Button ========== */
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--gradient-accent);
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: var(--radius-pill);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-body);
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 20px rgba(var(--accent-primary-rgb), 0.3);
+}
+
+.cta-button:hover {
+  transform: var(--hover-lift-sm);
+  box-shadow: 0 8px 30px rgba(var(--accent-primary-rgb), 0.5);
+}
+
+.cta-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ========== Section ========== */
+
+.section {
+  padding: var(--section-padding-vertical) 0;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: var(--section-padding-vertical-mobile) 0;
+  }
+}
+
+.section-title {
+  font-size: var(--font-size-section);
+  font-weight: var(--font-heavy);
+  letter-spacing: var(--letter-spacing-normal);
+  margin-bottom: var(--spacing-3xl);
+}
+
+/* ========== Points Grid ========== */
+
+.points-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+  .points-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========== Point Card ========== */
+
+.point-card {
+  background: var(--bg-card);
+  border: var(--border-thin) solid var(--border);
+  padding: var(--card-padding);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.point-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-accent);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.point-card:hover {
+  border-color: var(--accent-primary);
+  transform: var(--hover-lift);
+  box-shadow: var(--shadow-lg);
+}
+
+.point-card:hover::before {
+  opacity: 1;
+}
+
+.point-number {
+  font-size: 48px;
+  font-weight: var(--font-heavy);
+  color: var(--border);
+  margin-bottom: var(--spacing-md);
+  line-height: 1;
+}
+
+.point-title {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-sm);
+  color: var(--accent-primary);
+}
+
+.point-desc {
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: var(--line-height-relaxed);
+}
+
+/* ========== Topic ========== */
+
+.topic {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.topic-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+}
+
+.topic-number {
+  font-size: var(--font-size-number);
+  font-weight: var(--font-heavy);
+  line-height: 1;
+  background: var(--gradient-number);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  flex-shrink: 0;
+}
+
+.topic-info {
+  flex: 1;
+  padding-top: var(--spacing-md);
+}
+
+.topic-title {
+  font-size: var(--font-size-topic);
+  font-weight: var(--font-heavy);
+  letter-spacing: var(--letter-spacing-normal);
+  margin-bottom: var(--spacing-md);
+  line-height: var(--line-height-normal);
+}
+
+.topic-timestamp {
+  display: inline-block;
+  padding: 6px var(--spacing-sm);
+  background: var(--bg-card);
+  border: var(--border-thin) solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-family: var(--font-mono);
+  color: var(--accent-secondary);
+}
+
+.topic-content {
+  background: var(--bg-card);
+  border: var(--border-thin) solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--card-padding);
+  margin-left: clamp(40px, 10vw, 120px);
+}
+
+@media (max-width: 768px) {
+  .topic-content {
+    margin-left: 0;
+  }
+}
+
+.topic-section-title {
+  font-size: var(--font-size-small);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-md);
+  color: var(--accent-primary);
+}
+
+.topic-core-point {
+  font-size: var(--font-size-body);
+  color: var(--text-primary);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-2xl);
+  font-weight: var(--font-weight-normal);
+}
+
+.topic-detail {
+  padding-left: var(--spacing-lg);
+  border-left: var(--border-medium) solid var(--border);
+  margin-bottom: var(--spacing-lg);
+}
+
+.topic-detail-label {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.topic-detail-content {
+  color: var(--text-tertiary);
+  line-height: var(--line-height-relaxed);
+}
+
+/* ========== Quote Block ========== */
+
+.quote-block {
+  border-left: var(--border-thick) solid var(--accent-primary);
+  padding: var(--spacing-lg);
+  background: var(--quote-bg);
+  margin: var(--spacing-lg) 0;
+  font-style: italic;
+  font-size: 17px;
+  color: var(--text-primary);
+}
+
+/* ========== Quote Block（关键引用）========== */
+
+.quote-block cite {
+  display: block;
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--border);
+  font-size: var(--font-size-small);
+  font-style: normal;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+}
+
+.quote-block cite::before {
+  content: '— ';
+}
+
+/* ========== Thought Block ========== */
+
+.thought-block {
+  background: var(--bg-card);
+  border: var(--border-thin) solid var(--border);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  margin: var(--spacing-lg) 0;
+}
+
+.thought-label {
+  font-size: var(--font-size-tiny);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  color: var(--text-tertiary);
+  margin-bottom: var(--spacing-sm);
+}
+
+/* ========== Takeaways ========== */
+
+.takeaways-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.takeaway-card {
+  background: var(--bg-card);
+  border: var(--border-thin) solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  transition: all var(--transition-fast);
+}
+
+.takeaway-card:hover {
+  border-color: var(--accent-secondary);
+  transform: var(--hover-lift);
+}
+
+.takeaway-emoji {
+  font-size: 40px;
+  margin-bottom: var(--spacing-md);
+}
+
+.takeaway-title {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-sm);
+}
+
+.takeaway-desc {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: var(--line-height-relaxed);
+}
+
+/* ========== Footer ========== */
+
+.footer {
+  border-top: var(--border-thin) solid var(--border);
+  padding: var(--section-padding-vertical) 0;
+  text-align: center;
+}
+
+.footer-title {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-heavy);
+  margin-bottom: var(--spacing-md);
+}
+
+.footer-desc {
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto var(--spacing-xl);
+  line-height: var(--line-height-relaxed);
+}
+
+.footer-quote {
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: var(--font-heavy);
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: var(--spacing-2xl) 0;
+  line-height: var(--line-height-normal);
+}
+
+.footer-note {
+  color: var(--text-tertiary);
+  font-size: 14px;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: var(--line-height-relaxed);
+}
+
+.footer-note a {
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+
+.footer-note a:hover {
+  text-decoration: underline;
+}
+
+/* ========== Divider ========== */
+
+.divider {
+  height: var(--border-thin);
+  background: var(--border);
+  margin: 0;
+}
+
+/* ========== Animations ========== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header animations - use keyframes for initial page load */
+.header .animate-in {
+  animation: fadeInUp var(--transition-normal) ease forwards;
+  opacity: 0;
+}
+
+/* Card animations - use transition for scroll trigger */
+.point-card,
+.takeaway-card,
+.topic {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--transition-normal) ease, transform var(--transition-normal) ease;
+}
+
+.point-card.animate-in,
+.takeaway-card.animate-in,
+.topic.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.delay-1 { animation-delay: var(--delay-1); transition-delay: var(--delay-1); }
+.delay-2 { animation-delay: var(--delay-2); transition-delay: var(--delay-2); }
+.delay-3 { animation-delay: var(--delay-3); transition-delay: var(--delay-3); }
+.delay-4 { animation-delay: var(--delay-4); transition-delay: var(--delay-4); }
+
+/* ========== Responsive ========== */
+
+@media (max-width: 768px) {
+  .section {
+    padding: var(--section-padding-vertical-mobile) 0;
+  }
+
+  .topic-content {
+    margin-left: 0;
+  }
+
+  .points-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+        /* ========== 本文配色覆盖：紫黄方案 ========== */
+        :root {
+            --accent-primary: #a855f7;
+            --accent-secondary: #FFC107;
+            --accent-primary-rgb: 168, 85, 247;
+            --accent-secondary-rgb: 255, 193, 7;
+        }
+
+        /* ========== 深度阐述可读性微调 ========== */
+        .topic-detail-content p { margin-bottom: 12px; }
+        .topic-detail-content p:last-child { margin-bottom: 0; }
+
+        /* ========== 关键引用：英文原文 ========== */
+        .quote-block .quote-en {
+            display: block;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        /* ========== Header 封面背景图 + 暗化渐变 + 光晕 ========== */
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.15) 0%, rgba(10, 10, 11, 0.78) 45%, var(--bg-primary) 78%),
+                url('images/greg-brockman-on-astra-and-the-future-of-openai-cover.jpg') no-repeat right center / cover;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 55%),
+                radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+    </style>
+</head>
+<body data-page-node-id="k2qQ1fmraF3gEQduhAuLn9">
+
+    <!-- Header -->
+    <header class="header" data-page-node-id="fhB6SPkjZRnijTfgfxOf2l">
+        <div class="container" data-page-node-id="c1El6NrljLBn9xFJdt61GH">
+            <div class="header-content" data-page-node-id="BvY22OgFraON9BZtU9dz7h">
+                <div class="badge-wrapper" data-page-node-id="4xIcr7fkKx96FU764LvI6f">
+                    <a class="badge" href="../index.html" data-page-node-id="rfn7rF4Oz3hw4kEAdGqLRA">← TBPN · 深度访谈</a>
+                </div>
+                <h1 class="title" data-page-node-id="BAs7elwZewFjcQDgJv8Doe">
+                    <span class="title-line-1" data-page-node-id="iPeR7RRvijCGRyTSU6kTX4">Greg Brockman 谈 Astra</span>
+                    <span class="title-line-2" data-page-node-id="57eN6AYOmkXW93zbawmYfa">与 OpenAI 的未来</span>
+                </h1>
+                <p class="subtitle" data-page-node-id="77pWpkdcZgtAztueakZDoN">
+                    模型证明纳维-斯托克斯千禧年难题、Astra 让「计算机使用」抵达新阈值、每周 10 亿用户的 ChatGPT 走向何方——OpenAI 联合创始人兼总裁 Greg Brockman 在 Astra 发布日的完整访谈：从破解数学难题到让普通人用一句话造出实物，从健康平台的宏图到 Operator 的教训。
+                </p>
+                <div class="meta-grid" data-page-node-id="jbHFsStFI6OldjByIfDEQC">
+                    <div class="meta-item" data-page-node-id="xc9cLfErPFHc2xVz7WDXhs">
+                        <div class="meta-label" data-page-node-id="QtNdRoI3o0973gNZCDG9ko">嘉宾</div>
+                        <div class="meta-value" data-page-node-id="HfNmrIUxuTckBsqolJqipF">Greg Brockman</div>
+                    </div>
+                    <div class="meta-item" data-page-node-id="Idz1o8pEQhRePdDzMCvpGr">
+                        <div class="meta-label" data-page-node-id="uM8VnaHTLGKxFBJCiYKgRX">频道</div>
+                        <div class="meta-value" data-page-node-id="5Mh3W2I98LDYSUUVJY3uYO">TBPN</div>
+                    </div>
+                    <div class="meta-item" data-page-node-id="A3X3QWAYXAqCBJHBUcTRfC">
+                        <div class="meta-label" data-page-node-id="cLzUISjONhIXX54A3PdUpG">时长</div>
+                        <div class="meta-value" data-page-node-id="6HHmsIapJdrdLKHKd0KaKp">24:41</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=qNxuxwb9ksA" class="cta-button" target="_blank" rel="noopener" data-page-node-id="XcK3VmjHqKA8a0fholIgYs">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" data-page-node-id="KKX8ggtHaN8WQSh5zKOsU4">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" data-page-node-id="hDcAcBgloQYDQXql2YcTAL"/>
+                    </svg>
+                    观看完整访谈
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section" data-page-node-id="jawQeMzbpn5ade7Oj9rA9e">
+        <div class="container" data-page-node-id="tLtiglqUkB5tAQSv2J3rN0">
+            <h2 class="section-title" data-page-node-id="cYRukCSn9xStmKPafDnndo">核心要点</h2>
+            <div class="points-grid" data-page-node-id="ltKfXN2QQWxz0eSBZ4A3OX">
+                <!-- Point Card 1 -->
+                <div class="point-card" data-page-node-id="3AUeHTMl4d7uW72DrBpKKx">
+                    <div class="point-number" data-page-node-id="8BChSFs2zSeUJRkSiyVqnW">01</div>
+                    <h3 class="point-title" data-page-node-id="VDvmJG3EUYBFCHfkGeJISe">千禧年难题被 AI 破解</h3>
+                    <p class="point-desc" data-page-node-id="B5nsNVf25Y7x5WCLAeCjtd">模型为纳维-斯托克斯方程找到奇点反例——这是人类的新知识，更代表模型首次越过「产生新知识」的能力门槛。</p>
+                </div>
+
+                <!-- Point Card 2 -->
+                <div class="point-card" data-page-node-id="ghwsvusiTMfH3iZ1uNG56f">
+                    <div class="point-number" data-page-node-id="LEPDU2qoPpbgtlAycDfWS3">02</div>
+                    <h3 class="point-title" data-page-node-id="hJIZvgn9zOEnodErB9j1cR">Astra 的破圈周末</h3>
+                    <p class="point-desc" data-page-node-id="WlFvPWPI4pmI0OihBzHyu7">「计算机使用」抵达新阈值：人们用它重建房屋、做 3D 建模，甚至设计一只拦头发的淋浴地漏过滤器并真的造出来。</p>
+                </div>
+
+                <!-- Point Card 3 -->
+                <div class="point-card" data-page-node-id="OoPxWXO0Nx6thXdfFjMD0y">
+                    <div class="point-number" data-page-node-id="LbCz8CS1yJlGWat6trW1ra">03</div>
+                    <h3 class="point-title" data-page-node-id="HQ1kJgQ1xX6Wfed3Q40ZS0">从聊天到智能体</h3>
+                    <p class="point-desc" data-page-node-id="hCZuzcGoWABAnJbitWJfOO">ChatGPT 每周超 10 亿用户；ChatGPT Work 发布后智能体采用率近乎垂直增长，两种模式正在融合成新形态。</p>
+                </div>
+
+                <!-- Point Card 4 -->
+                <div class="point-card" data-page-node-id="ky2YJXjibq0HETcgbSEBLw">
+                    <div class="point-number" data-page-node-id="0mzdfdjHqkIoyWEi8jCmGS">04</div>
+                    <h3 class="point-title" data-page-node-id="GwWTRUANNbbZoB2sEAiT8K">「发现问题」是新战场</h3>
+                    <p class="point-desc" data-page-node-id="eIRVN3QIdBs6Gklq9nvWmA">先发者要让 15 亿用过 ChatGPT 的人重新认识它——让模型主动说出「换个问法、加个连接器，我就能替你做得更多」。</p>
+                </div>
+
+                <!-- Point Card 5 -->
+                <div class="point-card" data-page-node-id="qrABpPHXG0DiIAJg6lIQ8j">
+                    <div class="point-number" data-page-node-id="wCMDf7oNZfLrr4OocG6jkw">05</div>
+                    <h3 class="point-title" data-page-node-id="BQdy3lQbaacnOFAfuyG0yX">健康：AI 最正面应用</h3>
+                    <p class="point-desc" data-page-node-id="OCgECPOd67l6aOtxSD4rYg">每周 3 亿健康查询只是入口：消费者、临床医生、医院三支柱协同，目标是拼起分科医疗永远凑不齐的完整诊断。</p>
+                </div>
+
+                <!-- Point Card 6 -->
+                <div class="point-card" data-page-node-id="GsOlfi016gCRmk7RNjxqYY">
+                    <div class="point-number" data-page-node-id="NDB8vb92UjCOSmGLLvfb6N">06</div>
+                    <h3 class="point-title" data-page-node-id="uQbAtLbE8L4aEID4Ztxnsz">Operator 不是失败</h3>
+                    <p class="point-desc" data-page-node-id="c1bYrhRZRMOxVckWWu7y8H">低于阈值时的过早尝试，换来真实部署的经验——长期投资、逐条烧掉问题清单，才有了 Astra 的「像人一样用电脑」。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider" data-page-node-id="cZdH1zbUQDqscqzkTTrdDH"></div>
+
+    <!-- Topics Section -->
+    <section class="section" data-page-node-id="eNDVqe59M8dNNM3996CYhG">
+        <div class="container" data-page-node-id="6C0A3U7ijVQPH4rsHWAuor">
+            <h2 class="section-title" data-page-node-id="QwNnOKbA7rQEk4LSjmENcL">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic" data-page-node-id="cU1Hxf1Xc6R3cr3joOHGjr">
+                <div class="topic-header" data-page-node-id="9Yb8U95bH8uPLtJhLWGnze">
+                    <span class="topic-number" data-page-node-id="NryT53CP2zMIaP7Z8a7PIT">01</span>
+                    <div class="topic-info" data-page-node-id="enCTkblNwbDmNA3zvI0mj1">
+                        <h3 class="topic-title" data-page-node-id="lt2ZGXhZ6Ba2D9ViW8YEbk">模型证明千禧年难题：数学新知识背后的能力信号</h3>
+                        <span class="topic-timestamp" data-page-node-id="bNtWb3TvYIG9FisgbWibCj">00:00 - 02:29</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="fUrgsRsYRyBmjELAEf36zn">
+                    <div class="topic-section-title" data-page-node-id="jwmVJU1eqF72vaBr20m5HV">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="BXoRGOfJe3IK2lRzdiCcBg">
+                        OpenAI 模型为纳维-斯托克斯问题找到了反例，证明其方程在特定条件下会出现奇点——意义不在方程本身，而在于模型已经能产生人类未知的新知识。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="rAveT0nHBIwiYDJC8HwGDb">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="po9FsMVBucZh9RoVAe9VvY">
+                        <div class="topic-detail-label" data-page-node-id="UvZ4MK5S2OvANaUFo4PhgB">发生了什么</div>
+                        <p class="topic-detail-content" data-page-node-id="v0cAThek2cG7EoD97t3ate">纳维-斯托克斯方程是七大千禧年难题之一，也是数学界最深刻、最重要的一类问题。Brockman 解释，模型找到的是一个反例：这些描述流体运动的方程在特定条件下会「崩溃」、出现奇点（singularity，方程解失效的点）。这个反例本身就是人类此前不知道的新知识，而且证明非常优雅、漂亮。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="fKOPJBt3KKBaslVdCUG4lI">
+                        <div class="topic-detail-label" data-page-node-id="4RGcVB4xvwL5mp10W9U9tP">两层意义</div>
+                        <p class="topic-detail-content" data-page-node-id="bWsObRGA1cjI3vAPfZmWSX">第一层是方程的直接应用：它描述从洋流、飞机周围气流到湍流的一系列现象。第二层、也是他更看重的：这件事是「模型能力里程碑」的指示器——如果模型能攻克这样的数学难题，新药研发这类与生活更近的科学问题就变得更加现实，人类能挑战的问题规模将被整体放大。Brockman 用「我们可以向这些模型学习」来定位关系：模型不是工具，而是能反哺人类的合作者。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="pxXLOZD1IszgcWQwkfCAqf">
+                        「这是人类的新知识……对我来说更重要的是，这代表了我们的模型能力到了什么地步——我们真的能够产生新知识。」
+                        <span class="quote-en" data-page-node-id="3dkOAWc9Ol062aUO4d4MkT">"This is new knowledge for humanity... to me what's even more important is about what this represents about where we are in terms of model capabilities and the fact that we can actually generate new knowledge."</span>
+                        <cite data-page-node-id="hyMakq8zKQJg0FIArtmv8a">00:51</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic" data-page-node-id="Y54f2DYKl2kIm7SxmYipJT">
+                <div class="topic-header" data-page-node-id="rFJZwl6PEXMgkl1UG8ckii">
+                    <span class="topic-number" data-page-node-id="y7Kq2P5Pb1REvD7AFzOzn4">02</span>
+                    <div class="topic-info" data-page-node-id="AFpi175KhwCateDDtjrBEY">
+                        <h3 class="topic-title" data-page-node-id="1HW2b4IsG7RhLHRDLrJAVQ">Astra 的周末：从 3D 建模到「淋浴地漏过滤器」</h3>
+                        <span class="topic-timestamp" data-page-node-id="Tpnik9K4EW6gEqbf462ufq">02:29 - 04:48</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="zNXWPcBDfI7w1c4B9iEiIu">
+                    <div class="topic-section-title" data-page-node-id="OHBi5auYHa8uARJBSJSB6L">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="C1ocqN0z3y2JUeY58dyH0S">
+                        Astra 发布后的社区反应证明「计算机使用」达到新阈值：普通人正在用它做 3D 建模、零件设计等此前不可能的事，AI 开始解决生活中的实际问题。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="gLUV8fPYJ9aj967l8rwCXT">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="WLuqknAGxx6WbSFvK6JsNX">
+                        <div class="topic-detail-label" data-page-node-id="PE14CSWkuqhWScFZu49NM5">社区创意的井喷</div>
+                        <p class="topic-detail-content" data-page-node-id="RJ7JOVTYaf1vD5kbTjzD9p">这个周末几乎人人都在用 Blender（开源 3D 建模软件）重建房子、规划翻新——因为 Astra 能直接操作这类专业软件。Brockman 说社区反应让他「震惊且谦卑」：人们展示 3D 创作、把真实地点扫描成 3D 模型、讨论用它设计实体零件。最让他开心的例子反而最「土」：有人设计了一个拦截淋浴地漏头发的装置，并且真的把它制造了出来。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="1oz5NbP2vsxD4KbYzBtT26">
+                        <div class="topic-detail-label" data-page-node-id="kIha191PboWkTclgHVzYiT">「平凡问题」的内核</div>
+                        <p class="topic-detail-content" data-page-node-id="a2Q3ycWc3ORYzHYnW14qnA">这个例子的分量在于它的隐喻：AI 行业总在谈论宏大挑战或晦涩应用，但真正重要的是「赋能个人」——让你生活里那些一直想解决、却总需要专业技能的问题变得可解。Brockman 称之为「给你超能力」：工具的价值不在于本身多炫，而在于让个体完成更多事。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="ktPr19IG20SuztrdGu4sUi">
+                        「有人说他们设计了一个拦截淋浴地漏头发的小装置，而且真的能把它制造出来。」
+                        <span class="quote-en" data-page-node-id="QgURMqMzYfFozkeywiYP4V">"Someone talked about how they were designing some mechanic for catching hair in a shower drain and that they were able to actually manufacture that."</span>
+                        <cite data-page-node-id="AtiFGzVEckspMBWnlfWiuz">03:36</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic" data-page-node-id="IwqERctx3T8lvmIArT32NG">
+                <div class="topic-header" data-page-node-id="6Gg2JTFUO854MX3Vq7vqn9">
+                    <span class="topic-number" data-page-node-id="7RGtzov2xO0GdfhR02jAuM">03</span>
+                    <div class="topic-info" data-page-node-id="OEvom29y9vxfpMPfxCOjIr">
+                        <h3 class="topic-title" data-page-node-id="PzSJwKIw4xmnBE3loRT9pA">让人类「飞起来」：从底层操作到目标委托</h3>
+                        <span class="topic-timestamp" data-page-node-id="miw30q7GLMdMyPdp2RvHEm">04:48 - 07:50</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="7C2YnjUlBSaI1634telySX">
+                    <div class="topic-section-title" data-page-node-id="HreAbWC9s2ASW0pR4xSVbF">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="nagozefgChxjm40tJcUq3m">
+                        AI 工具的演进方向是让用户从「摆弄底层细节」转向「设定目标」，同时保留监督权——聊天与智能体两种模式正在融合，ChatGPT Work 推出后智能体采用率近乎垂直增长。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="W5x6GzR9dTbpYNJVbkUhET">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="C5cIg0u8ciP5kKayGKsWdX">
+                        <div class="topic-detail-label" data-page-node-id="mKxaRwt9tSoeHY6DqZvHTB">让人类「飞」</div>
+                        <p class="topic-detail-content" data-page-node-id="Lz85L2gKKkQyg5NNRWS6Zn">主持人抛出「产品融合」的困惑：像极客一样在本地和云端之间手动调配 Codex、ChatGPT，这种手工活在普通消费者那里会变成什么样？Brockman 的回答定义了 OpenAI 的产品哲学：把工具从「要求用户具备底层操作能力」转变为「让人类飞起来」——你设定目标、理解过程、保留监督，因为你要为结果负责，但执行由 AI 完成。他把这种放大效应比作「思维的蹦床或火箭船」。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="Kkn8GLOqTVlwPt3SrW4jZO">
+                        <div class="topic-detail-label" data-page-node-id="9HFuvKVnnodohALZd505Ap">数据印证的结构转变</div>
+                        <p class="topic-detail-content" data-page-node-id="h8TrlPPm7Jen4EhShltvz9">今年 AI 正从纯聊天用例转向智能体用例，但聊天并未衰落：ChatGPT 每周用户已超 10 亿，市场份额因教育、健康等场景的深耕而回升；自 ChatGPT Work 发布以来，智能体采用率「几乎垂直增长」。两种模式并存只是过渡态，OpenAI 正在把它们统一为一种新的形态。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="dQ8IvEcaCABRE1LpdF7r4C">
+                        <div class="topic-detail-label" data-page-node-id="kh8o0Ieby2qIBkrFPsbn7C">批判技术噪音</div>
+                        <p class="topic-detail-content" data-page-node-id="lxwtoF98IDAs1TKG9mo9Cm">Brockman 直言：五到十年前承诺给用户的「可对话、可委托、主动且持久」的 AI，如今却让用户面对上下文窗口、思考强度、模型选择等技术噪音——「这些统统不是未来」。未来是计算机按你的目标运行，底层用没用 Blender，只是淡出背景的细节。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="TkDDOeXqL7bGfuaH808DJA">
+                        「AI 的承诺从来就是：你有一个可以与之交谈、真正把工作委托出去的东西……五到十年前承诺给我们的，从来不是一个底层语言模型。」
+                        <span class="quote-en" data-page-node-id="QM6ONkLhGrR49jn8aqrc15">"The promise of AI has always been that you have something that you can talk to and really delegate work to... What we were promised five or ten years ago was never a low-level language model."</span>
+                        <cite data-page-node-id="HmLDG4VKpEYHr6Wax4W1ly">07:15</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic" data-page-node-id="j8aLE3SNjUX5vASvsLOHUq">
+                <div class="topic-header" data-page-node-id="unUI7lJm2cZJNvdGumXSLs">
+                    <span class="topic-number" data-page-node-id="HccETjmDns3YuF4ijEMsNK">04</span>
+                    <div class="topic-info" data-page-node-id="KRzxlg53NT0NVQBGwfVsNI">
+                        <h3 class="topic-title" data-page-node-id="Ri6B4gbZV5cQAg1W5MPm2s">先发劣势与「发现问题」：让 15 亿人重新认识 ChatGPT</h3>
+                        <span class="topic-timestamp" data-page-node-id="ekwBv8QMWf7y1VOI3AFtKw">07:50 - 11:05</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="X7Qnci1cNMbHOPKkUYwS7p">
+                    <div class="topic-section-title" data-page-node-id="2OvCsdHmNK0X61aUfp3gtC">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="hxAOKkofFPD28X5k7kKXYv">
+                        数十亿用户的早期印象让 OpenAI 背上「先发劣势」，而解决方案是让 AI 具备「自我认知」——主动告诉用户它能做什么、怎样配置能解锁更多能力，把引导上手变成核心机会。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="QTd2HYXhKjUkYArwqGMZHp">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="vjEDYLWpUVoPK9MCfWRytD">
+                        <div class="topic-detail-label" data-page-node-id="7lkFXriJptumB10wcdKUZ9">先发劣势与能力溢出</div>
+                        <p class="topic-detail-content" data-page-node-id="EEczPxdtgAkxHTg1PRNwYv">几十亿人试过 ChatGPT，第一次使用留下的印象早已过时，而最近几周新智能体产品让试用者「彻底震撼」——主持人自己就在用常驻后台的持久智能体（比如追踪 SpaceX 发射与推迟通知）。Brockman 承认这是「能力溢出」带来的挑战：产品能力远超用户认知，用户不知道该怎么问、不知道它能做什么。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="tnvaH03VUNEOs1ZcWZWHkg">
+                        <div class="topic-detail-label" data-page-node-id="K4inGR7oKarPN3AGX5BGt9">解法：模型的「自我认知」</div>
+                        <p class="topic-detail-content" data-page-node-id="MgtPjskRLS6ga6FJB1KPrI">现在 ChatGPT 和 ChatGPT Work 都是「文本框」，用户困惑于「新文本框更强，但旧文本框似乎也有用」——这不该是终局。模型既然理解你的目标、掌握你的上下文，就应该主动提示：「换个问法」「加上这个连接器」「授权我访问凭据，我就能替你做那件事」。把 onboarding（引导上手）做成核心体验，是 OpenAI 眼中的巨大机会。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="bSlAci7MFvaOBgIr0iypPc">
+                        <div class="topic-detail-label" data-page-node-id="GHPCGn4H0Wymkt3Zpv3Wma">巨大基数与新机会</div>
+                        <p class="topic-detail-content" data-page-node-id="aTOluBhe26undVYMjhVkoH">先发劣势的另一面是先发优势：ChatGPT 每周超 10 亿用户，累计试用者约 15 亿，无人拥有这样的基数。Brockman 特别举了一个惊人的场景数据：每周有 3 亿人向 ChatGPT 提健康类问题——这为后文医疗话题埋下伏笔。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="2z1VHpOdjf71FqfDGrG1yK">
+                        「我们有一个理解你想达成什么目标的模型……它应该能主动告诉你：嘿，如果你换个方式问我、或者加上这个连接器……我就能去帮你做那件别的事。」
+                        <span class="quote-en" data-page-node-id="cgHTDKyJbljE3B1mIoM4qJ">"We have a model that understands what you're trying to accomplish... it should also be able to proactively say to you, hey, if you ask me this other way or if you added this connector... I can go and do this other thing for you."</span>
+                        <cite data-page-node-id="BZLrGDbJoa65LszeUX3dAr">09:50</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic" data-page-node-id="Q8DJdVBFMeGRHcLptBaL4c">
+                <div class="topic-header" data-page-node-id="XrwVCQJ5i3F9FTpE3zMFfP">
+                    <span class="topic-number" data-page-node-id="aBl5kGxX5To8EDjXgNg0hs">05</span>
+                    <div class="topic-info" data-page-node-id="TXJA4uDpNDKBHwnhiUsGdP">
+                        <h3 class="topic-title" data-page-node-id="dn3ReW6f6kmDdbSHQewdBF">营销启示：做「AI 界的苹果」，靠的是细节不是口号</h3>
+                        <span class="topic-timestamp" data-page-node-id="9Wn6HBJrkHYvMNoXyV7x6a">11:05 - 13:37</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="WHHYTAikd3B77JK0IOGGEx">
+                    <div class="topic-section-title" data-page-node-id="IS9caGWSUPfgko7o390YRo">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="63G3Y4HcHAGG7srsaqJIxq">
+                        苹果营销的真相不是「1984」式品牌广告，而是死磕产品细节——AI 的能力表面积比任何硬件都大一个数量级，OpenAI 的机会在于用大量「具体功能点」广告让用户发现 AI 能为自己省时间。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="p0sprpRBvd2o0fk72r0s99">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="YOzl3j6WmMDHGujEt8PfqZ">
+                        <div class="topic-detail-label" data-page-node-id="AnoGE262h8WUsmQLZkBnia">苹果式营销的真相</div>
+                        <p class="topic-detail-content" data-page-node-id="B8TgpH9FtKkfTRsUA6VLoj">人人都想当「AI 界的苹果」，但把苹果营销理解为「Mac vs PC」「1984 广告」是错的。苹果真正擅长的是反复砸极其具体的产品细节——新相机、Animoji、Safari 的某个功能。而 AI 需要传达的表面积比任何硬件都大一个数量级，因为它什么都能做。所以该有大量「直白列出 ChatGPT 具体能帮你省时间之事」的广告，而不只是酷炫的品牌大片。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="jjGsvRvIZSo3nZGsClamlb">
+                        <div class="topic-detail-label" data-page-node-id="VTL6zBQikL1CTX4K9YRSjR">直击用例胜过抽象宣传</div>
+                        <p class="topic-detail-content" data-page-node-id="bleCS9KRwupMIYV8FFTz74">Brockman 说这是他今年最深的领悟之一。他举 ChatGPT Images 2.5 发布视频为例：视频不吹「图像生成革命」，而是展示一个人画烛台草图→生成惊艳可视化→最终拿到实体烛台——「直击你想要的东西」远比抽象宣传有效。他还反思了反直觉现象：团队爱展示「冷门但惊艳」的用例，对特定人群妙极，但大众不会从中联想到「我也能做我一直想做的另一件强大之事」，因为能力迁移的联想极难建立。正确做法是给人们「看完就想亲自试试」的用例。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="LGvPP2XJSAjQQEIUBpfWdD">
+                        <div class="topic-detail-label" data-page-node-id="TKcyPtOPMbE2OgAyaflQ1S">提醒用户：去问 AI 自己能干什么</div>
+                        <p class="topic-detail-content" data-page-node-id="6MZnQL1ADdoe8ROEYQmvjU">Brockman 还分享了一个实用心法：他一位做地产开发的朋友整天用 ChatGPT 处理交易备忘录，却总来问他「ChatGPT 能不能做 X」——而他手里其实就握着那个能回答自己的工具。直接问 AI 它能做什么，是最被低估的上手方式。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="CmXPLPBjV86IxoGaPxJzLj">
+                        「苹果营销真正登峰造极的，是反复死磕产品上极其具体的细节……而 AI 需要传达的东西的表面积要大一个数量级。」
+                        <span class="quote-en" data-page-node-id="rYrAPFzm65KCS2gQEbT6TD">"The actual thing that Apple does really well with marketing is they just hammer really really specific details about their products... with AI, the surface area of things that you need to communicate is an order of magnitude greater."</span>
+                        <cite data-page-node-id="SWUqQOwCCVXE8SlBEpXBGn">11:33</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic" data-page-node-id="MBGBDAVPrs4zagRKrulG9e">
+                <div class="topic-header" data-page-node-id="sZJwXOq9v0w2r33A531wV8">
+                    <span class="topic-number" data-page-node-id="hdptMhKZGbgcXDm0HLtjbb">06</span>
+                    <div class="topic-info" data-page-node-id="OEBS1BNUv8DPAM4Cx362ml">
+                        <h3 class="topic-title" data-page-node-id="hCTzVDCvIvFKBt9jGhSRxV">图像生成：质量阈值之上的新应用喷发</h3>
+                        <span class="topic-timestamp" data-page-node-id="hVJQmVT4HQTrIAQtxq7qiU">14:21 - 16:37</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="91Aj7MYJVnvhGevmvmVTli">
+                    <div class="topic-section-title" data-page-node-id="KkO9t3wtYXUmGzFSELvreI">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="B89bAGf1L2KDRNF9JozD9g">
+                        图像模型的天花板远未到：一旦越过质量阈值、具备精确编辑控制与多样性，它会在知识工作、营销、幻灯片、建站等下游解锁全新用例——这也是 OpenAI 相对对手的独特优势。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="d4g6qCjXWxNBtRQcziPmuU">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="p86hxDMUqF9pC7govGqU0d">
+                        <div class="topic-detail-label" data-page-node-id="ZiddtLTNIVtUJwfettJ6dB">阈值论</div>
+                        <p class="topic-detail-content" data-page-node-id="oBf2f2SGf7VlYBI4p13qUL">主持人分享「顿悟时刻」：Images 2 发布后他一度以为「图像已死」，结果那个周六花了几小时、跑了几百条提示词设计家具。Brockman 给出框架：在知识工作、专业工作、营销等领域，质量存在硬门槛——低于门槛只是「酷概念」，产出没法实际使用，等于没解决问题；一旦越过门槛，再加上精确的编辑控制、速度、创造力、结果多样性、与人来回互动的能力，根本性的新应用就会被解锁，而且解锁方式「事先几乎无法预料」。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="BVxvAPnKi6DbbwoLI4iqPq">
+                        <div class="topic-detail-label" data-page-node-id="qZiAWbkoJaUHGUkXQdwo39">涌现的新应用与多模态打包</div>
+                        <p class="topic-detail-content" data-page-node-id="UOfpX70FHMrbJAoxJQ5xGB">正在涌现的真实应用包括：做幻灯片、做漂亮的网站——在创作流程中嵌入图像生成，能大幅提升下游成品的质量。Brockman 把这定位为 OpenAI 的相对竞争优势，并重申产品哲学：图像、语音、编程不是孤立功能，而是一个「能力包」，最终合成为「赋能你的 AI——让你能创造任何想象之物」。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="tehCSFRBGsCGd1y79nQJAR">
+                        「每当能力突破新阈值，根本性的新应用就会被解锁，而且方式是你事先几乎无法预料的。」
+                        <span class="quote-en" data-page-node-id="9TcFISYSyRsQOY9AyZHDZQ">"As you hit new thresholds of capability... fundamentally new applications become unlocked in ways that you almost wouldn't have thought about ahead of time."</span>
+                        <cite data-page-node-id="UtgPhCORtK04rjQQUkCqt2">14:51</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic" data-page-node-id="4srTMdGSMdmoEDUPRmF4JS">
+                <div class="topic-header" data-page-node-id="ECjXRZUA8KmL8BFCBC3JkZ">
+                    <span class="topic-number" data-page-node-id="MWDI5rvvOIStsSGJ2fDWpB">07</span>
+                    <div class="topic-info" data-page-node-id="sOUq69bEzhtfxCikklKCQV">
+                        <h3 class="topic-title" data-page-node-id="CV38RIamFY6YAe4G3ULbOP">ChatGPT Health：三支柱与「拼起完整诊断」的野心</h3>
+                        <span class="topic-timestamp" data-page-node-id="JiM9pgNBx8g1ilylWG05h4">16:37 - 20:33</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="KEeMOKQCF2pI5ygj3nOVVM">
+                    <div class="topic-section-title" data-page-node-id="l4O88f1UpiEyCvS2xgCZz9">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="s7HlSa1EEcjdzlMbwyGsMk">
+                        健康业务分消费者、临床医生、医院企业三路推进；更深层的愿景是借助统一平台与记忆能力，解决医疗体系「专科割裂、病人独自拼图」的根本困境。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="LKPw7x5uWt0cZKN10IOviQ">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="EaWPTgAUnAwEifNTooWhvT">
+                        <div class="topic-detail-label" data-page-node-id="6UzpSBmEqlce3xnYlYoTO6">三支柱战略</div>
+                        <p class="topic-detail-content" data-page-node-id="douAYEzf0tFUOZb8MZBgWr">医疗是 Brockman 眼中 AI「最正面的应用」。一是消费者端——每周 3 亿健康类查询，是最广入口；二是临床医生端——「为临床医生调校的 ChatGPT」，直接引用医学文献，走自下而上路线；三是企业端——直接向医院销售部署，如与电子病历巨头 Epic 的集成。三支柱各自独立做强，最终互相协同，目标是「把医疗带进 AI 时代」。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="EVVRTUyxEDoMg4kmdQhqBM">
+                        <div class="topic-detail-label" data-page-node-id="mT5A6HuTqvtbjEAPIjgT88">平台的协同价值</div>
+                        <p class="topic-detail-content" data-page-node-id="NuyFWNu7VB6yGiv0ydD7hN">现行医疗体系的深层痛点：病人见不同专科医生时，要自己搬运病历、反复从头解释病情，最终却要由「最不懂医学的病人」拍板；临床试验入组则是药物开发的巨大瓶颈。当患者数据能在一个平台上顺畅共享，这些困境才有解。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="00HzBPQaHumSye3FB5FbSf">
+                        <div class="topic-detail-label" data-page-node-id="OMN7NCOBDNosfaMZTYxHNY">记忆 × 健康：拼起完整诊断</div>
+                        <p class="topic-detail-content" data-page-node-id="f8Jt4rjkov0uAKvHqQfqpF">Brockman 分享了切身的五年求医故事：妻子见了许多专科医生，每个人都像「摸象的一部分」，直到过敏科医生点破——所有症状同源于一种影响全身子系统的遗传病。他由此提出 AI 的独特价值：记忆与跨领域能力，能把散落在不同科室的线索拼成完整诊断，拯救那些「永远没被发现」的病人。他举的案例还包括：病人用 ChatGPT 核实医生的说法、敢于提出异议而获得更好结果——「这种事每天都在发生」。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="wZ2Sk86ogw3msLXIqqwyHV">
+                        「只要你是按功能分科就诊的，你就永远无法把完整的诊断拼凑起来。这正是 AI 的力量与潜力：它能深入地在生活方方面面帮助你。」
+                        <span class="quote-en" data-page-node-id="nBZW5dqhCh95piEWUNA7g7">"If you just sort of are functionally specialized, you're never going to bring together the whole diagnosis. And I think that is one of the powers and potentials of an AI that really deeply is able to help you across all parts of your life."</span>
+                        <cite data-page-node-id="uYpi7kCkEPXybPSdhQtwTO">19:56</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic" data-page-node-id="6PV87z9CzsGF1E0TrPpp7r">
+                <div class="topic-header" data-page-node-id="9yG8QFgqTHdnXdbPv3OlqB">
+                    <span class="topic-number" data-page-node-id="7VBXQ7hpSriMle12C9AuEa">08</span>
+                    <div class="topic-info" data-page-node-id="n0WhfoiXs5gZVh7z5NBiMv">
+                        <h3 class="topic-title" data-page-node-id="wuUNem7826XOY7eGJHhrzH">Operator 的教训：时机、迭代部署与「把苦活干完」</h3>
+                        <span class="topic-timestamp" data-page-node-id="vGJC7pCQDhAjGOG5J1HZkp">20:33 - 22:58</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="S8jnYEsVIsGxXJeunM9W3d">
+                    <div class="topic-section-title" data-page-node-id="7kKRKfJG99zFtFAaNOkaqz">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="mW3GcPDd1mjcnytBSasBor">
+                        曾被看作失败支线的 Operator，实为「能力低于阈值」的过早尝试；OpenAI 的长处是长期投资、逐条烧掉问题清单，最终让「像人一样用电脑」的 Astra 抵达里程碑。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="DakGWlI2JXth567NwDyqvp">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="uBR8PtFqzChUA7FVZaf3Ed">
+                        <div class="topic-detail-label" data-page-node-id="mw8IQrKEJwtS9hEpcgzwmk">时机与迭代部署</div>
+                        <p class="topic-detail-content" data-page-node-id="XTHZGTGrSGUTLzUfYBckGP">Operator（OpenAI 早期的云端电脑操作智能体）当年就属于「低于阈值」：基于云、能操作电脑，但慢、不够准、「用起来相当痛苦」——少数人获得了价值，整体没过关。Brockman 的框架是「时机 + 迭代部署」：有些产品发布时能力还没到位，但从真实世界的部署中学习极其宝贵。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="a68plE2QI2e0erL5n7ojuv">
+                        <div class="topic-detail-label" data-page-node-id="H8GZYU031INzZgOACEovWp">连接器 vs 像人一样用电脑</div>
+                        <p class="topic-detail-content" data-page-node-id="Sv8qFzgdDNMZI69rogYlZf">过去让智能体用电脑靠「连接器」（connectors，精心编码的 API 对接），这与人类用电脑的方式天差地别——而电脑上的一切软件本来就是为人设计的。从 OpenAI 成立之初，他们梦想的就是造出能「像人一样操作电脑」的 AI，一旦实现，AI 就能在所有你能用电脑完成的事情上帮你。今年团队蓄积势能，逐条烧掉一长串问题清单，真正攻克了计算机使用——Astra 让这个梦想落地了。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="MyF3OaxJMPnTM97vzlubKJ">
+                        <div class="topic-detail-label" data-page-node-id="uQbkeG2YEyOKgjAojKFFxk">长期主义样本</div>
+                        <p class="topic-detail-content" data-page-node-id="sGq7ElWb4koFYlqZEs7ABr">在 Brockman 的叙事里，Operator 不是失败：它是「长期聚焦、踏实做事、即便艰难也不放弃」的样本。OpenAI 擅长对真正重要的事做长期投资并「干苦活」，这构成了公司方法论的底色。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="8VKfEJ2lKWihDIenRBhXmS">
+                        「Operator 就属于模型能力低于阈值的情况……这是一个关于长期聚焦、踏实做事、即便艰难也不放弃的例子。」
+                        <span class="quote-en" data-page-node-id="VTJIiZrOSE27Gwse5NLTiZ">"Operator was just kind of below threshold in terms of the model capabilities... it's an example of long-term focus, doing the work, and not giving up even when the going gets tough."</span>
+                        <cite data-page-node-id="nxIM7VAkD5EIq7WMy1FUnE">21:17</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic" data-page-node-id="mdtlMiMBYYdiS9YoaEFKnl">
+                <div class="topic-header" data-page-node-id="UhPYb6wi3hTyzRmGa3Dg1V">
+                    <span class="topic-number" data-page-node-id="ULuxNThot4NI64XT7g4dBt">09</span>
+                    <div class="topic-info" data-page-node-id="jFnX2w0elPjFZPUlgih8Zs">
+                        <h3 class="topic-title" data-page-node-id="fmJHAiQrHsX41JHUjbgafa">回归创业公司模式：专注把赌注拧成一股绳</h3>
+                        <span class="topic-timestamp" data-page-node-id="Ml1npUyKsVtYol3fq6eb7B">23:12 - 24:20</span>
+                    </div>
+                </div>
+                <div class="topic-content" data-page-node-id="6LfzZmTek84RcFyKd9Lgxp">
+                    <div class="topic-section-title" data-page-node-id="krwjIe5NvPVH1uf5FN8RND">核心观点</div>
+                    <p class="topic-core-point" data-page-node-id="oWLAtBM6qGHBanDpUEDB8N">
+                        主持人观察到 OpenAI 从「大公司式撒网」回归「创业公司式聚焦」——去年推产品赌 10%-20% 命中率，今年全公司朝同一方向划桨；Brockman 回应称专注源于对使命的执念。
+                    </p>
+
+                    <div class="topic-section-title" data-page-node-id="GwFSCQIUMu1qCLQTjPCiSh">深度阐述</div>
+                    <div class="topic-detail" data-page-node-id="FWf0Wn66CkEAhtuVgGZerf">
+                        <div class="topic-detail-label" data-page-node-id="gIuMzWl1tY2uaPhW4c1zRy">两种模式的对比</div>
+                        <p class="topic-detail-content" data-page-node-id="luhphEghKJfCVYvPyFMMZd">Astra 给人的感觉是「所有不同赌注在恰当时间汇聚」——模型能力、计算机使用、语音同时成熟。主持人犀利对比两年差异：去年的 OpenAI 像超大规模云厂商，推新产品时默认「20%、10% 甚至 5% 的命中率就够了」；今年整个公司切回创业公司模式——「专注、专注、专注」，所有事必须咬合，全员朝同一方向划桨。让一家大公司重新像创业公司一样聚焦和发布，「像是不可能完成的任务」，而 OpenAI 做到了，势能与增长随之而来。</p>
+                    </div>
+                    <div class="topic-detail" data-page-node-id="9MrdNGhzBuDhDb2qqhzCi9">
+                        <div class="topic-detail-label" data-page-node-id="7NN1cg9Eqm5Q1l05XUX3bD">专注 = 使命</div>
+                        <p class="topic-detail-content" data-page-node-id="WqwHiyovCAdsgef1ndqlrW">Brockman 的回应克制而笃定：这是公司里许多人的共同努力；他珍视这种状态——对使命无比专注，所做的每一件事都应当服务于完成它。访谈在「每件事都该为使命服务」的注脚中收束，也解释了 Astra 的爆发为何不像是偶然。</p>
+                    </div>
+
+                    <div class="quote-block" data-page-node-id="7LzIeDUPhjRtqgbQXiYtFK">
+                        「今年感觉整个公司真的切回了创业公司模式——专注、专注、专注，所有东西必须咬合在一起，整个团队朝同一方向划桨。」
+                        <span class="quote-en" data-page-node-id="ZHEhUCVcbqh4gVVN7FqRKe">"This year it feels like... the entire company switched back into actual startup mode... focus focus focus all these things need to come together, the whole team needs to be rowing in the same direction."</span>
+                        <cite data-page-node-id="XabjONb90wy27FgzxF5VHM">23:12</cite>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider" data-page-node-id="ZjQdnbOAnFQUuXaPKusOcV"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section" data-page-node-id="kr76uRBJKyDhe75QWeDfiT">
+        <div class="container" data-page-node-id="M00nuUSIYtVRGBDq35NvqD">
+            <h2 class="section-title" data-page-node-id="o0kLeEDakDMApjiJfDHvUB">精华收获</h2>
+            <div class="takeaways-grid" data-page-node-id="PSaGQBtmW53BxzpaEEGuYn">
+                <!-- Takeaway Card 1 -->
+                <div class="takeaway-card" data-page-node-id="g19nT7WfbBBiadsY5U0bHm">
+                    <div class="takeaway-emoji" data-page-node-id="BefG1xc7AFOrg24gjjSWpP">💡</div>
+                    <h3 class="takeaway-title" data-page-node-id="e3VghcAp2usHHen156FXFd">能力阈值</h3>
+                    <p class="takeaway-desc" data-page-node-id="YWV9DS7K3N3OGt2UnjGQGa">AI 的价值分野在「质量阈值」——低于阈值只是酷概念，越过阈值才会井喷式解锁真实应用；破解数学定理与 3D 建模日常应用，本质是同一件事的两面。</p>
+                </div>
+
+                <!-- Takeaway Card 2 -->
+                <div class="takeaway-card" data-page-node-id="3VXYy7T32sA40G0GJkiFuj">
+                    <div class="takeaway-emoji" data-page-node-id="wPw49VxXTh8bxQTdRB2gHg">🎯</div>
+                    <h3 class="takeaway-title" data-page-node-id="ueBsYjCKjzmhGbgXDeQBrf">先发劣势</h3>
+                    <p class="takeaway-desc" data-page-node-id="yfJ0yg5Phj1qs8PwPvVO8p">数十亿用户的旧印象是负担更是资产（每周 10 亿+ 用户、累计约 15 亿试用者）；破局之道是「发现问题」——让模型主动开口告诉你它还能替你做什么。</p>
+                </div>
+
+                <!-- Takeaway Card 3 -->
+                <div class="takeaway-card" data-page-node-id="32Q7kDcHanFO1PwKcfpVhY">
+                    <div class="takeaway-emoji" data-page-node-id="zFOfcI4tbjcazDH47DtD3q">🏥</div>
+                    <h3 class="takeaway-title" data-page-node-id="9IMHhJCzkHVgW1LE8sjhCs">健康拼图</h3>
+                    <p class="takeaway-desc" data-page-node-id="Rqn6WfcAOMeDWR6yGsEvuc">每周 3 亿健康查询 + 三支柱布局（消费者/临床医生/医院）之上，AI 最独特的价值是用记忆与全科视野，拼起分科医疗永远拼不完整的诊断。</p>
+                </div>
+
+                <!-- Takeaway Card 4 -->
+                <div class="takeaway-card" data-page-node-id="YjYmvr2113MbxMHABg2iIj">
+                    <div class="takeaway-emoji" data-page-node-id="e8KwvPsEGVIQivPHmRdl2E">📣</div>
+                    <h3 class="takeaway-title" data-page-node-id="e9auosGuU2lGoBTY8KMTos">营销心法</h3>
+                    <p class="takeaway-desc" data-page-node-id="JE7IgSBBd8sbDi8sNI0dFg">当「AI 界的苹果」，学的不是 1984 广告而是苹果对产品细节的死磕——用大量具体功能点广告，让用户看完就想亲自试一试；以及，提醒用户直接问 AI 它能做什么。</p>
+                </div>
+
+                <!-- Takeaway Card 5 -->
+                <div class="takeaway-card" data-page-node-id="HwnqWLbENdtjFDrduCBIfu">
+                    <div class="takeaway-emoji" data-page-node-id="ZLp5KttmqHFLlxDWY9hhYO">🧭</div>
+                    <h3 class="takeaway-title" data-page-node-id="2iGaAdcxmTbDLI4bPAEeep">Operator 叙事</h3>
+                    <p class="takeaway-desc" data-page-node-id="zK3bKlHCR5zQZWmJ2ekpGC">被看作失败的早期产品可能是必要的迭代学费；长期投资 + 逐条烧掉问题清单的「苦活」，比押注单一爆点更可靠。</p>
+                </div>
+
+                <!-- Takeaway Card 6 -->
+                <div class="takeaway-card" data-page-node-id="SHaPsR4AcIDAyYeV6jvxQo">
+                    <div class="takeaway-emoji" data-page-node-id="XBaJdLHv43Yl4doUFytJyZ">🚀</div>
+                    <h3 class="takeaway-title" data-page-node-id="2srke8Gz37x0vCypfg5YtA">专注回归</h3>
+                    <p class="takeaway-desc" data-page-node-id="7Q2eiw6vbjWkEgLuYV1TbK">从「10% 命中率就够」的大公司式撒网，回到全公司朝同一方向划桨的创业公司节奏，是 OpenAI 今年势能与增长差异的来源。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" data-page-node-id="VOcYCtIWAUWqx6djQjy67w">
+        <div class="container" data-page-node-id="nE3lBBkRHzjhI73GA61mDR">
+            <h3 class="footer-title" data-page-node-id="TOt02ZBE7IhWU9t9eXLysj">关于本期</h3>
+            <p class="footer-desc" data-page-node-id="9keT0GmfcNMQWu5bs25RVa">
+                本页内容整理自 TBPN 对 OpenAI 联合创始人兼总裁 Greg Brockman 的完整访谈。译文在保留原意基础上做了口语转书面处理，专有名词如 ChatGPT、Astra、Operator、Blender 等保留原文。
+            </p>
+            <div class="footer-quote" data-page-node-id="rAL4App3No3EUEDLFdOI67">
+"我们正在走向真正的放大：把你的时间还给你。"
+            </div>
+            <p class="footer-note" data-page-node-id="wOxvkeiCNoxvSvabfFzyMq">
+                内容基于 YouTube 公开访谈整理，仅供学习参考，版权归原频道及受访者所有。<br data-page-node-id="TANps0jPoVA6GzmdfTtr8w">
+                <a href="https://www.youtube.com/watch?v=qNxuxwb9ksA" target="_blank" rel="noopener" data-page-node-id="btIszPGJLoRLs02Y3T6qF0">观看原视频</a> · <a href="../index.html" data-page-node-id="lk3DfxyYP1NKuozTThHM6V">返回首页</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+</body>
+</html>

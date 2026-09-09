@@ -1,6 +1,50 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/mark-zuckerberg-on-muse-metas-biggest-ai-bet-yet.html",
+    card_class: "card-ai",
+    category: "Sources Podcast · 深度访谈 · Meta · Muse · 个人智能体",
+    type: "AI",
+    date: "2026-09-09",
+    title: "马克·扎克伯格谈 Muse：Meta 迄今最大的一笔 AI 押注 | Sources Podcast",
+    excerpt:
+      "当大多数科技巨头还在争论「要不要把最强模型放出来」时，扎克伯格却担心相反的事：少数实验室垄断一种如此强大的东西。这场访谈正值 Meta 发布个人智能体 Muse——不同于 ChatGPT 式一问一答，Muse 背后运行一台云端虚拟机，能替你 24 小时持续工作，甚至主动提议下一步该做什么。扎克伯格罕见坦诚：Llama 4 为何失败、他如何亲手重建 AI 实验室（人才密度、西瓜代号）、Muse 每周免费 1 亿 token 靠交易抽成的生意经，以及他眼中「人手一个超级智能体」与 OpenAI、Anthropic「巨头垄断」路线之间的根本分歧——还有机密虚拟机、哨兵智能体、最小权限构成他口中「别人望尘莫及」的隐私护城河。",
+    tags: ["#MarkZuckerberg", "#Muse", "#Meta", "#SourcesPodcast", "#个人智能体", "#个人超级智能", "#AI安全", "#Llama4", "#机密虚拟机", "#分发哲学"],
+  },
+  {
+    url: "articles/how-we-built-grok-bot-in-a-month-roman-ugarte-spacexai.html",
+    card_class: "card-ai",
+    category: "Lenny's Podcast · 深度访谈 · AI 智能体 · 知识工作 · SpaceXAI · Cursor",
+    type: "AI",
+    date: "2026-09-09",
+    title: "我们如何在一个月内构建出 Grok Bot | Roman Ugarte（SpaceXAI）",
+    excerpt:
+      "一支 5 人小团队用 4 周从零做出可用的内部产品，再用 3 周推向世界，又过 3 周就成了「全球最热 AI 产品」——SpaceXAI 的 Grok Bot。Roman Ugarte 复盘了破圈的两次早期决定（全云端 + 每个机器人拥有自己的电脑）、「同事脑」（colleague-pilled）产品哲学，以及亲手引导两三百个早期用户背后的方法论：从不引导证人、不把多个愿景挤进同一界面、不靠 PPT 估算护城河。Lenny 追问那些反常识判断：为什么不并进 Cursor？为什么说「护城河是被发现的」？为什么「100% 完成」与「90% 到位」是不同类别？",
+    tags: ["#GrokBot", "#LennysPodcast", "#RomanUgarte", "#SpaceXAI", "#Cursor", "#AI智能体", "#知识工作", "#同事脑", "#创业", "#护城河"],
+  },
+  {
+    url: "articles/how-founders-build-on-claude-managed-agents.html",
+    card_class: "card-ai",
+    category: "Claude 官方 · 圆桌访谈 · AI 智能体 · 创业 · Anthropic",
+    type: "AI",
+    date: "2026-09-09",
+    title: "创始人如何基于 Claude Managed Agents 构建产品 | Claude 官方圆桌",
+    excerpt:
+      "当三家公司分别用 1 天、2 周、2 周把智能体功能送上生产环境，问题就不再是「要不要用托管智能体」，而是「什么时候该自己造轮子」。Wispr 的会议助手一天出第一版、几周扩展 100 到 1000 倍用户；Actively 用两周上线跨账户销售智能体 Watchtower；Pendo 让分析平台直接读取客户代码库并主动推送修复。Anthropic 官方请来三位创始人，聊透结果验证（outcomes）、记忆（memory）、沙箱（sandboxing）三大托管特性的实战取舍——briefs 靠「独立考官」保证零错误、记忆拆成「核心自建、外围托管」两层、代码审查走向「自愈软件」。还有一条可以带走的决策准则：非核心就买，核心才建，成本卡脖子就自建。",
+    tags: ["#Claude", "#ManagedAgents", "#Anthropic", "#AI智能体", "#Wispr", "#Actively", "#Pendo", "#创业", "#Outcomes", "#沙箱"],
+  },
+  {
+    url: "articles/greg-brockman-on-astra-and-the-future-of-openai.html",
+    card_class: "card-ai",
+    category: "TBPN · 深度访谈 · OpenAI · AI 战略 · 计算机使用 · 医疗 AI",
+    type: "AI",
+    date: "2026-09-09",
+    title: "Greg Brockman 谈 Astra 与 OpenAI 的未来：AI 破解千禧年难题之后 | TBPN",
+    excerpt:
+      "当 OpenAI 宣布模型解决了纳维-斯托克斯千禧年难题时，总裁 Greg Brockman 想让你记住的却是一件更「土」的事：有人用 Astra 设计了一个拦截淋浴地漏头发的小装置，并且真的造了出来。这场发布日访谈串起了 OpenAI 的全部棋局——从证明数学定理到让普通人一句话造出实物，本质是同一件事：模型能力越过阈值，日常问题第一次变得可解。Astra 让「计算机使用」抵达新阈值，ChatGPT 每周超 10 亿用户、智能体采用率近乎垂直增长；医疗成为他眼中 AI 最正面的应用（每周 3 亿健康查询 + 三支柱平台愿景，拼起分科医疗凑不齐的完整诊断）；曾被看作失败的 Operator 被重新讲述为「长期聚焦、把苦活干完」的方法论样本。25 分钟访谈，读懂 OpenAI 从大公司模式回归创业公司专注的这一年。",
+    tags: ["#TBPN", "#GregBrockman", "#OpenAI", "#Astra", "#千禧年难题", "#计算机使用", "#ChatGPT", "#医疗AI", "#Operator"],
+  },
+  {
     url: "articles/ai-is-running-out-of-power.html",
     card_class: "card-ai",
     category: "SemiAnalysis · 视频深度 · AI 基础设施 · 电力 · 电网",

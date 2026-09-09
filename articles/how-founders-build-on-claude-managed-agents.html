@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创始人如何基于 Claude Managed Agents 构建产品</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <!-- 配色方案覆盖：珊瑚金 -->
+    <style>
+        :root {
+            --accent-primary: #f97066;
+            --accent-secondary: #fbbf24;
+            --accent-primary-rgb: 249, 112, 102;
+            --accent-secondary-rgb: 251, 191, 36;
+            --border: #2a2a2e;
+        }
+    </style>
+
+    <!-- Header 封面背景图 -->
+    <style>
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/how-founders-build-on-claude-managed-agents-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">Claude 官方 · 圆桌访谈 · AI 智能体 · 创业</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">创始人如何基于 Claude</span>
+                    <span class="title-line-2">Managed Agents 构建</span>
+                </h1>
+                <p class="subtitle">
+                    当三家公司分别用 1 天、2 周、2 周把智能体功能送上生产环境，问题就不再是"要不要用托管智能体"，而是"什么时候该自己造轮子"。Wispr 的会议助手一天出第一版、几周扩展 100 到 1000 倍用户；Actively 用两周上线跨账户销售智能体 Watchtower；Pendo 让分析平台直接读取客户代码库并主动推送修复。Anthropic 官方请来三位创始人，聊透结果验证（outcomes）、记忆（memory）、沙箱（sandboxing）三大托管特性，以及一条可以带走的决策准则：非核心就买，核心才建。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">频道</div>
+                        <div class="meta-value">Claude（Anthropic）</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Wispr · Actively · Pendo 创始人</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">约 35 分钟</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=hm8NzEd5io0" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心洞察</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">托管优先</h3>
+                    <p class="point-desc">判断"自建还是托管"只看一条：智能体框架（harness）是不是你要构建的功能的核心能力——不是核心就买，是核心才自己建。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">一天 / 两周</h3>
+                    <p class="point-desc">Wispr 用 1 天交付会议助手第一版、几周扩展 100 到 1000 倍用户；Actively 与 Pendo 都约 2 周从想法到上线。托管方案的真正价值是速度。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">独立考官</h3>
+                    <p class="point-desc">Outcomes 的精髓：让验证智能体拥有完全独立的上下文窗口来评估产出。拿不准就不展示——宁可沉默，也不给用户错误信息。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">体感先行</h3>
+                    <p class="point-desc">先把产品靠"体感"迭代到有黏性，再上系统化 evals。评估集必须落在真实用户分布内——在错误的分布上爬山优化，用户根本不在乎。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">记忆分层</h3>
+                    <p class="point-desc">核心记忆（账户级、需要定制索引）自建掌控，通用记忆（组织概念、用户偏好）交给托管——不要为没有差异化的东西付工程成本。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">对冲新模型</h3>
+                    <p class="point-desc">模型迁移要评估新家族"特有的失败模式"，而不是榨取当前模型的最后 1%；批量任务提前 24 小时跑，理论上可省 50%-75% 成本。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">三种用法：会议、销售与代码库</h3>
+                        <span class="topic-timestamp">00:00:07 - 00:02:17</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        同一个托管智能体平台，被三家公司用在截然不同的场景：会议全旅程、跨账户销售聚合、代码库与现实对账。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Wispr：把会议拆成"前、中、后"三段</div>
+                        <p class="topic-detail-content">Sahaj 提出一个容易忽视的视角：几乎所有人都只把会议产品限定在"会议进行中"，而智能体最有趣的地方恰恰在会前与会后——会前帮你弄清"对方是谁、为什么相关、要达成什么"，会后替你落实该跟进的事项。Wispr 用 Managed Agents 同时构建"简报"（briefs，会前准备）与"任务自动化"（会后执行）两侧。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Actively：从单账户到跨账户的 Watchtower</div>
+                        <p class="topic-detail-content">Mihir 的产品理念是"每个账户一个永远在工作的智能体"，但销售问题天然跨账户：代表问"今天该追哪五个账户"，经理问"下季度该预测哪些交易"。他们用 Managed Agents 两周做出跨账户聚合产品 Watchtower——如今已是使用率最高的功能之一。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Pendo：让智能体读懂代码库</div>
+                        <p class="topic-detail-content">Todd 的场景最重：产品分析要插桩客户应用、采集真实行为，但客户迭代太快，手动插桩越来越跟不上。他们的智能体直接快照代码库，把"代码在做什么"与"应用实际发生什么"连接起来，主动推送洞察甚至修复。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Outcomes：先定评分标准，再配独立考官</h3>
+                        <span class="topic-timestamp">00:02:18 - 00:06:46</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Outcomes 本质是给智能体一份评分标准（rubric），让它迭代到达标为止；关键设计是验证者拥有完全独立的上下文窗口——评估与干活彻底解耦。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">"错误的 Tom"是破坏性的</div>
+                        <p class="topic-detail-content">Wispr 以简报功能解释正确性为何是生死线：若你要见的人叫 Tom，简报却给了另一个 Tom 的信息，用户进了会议才发现资料对不上人，体验近乎破坏性。因此"无法确认正确就什么都不展示"远好于展示错误信息。Outcomes 让他们可以给智能体挂一个完全独立的验证智能体，用干净、独立的上下文窗口判断产出是否正确、来源归属是否准确——保证给用户的东西始终正确。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Rubric 分两类：客观可验证 + UX 可消费</div>
+                        <p class="topic-detail-content">构建 rubric 时，他们把对用户重要的维度拆成两类：一类客观上可验证（如"是否为正确的人拉取到正确的 LinkedIn"），一类关乎呈现质量（如"信息是否可快速扫读、结构是否先人物、再目的、后行动"）。每个 UX 期望都变成 rubric 的一项，然后对着 rubric 做爬山式优化（hill climb）。执行上，流程在会议前 24 小时启动，留出足够长的评估窗口。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">做事的智能体与评估的智能体必须解耦</div>
+                        <p class="topic-detail-content">即便人类自己接到陌生会议邀请，也会本能地查 LinkedIn 并感到"不对劲"——独立于工作轨迹的评估者正是把这种复核制度化。Wispr 的用法甚至更克制：不追求迭代到完美，只在信息可信时呈现，否则保持沉默。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "帮得到就帮，但别造成困扰或骚扰。" [00:06:46]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">记忆：让跨账户智能体真正懂你的生意</h3>
+                        <span class="topic-timestamp">00:06:47 - 00:10:41</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        公司特有的业务概念是记忆的核心难题——系统在交互中学习概念并存入组织级记忆，再用"写代码 + 扇出"处理复杂的跨账户查询。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">脏数据里的组织概念</div>
+                        <p class="topic-detail-content">销售数据中充满了公司特有概念：如何定义"ownership"、怎么做预测、交易怎么运作。而源数据极脏——每家 Salesforce 里都有 30 个含义相同的废弃字段。硬编码配置根本不现实。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">组织级记忆免配置</div>
+                        <p class="topic-detail-content">Actively 的做法是：当人们与产品互动时，系统学习这些概念并存入组织级记忆，让后续所有人的结果越来越好——既免去冷启动配置，又越用越准。用户首次提问含糊时，智能体还会反问澄清并把答案记住。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">写代码处理 500 个交易</div>
+                        <p class="topic-detail-content">面对"500 个交易里做深度分析"这类查询，Watchtower 的托管智能体会自己写代码、做程序化工具调用：先缩小候选集，再扇出给每个账户的独立智能体并行工作，最后汇总反馈。记忆分账户级与跨账户级两层，配合用户级与组织级，构成一个 2×2 矩阵，以不同方式学习、增强产品不同部分。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "它会自己写代码来回答问题……缩小候选集，然后把工作扇出给独立智能体，让它们分别在每个账户上工作，再把反馈汇总回来。" [00:08:26]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">沙箱：敢碰客户源码的底气</h3>
+                        <span class="topic-timestamp">00:10:41 - 00:12:12</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        快照客户源代码必然触及密钥等敏感信息——沙箱化、工具暴露面控制这类安全细节不是分析公司的价值核心，交给托管平台覆盖全部边缘情况更划算。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">密钥风险与暴露面控制</div>
+                        <p class="topic-detail-content">智能体拿到客户源码就可能碰到密钥（secrets），因此必须审慎控制暴露哪些工具、发送什么数据、允许什么动作；交互末尾往往还要自动生成 pull request（PR，合并请求）推回真实仓库。Pendo 曾尝试自研这块，却发现自己只是在穷举边缘情况。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">会话形态的多样性</div>
+                        <p class="topic-detail-content">他们的会话并不单一：夜间有批量 cron 流程扫描大规模漏斗变化（不适合实时做），白天有按需会话快速查阅源码回答用户问题——全部跑在 Managed Agents 上，托管沙箱让他们快速达标。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "你是在穷举每一个边缘情况、做所有那些工作，而它根本不是我们价值主张的核心。它只需要能用、必须安全可靠。" [00:11:02]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">自建还是托管：一条决策准则</h3>
+                        <span class="topic-timestamp">00:12:12 - 00:16:56</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        判断标准是"harness 是不是你要构建功能的核心能力"——不是核心就买，是核心才自建；早期验证产品-市场契合度阶段，速度压倒一切。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Sahaj 的对照：简报 vs Jarvis</div>
+                        <p class="topic-detail-content">做"简报"时，智能体框架本身不是核心，核心是给用户交付价值；但如果未来做"完全语音控制的 Jarvis 式系统"，harness 本身就是产品差异化所在——那时才值得自建。这是"控制 vs 成本与时间"的权衡。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Todd：早期唯一重要的变量是速度</div>
+                        <p class="topic-detail-content">任何产品早期都在验证产品-市场契合度、验证让产品与众不同的核心功能，没人需要为这些自建基础设施。在座没有一个人是基础设施专家——托管方案让团队把精力放在正确的地方。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两个真实的时间线</div>
+                        <p class="topic-detail-content">Mihir：自研方案跑了一阵后遇到成串问题，被迫重建；对拍测试后转用 Managed Agents，几天拿到可用基础设施、几周完成全产品迁移。Wispr：功能第一版 1 天交付，随后几周内用户量实现 100 到 1000 倍增长——真正耗时的是用"构建→吃狗粮→找人测试→再迭代"的循环搞清用户到底要什么。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "如果你不需要为它自建基础设施——因为它不是定义你产品品质的东西——那就选择购买；而当它恰恰是核心时，就自己建。" [00:13:17]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">迭代哲学：先"体感"再"评估"</h3>
+                        <span class="topic-timestamp">00:16:56 - 00:17:48</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        先把产品靠体感（vibes-based）迭代到"让人离不开"，一旦有黏性就必须建立系统化 evals——托管 harness 的价值在于让你只操心"该给用户呈现什么"。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Claude Code 早期没有 evals</div>
+                        <p class="topic-detail-content">主持人用 Claude Code 的历史点出普遍规律：靠体感把东西做到有黏性之后，才需要系统化评估去迭代——没有 evals 会非常痛苦；反过来，东西本身没黏性时，再多的评估也救不了它。Wispr 团队因此能纯粹聚焦一个问题："针对这场会议，最重要的信息是什么、如何组织？"而 outcomes 恰好为此提供了结构化的快速迭代回路——上下文压缩、提示词缓存这类脏活全由托管基础设施解决。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "你可以靠'体感'迭代，把一个东西做到让人离不开。而一旦它让人离不开了，你就必须有 evals。" [00:17:21]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">记忆架构：核心自建，外围托管</h3>
+                        <span class="topic-timestamp">00:17:48 - 00:21:42</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        把记忆拆成两层：账户级核心记忆需要自己掌控索引与防损坏，而"字段含义、组织运作、用户偏好"这类通用记忆交给托管方案即可。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">核心记忆：要定制、防损坏、可索引</div>
+                        <p class="topic-detail-content">每个账户上的记忆永久存在、细节详尽、可能随时间损坏，必须以特定方式建立索引才能高效查询——这部分 Actively 自己管理，投入大量工作确保稳定。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">外围记忆：能用、够好即可</div>
+                        <p class="topic-detail-content">其余记忆（字段含义、组织规则、用户偏好）与其他公司并无差异，"不需要对我们和对别人有什么不同"——托管记忆正好解锁这一大块，省下大量工程成本。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">架构澄清：自建舰队 + 托管瞭望塔</div>
+                        <p class="topic-detail-content">关键澄清：那些"每账户一个"的智能体是 Actively 自建的（拥有完全独立的记忆架构）；只有 Watchtower 跑在 Managed Agents 上，却能访问整个自建舰队的记忆。当客户经理问"今天该跟进哪五个账户"，答案是账户记忆 + 个人偏好 + 组织知识的函数，托管智能体会写代码查询、做扇出。这套结构还让产品从一线销售扩展到销售管理者——管 5 名客户经理的 leader，等于对 500 个账户负责。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "它需要能用、要够好，但它们不需要'对我们'和对其他任何人有什么不同。对我们来说，托管记忆正好解锁了那一大块。" [00:18:31]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Pendo 实战：从代码审查到"自愈软件"</h3>
+                        <span class="topic-timestamp">00:21:43 - 00:24:22</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Pendo 在沙箱里把客户源码与遥测联合分析，覆盖 PR 审查、自动补插桩、夜间退化扫描——终极目标是让软件自愈。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">PR 触发轻量级 UX 审查</div>
+                        <p class="topic-detail-content">源码仓库每次有 PR 提交，就触发一个托管智能体会话审查代码变化，并附加轻量级 UX 审查——把坏体验挡在合入之前。一旦变更被合并，智能体判断是否需要更新分析或补插桩，自动在客户 PR 之上追加一个自己的 PR，让客户拥有准确的埋点。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">夜间扫描与智能体对话评估</div>
+                        <p class="topic-detail-content">夜间 cron 检查前一天漏斗转化率是否下滑、30 天窗口是否逐周退化；若发现退化，回溯 4 周前的改动并建议修复。他们还评估"人类与智能体的对话质量"——错误率异常偏高时，主动建议修改提示词。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">自愈软件愿景</div>
+                        <p class="topic-detail-content">目标不只是跑在自家评估集上，而是观察真实用户的实际行为与系统运行状态——理解之后建议修复，让人能继续全速前进。这回答了 Pendo 的终极愿景：软件能够自我修复。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "目标是最终走向'自愈软件'：人们合入越来越多的变更，我们看真实用户在做什么、系统如何运行，理解之后建议修复，让你能继续全速前进。" [00:23:48]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">Evals：别在错误的分布上爬山</h3>
+                        <span class="topic-timestamp">00:24:22 - 00:27:25</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        评估要分阶段演进：第零阶段靠体感；随后用真实用户反馈（而非内部吃狗粮）构建"在分布内"的评估集；带外部状态（实时记忆、第三方 MCP）的系统目前仍无好的离线评估办法。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">内部反馈的过度拟合风险</div>
+                        <p class="topic-detail-content">Sahaj 点出经典陷阱：一套精心挑选的评估集若不在用户分布上，爬山优化做得再好用户也不在乎。正确路径是：第零阶段体感判断；内部吃狗粮容易过度拟合到自家公司；之后依赖外部用户的赞/踩信号快速积累样本，构建覆盖回归、困难场景、任务类型分区的评估群组，并让"离线评估的 rubric"与"outcomes 的 rubric"尽量同步。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Mihir：用真实客户查询对抗"抽象风险"</div>
+                        <p class="topic-detail-content">Actively 曾因评估太抽象、不具代表性而苦恼。后来改为直接研究真实客户查询、访谈用户"你当时想得到什么"，再围绕真实意图建 eval——规避了抽象风险。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">无法评估的两类系统</div>
+                        <p class="topic-detail-content">对"带实时记忆的状态化系统"做离线结果评估仍无好方法（轨迹评估可做但结果评估难）；依赖 Slack MCP 这类会随外部状态漂移的工具做评估同样难以系统化——而把客户的 Slack 整个 mock 掉又不现实。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "你可以有一套精心挑选的评估集，但它根本不在你用户的实际分布上。你在上面做爬山优化，结果毫无意义——你的用户根本不在乎。" [00:24:22]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">模型迁移与成本：两大现实约束</h3>
+                        <span class="topic-timestamp">00:27:26 - 00:31:14</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        好 eval 套件是模型迁移的前提，提示词不该过度优化到特定模型家族；成本上托管加价虽低，但缺批处理模式与细粒度归因是主要痛点。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">迁移对冲"失败模式"而非榨取"最后 1%"</div>
+                        <p class="topic-detail-content">对模型迁移，嘉宾们认为关键是对冲新一代模型的已知失败模式——例如新系列模型写作中更多的 AI 痕迹（破折号、不可读句式）。针对家族的最后 1% 优化会随代际自然改善，不值得投入；好 eval 套件让你能放心迁移。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">成本：托管加价低，但没有批处理</div>
+                        <p class="topic-detail-content">Mihir 给出具体数字：Managed Agents 的加价其实很低，但目前难以跑批处理模式——若能把任务提前 24 小时以批处理执行，可省 50%-75% 成本。他的策略是短期优先创造用户价值，成本细节优化留待平台补齐功能。Pendo 补充：夜间大批量处理容易变贵，现阶段用廉价工程手段（降低频率、少发数据）即可，但规模化后需要"什么调用花了多少钱"的细粒度归因遥测。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "如果你完全不担心成本，你很可能做不出一个能长期规模化、可持续商业模式的东西。" [00:28:35]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 11 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">11</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">给 Anthropic 的反馈与四条准则</h3>
+                        <span class="topic-timestamp">00:31:14 - 00:34:36</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        托管方案当前最适配"需要前沿智能、对价格不敏感、任务跑几分钟"的场景；创始人希望平台补上成本杠杆与沙箱预热等能力，并总结出四条"何时自建"准则。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">成本杠杆太少：全有或全无</div>
+                        <p class="topic-detail-content">Watchtower 的协调主智能体需要前沿智能（跑 Opus 合理），但扇出到 500 个账户的子任务不该用同等级模型——托管平台在成本优化上近乎"全有或全无"。创始人希望有弹性（flex）或批处理模式（直接对应约 2 倍速、省 50% 成本），并支持预热沙箱以降低延迟敏感场景的冷启动。他们也承认，Managed Agents 在"任务难、跑几分钟、不在乎秒级延迟"的场景下运转得非常好。</p>
+                    </div>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">四条"何时自建"准则</div>
+                        <p class="topic-detail-content">Mihir 的标准：当"优化成本或控制"能让你做出原本做不出的东西时，自建才有意义——例如未来若做语音控制的 Jarvis 式"幕僚长"，大概率要自建 harness，但绝不意味着事事自建。主持人补充第四条：在验证可行性阶段，一次实验的成本等于"学到东西所需的时间"，托管方案在此时同样大放异彩。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "如果优化成本或优化控制，能让你构建出原本构建不了的东西，那它就非常有意义。如果你不把成本降 90% 就做不出某个功能，那你就必须想办法做到。" [00:33:32]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏗️</div>
+                    <h3 class="takeaway-title">托管优先</h3>
+                    <p class="takeaway-desc">判断"自建 vs 托管"看 harness 是否为核心能力——不是核心就买，是核心才建；不要为不构成差异化的边缘情况自研基础设施。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">速度红利：1 天 / 2 周</h3>
+                    <p class="takeaway-desc">Wispr 一天交付会议助手第一版、几周扩展 100-1000 倍；Actively 两周从想法到上线 Watchtower——托管方案被反复验证的价值是惊人的上线速度。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧪</div>
+                    <h3 class="takeaway-title">独立考官</h3>
+                    <p class="takeaway-desc">Outcomes 的精髓是让评估智能体拥有完全独立的上下文窗口，对"做事轨迹"做第三方判断；拿不准就不展示，好过给错误信息。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">体感先行</h3>
+                    <p class="takeaway-desc">先把产品迭代到"有黏性"，再建立系统化 evals；评估集必须落在真实用户分布内，否则爬山优化毫无意义。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧠</div>
+                    <h3 class="takeaway-title">记忆分层</h3>
+                    <p class="takeaway-desc">核心记忆（账户级、需定制索引与防损坏）自建掌控，通用记忆（组织概念、用户偏好）用托管——不要为无差异的东西付工程成本。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔄</div>
+                    <h3 class="takeaway-title">对冲新模型</h3>
+                    <p class="takeaway-desc">模型迁移要对冲新家族的失败模式，而非优化到最后 1%；托管平台缺批处理/弹性与细粒度归因，批量任务提前 24 小时可省 50%-75% 成本。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">延伸思考</h3>
+            <p class="footer-desc">
+                把"买 vs 建"放进整个 AI 应用浪潮里看，这条决策准则的意义远超三家公司的选择。托管平台的边界一直在外扩——当批处理、弹性模式、细粒度成本归因、沙箱预热这些能力逐步补齐，"买"的成本曲线会持续下移，而"自建"的触发条件（核心能力、极致控制、90% 成本削减）会越来越清晰、越来越少见。创始人的真正护城河从来不在 harness，而在用户价值、产品体验与那些定义差异化的表层能力。
+            </p>
+            <div class="footer-quote">
+                "非核心就买，核心才建，成本卡脖子就自建。"
+            </div>
+            <p class="footer-note">
+                更深一层，三家公司示范了一种正在成形的工程分工：把智能体的"通用骨架"（沙箱安全、上下文压缩、提示词缓存、基础记忆）交给平台，把"业务脑"（rubric、组织概念、账户记忆、代码库理解）留给自己。<br><br>
+                Wispr 的克制（拿不准就不展示）、Actively 的分层（核心自建、外围托管）、Pendo 的愿景（自愈软件）——分别回答了智能体产品三个最尖锐的问题：如何让用户信任你、如何让系统记得住、如何让系统自我进化。当这些答案被不断验证，创业者真正需要思考的可能不再是"要不要用托管"，而是"我的核心能力到底在哪一层"。
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
