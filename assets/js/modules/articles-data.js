@@ -1,6 +1,39 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/a16z-ai-power-law-of-venture-capital.html",
+    card_class: "card-finance",
+    category: "a16z · 深度访谈 · AI 投资 · 风险投资 · 资产配置",
+    type: "投资",
+    date: "2026-09-10",
+    title: "AI 正在如何改写风险投资的幂律法则 | a16z",
+    excerpt:
+      "研究美国 3,000 家风投机构二十年的数据，只有 20 家做到持续 3 倍净回报——不到 1%；而风投平均回报只有 1 到 2 倍，低于公开市场和私募股权，却要锁定十年。与此同时，SpaceX、OpenAI、Anthropic 三家前沿模型公司代表着 3.5 万到 5 万亿美元潜在企业价值，而大量机构配置者几乎没有这块敞口。a16z 的 David George、Jen Kha 与 Accolade Partners 的 Aram Verdiyan 把这件事讲透了：为什么资本第一次成为「放大器」而非负担（美元可以直接买算力）、为什么晚期基金头部仓位必须占 5%–10% 才能单笔回收整只基金、为什么 LP 的激励机制天然与这个机会错配（GP 因「错过」被解雇，LP 因「投错」被解雇），以及为什么真正的瓶颈不在需求侧，而在能源、电网与数据中心。",
+    tags: ["#a16z", "#风险投资", "#幂律法则", "#资产配置", "#AI投资", "#LP与GP", "#遗留SaaS", "#私募信贷", "#数据中心", "#机器时代"],
+  },
+  {
+    url: "articles/when-ai-improves-itself-richard-socher-recursive.html",
+    card_class: "card-ai",
+    category: "The MAD Podcast · 深度访谈 · AI 递归自我改进 · AI for Science · 生物学",
+    type: "AI",
+    date: "2026-09-10",
+    title: "AI 开始自我改进之时：Richard Socher 谈《尤里卡机器》 | The MAD Podcast",
+    excerpt:
+      "科学进步其实正在放缓——知识从「共同体」碎裂成「迷宫」，3.4 万种期刊、上千个细分领域，通才消亡。Salesforce 前首席科学家、Recursive 公司 CEO Richard Socher 在新书《The Eureka Machine》里给出解药：把 AI 变成科学的「微积分」。这场 74 分钟访谈串起三条线索——递归自我改进、AI for Science、智能体群体——层层拆解「尤里卡机器」的四大支柱（大语言模型、现实测量、模拟、真实世界实验），也坦率回答天花板在哪里：为什么「硬起飞」不会发生、算力为何是最大瓶颈（Recursive 6.7 亿美元融资中约 4.1 亿压在单一算力协议上）、幻觉为何反而是发现的朋友、生物学为何正从「读」转向「写」。还有一条可操作的分析准则：可模拟、可验证的领域，AI 必然超越人类。",
+    tags: ["#RichardSocher", "#Recursive", "#AIforScience", "#递归自我改进", "#尤里卡机器", "#AI幻觉", "#蛋白质语言模型", "#AI经济学家", "#智能体群体", "#算力"],
+  },
+  {
+    url: "articles/coinbases-everything-exchange-agentic-finance-brian-armstrong.html",
+    card_class: "card-ai",
+    category: "No Priors · 深度访谈 · Coinbase · 智能体金融 · 稳定币 · 长寿科技",
+    type: "AI",
+    date: "2026-09-10",
+    title: "Coinbase 的万物交易所：给 AI 开户 | No Priors",
+    excerpt:
+      "如果未来开户数量最多的「用户群体」不是人类而是 AI，你会怎么设计银行？Coinbase CEO Brian Armstrong 给出的实测数据是：真实发生的智能体商业交易中约 76% 金额低于 30 美分——而主流卡网络的最低手续费恰好从 30 美分起步。这场访谈完整拆解三条同时推进的战线：把股票、商品、衍生品与预测市场收进同一个「万物交易所」（88% 收入已不来自比特币交易）；用自托管钱包 + 加密轨道绕开 KYC，给没有身份证件的 AI 智能体开户；以及他押注的「第二幕」——长寿公司 New Limit 用 AI 做表观遗传重编程，已在小鼠模型中演示成功，一季度临床明年启动，首针打酒精性肝病。他还罕见表态：员工离职应该能带走自己的 AI「大脑」。",
+    tags: ["#Coinbase", "#BrianArmstrong", "#NoPriors", "#智能体金融", "#稳定币", "#代币化", "#NewLimit", "#长寿科技", "#预测市场", "#递归式自我改进"],
+  },
+  {
     url: "articles/mark-zuckerberg-on-muse-metas-biggest-ai-bet-yet.html",
     card_class: "card-ai",
     category: "Sources Podcast · 深度访谈 · Meta · Muse · 个人智能体",

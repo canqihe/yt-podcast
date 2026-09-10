@@ -17,7 +17,7 @@
    ```
 
 2. **使用空白模板**
-   - 复制 `design-system/template.html`
+   - 复制 `design-system/template-standalone.html`
    - 填入你的内容
 
 3. **告诉 AI 生成网页**
@@ -122,6 +122,7 @@ background: linear-gradient(180deg, var(--border) 0%, transparent 100%);
 **内容规则**：
 - 优先使用**播客频道名称**（如果有）
 - 如果没有频道信息，使用内容分类标签
+- ⚠️ **频道信息只出现在徽章里，禁止写进 Meta Grid**（Meta Grid 的标签是固定的，见下一节）
 
 **样式**：
 - 胶囊形状（`border-radius: 100px`）
@@ -161,14 +162,31 @@ background: linear-gradient(180deg, var(--border) 0%, transparent 100%);
 <div class="meta-grid">
   <div class="meta-item">
     <div class="meta-label">主持人</div>
-    <div class="meta-value">Harry Stebbings</div>
+    <div class="meta-value">Erik Torenberg</div>
+  </div>
+  <div class="meta-item">
+    <div class="meta-label">嘉宾</div>
+    <div class="meta-value">David George · Jen Kha · Aram Verdiyan</div>
   </div>
   <div class="meta-item">
     <div class="meta-label">时长</div>
-    <div class="meta-value">1:21:57</div>
+    <div class="meta-value">约 48 分钟</div>
   </div>
 </div>
 ```
+
+**内容规则（强制）**：
+
+1. **标签固定为三项，顺序固定**：`主持人` → `嘉宾` → `时长`。
+   - 标签文案**不可改写**。禁止使用 `频道`、`主播`、`主持`、`演讲者`、`主讲人`、`受访者`、`对话者`、`来源`、`日期` 等任何变体或自造标签。
+2. **数据来源与写法**：
+   - `主持人`：填**人名**（节目主持人），不是频道名、不是机构名。可从视频简介的 "Follow our host" 一行、或开场白（如"感谢你们来参加"这类由第三方向嘉宾说的话）中识别。
+   - `嘉宾`：填**人名**，多位受访者用 ` · ` 分隔。纯单人独白/演讲类内容，演讲者填入本项。
+   - `时长`：优先 `M:SS` / `H:MM:SS` 精确格式；只知大概时用 `约 XX 分钟`。
+3. **唯一的例外**：当素材中**确实不存在**该维度信息时，才允许省略该项（例如无主持人的单人演讲可省略 `主持人`）。省略后剩余项保持原顺序左对齐。
+   - ❌ 不允许用其他标签去填补空出来的位置（例如把第三项改成 `频道`、`发布日期`）。
+   - ❌ 不允许因为只找到两项数据就自造一个新的标签名。
+   - ✅ 数据齐全时，默认就是且只能是这三项。
 
 **样式**：
 - 响应式网格（最小 200px）
@@ -624,7 +642,7 @@ padding: 24px;
 design-system/
 ├── design-tokens.css    # CSS 变量（设计 Token）
 ├── style.css            # 完整样式表
-├── template.html        # 空白模板
+├── template-standalone.html        # 空白模板
 ├── design-spec.md       # 本文档
 └── README.md            # 使用说明
 ```

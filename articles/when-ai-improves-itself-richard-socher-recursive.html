@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 开始自我改进之时：Richard Socher 谈《尤里卡机器》</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <!-- 配色方案覆盖：绿黄 -->
+    <style>
+        :root {
+            --accent-primary: #22c55e;
+            --accent-secondary: #eab308;
+            --accent-primary-rgb: 34, 197, 94;
+            --accent-secondary-rgb: 234, 179, 8;
+            --border: #2a2a2e;
+        }
+
+        /* 关键引用：英文原文 */
+        .quote-block .quote-en {
+            display: block;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        /* Header 封面背景图 + 暗化渐变 + 光晕 */
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/when-ai-improves-itself-richard-socher-recursive-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <a class="badge" href="../index.html">← The MAD Podcast · 深度访谈</a>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">AI 开始自我改进之时</span>
+                    <span class="title-line-2">Richard Socher 访谈</span>
+                </h1>
+                <p class="subtitle">
+                    科学进步其实正在放缓——知识碎裂成迷宫，再也没有文艺复兴式的通才。Salesforce 前首席科学家、Recursive 公司 CEO Richard Socher 在新书《The Eureka Machine》里给出解药：把 AI 变成科学的「微积分」。这场 74 分钟访谈串起三条线索——递归自我改进、AI for Science、智能体群体——层层拆解「尤里卡机器」的四大支柱，也坦率回答天花板在哪里：为什么「硬起飞」不会发生、算力为何是最大瓶颈、幻觉为何反而是发现的朋友。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Richard Socher（Recursive CEO）</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Matt Turck</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">1:14:23</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=kyyLku5F3bo" class="cta-button" target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看完整访谈
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <!-- Point Card 1 -->
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">科学正在失速</h3>
+                    <p class="point-desc">知识从「共同体」裂成「迷宫」：3.4 万种期刊、上千个细分领域，通才消亡，学术体制还在压制过度新颖的研究。</p>
+                </div>
+
+                <!-- Point Card 2 -->
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">AI 是科学的微积分</h3>
+                    <p class="point-desc">科学擅长把系统拆成越来越小的零件，却拼不回整体；AI 正是重新缝合复杂系统的那门语言。</p>
+                </div>
+
+                <!-- Point Card 3 -->
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">可模拟即胜负</h3>
+                    <p class="point-desc">「任何能模拟的东西，AI 都能解决。」可模拟、可验证的领域（围棋、数学、编程）AI 必将超越人类。</p>
+                </div>
+
+                <!-- Point Card 4 -->
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">幻觉是特性</h3>
+                    <p class="point-desc">在探索性任务里，模型「跳出分布」正是创造力来源；事实性问题只要注入真实搜索结果即可校准。</p>
+                </div>
+
+                <!-- Point Card 5 -->
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">四大支柱</h3>
+                    <p class="point-desc">大语言模型、现实测量、模拟、真实实验，其上叠加智能体群体——「永不停歇的 AI 科学家」的工程蓝图。</p>
+                </div>
+
+                <!-- Point Card 6 -->
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">算力是最硬约束</h3>
+                    <p class="point-desc">瓶颈不是数据而是算力；Recursive 6.7 亿美元融资中约 4.1 亿押在单一算力协议上。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">科学的巴别塔：为什么进步在放缓</h3>
+                        <span class="topic-timestamp">00:00 - 05:40</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        科学进步的放缓不是因为投入不足，而是因为知识被切分成了几千个互不相通的细分领域；同时，学术体制对「过度新颖」的排斥，进一步压制了跨学科的突破。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三个「已经解决」与无数「尚未解决」</div>
+                        <p class="topic-detail-content">Richard 用一组对比开场：人类已经「彻底解决」了细菌感染——它从瘟疫般的死刑判决变成了小毛病；但病毒、癌症至今没有被以同样的方式解决。在物理学上，自广义相对论与 E=mc² 之后，人类也再未拿出同等量级的基础理论。他承认各应用层面仍有大量进展，但基础性的新发现明显变慢了。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从「知识共同体」到「知识迷宫」</div>
+                        <p class="topic-detail-content">全世界约 3.4 万种学术期刊，每一本都像挂了「禁止入内」的牌子。Richard 举了自己的亲身体验：早年学语言学和计算机科学，近几年又旁听生物学，结果发现——和生物学家聊上十句话，对方就会抛出一连串你完全不懂的缩写和术语。生物学内部也早已分层：细胞层面、组织／医学层面、生物化学层面、蛋白质层面，一个生物学博士也答不上另一个层面的深层问题。文艺复兴式的通才之所以能做出跨学科联结，是因为当时的知识总量很小；如今每个领域都需数年深耕，细分领域多到「每个坑里都不够人」。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">体制性的第二重阻力</div>
+                        <p class="topic-detail-content">学术生涯奖励「新颖」，但太新颖意味着论文被拒。Richard 回忆 2010 年前后做神经网络 NLP 时，最初几篇论文几乎全被 NLP 顶会拒掉，只能发在很小的分支会议上。他记得当年 NIPS 上第一场深度学习 workshop 只来了三四十人，全是如今大名鼎鼎的面孔，当时却是少数几个「叛徒」——他们共同相信「特征工程不是正确的路」，而特征学习才是。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「我们从一个知识共同体，演化成了一座知识迷宫。3.4 万种期刊，本本都像挂着『禁止入内』的牌子。」
+                        <span class="quote-en">"You talk about how we evolve from a body of knowledge to a labyrinth of knowledge. 34,000 journals that might as well have no trespassing signs."</span>
+                        <cite>03:08</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 是生物学的「微积分」</h3>
+                        <span class="topic-timestamp">05:59 - 11:13</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        科学擅长把系统拆解成越来越小的零件，却难以把它们重新组装起来理解整体；AI 正是用于「重新缝合」复杂系统的语言——就像微积分之于物理学。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">一个核心比喻</div>
+                        <p class="topic-detail-content">现代科学已经把神经元、突触、放电机制、化学过程讲得非常清楚，可一旦把成千上万个零件拼起来，我们就说不清「整体的大脑为什么能产生一个念头」。AI 提供了一种处理这类复杂系统的恰当「语言」——而且在这里，「理解」变得容易了：研究一个神经网络，永远比研究原始的生物系统更容易。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">为什么「最会聊天的模型」也能预测蛋白质</div>
+                        <p class="topic-detail-content">生物学家会说「能预测衰老或各类癌症的模型要等几十年」；但同样地，二十年前 NLP 研究者也坚称「不可能有一个神经网络回答所有类型的问题」。Richard 提到自己那篇描述「提示工程」（prompt engineering）的论文 DECA NLP——提出用一个统一网络、以提示应对任意问题——当年被几乎所有审稿人、领域主席一致否决，理由荒诞得可笑：连人类都没有一个统一系统来回答所有问题。而如今这已经是「显而易见」到没人会去发明的常识。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">蛋白质：同一个故事的另一个版本</div>
+                        <p class="topic-detail-content">蛋白质只是氨基酸的序列。没有任何人类在演化中被训练去「说蛋白质的语言」，但 AI 并不在乎序列是英语单词还是氨基酸——它照样能生成训练数据中从未出现过的全新蛋白质组合，就像生成全新的句子。把这套逻辑下推到化学、分子层面，同样成立。他引用了一个反直觉的判断：如果你想知道某件事为什么行不通，去问专家——这句话在当年的 NLP 上成立，在今天的生物学上同样成立。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「AI 之于生物学，就像微积分之于物理学。」
+                        <span class="quote-en">"AI is kind of what calculus did for physics, AI will do for biology."</span>
+                        <cite>06:00</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">下一 token 预测：藏在语言里的世界模型</h3>
+                        <span class="topic-timestamp">10:56 - 16:44</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        「预测下一个 token」看似简单，却能逼出关于世界的隐性知识——地理、物理、蛋白质的三维结构都会自动浮现，因为要预测得准，模型必须内化生成这些数据的底层规律。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">「我在纽约，往北开车去 ___」</div>
+                        <p class="topic-detail-content">如果模型要预测这句话的下一个词，它最可能给出 Boston，其次是 Yale；往南则是 Princeton、New Jersey。仅仅为了预测这一个词，模型就必须「知道」美国的城市地理，而且知道得越准，越意味着它抓住了「城市越大越可能是答案」这类统计规律。当这样的预测重复数万亿次，地理知识就被内化了。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">万物皆可 token 化</div>
+                        <p class="topic-detail-content">蛋白质折叠遵循同一机制：折叠后在三维空间里彼此靠近的蛋白质，在模型内部表征里也呈现相关性。Richard 由此给出对 token 的通用定义——它可以是一个英文单词、一个子词、一个蛋白质、图像中的几个像素、视频或音频的一小段。万物皆可被 token 化、被离散化、被预测。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">「所有模型都是错的」</div>
+                        <p class="topic-detail-content">Matt 追问：这个类比在跨物理、生物时会不会失效？Richard 的回答坦诚而克制。蛋白质当然不只是序列，它有三维结构；但「把分子表示成标准字符串」这种简化，在化学的许多任务上出奇地有效。他认为科学本就站在巨人的肩膀上，仅靠对既有想法的聪明重组，就能带来惊人进步——因为大量基础零件已被拆解清楚，缺的正是「重新编织」。他也举出真实案例：Recursive 联合创始人 Jeff Cloon 曾用进化算法让 AI 生成想法，几个月后有人发表了几乎相同的论文，说明新颖性门槛确实被跨过了。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「所有模型都是错的，但有些是有用的。」
+                        <span class="quote-en">"All models are wrong but some are useful."</span>
+                        <cite>13:58</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">可模拟、可验证之处，AI 必然超越人类</h3>
+                        <span class="topic-timestamp">16:44 - 24:49</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 会在「可模拟」或「可验证」的领域确定性地达到超人水平；而当前最难模拟的领域——复杂的细胞、组织、器官——正是下一片待攻克的高地。Recursive 的路线则是先让 AI 改进 AI。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">一条可操作的判断准则</div>
+                        <p class="topic-detail-content">凡是能构建模拟环境、或能构建验证器的领域，AI 一定会赢——因为 AI 可以在模拟里做近乎无限次的实验。这解释了为什么那些完全信息、没有隐藏变量的游戏（象棋、围棋）AI 迟早并且会很快超越人类；更妙的是，AI 可以「自己跟自己下」，而这种自我博弈正是开放式探索与递归自我改进的关键机制。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">数学将剧烈改变，而编程的验证器最强</div>
+                        <p class="topic-detail-content">Richard 认为下一个会剧变的领域是数学，陶哲轩（Terence Tao）等最前沿的数学家对此完全清楚。他随即补了一句颇具人文关怀的观察：这对「想尽可能多证明定理」的人是好事，对「纯粹为了智识乐趣而热爱数学」的人未必。他还谈到 AI 对人类能力的提携效应——象棋因 AI 而更流行，人类棋手因能与近乎完美的对手切磋而变得更强。最强的验证器是编程：给出一张网页截图，让 AI 写出「看起来一模一样」的代码，这样的样本可以无限生成，于是就有了一个完美的验证器。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">边界：先 AI for AI，再 AI for Science</div>
+                        <p class="topic-detail-content">那么边界在哪？答案是当下难以模拟的东西：我们还无法完美模拟一个复杂细胞，遑论组织、器官与完整人体。Recursive 的排序逻辑是——必须先做「AI 改进 AI」，把系统做到在知识与能力上相当于 5 万名博士的水平，然后才去做自然科学。他对通用性的回答不是某个单一的宏大突破，而是数据先行：以扰动实验（perturbation study，敲除某个基因或加入某种分子、观察结果）积累海量数据，就像学会「纽约往北是波士顿」那样，学会「加入这种分子到这类细胞会得到什么输出」，进而开始泛化。但生物学的训练数据远远不够，所以需要类器官，最终目标是在「虚拟细胞」里让 AI 反复做实验。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「任何你能模拟的东西，AI 都能解决。」
+                        <span class="quote-en">"Anything you can simulate AI will solve."</span>
+                        <cite>18:28</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">幻觉是发现的朋友，而非敌人</h3>
+                        <span class="topic-timestamp">24:49 - 27:44</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        在科学探索中，幻觉（hallucination）可以是一种特性而非缺陷——它对应着模型「跳出分布」的能力，而这正是创造力的来源。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">两种任务，同一个机制</div>
+                        <p class="topic-detail-content">在探索新蛋白质这类任务上，关键不是「记住」，而是「能多合理地跳出训练分布」——这恰是幻觉的价值。技术上对应的是提高温度参数（temperature），让模型生成越来越偏离既有样本的 token。他给了一个非常实用的判据：当你问事实性问题时，你希望模型准确，那就把真实搜索结果塞进提示词（You.com 正是这么做的），让模型去总结，幻觉问题很大程度上就解决了，根本不需要什么符号推理。而当你给妻子写一首诗时，你要的正是一首「不像其他任何诗」的新诗。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">科学史上的「半幻觉」时刻</div>
+                        <p class="topic-detail-content">Richard 讲了一个有趣的历史观察：不少科学发现来自处于「半幻觉」状态的科学家，比如海森堡（Heisenberg）；有些是疾病所致，有些则来自最终很不健康的精神状态。创造力与病理之间的界线，在人类身上本就模糊。他坦言，写书这几年不得不把很多章节从「某人应该去做」改成「某人已经做了」，因为进展太快。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「幻觉在某些情况下是特性，而不是缺陷。」
+                        <span class="quote-en">"Hallucinations are in some cases a feature and not a bug."</span>
+                        <cite>25:30</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">从「读生物学」到「写生物学」</h3>
+                        <span class="topic-timestamp">27:42 - 31:31</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        生物学正从「阅读」（理解既有机制）转向「书写」（设计新的分子与疗法），这一转变释放出巨大的低垂果实。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从死记硬背到可编程</div>
+                        <p class="topic-detail-content">Richard 坦言，自己高中学生物学时并不喜欢——背下一堆过程，考个 A，半年后忘光。改变发生在这几年：生物学正在变成一门可编程的科学、一门工程科学。一旦一个领域理解了基础零件，接下来的红利就是「用新方式把零件拼起来」。他举了一个具体机制：某些分子能附着到细胞上，而附着之后可以再挂上不同的「载荷」，于是就能向细胞内部递送东西——分子可以被重新组合。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">ProGen 与 Profluent</div>
+                        <p class="topic-detail-content">团队的「顿悟时刻」发生在 2018 年：他们训练了当时最大的蛋白质语言模型 ProGen（论文一作 Ali Madani，当时 Richard 还在 Salesforce 任首席科学家）。Madani 后来创办了 Profluent，如今已与礼来（Eli Lilly）签下数十亿美元级合作——因为 Profluent 造出了比 CRISPR-Cas9 更好的蛋白质，在基因编辑上更精准、更具靶向性，有望用于改造活人体内的特定基因并衍生出新疗法。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">临床试验的「打法」也在变</div>
+                        <p class="topic-detail-content">他提到一个里程碑：有一项试验为每一位患者「定制」了不同的药物——这是 FDA 历史上的第一次。顺带地，他批评美国的临床试验环境：成本高、流程慢，导致很多公司转向中国或澳大利亚。中国更便宜、更快，但存在知识产权外流的顾虑；澳大利亚则聪明地把临床试验去中心化——每家医院都可以独立开展试验，从而形成竞争，而不是由一个中心机构决定排期。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「生物学正在成为一门可编程的科学，一门工程科学。」
+                        <span class="quote-en">"Biology is becoming a programmable science. It's becoming an engineering science."</span>
+                        <cite>28:09</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">药物研发、癌症与下一波突破</h3>
+                        <span class="topic-timestamp">31:31 - 40:19</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        AI 把「8 年磨一药」变成「6–18 个月内推进多个晚期二期药物」，但临床验证受物理规律约束，无法被算力跳过；癌症更像一个「系统问题」，而这恰是 AI 的强项。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">不相信「硬起飞」</div>
+                        <p class="topic-detail-content">面对「能加速多少」的问题，Richard 明确表示自己不相信硬起飞（hard takeoff）：有些事就是需要时间，因为物理规律和现实约束。例如需要观察患者在停药三年后是否出现问题，这类长期随访无法被模拟替代。但真正的变化在商业模式上：过去生物科技公司往往苦熬 8–10 年、只带着一两个晚期三期药物上市，一旦三期失败，公司就死了；现在出现的公司能在 6–18 个月内同时推进多个进入晚期二期的候选药物，等到上市时可能已手握 8 个以上的药物，而且因为预测模型更强，成功率更高。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 与就业：一个极简的二分</div>
+                        <p class="topic-detail-content">他给出一个极简而深刻的二分：如果你关心一个行业或公司的产出，你会喜欢 AI；如果你按小时计酬，你大概率会讨厌 AI。背后是需求的弹性问题。插画师受到的冲击大——因为世界上并不需要那么多插画，价格从 200 美元跌到 2 美分，但需求并没有增长 1000 倍；而编程完全不同，价格下降后需求反而暴涨，这正是杰文斯悖论（Jevons paradox）。他甚至预言：未来每个人手机上都会有几十个属于自己的、高度定制的小应用。他还提到一个被 AIX Ventures 认同的逆势观点：外界认为生物是糟糕的投资领域，但这一局面正在被改写。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">癌症是系统问题——而这正是 AI 擅长的</div>
+                        <p class="topic-detail-content">他的判断明确：AI 会在治愈多种癌症中扮演重要角色——已有试验用 AI 为患者定制「药物组合」、定制 RNA 序列。他强调癌症并非均质实体，内部有不同亚型，需要对每个患者、每种亚型做专门化治疗。Matt 追问这是否意味着「癌症本质上是系统问题」，Richard 回答：「正是如此——而这恰恰是 AI 独一无二地擅长解决的问题。」但他也补充了务实的边界：即便 AI 给出了完美分子，仍要跑完多年临床试验。至于下一波突破，他点名了几件事：设计能吃微塑料、塑料耗尽就自动死亡的细菌（但要警惕突变）；托卡马克的等离子体平衡控制本身就是机器学习问题；用 AI 设计更高效的太阳能电池、更优的电池，目标是摆脱对锂的依赖。他引用了一句讽刺：如果你想知道某件事为什么行不通，去问专家——这句话如今在长寿研究、癌症研究上同样成立。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「如果你关心一个行业或公司的产出，你会喜欢 AI；如果你按小时计酬，你大概率会讨厌 AI。」
+                        <span class="quote-en">"If you care about the outputs of an industry or a company, then you love AI. If you get paid hourly, you probably hate AI."</span>
+                        <cite>34:01</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 8 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">拒绝 AI 的社会与进步的岔路口</h3>
+                        <span class="topic-timestamp">40:19 - 45:07</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        进步不会覆盖所有人——一些社会或群体会主动「下车」，选择不参与 AI 驱动的进步；而这背后既有真实的代价，也夹杂着历史上一再重演的道德恐慌。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">「下车」的人与不丹样本</div>
+                        <p class="topic-detail-content">Richard 提出一个颇具哲学意味的图景：已经有许多亚文化群体实质上「退出」了进步。比如生活在希腊某个美丽小岛上的人，不需要考虑 AI，出海打鱼，天气好、鱼够多，就这样过日子。他认为这种「下车」的人群会越来越多。他个人热爱进步，并引用 David Deutsch 的《无穷的开始》（The Beginning of Infinity）——科学进步帮人类解决了生物圈里几乎所有的硬问题；但他也承认：AI 太强的加速效应，会让「要不要参与」这个问题变得空前紧迫。Matt 追问这是否会以「城邦式」的政治选择显现，Richard 举了不丹的例子：不丹用幸福而非 GDP 衡量国家发展，崇尚简单生活、重视环境与宗教。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">AI 行业「糟糕的公关」与历史的道德恐慌</div>
+                        <p class="topic-detail-content">他转向一个更尖锐的批评：AI 行业整体的公关做得非常糟糕。Matt 补充了一个值得注意的观察：技术在实实在在被使用——如果没人用 ChatGPT 或 Claude Code，就不会有争议；真正从技术中获益的人沉默，而负面声音更响。此外还有大量道德恐慌，与历史上对小说的恐慌如出一辙：当年有人说小说在毁掉年轻人，让他们活在幻想世界里；歌德的《少年维特之烦恼》甚至引发过自杀事件，如今却是德国高中必读的文学经典。漫画、电子游戏都经历过同样的循环，如今轮到了聊天机器人。与此同时，人们通过聊天机器人获得了更便宜的医疗建议、法律建议乃至情感支持——但那些因此避免了自毁、脱离了痛苦的人，很少发声。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「我认为 AI 行业整体的公关做得非常糟糕。」
+                        <span class="quote-en">"I think the AI industry has done a terrible PR job in general."</span>
+                        <cite>42:53</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 9 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">AI 经济学家：让经济学变成一门客观科学</h3>
+                        <span class="topic-timestamp">45:07 - 52:22</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        经济学缺乏客观基准、容易沦为政治立场之争；用强化学习在模拟社会中优化税收与补贴，至少可以提供一套「可被检验」的政策建议。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">150 次衰退漏掉 148 次</div>
+                        <p class="topic-detail-content">Richard 引用了一个惊人的数据：经济学家没能预测过去 150 次经济衰退中的 148 次。他认为根源在于经济学没有像计算机科学那样的客观基准。他回忆，当年他们向《Nature》和《Science》投递关于双层强化学习（two-level reinforcement learning）系统的论文时，直接被拒稿；有一次审稿人是个完全不懂 AI 的伦理学者，理由简单粗暴：用强化学习做经济学本身就很奇怪。正因为缺乏客观标准，经济学往往退化为政治领域。于是他们构建了一个模拟社会：一批智能体（agent）各有效用函数与愿意工作的小时数，可以采集资源、建造房屋、甚至阻断他人获取资源以形成垄断；其上是一个「元智能体」，决定如何对不同群体征税与补贴，目标函数选的是「平等 × 生产率」。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">复现 Saez 公式，并超越它</div>
+                        <p class="topic-detail-content">结果很有意思：智能体会试图规避税收——在税年前突击抛售、或在税年后集中兑现收益。而更妙的是，这套复杂的强化学习系统最终「复现」了经济学里那个著名的 Saez 最优税率公式——但那是「一次性、单步经济」下的最优解；他们的系统还能处理「经济是多期连续决策、智能体会反向适应税制」这层现实。他的期待是：这篇论文有一天会迎来自己的「GPT-3 时刻」——有人把它规模化，建起足够真实的模拟，让 AI 为经济政策提供建议。他反复强调必须有人类监督，而人类真正要做的，是把「我们社会的目标函数」形式化地定义清楚。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">非理性可以被建模吗</div>
+                        <p class="topic-detail-content">面对 Matt 的质疑——经济里有太多非理性，恐惧、贪婪，能被建模吗？Richard 的回答依旧是那句「所有模型都是错的，但有些是有用的」。他还举了 LLM 的例子：只要提示「你现在是一个来自某地区的 43 岁的人」，在数万亿 token 训练之后，模型真能说出类似该情境下人们的表达。他坦承短期内美国极难采用这套东西（身份政治、特殊利益集团、超级政治行动委员会），但新加坡、中国这类地方更可能先试——因为它们能把目标函数说清楚，然后真的去调税收与补贴。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「过去 150 次经济衰退，经济学家漏掉了 148 次。」
+                        <span class="quote-en">"Economists failed to predict 148 of the last 150 recessions."</span>
+                        <cite>45:08</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 10 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">10</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">尤里卡机器的四大支柱</h3>
+                        <span class="topic-timestamp">52:22 - 01:00:40</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        要做一台「永不停歇的 AI 科学家」，需要四根支柱：人类知识（大语言模型）、现实测量、模拟、真实世界实验；而每一根都尚未完备。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">前置问题：数据质量</div>
+                        <p class="topic-detail-content">Matt 提出担心：用 AI 数据训练 AI，会继承人类历史上的偏见与错误。Richard 完全认同：AI 的水平取决于我们给它的人、数据、系统、基础设施与奖励机制。他补充说，令人意外的是，一些前沿实验室用于 AI 的沙箱环境「工程做得相当糟糕」。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">支柱一与支柱二：语言，以及比语言更广阔的现实</div>
+                        <p class="topic-detail-content">第一大支柱是大语言模型，把人类知识灌进机器。他讲了一个「知识的奇妙循环」：Anthropic、OpenAI 等少数闭源实验室几乎把开放互联网的知识都吃进模型，但随后中国开源公司通过蒸馏把这些知识从闭源模型中「抽」了回来，再开源回开放领域——于是知识又回到了它出发的地方。第二大支柱是「现实模型」：人类看不见引力波、看不见伽马射线，但可以造仪器去测量，而这些测量结果有时根本无法用人类语言描述。他打了个精彩的比方：你可以说「神经网络因为那 500 万个参数预测了这个词」，但把它们全部列出来，你并不会获得任何直觉——就像没有人能说清「你转动方向盘时，为什么小指的这块肌纤维动了」。目前这根支柱还不存在，它需要众多学科协作，把物理、化学、生物乃至更大的系统整合进一个基础模型。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">支柱三与支柱四：模拟，以及真实世界</div>
+                        <p class="topic-detail-content">第三大支柱是模拟。理想状态是「一个包罗万象的模拟」，但现实中存在不同抽象层级——计算化学时不必模拟每个亚原子粒子的量子细节；进入生物学，甚至可以跳过分子，直接说「这个蛋白在那个层面与细胞结合」。这与计算机科学的抽象能力同源：没人再用 0 和 1 编程了，现在可以用英语编程。他提醒，有些被我们简化掉的效应（比如量子生物学）可能恰恰是关键，而这正是大模拟的价值所在。目前这根支柱以「碎片」形式存在——最简单的例子是围棋和象棋的模拟；而许多人正在攻关的「虚拟细胞」，距离真实人类细胞的复杂度还相当遥远。第四大支柱是真实世界：无论模拟多好，你都必须把系统真正造出来，检验是否遗漏了任何东西。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「AI 的水平，往往只取决于我们给它的人、数据、系统、基础设施和奖励。」
+                        <span class="quote-en">"AI often is only as good as the people, the data, the systems, the infrastructure, the rewards that we give it."</span>
+                        <cite>52:31</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 11 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">11</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">机器人实验室、智能体群体与算力瓶颈</h3>
+                        <span class="topic-timestamp">01:00:40 - 01:10:10</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        自驱动机器人实验室已出现雏形；智能体群体将尽可能多地承担科学流程。而算力（而非数据）是最大约束，Recursive 用一笔 4.1 亿美元的算力协议来印证这个判断。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">自驱动机器人实验室与类器官</div>
+                        <p class="topic-detail-content">Richard 表示从投资角度看「自驱动机器实验室」现在略早，但两三年后恰好——到那时软件成熟、科学数据处理顺畅、更高保真的模拟也建起来了，于是可以让 AI 去设计那些需要数小时、数天甚至数周才能跑完的「昂贵实验」。同时，可实验的载体也在进化：类器官（organoid）、基于人类干细胞的微型细胞系统。他再次点名 Parallel Bio——它在用人类免疫细胞做实验，并且已经拿到 FDA 批准，可以跳过某些动物试验。这意味着未来几年能省下巨量资金，也省下无数「为测试而被繁殖、被解剖」的动物生命。Richard 由此给出一个温情的推论：如果你关爱动物，你也可以热爱 AI。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">智能体群体与「微波炉」的教训</div>
+                        <p class="topic-detail-content">关于智能体群体，Richard 的设想是：智能体应尽可能覆盖科学流程的每一环，就像人类科学共同体那样分工协作。这背后的哲学是「开放式」（open-endedness）——科学、文化乃至生物演化的进程，都带有开放式特征：大量并行地探索彼此不同的有趣想法，然后重组。Jeff Cloon 常举的例子是微波炉：你不可能通过「让这口锅更快加热食物」直接得到微波炉；你必须先去研究雷达技术，偶然发现口袋里的巧克力在融化，才最终走向微波炉。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">算力是最大的约束，以及 Recursive 的野心</div>
+                        <p class="topic-detail-content">Matt 抛出一个尖锐问题：这台机器听起来极度饥渴于算力与数据——算力够吗？Richard 的回答干脆：算力是最大的约束。他的预测是，未来更多组织都必须回答：哪个问题值得被解决？我们愿意给它多少算力？关于数据，他承认公开互联网的绝大部分已被各大实验室消化，但数据永远在更新。谈到 Recursive 本身：八位联合创始人从非常不同的方向走到同一个判断。Tim Rocktäschel 与 Jeff Cloon 来自开放式研究与进化算法；Richard 自己则来自一个「自动化层级」的叙事——我们自动化了特征工程，又自动化了架构工程，下一层就是「想法」本身的提出、实现与验证。融资细节印证了算力的分量：他透露最终募得约 6.7 亿美元，其中很大一部分投向与 Amazon 的算力协议（约 4.1 亿美元），并预判「这很可能是我们未来最小的一笔算力交易」。他对「新型实验室」（neolab）这个标签颇有微词：我们是真正的公司，不是学术实验室；我们在做真实的产品，在和真实的客户谈。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「我们是真正的公司，不是学术实验室。」
+                        <span class="quote-en">"We are a real company, not an academic lab."</span>
+                        <cite>01:07:46</cite>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 12 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">12</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">智能的定义与边界：我们离上限还非常远</h3>
+                        <span class="topic-timestamp">01:10:10 - 01:14:17</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        Richard 认为智能的三个「主成分」是预测、行动与目标；而若把智能按领域分层并追问其物理上限，会发现人类与 AI 都远未接近真正的天花板。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">智能的三个主成分</div>
+                        <p class="topic-detail-content">这是全书的收尾，也是 Richard 认为「几乎需要再写一本书」的问题。他惊讶于至今没有人真正把「智能」定义清楚，而他当前的答案是三个基础构件：预测（prediction）、行动（action）、目标（goals）。他类比物理学：能量有统一的单位，但智能的单位是什么，我们至今不知道。他也在思考如何像物理学区分动能、势能、化学能那样，把 AI 拆成视觉智能、语言智能、物理智能等 10 个不同的智能空间，每个空间又有多个维度。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从视觉智能倒推物理边界</div>
+                        <p class="topic-detail-content">他以视觉智能举例：人类只能看到电磁频谱中极窄的一段，但那远非上限。你可以从伽马射线看到引力波，可以拥有数百万乃至数十亿个传感器遍布各处——但很快你就撞上了物理的边界：光速构成通信的限制，每个传感器都有自己的光锥。于是问题变成「这些边界究竟在哪里」。而这导向了他最想传达的乐观：我们距离任何一个智能空间的真正上限，都还差得极远。因此当有人说「AI 是个即将破裂的泡沫」时，他的回应是：单位智能的成本或许会随各种因素波动，但作为一个领域、作为一个文明，我们还有极长的路可走。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「天哪，我们距离任何一个智能空间的真正上限，都还差得极远。」
+                        <span class="quote-en">"Boy, are we far away from the true upper bounds of any of the spaces of intelligence."</span>
+                        <cite>01:12:46</cite>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <!-- Takeaway Card 1 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧩</div>
+                    <h3 class="takeaway-title">碎片重建</h3>
+                    <p class="takeaway-desc">科学的瓶颈不是投入不足，而是知识碎裂成迷宫；AI 的真正机会是「重新缝合」复杂系统——这解释了 AI for Science 为何会从系统级问题突破。</p>
+                </div>
+
+                <!-- Takeaway Card 2 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">可模拟即胜负</h3>
+                    <p class="takeaway-desc">用「这个领域能否构建模拟或验证器」来预判 AI 何时超越人类，是一条可操作的分析准则：能，则 AI 必然赢。</p>
+                </div>
+
+                <!-- Takeaway Card 3 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🌀</div>
+                    <h3 class="takeaway-title">幻觉有用</h3>
+                    <p class="takeaway-desc">探索性任务里让模型跳出分布，事实性任务里注入真实搜索结果——同一个机制，两种用法，比「消除幻觉」更接近真实的产品逻辑。</p>
+                </div>
+
+                <!-- Takeaway Card 4 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">算力决策</h3>
+                    <p class="takeaway-desc">算力而非数据才是最大约束。未来组织的核心能力之一，是判断「哪个问题值得花多少算力」——6.7 亿融资押 4.1 亿于单一协议即是极端表达。</p>
+                </div>
+
+                <!-- Takeaway Card 5 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🌱</div>
+                    <h3 class="takeaway-title">模式而非通用</h3>
+                    <p class="takeaway-desc">AGI 可能不是一次性跃迁，而是沿「有验证器的领域」逐个征服的序列：编程、数学、生物学依次排队，先 AI for AI，再 AI for Science。</p>
+                </div>
+
+                <!-- Takeaway Card 6 -->
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🚀</div>
+                    <h3 class="takeaway-title">上限远未触及</h3>
+                    <p class="takeaway-desc">智能可拆为预测、行动、目标，并分层为 10 个智能空间；从光速与传感器的物理边界倒推，人类与 AI 都远未接近各自领域的真正上限。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">关于本期</h3>
+            <p class="footer-desc">
+                本页内容整理自 The MAD Podcast（Matt Turck 主持）对 Richard Socher 的完整访谈。译文在保留原意基础上做了口语转书面处理，专有名词如 Recursive、Profluent、Parallel Bio、CRISPR-Cas9、CUDA、ProGen 等保留原文。
+            </p>
+            <div class="footer-quote">
+                "任何你能模拟的东西，AI 都能解决。"
+            </div>
+            <p class="footer-note">
+                内容基于 YouTube 公开访谈整理，仅供学习参考，版权归原频道及受访者所有。<br>
+                <a href="https://www.youtube.com/watch?v=kyyLku5F3bo" target="_blank" rel="noopener">观看原视频</a> · <a href="../index.html">返回首页</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

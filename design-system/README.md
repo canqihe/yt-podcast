@@ -12,11 +12,13 @@
 design-system/
 ├── design-tokens.css         # CSS 变量（设计 Tokens）
 ├── style.css                 # 完整样式表
-├── template.html             # 空白模板（引用外部 CSS）
-├── template-standalone.html  # 独立模板（内嵌所有 CSS）⭐ 推荐直接使用
-├── design-spec.md            # 详细设计规范
+├── article-styles.css        # 文章页样式（yt-podcast 实际引用）
+├── template-standalone.html  # 独立模板（内嵌所有 CSS）⭐ 唯一实际存在的模板
+├── design-spec.md            # 详细设计规范（组件规则的唯一权威）
 └── README.md                 # 本文档
 ```
+
+> 注：早期文档提到的 `template.html`（引用外部 CSS 的空白模板）已不存在，请以 `template-standalone.html` 为结构参考。
 
 ---
 
@@ -51,11 +53,11 @@ open ~/Desktop/my-article.html
    cd ~/Desktop/my-project
    ```
 
-2. **编辑 template.html**
+2. **编辑 template-standalone.html**
 
 3. **预览**
    ```bash
-   open template.html
+   open template-standalone.html
    ```
 
 ---
@@ -73,7 +75,7 @@ open ~/Desktop/my-article.html
 要求：
 - 引用 design-tokens.css 和 style.css
 - 严格遵循 design-spec.md 中的组件规范
-- 参考 template.html 的页面结构
+- 参考 template-standalone.html 的页面结构
 ```
 
 #### 或者更简单：
@@ -115,7 +117,7 @@ open ~/Desktop/my-article.html
 
 ---
 
-### 3. `template.html` - 空白模板
+### 3. `template-standalone.html` - 空白模板
 
 预填充的 HTML 结构：
 - Header 区域
@@ -216,12 +218,14 @@ padding: 24px;
 
 ### 2. 复用组件代码
 
-从 `template.html` 或 `design-spec.md` 复制组件代码块，只修改内容。
+从 `template-standalone.html` 或 `design-spec.md` 复制组件代码块，只修改内容。
 
 ### 3. 保持结构一致
 
 严格按照模板的结构顺序：
 - Header → Points → Topics → Takeaways → Footer
+
+**Meta Grid 标签固定为「主持人 / 嘉宾 / 时长」三项**，顺序和文案都不可改（详见 [design-spec.md](design-spec.md#3-meta-grid元信息网格)）。频道名只写在 badge 里。仅当素材确实没有该维度信息时才省略该项，且不得用别的标签补位。
 
 ### 4. 渐变文字使用
 
@@ -282,7 +286,7 @@ padding: 24px;
 ## 📚 延伸阅读
 
 - [design-spec.md](design-spec.md) - 完整设计规范
-- [template.html](template.html) - 空白模板
+- [template-standalone.html](template-standalone.html) - 空白模板
 - [design-tokens.css](design-tokens.css) - 所有 CSS 变量
 
 ---
@@ -290,6 +294,7 @@ padding: 24px;
 ## 📝 版本历史
 
 - **v1.0** (2025-01-25)：初始版本，提取自 moonshots-ai-2026.html
+- **v1.1** (2026-09-10)：明确 Meta Grid 标签固定为「主持人 / 嘉宾 / 时长」（顺序与文案均不可改），频道信息仅允许出现在 badge；同步更新 `template-standalone.html` 与 `design-spec.md`，修正文档中已失效的 `template.html` 引用。
 
 ---
 
