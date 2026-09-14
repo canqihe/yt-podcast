@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>递归自我改进离我们还有多远 | Dwarkesh Patel</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <!-- 配色方案覆盖：蓝粉 -->
+    <style>
+        :root {
+            --accent-primary: #ff4081;
+            --accent-secondary: #3b82f6;
+            --accent-primary-rgb: 255, 64, 129;
+            --accent-secondary-rgb: 59, 130, 246;
+            --border: #2a2a2e;
+        }
+    </style>
+
+    <!-- Header 封面背景图 -->
+    <style>
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/ai-researchers-debate-how-close-we-are-to-recursive-self-improvement-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">Dwarkesh Patel · 深度辩论 · 递归自我改进 · 强化学习 · 蒸馏 · 时间线预测</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">我们距离递归自我改进</span>
+                    <span class="title-line-2">还有多远</span>
+                </h1>
+                <p class="subtitle">
+                    如果现在是 2036 年，而世界并没有被数十亿个超级智能改写，最可能的技术原因是什么？Dwarkesh Patel 把这个问题交给了三位待在相对开放实验室里的研究者——John Schulman、Charlie O'Neill 与 Beren Millidge。他们没有争论「AGI 何时到来」，而是拆开那些真正卡住递归自我改进（Recursive Self-Improvement，RSI，指 AI 自己改进自己并不断加速的循环）的工程细节：为什么仿真环境可能永远补不上现实世界的鸿沟、为什么强化学习只用「一个比特」就能提升模型、为什么大家都在蒸馏 Claude 正在让开源模型说同一种话。结尾的快问快答里，同一个问题得到的答案从一年一直跨到十年。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Dwarkesh Patel</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">John Schulman · Charlie O'Neill · Beren Millidge</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">1:37:01</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=PrSf7IOYu-I" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">莫拉维克陷阱</h3>
+                    <p class="point-desc">反对 RSI 的最强论证不是「AI 不够聪明」，而是 AI 可能永远只在被放进基准测试的东西上变强。真正的风险是那道持续的仿真到现实（sim-to-real）鸿沟——它不挡能力，它挡泛化。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">定义目标的岗位</h3>
+                    <p class="point-desc">AI 可以跑任何你指定的实验，但「选哪个实验、我们到底要什么」只能靠人类的品味。三位嘉宾一致认为这是最后消失的人类工作，并用一句话概括：对齐就是最后一份工作。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">蒸馏是最强平权器</h3>
+                    <p class="point-desc">模型供应商本该走向高度集中，唯一长期对抗这股力量的是蒸馏。而关键变量不是模型权重，是提示分布——当路由器服务把真实用户提示卖出去，最难的 RL 环境优势可能已被抹平。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">RSI 比当律师更容易</h3>
+                    <p class="point-desc">RSI 是累积型任务：发现注意力机制、混合专家、GRPO 之后就永久持有，可以写进一个不到百万 token 的脚本。而律所法务助理是非平稳任务——关系、流程、信息去处全都在变。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">RL 的功劳被高估</h3>
+                    <p class="point-desc">模型约 80% 的能力来自中期训练里的合成推理数据，RL 只负责最后调参。它高效不是因为教得多，而是目标函数忽略了其它所有比特，信噪比被极度放大。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">单一栽培</h3>
+                    <p class="point-desc">创造力并没有被 RL 摧毁——模型为了越狱能一口气找出多个零日漏洞。被摧毁的是多样性：所有人都在蒸 Claude，导致开源权重模型写起来一样、连怪癖都一样。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">从莫拉维克悖论到「Elo 拐点」：反驳 RSI 的最强论证</h3>
+                        <span class="topic-timestamp">00:00:00 - 00:18:37</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        反对 RSI 的最强论证不是「AI 不够聪明」，而是「AI 可能永远只在被放进基准测试的东西上变强」。而支持 RSI 的最强论证也不是「AI 更聪明」，是「Elo 评分越过人类区间的那一刻会是一次断崖式的相变」。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">莫拉维克悖论的第二幕</div>
+                        <p class="topic-detail-content">Beren Millidge 给出的答案是莫拉维克悖论（Moravec's paradox，即对人而言困难的事对机器容易、对人容易的事对机器反而困难）的延伸版：如果 AI 始终只在「人们放进基准测试或放进环境里的东西」上极其擅长，而真正的泛化火花从未出现，那么就会存在一道持续的仿真到现实（sim-to-real）鸿沟，把所有东西挡在外面。他把这当作「元学习泛化难到离谱、且持续学习始终没被解决」这一情形下的默认剧情——但他本人认为这不太可能，因为 RL 在实践中已经展现出了这种泛化。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">「一个月就变蠢」的循环</div>
+                        <p class="topic-detail-content">John Schulman 补了一个更日常的观察：每当新模型出来，人们都会惊呼「就是它了，这就是 AGI」，然后用了大约一个月，就开始觉得它变蠢——这个循环可能一直重复下去。真正抑制爆发式增长的不是模型会不会写代码：模型写的代码量可以远超人类，但这并不让你生产力提升 100 倍，因为在做研究和工程时，你依然会被那些模型更弱、判断力更差、无法自我检查的环节卡住。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">摩尔定律的教训</div>
+                        <p class="topic-detail-content">Beren 把问题收敛到「距离全局最优有多远」：人们想象中的「芯片上能存在的最优学习器」，与当前的 Transformer + RL 配方之间差距有多大？流行的直觉是——只要有一个在所有人类之上、哪怕只强 0.1% 的 AI 研究员，由于你能并行跑上百万个实例、而且芯片还会变快，这个优势就会压过其他一切瓶颈。但他提醒，摩尔定律的启示恰恰相反：那条漂亮的直线维持了很久，背后却是无数离散的不连续性创新在续命。LLM 也一样——预训练缩放定律先碰到收益递减，RL 续了一轮，现在又有新的收益递减曲线。如果还需要一次这样的不连续性，他不确定「用 RL 环境训练 LLM」这套方法（哪怕目标是 RSI 的环境）能自己发现它；发现不了，就撞上渐近线。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">象棋机器人的 Elo 拐点</div>
+                        <p class="topic-detail-content">Dwarkesh 用 Ryan Greenblatt 的类比把问题讲得更锋利：国际象棋机器人的 Elo 从 80 年代起几乎线性上升，但当它穿越人类水平区间时出现了一个巨大的不连续性——从「人类专家总能赢 AI」变成「人类专家永远赢不了 AI」。AI 至今经济冲击有限，正是因为它的 Elo 相对人类还在缓慢爬升。于是「2036 年世界依旧正常」的唯一出路，就是在穿越人类 Elo 之前先渐近；而 Beren 认为，比技术原因更可能的其实是监管。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">人类最后的工作是定义目标</div>
+                        <p class="topic-detail-content">如果把 2012 年以来所有创新排个序，哪一件是「AI 完全自动化 AI 研发之前人类要做的最后一件事」？答案是「反复地提出正确的问题」。AI 现在做研究提议时给出的一堆东西都是极其微小的碎片式步骤；而从 DeepMind「靠超人类打游戏来解智能」的思路，转到 Radford「我就试着预测一大片数据的下一个 token」，这类跳跃依然需要人。甚至在 Radford 发现之后，还过了很久人们才决定把它规模化，因为得先有缩放定律这个想法。John 因此把「目标函数、模型规范、宪法」看作最后消失的岗位，并把对齐拆成两半：一是<strong>指定</strong>正确的目标，二是<strong>达成</strong>你指定的目标——前者短期内不会消失，这也是后训练团队需要很多人的原因。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「Alignment is the final job. Alignment is sort of the answer.」——对齐就是最后一份工作，对齐在某种意义上就是答案。[00:16:03]
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">蒸馏：对抗大一统的那股力量，与中国实验室的追赶速度</h3>
+                        <span class="topic-timestamp">00:18:39 - 00:28:05</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        模型供应商本该走向高度集中，但蒸馏（把强模型的行为复制进弱模型）是唯一能长期对抗这股集中化力量的东西。而真正的关键变量不是模型权重，是提示分布——谁能拿到真实用户的使用轨迹，谁就能蒸馏得干净。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">为什么蒸馏能对抗集中化</div>
+                        <p class="topic-detail-content">Beren 直言，指向集中化的证据太多了，唯一在反方向起作用的是蒸馏：任何能通过 RL 学到的东西，都能被极容易地蒸馏出来，因为它只有很少几个比特、能从很少的数据里学会。只要拿到能展示某种行为的轨迹，就能复制它。另一种可能性是出现「公司专属模型」——从自己的部署数据里持续学习、不停变强，这种系统可能由当前的寡头供应商提供，也可能由某家现在还小的公司提供；但持续学习并不能阻止蒸馏，因为两条循环可以以同样的速度并行运转。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">完美提示分布从哪里来</div>
+                        <p class="topic-detail-content">Charlie O'Neill 指出蒸馏里最容易被忽视的难点：用监督学习蒸馏时，提示分布极其重要。即使你拥有模型的完整访问权、连思维链都能拿到，也很难把所有有用能力都蒸出来——因为你得用真实的、足够宽的提示去喂它。于是在当下出现了一个新情况：一些中国公司很可能在使用那些「帮中国用户访问美国前沿模型」的路由或代理服务（主要用来写代码），而这些服务在收集并出售这些数据。这批数据是极其宝贵的蒸馏数据集，因为它<strong>提供了完美的提示分布</strong>。再看流水线：从人类数据和这类数据里拿到种子提示，再用自己或别家的前沿模型合成出巨大的覆盖面——提示分布的收集与环境创建可以被大量自动化，人类需要提供的比特越来越少。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">难度 vs 真实性：两个轴</div>
+                        <p class="topic-detail-content">Beren 由此给出一个相当具体的预测：前沿实验室在 RL 环境上可能已经没有多少优势了。他的推理是——如果 Anthropic 既掌握那些最难的 RL 环境，又能做 logits 蒸馏，结果却做出一个更差的模型，那也许说明「真实世界的部署」比「精心构造的环境」更重要。他给出更有技术含量的替代解释：环境有两个轴，<strong>难度</strong>和<strong>真实性</strong>。造一堆高难度环境比较容易，这正是「刷榜（benchmaxxing）分布」，因为多数知名基准就是难以验证优先的谜题任务；而真实性这一轴要求模型能在真实的编程智能体场景里工作——多轮人机往返、多个目标并存。第一次塑造模型行为的实验室必须两个方向同时推；但如果只是天真地做蒸馏，你会<strong>只在刷榜分布上对齐老师模型</strong>。大模型从刁钻窄任务泛化到真实任务的能力更强，所以只拿到易验证任务分布的学生模型，会在所有基准上对齐、却在更宽的分布上更差。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">最朴素的那个事实</div>
+                        <p class="topic-detail-content">还有一个非常朴素的事实：前沿 AI 实验室的所有数据都是从大数据公司买的，中国公司可以买到同样的数据。数据相同、又能蒸馏，意味着「跟上」这件事其实相当容易。Beren 也承认其他解释同样成立——比如那些小尺寸模型的团队一直在改后训练技术栈，某个旋钮调得太高，造出了用户不喜欢的怪癖，因为后训练极容易在基准测试看不出来的地方搞砸。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「distillation is the main thing that fights against the centralizing force.」——蒸馏是唯一在对抗集中化力量的主要因素。[00:19:11]
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">自动化 AI 研究者会怎么被训练出来</h3>
+                        <span class="topic-timestamp">00:28:06 - 00:33:50</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        第一代能自动化 AI 研发的模型，不会是「给一块 GPU 让它从零悟出深度学习」，而更可能是「人类反馈吸收研究品味 + 大量多步研究项目的练习环境 + 每一轮只修补上一轮最破的地方」。真正超越人类的那一步，靠的不是蒸馏，而是人类做不出来的环境。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">谱系回滚：从哪儿开始自我对弈</div>
+                        <p class="topic-detail-content">Dwarkesh 先给出一个「玩具版本」：让一个遥远未来的大模型去构建小规模模型，目标是擅长内循环式挑战——比如击败需要持续学习的电子游戏，或者用最少算力达到某个损失值。John Schulman 认为实际会发生的是两件事的组合：从人类反馈中学习以吸收研究者的<strong>品味</strong>，以及创建大量涉及多步骤研究项目的练习环境。每一轮迭代，就去修补上一轮看起来最破的地方。他提出一个有用的思考框架——<strong>我们会回滚多少比例的谱系（lineage），然后从那里开始自我对弈？</strong> 而现实中现在的做法是：走到谱系的最边缘，「这是 Anthropic 过去几个月在训练栈里发现的 bug，我们把这些做成环境」。由于算力始终是瓶颈，大家会一直待在前沿，把上一代模型以来发现的所有 bug 和改进 diff 成训练环境。本质上这是 AI 实验室内部的持续学习：把过去三个月的 AI 研究进展通过环境和基于人类反馈的强化学习（RLHF）重新蒸馏回模型。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">蒸馏的天花板 vs 环境的地板</div>
+                        <p class="topic-detail-content">也正因如此，有人觉得这条路是渐近的——你永远只是在追过去三个月的进展。但关键区别在这里：<strong>只在轨迹上蒸馏，你永远无法超越它；而环境可以远远高过人类能做到的水平。</strong> 设计一个人类解不出的环境非常容易，而 AI 仍然可以去解——这才是跑在人类 AI 研究前面的路径。具体例子就是「比人类速通选手更快的 nanochat 速通」。在 AI 研究里目标很容易定义：比如说损失值必须到 1.3，而目前没有任何人类能做到——这极其可测量、可验证。Dwarkesh 在这里插入了一个有意思的感慨：如果是「一个 1 亿参数模型通关《我的世界》」，我们居然会称之为「太简单」——五年前说这话试试看。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">研究不是爬山</div>
+                        <p class="topic-detail-content">John 也提醒，很多研究并不是在定义良好的目标上爬山。真实过程更像：我们有一个关于「模型应该怎样更好」的直觉，也有一个似乎朝这个方向走了一点点的算法想法，于是<strong>设计一个用来显示这个方向上有生命迹象的任务</strong>；如果看到迹象，就把任务做成越来越真实的版本。这是被直觉引导的，内循环是用来检验直觉的，而不是检验本身带来洞察。你是刻意放松对真实性的要求，先找到能用的方法，等方法成熟再回到真实性。此外还有一类更偏解释和理论的研究——机器学习里那些有预测力的数学理论其实很少，但有大量非正式的理论。模型大概会在所有这些任务的混合上训练：有些容易验证，有些靠大模型当评判，有些直接问人类。希望是它们能泛化到更困难、更模糊的任务上；至于能不能泛化到<strong>整个循环不再需要人类</strong>的程度，尚不清楚。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「Nanochat speedrun, but doing it even faster than a human speedrunner.」——做 nanochat 速通，而且比人类的速通选手做得还快。[00:31:04]
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">长时程强化学习就是通往 AGI 的那条路吗？</h3>
+                        <span class="topic-timestamp">00:33:51 - 00:45:23</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        前沿实验室的赌注是：把可验证奖励的强化学习（RLVR，Reinforcement Learning with Verifiable Rewards）扩展到数百万个环境、几百个领域，从而长出一个「能像远程员工一样连干一个月」的智能体。但这个赌注严格来说只覆盖了商业部署这条路，并不等于直接通往 RSI；而且算力有一半花在了不会让模型变好的推理上。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">环境谱系：从编程到 PPT</div>
+                        <p class="topic-detail-content">Dwarkesh 概括了他理解中的「计划」：在数百万个多样环境、几百种领域上扩展 RLVR，另一端会长出一个学会了「保持持久、能对信息和上下文做分诊、最终能与其它智能体做端到端协同优化」的智能体；它在上下文内样本效率极高，最终产物基本等同于一个能连续工作一周到一个月、即插即用的远程员工。注意这里的本质是——<strong>在数据中心的仿真环境里学会学习，然后部署到真实世界，却并不真正从真实部署中学习</strong>。Beren 的回答很坦率：现在已经很难把实验室的努力切成「直接冲 RSI」和「做出通用模型、持续部署赚取收入来供养下一次大训练」两部分了。对于后者，那确实就是他们下的赌注，而且环境演进路径非常清晰——Anthropic 的环境谱系是绝佳例子：先专注编程、把它做到极强；然后从编程带来的任务时间跨度向外泛化，下一个是金融（海量 Excel 数据），再然后是 PPT，最后才是整个工作经济的长尾。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">收入是手段，不是目的</div>
+                        <p class="topic-detail-content">Dwarkesh 说他问过 Dario：如果你真的预期模型具备像人一样在岗学习的能力，为什么非要把 PPT 这类技能烤进模型？模型在部署过程中自己学会不就行了吗？可能的解释有两个：一是模型很快会具备这种能力但现在还没到，所以先把技能摊销进训练；二是实验室并不真的在意「把广泛部署的工作做好」，他们想要的是<strong>把 RSI 做好</strong>，商业收入只是把资金灌回那个真正擅长 RSI 开发的模型的手段。John 从工程角度补了三点：如果模型的上下文学习足够好，理论上确实不需要专门训练金融，它们可以现场读完所有书再判断适用哪个司法辖区，但为了让它们运行时更高效，你仍然可能想把大量直觉用 RL 烤进权重里；在实际操作中，模型供应商确实是一个领域一个领域地强化最高价值的领域，这也是模型为什么变得这么好用的一个答案；而且同时做两件事并不贵——模型参数规模巨大，完全负担得起把所有东西都学进去，加上「搞清什么重要、如何拥有品味、如何做长时程工作」这类元学习是可以泛化的，而世界上 RSI 数据本来就少、又难生成。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">仿真到现实为什么必然占据主导</div>
+                        <p class="topic-detail-content">Charlie 把仿真到现实的位置说得很清楚：<strong>只要样本效率还很低，仿真到现实就必然占据主导</strong>。因为现在你需要与人类进行成千上万次交互，而没有任何人类愿意坐在 RL 训练循环里当样本源。等样本效率大幅提升，从部署中学习就会变成更大的一块。此外还有离策略学习这条路：把所有轨迹收下来，即使不重新仿真，也可能从中提取到东西。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">一半算力花在了不改善模型的地方</div>
+                        <p class="topic-detail-content">Dwarkesh 在这里提出了全场最尖锐的一点：目前有大约一半算力花在推理上，而这些推理并不会让模型本身变得更好。数字心智的一个关键优势是——人类只有 50 年的真实世界经验，而模型通过它的所有实例，可以获得跨越各种经济相关工作的数百万年「部署经验」。今天这些数据在实质意义上完全没有帮到模型。一旦模型能从中学习，你得到的东西几乎就是「广泛部署的智能爆炸」，因为它正在从所有部署实例中同化海量信息。Beren 认为，在最基本的层面上这件事已经在发生了，只不过是在下一代模型里：你可以把部署数据放进未来模型的预训练或中期训练，尤其是做过筛选、判断、标注或合成之后。至于大实验室是否真这么做，他持保留态度（他们宣称不用用户数据训练），但「中国 100% 会这么做」——这本质上就是蒸馏。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Cursor 的五小时部署节奏</div>
+                        <p class="topic-detail-content">Beren 补充了一个很具体的案例：在 Cursor 里，用户按下或没有按下 Tab 接受下一个补全，都成为信号——这不只用在老的 Tab 模型上，也用在了真正的生成模型上。困难在于在线 RL <strong>没有分组</strong>：只有一个用户说了一句话、你只拿到一条 rollout，方差极大。Cursor 的解法是用很好的启发式去估计这条响应比平均好多少或差多少，然后做一次大的 REINFORCE 更新；判断有没有变差的办法是——如果它在自家基准上有提升，就每五小时部署一个新版，没有就丢掉。John 指出真正的最大问题其实是：<strong>对自然数据，你根本不知道奖励函数应该是什么</strong>。用「用户是否接受了这次编辑」这种浅层信号，很可能被奖励黑客（reward hack）。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「that basically functions like a drop-in remote worker over the course of a week or a month.」——它基本上会像一个能连续工作一周到一个月、即插即用的远程员工那样运转。[00:34:31]
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">仿真到现实的鸿沟：为什么「做 RSI」比「当律师」更容易</h3>
+                        <span class="topic-timestamp">00:45:24 - 01:00:32</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        任务可以分成两类：累积型（发现即永久持有，比如 RSI）和非平稳型（关系与环境持续变化，比如在律所当法务助理）。不幸的是，RSI 恰好是累积型，所以它比很多普通白领工作更容易自动化。而真正的瓶颈可能是样本效率——模型在这方面可能比人类落后一百万倍。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">一个不到百万 token 的 Python 文件</div>
+                        <p class="topic-detail-content">Dwarkesh 先把仿真到现实的困难推到底：任务的时间跨度越长，在数据中心里就越难模拟。即便在编程领域，也已经没有什么「长达数年的编程任务」最终不需要你去和客户沟通、和公司打交道、和用户交互。而超级智能最终应该能经营一家公司、创办新公司并让它盈利、在市场上做有利可图的日内交易、或者打赢一场官司——这些都极难在数据中心里模拟。于是他提出全场最反直觉的担忧：<strong>在权重更新的样本效率上，模型似乎远远落后于人类，可能有百万倍的差距</strong>。John 给出的二分法是，<strong>累积型任务</strong>的典型就是 RSI——理论上存在一个不到一百万 token 的 Python 文件，它能从零训练出一个具备递归自我改进能力的模型。你做出的每一项发现都是画在沙地上的一条线，之后就一直成立；一旦发现了注意力机制、混合专家、GRPO，你把它加进训练栈，它就在那里了。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">律所助理为什么更难</div>
+                        <p class="topic-detail-content">而<strong>真实世界不是累积型任务</strong>。想象一个在律所当法务助理的智能体：这是极其非平稳的分布。你必须在上下文里装下那家公司所有重要人物之间的全部关系——而这些关系随时在变；还要装下所有「事情该怎么做」「去哪里找信息」的隐性知识。这远没有 RSI 那么干净。John 的结论是，任务之间会出现分化；而如果实验室意识到这一点（他们确实相信 RSI 在「不需要回头发现全新架构」这个意义上是累积型的），那么越来越多的努力和算力可能会被集中到 RSI 上，而不是其他任务上。这也引出了全场最令人不安的一句总结——<strong>很不幸，RSI 恰好比当律师助理更容易</strong>。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">品味能被元学习出来吗</div>
+                        <p class="topic-detail-content">John 强调今天的模型在很多方面都比人类弱，其中一部分可能与某种区间内的样本效率有关：模型在某些区间样本效率极高（上下文学习），但在中等长度区间可能更低，因为人类做某种「权重更新」比模型更高效。但也有很多弱点与样本效率完全无关：思想多样性低于人类、某些长时程判断能力差。他指出，人们称为「品味」的东西，很大程度上是关于「长期来看行得通的行为」——尤其是软件工程里，品味大半就是「哪些系统在这个项目的长期演进中可维护、能工作」。Dwarkesh 于是设计了一个思想实验：给模型一个一万亿 token 的上下文窗口，把你到 RLHF 之前的所有经验全部装进去，并让它的样本效率与一百万 token 时一样——品味问题就被解决了吗？John 的回答是它必须<strong>被训练</strong>去从那个上下文里学习，而且你仍然需要一万亿长度的数据来训它。这就归结为一个问题：品味能从短时程片段里元学习出来多少。他指出没有明显理由说它一定需要超长，因为人类就是在没有很多长片段的情况下发展出品味的——一个博士生从一年级到毕业也就五年、总共做过 10 到 30 个研究项目，却能在相当短的一连串小事情里发展出品味。剩下的问题是：这能多好地泛化到真正的长时程任务上——这一点目前完全未解。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">蜂巢思维首先是激励问题</div>
+                        <p class="topic-detail-content">关于「AI 是否会出现从每一次部署实例中大量学习的蜂巢思维」，Beren 认为这<strong>主要是激励问题，而非技术问题</strong>。公司不会愿意让模型供应商从自己的全部部署中学习，因为那会削弱自己的商业优势。经济压力会推动的不是「把权重更新进一个共享大模型」，而是「被插进来的模块」。最明显的例子是 LoRA，但也可能是别的东西；有大量工作在尝试把任意长度的上下文压进固定大小，这就是线性注意力那一类；还有「卡匣（cartridge）」——本质是被训练得极度压缩的 KV 缓存，用来装下大量信息。Dwarkesh 反驳说，就算有卡匣和 LoRA，你还是可以把所有轨迹倒进下一代模型的预训练里。Beren 承认这仍然是非常有价值的学习，只是更间接；他无法想象我们一上来就是「直接拿收到的全部真实数据去训练这一个大模型」，而是会分阶段：卡匣让模型先在具体部署上特化，产生轨迹，喂进模型，三个月后出来一个更擅长这类事情的模型；再特化、再整合，然后这个循环的跃迁越来越快——从三个月一代，到一周一代，到一天一代，到一小时一代，那时候基本就等于解决了。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">灾难性遗忘与可塑性</div>
+                        <p class="topic-detail-content">Charlie 在这里给出了最重要的现实约束。在足够大的规模上，当你把噪声洗得足够干净、批量足够大，「把数据放进中期训练 + 自造环境」这个外循环在某种持续学习意义上确实是有效的。<strong>但只要把镜头拉到微观，一切方法都会失效</strong>：你只有一个模型，要为一个律所再次更新它，需要非常连续地用相对少量的数据做更新——无论是把成功轨迹拿来做监督微调（SFT，Supervised Fine-Tuning），无论是离策略还是在策略，只要进入「做几百次微更新」的高度迭代模式，你就会看到<strong>灾难性遗忘</strong>：基础模型之上更早学到的信息被忘掉，通用能力退化。而 RL 擅长把<strong>能力</strong>装进去，却不擅长把<strong>知识</strong>装进去——那种「这个人在这个律所负责这件事」的显式知识。Dwarkesh 问这根本上是容量问题还是技术问题，Charlie 说两者都有，但主要是技术问题、绝不是容量问题：如果你把同一尺寸的模型从零开始训，并把所有这些内容放进中期训练，它会更好。Beren 把它总结为可塑性 + 灾难性遗忘的组合——极限情况下，你只能通过「带着所有新信息从零重训」来突破，而这当然极其昂贵。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「RL is good at getting capabilities in, but it's not as good at getting knowledge in.」——RL 擅长把能力装进模型，却不擅长把知识装进模型。[00:56:17]
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">有多少进展其实来自数据？</h3>
+                        <span class="topic-timestamp">01:00:33 - 01:18:02</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        在非常小的规模上，数据集改善带来的算力效率增益约 12 倍，架构改进约 3.7 倍——数据看起来比架构重要得多。但预训练的低垂果实正在耗尽，因为互联网不会以同样的速度增长；而 RL 缺的不是数据，是课程：RL 的探索能力很弱，如果一个模型 128 次 rollout 都做不出来，它几乎不可能获得进步的信号。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">倒着走比正着走容易</div>
+                        <p class="topic-detail-content">Dwarkesh 的问题是：是否存在某种数据分布，用当前架构去训练，就能得到一个在所有领域压倒人类专家的超级智能？Beren 认为这个分布的存在性是显然的，问题只在于能否造出正确的环境到达那里——最平凡的版本是「训练模型输出那个能训练出超级智能的 Python 文件」，直接把它背进权重里。更现实的说法是：存在一架 RL 环境的阶梯，逐级爬升就能得到至少与人类研究者同样好的 AI 研究者，但爬每一级的代价大致是指数增长的。他详细讲了他们利用的不对称性：存在「倒着走比正着走容易」的环境——你可以定义一个极其复杂的数据生成过程，把其中的潜变量对模型隐藏起来，就能生成任意复杂的环境，逼模型花掉大量不可约的 token 和时间去反推那个过程。另一种不对称是「从真实世界注入信息」：Anthropic 动用数万人类与 LLM 协同找到一个 bug，然后把它变成一道非常精炼的环境题，理论上单个 LLM 花几百万 token 就能解出来。但这条路会撞上收益递减：不是所有过程都能「倒着比正着容易」，你有时必须坐下来构造一个看起来足够长、且有人类参与的任务，这非常难做。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Talkie 与五年级数学</div>
+                        <p class="topic-detail-content">Charlie 给了一个惊人的正面案例：有人把只训练到 1930 年数据为止的模型，用现代编程智能体数据做了微调，结果在 SWE-bench 上超过了 Claude 3 Opus——一个对代码毫无知识的模型，只要有一份正确的专家行为样本，就能在适度数据量下表现得比大得多的预训练模型更好。但 Beren 马上给出反例：有篇论文把模型训练到五年级数学加小学英语的水平，然后试图用 RL 让它做高中后期和大学数学，差距太大，<strong>完全爬不上去</strong>；而如果按七年级数学、八年级数学这样逐级来，就能爬到十二年级。所以关键还是「梯子上的台阶间距有多大、造起来有多难」。这又回到 RL 信号问题：<strong>RL 目前探索能力很弱</strong>，如果一个模型 128 次 rollout 都做不出来，它几乎不可能拿到进步的信号。这也是为什么 RL 需要课程，而预训练完全不需要。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">信号已经不在原始数据里</div>
+                        <p class="topic-detail-content">Beren 进一步指出，随着时间推移人类参与会越来越少，但你依然受限于「能从真实世界提取多少信号」。世界上信号很多，但在模型的能力前沿上，真正与「提升模型能力」相关的比特还剩多少？有多少新数学问题正在被解决、且超出当前模型的能力边界？这就是收益递减的根源：<strong>连整个世界都无法提供把你推进下一个能力盆地的那些比特</strong>。Charlie 把这归结为「信号从哪里来」：预训练的信号本来就在 Common Crawl 里，问题只是过滤噪声，而这是相当可自动化的；但进入中期训练和后训练之后，信号<strong>在原始数据里根本不存在</strong>，再多的过滤也没用——Common Crawl 里不会藏着一个千禧年大奖难题的证明等着你去过滤出来。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">12.0 倍与 3.7 倍，以及缺失的那 100 倍</div>
+                        <p class="topic-detail-content">Beren 分享了他和普林斯顿学生 Jerry Han 做的一项研究：把 2019 年至今的所有训练配方和所有数据集两两组合成一张网格——用最新的数据集训早期的模型，用最新的开源配方去训老数据集，如此跑遍全网格，看达到同等能力水平能省下多少算力。结论是：<strong>数据约解释 12.0 倍的算力效率提升，而架构改进约 3.7 倍</strong>（在很小的规模上）。Dwarkesh 补充了一个数字对不上的地方：网格实验显示两者累计约 33 倍，而 Epoch 之类的机构估计 2019 年以来每年 3 倍，七年下来应该是 2000 倍以上——中间缺失的那 100 倍从哪来？Beren 认为这恰恰说明有多少来自后训练，另一种解释是很多算力效率增益是规模依赖的。他反而认为<strong>数据的重要性会随规模上升</strong>，而架构更像是「一次性」的东西：说某个架构带来 X% 的效率增益是有误导性的，因为架构的作用是让你到达一个旧架构到不了的<strong>全新区间</strong>。举反例：如果没有 GQA，如果全天候做全注意力，百万级上下文会贵得离谱，于是你根本用不上那些百万上下文的真实数据，也就拿不到那些能力——但在「2K 上下文下这个架构提升了多少」这种朴素测量里，架构没有打开任何新空间，数据就会显得比实际重要得多。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">参数会怎么走：2 倍增速还是平台期</div>
+                        <p class="topic-detail-content">开源架构上，前沿开源模型的参数量大概每年涨 2 倍。Charlie 认为未来几年会出现一点平台期：因为大家在专注做越来越长时程的 RL rollout，推理效率变得非常关键，而瓶颈仍在环境上。Beren 则觉得一些前沿闭源模型远小于人们谈论的 10 万亿参数区间，光靠和开源模型对比就能倒推出这个结论。他给出的决策逻辑是：模型大小取决于你有多少预训练数据、以及要训练多难的 RL 环境，理想点是「在你最难的环境上拿到一个像样的 pass@1（一次通过率）」。他还算了笔账：按最基本的 Chinchilla 缩放定律把参数量推到极致，所需数据量的下降其实不到 10 倍，而我们现在已经处在 Chinchilla 曲线「数据太多」的一侧、属于过度训练——所以随着数据耗尽，完全可能回到 Chinchilla 最优点附近。此外硬件也在变：要服务多万亿参数模型需要极高的内存带宽和显存，而大家现在还在用大量 H100，随着转向新的加速器，才更有能力在更大规模上服务和做大规模 RL 推理。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「the data seems to explain something like a 12.0x compute efficiency gain, but the architecture improvements explain something like a 3.7x compute efficiency gain, at a very small scale.」——数据似乎解释了大约 12.0 倍的算力效率提升，而架构改进解释了大约 3.7 倍——这是在很小的规模上。[01:06:44]
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">为什么强化学习效果这么好？</h3>
+                        <span class="topic-timestamp">01:18:03 - 01:24:53</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        RL 的效果好，不是因为它教了模型很多东西，恰恰相反——因为它的目标函数把其它所有比特都忽略了。模型 80% 的能力来自中期训练里的合成推理数据，RL 只贡献了信噪比极高的最后几个比特。而它在「横向」上几乎没有泛化，真正泛化出来的是时间跨度。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">被低估的中期训练</div>
+                        <p class="topic-detail-content">Dwarkesh 先回顾了一年前的主流悲观论：有人指出模型在 RL 中每个 episode 只学到一个比特——「我答对了还是答错了」；更进一步的批评是「比那还糟」，因为当通过率很低、模型几乎不可能答对时，它从一个 RL episode 里几乎什么都学不到。可今天的模型看起来相当聪明，而这看起来就是扩展 RL 的结果。Beren 的第一层解释是<strong>被低估的中期训练</strong>：我们看到的大量「RL 的成功」其实来自极其优质的中期训练数据——本质上还是预训练，只不过用的是合成推理数据和那些给 RL 做热启动的环境。这部分常常把模型带到最终 RL 检查点大约 80% 的位置，然后 RL 做的事情本质上是调整策略。这是它不需要那么多比特的原因之一。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">一个比特的杠杆</div>
+                        <p class="topic-detail-content">第二层是<strong>信号质量</strong>。这些比特相对于普通预训练是极高信号的，但真正重要的不是「比特就是关于如何答对的比特」这种朴素理解——因为在 SFT 里你有一条轨迹、那一个比特其实也在，你也会在答案 token 上做 SFT。关键在于<strong>目标函数忽略了其它所有比特</strong>：在 SFT 里你必须尽量匹配模型产出的每一个推理 token，于是你实际上拿到了太多「另一个模型具体怎样推理」的比特；而 RL 只给你那一个比特。这意味着信号不会被模型其它比特的噪声淹没——这是训练中信噪比的一次极其夸张的提升，也正是 RL 在步数上效率如此之高的原因。第三层是<strong>组大小的算术</strong>：如果你有足够算力采样出足够大的组，使得「拿到一批正确答案」的概率超过某个不算微不足道的阈值，它就会被加权；而中期训练和更多预训练决定了 RL 的起点，即 pass@1，它随预训练 token 数量呈对数增长。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">为什么几个比特能带来质变</div>
+                        <p class="topic-detail-content">Dwarkesh 提出疑问：看模型本身，它们的能力提升是<strong>质变</strong>的，怎么和「RL 只是加权了本来就会正确思考的策略」这种听起来影响很小的叙述调和？Beren 的回答是，小比特量并不必然意味着小影响。即使只有几个比特、参数只改了一点点，对<strong>函数空间</strong>——模型学到的输入到输出映射——的影响仍可能极其巨大。一个比特就能砍掉一半的假设空间，这是巨大的。所以从很好的起点出发做少量 RL，并不意味着行为上没有剧烈变化。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">横向泛化没兑现，时间跨度泛化兑现了</div>
+                        <p class="topic-detail-content">Beren 把结论收敛到两点。第一，<strong>横向泛化没有兑现，时间跨度泛化兑现了</strong>。所有人原本希望 RL 能把推理泛化到所有领域，但并不是这样——只训数学不会让你成为最好的程序员，你还是得在代码环境上做 RL。真正得到的是<strong>时间跨度泛化（horizon generalization）</strong>：模型学会了为更长时间使用更多 token、并在某个任务上持续取得进展。你可以在「越做越长」的环境上训练它，然后把它放进一个全新的环境——它可能没有泛化出让你在那里做得好的推理模式，但至少泛化出了「能在这件事上持续更久」的能力，而这与成功相关。Beren 引用了一篇叫 EdgeBench 的论文：<strong>模型能持续工作的时长每三个月翻一倍</strong>，这是泛化的明确证据。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">能力量子与相变</div>
+                        <p class="topic-detail-content">第二点是「能力量子」的视角。预训练里你有一条非常平滑的损失曲线，但看模型内部实际发生的事情，它在学习大量非常离散的任务，其中有大量涌现点、也就是相变——「以前它没有归纳头，现在它有归纳头了」。这样的东西有数万、数百万、可能上亿个，把它们全部平均起来，就得到那条平滑的损失曲线。RL 也在发生类似的事，而且存在一条很慢的外循环：训练一个模型、对它做 RL，然后在下一个模型迭代里把一大批合成推理轨迹倒进中期训练数据。在单个任务层面看，那可能像一次相变——某个金融任务或 Excel 任务的通过率突然从 0.5% 跳到 90%。把这些全部平均起来，再加上时间跨度泛化，你就会有「我们得到了质变级模型」的感觉。Beren 最后补充，RL 确实也泛化了一点（数学和代码之间、谜题和数学之间有迁移），而且人们所瞄准的环境数量<strong>极大地</strong>增多了——两年前你日常生活中的某个任务，实验室根本不会为它训练模型，现在覆盖面宽太多了。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「It's really a super dramatic increase in the signal-to-noise ratio during training, which is why RL is so dramatically efficient in terms of steps.」——这是训练中信噪比一次极其夸张的提升，也正是 RL 在步数上效率如此之高的原因。[01:20:20]
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">08</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">第 37 手还会出现吗？熵坍缩与单一栽培</h3>
+                        <span class="topic-timestamp">01:24:54 - 01:28:31</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        RL 并没有摧毁创造力——模型已经能连出多个零日漏洞越狱，这本身就是「第 37 手」级别的创造力。真正被摧毁的是输出多样性：模型形成了固定的口头禅，而且由于大家都在蒸馏 Claude，整个开源权重生态正在出现文风单一的「单一栽培」。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">创造力没有消失</div>
+                        <p class="topic-detail-content">Dwarkesh 先回顾了对话前半段关于熵坍缩的讨论：RL 把概率集中到基础模型已经做过的解法上，导致策略更新相对稀疏。但他提出另一个叙事——回到 Atari，再到 AlphaGo 下出「第 37 手」那步极具创造力的棋。因为它从未在人类数据上初始化过，它能以人类根本不会去想的思考方式，给出极具创造力的解法。Beren 先做了两点澄清：一是 AlphaGo 用的是蒙特卡洛树搜索（MCTS，Monte Carlo Tree Search），它天然比普通策略梯度做更多探索；二是 RL 并不必然削弱创造力。这属于定性判断，但如果看那次 OpenAI 与 Hugging Face 之间的事件，模型为了跳出沙箱能一口气找出多个零日漏洞——<strong>这已经是某种「第 37 手」级别的创造力了</strong>，而它仅仅来自 LLM 的一般泛化性质。所以「RL 在彻底摧毁熵」这个说法肯定不成立，尤其是在长时程上。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">被砍掉的是多样性</div>
+                        <p class="topic-detail-content">John 则把「创造力」拆成两种东西。一种人们称之为创造力的东西，本质上就是<strong>解决困难的搜索问题</strong>——第 37 手显然是一个例子；写一首同时满足一大堆约束的诗也是。这类能力如果专门训练，AI 显然会做得极好。但还有另一种：<strong>RL 之后模型输出多样性的显著下降</strong>，它们会长出固定的口头禅。虽然模型看起来擅长写作，但做分布层面的分析就会发现，它们反复复用某些主题、反复用同样的人名；你得不到人类作者那种多样性，你得到的是<strong>一种非常好的单一风格</strong>。这种多样性的丧失，确实被 RL 砍掉了很多。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">熵坍缩是评判器的问题，不是 RL 的问题</div>
+                        <p class="topic-detail-content">顺着前半段关于蒸馏的讨论，两位嘉宾指出一个值得警惕的现象：蒸馏的人太多了，而且大多在蒸 Claude，导致所有开源权重模型写起来都和 Claude 一样、连怪癖都一样——<strong>我们正在出现一种「单一栽培」（monoculture）</strong>。不过他们也强调这不是 RL 这个方法本身的问题。蒸馏也一样：你只是在数据上训练，数据不够宽不代表训练方法错了，那是数据的问题。Beren 补充说，RL 的熵坍缩很大程度上是<strong>在环境多样性不足时对过于简单的验证器的利用</strong>：比如写作品质大概是某个评判模型打的分，那个评判模型有它自己的怪癖，模型于是学会奖励黑客（reward hack）这个评判器，熵就坍缩了。所以这实际上是评判器的问题，而不是 RL 本身的问题。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「so many people are distilling, mostly from Claude, that all the open-weight models write the same way as Claude and have the same tics. This seems kind of concerning to me, that we're having this monoculture emerge.」——太多人在做蒸馏、而且大多蒸的是 Claude，以至于所有开源权重模型都写得和 Claude 一样、连怪癖都一样。这让我有点担心，我们正在出现一种单一栽培。[01:27:18]
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">09</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">快问快答：三位研究者给出的时间线</h3>
+                        <span class="topic-timestamp">01:28:32 - 01:36:59</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        同一个问题，三位一线研究者给出的答案跨度极大：作为「能连干一个月的通用远程员工」，大约 1 到 3 年；让 AI 研究者的生产力提升 10 倍，大约 2 年；而「在电脑上能完成的全部认知工作上碾压顶级人类专家」这种近乎超级智能的东西，答案是 3 到 4 年、5 到 10 年。分歧本身比数字更有信息量。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">问题一：即插即用的远程员工</div>
+                        <p class="topic-detail-content">Dwarkesh 把标准定得很硬：不只是编程，还包括视频剪辑、法律、律师助理；具备完整的电脑使用能力；能连续一个月无缝学习和运转；能执行需要与其他人互动的复杂项目；一个人一个月能做的事它都能做。Beren 的条件式回答是：如果强制它只能用浏览器（而不是由公司把信息准备好、做成程序可访问的形式），大概要<strong>几年</strong>；但如果不是浏览器受限的形态——它能发 Slack 消息、能完成所有这些事——他仍然会说<strong>大约一年</strong>。Charlie 对「完整通用性」给出<strong>三年</strong>，但他同时指出，会有大量公司把自己的组织改造成「对 AI 更友好」的样子，所以在这之前你就已经能拿到 80% 到 90% 的效果了。Beren 举了一个模型做不好的具体例子：如果我在工作中不得不朝某人吼一顿才能拿到东西、或者真的去推着某人把事办完，模型就是不会这么做——它太善良了。John 则从「人类远程工作者的质量分布」切入：如果你从 Upwork 上找人做软件工程项目，质量差异巨大，而且常常很难让他们认真对待你给的反馈；他猜测在某些情况下，<strong>AI 之前的版本比现在用 AI 得到的还差</strong>。他还举了报税的例子：Dwarkesh 今年直接让编程智能体去把所有需要的东西取来发给会计——那是一长串要它用电脑点击和下载的东西，它做完了，而且<strong>做得完美</strong>。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">问题二：AI 研究者提效 10 倍</div>
+                        <p class="topic-detail-content">问题设定是「本来一年一个突破，现在每月一个，需要多久」。Beren 拒绝给标量：在某些类型的工作（比如某些数学）上，我们可能<strong>已经</strong>超过 10 倍了。Charlie 先给出「大概 5 到 10 年」，Dwarkesh 很惊讶——比通用远程员工还久？Charlie 意识到双方对「完全通用远程工作者」的定义不同：他设想的是<strong>一个月周期的普通白领工作</strong>，超过两个月就开始分叉，而且要是「非常能干的白领」但不一定是极有创造力的研究者，于是改为<strong>两年</strong>。Beren 说他能理解这个数，因为现在编程上已经肯定超过 10 倍了；如果模型哪怕只能连跑一两轮实验反馈，那已经非常可观，所以他的答案也是<strong>两年内</strong>。Dwarkesh 做了一个简单外推：如果把「AI 进展中有多少来自 AI 研究者」套进一个朴素模型，加上研究者生产力 10 倍，那么从两年后开始 AI 进展会急剧加速——它不再被「研究者跑小实验的能力」卡住，而会以 10 倍速前进，并让下一个 100 倍速的节点更早到来。John 对这一点愿意多等一会儿，他认为关键瓶颈是<strong>自己吸收信息、并对下一个实验做出贝叶斯最优决策的能力</strong>。Dwarkesh 的回应是：假定你可以把一部分决策委派给 AI——如果它能连续跑两三个实验而不崩，那已经是巨大的提升。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">问题三：近乎超级智能的认知工作全面超越</div>
+                        <p class="topic-detail-content">最后一问的设定是：在「所有可以在电脑上完成的工作」上全面超越顶级人类专家，不只是 AI 研究，而是全部认知工作；不只是短时程，而是哪怕要花三年，AI 仍然会比人做得更好——这基本就是超级智能。Beren 给出<strong>3 到 4 年</strong>。他的理由是：AI 显然越来越受重视，这件事很难，但投入的能量很多；而且它并不是对 AI 来说最难的事，因为它涉及大量代码和数学，而模型在这些方面非常强。涉及 3D、空间和物理的事情会久一些；机械工程这类现在得不到最多关注的领域也会久一些；此外还包括一些因为领域性质本身数据就很少、必须在飞行中学习的领域，比如「在台积电当一个超人类的工程师」。Charlie 给出<strong>5 到 10 年</strong>。Dwarkesh 追问「是不是基本等于你认为自动化 AI 研究就等于超级智能完成」，Charlie 说「是」。他补充原因：世界上有非常多事情，即使你给模型一个外部记忆系统、即使上下文长度再长一点，<strong>从根本上就需要超过一百万 token 的上下文窗口</strong>。Beren 表示至少在实验室关注的那些事情上，他同意 5 年这个区间；但他认为会有一条很长的长尾——有些事 AI 理论上可以去学，但<strong>没有人费心去做、也没有把算力分配过去</strong>。Dwarkesh 澄清他这个问题里也包含「像人类一样快地学会一个新领域」，Beren 认为这一点不一定必要，因为 AI 拥有的经验会远远超过任何人类。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        「I would say 3-4 years.」——我会说 3 到 4 年。（Beren 回答「何时出现碾压所有在电脑上完成的工作的 AI」）[01:34:43]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Key Numbers Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">关键数字</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">12.0x / 3.7x</div>
+                    <h3 class="point-title">数据 vs 架构</h3>
+                    <p class="point-desc">小规模网格实验中，数据集改善与架构改进分别带来的算力效率增益。数据看起来比架构重要得多——但架构的作用是打开一个全新区间，不是简单的百分比加成。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">2000x</div>
+                    <h3 class="point-title">缺失的 100 倍</h3>
+                    <p class="point-desc">按「2019 年以来每年 3 倍」推算应有两千倍以上效率提升，而实测网格只找到 33 倍。缺口很可能来自中期训练与后训练数据，以及被小规模测量掩盖的规模依赖增益。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">128</div>
+                    <h3 class="point-title">RL 的探索门槛</h3>
+                    <p class="point-desc">如果模型在 128 次 rollout 内都拿不到正确答案，它几乎不可能从这次训练中获得进步的信号。这就是 RL 必须依赖课程、而预训练完全不需要的原因。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">约 80%</div>
+                    <h3 class="point-title">中期训练的贡献</h3>
+                    <p class="point-desc">极优质的中期训练数据常常把模型带到最终 RL 检查点大约 80% 的位置。RL 之所以不需要那么多比特，是因为它不必从零学会所有行为，只需微调策略。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">3 个月</div>
+                    <h3 class="point-title">时间跨度翻倍周期</h3>
+                    <p class="point-desc">模型能持续工作的时长每三个月翻一倍（EdgeBench）。这是 RL 泛化能力最硬的证据——横向泛化没兑现，但「能坚持更久」被广泛泛化了出来。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">1–3 年</div>
+                    <h3 class="point-title">通用远程员工</h3>
+                    <p class="point-desc">Beren 说非浏览器受限形态约一年；Charlie 认为完整通用性需要三年。但大量公司会在那之前就把组织改造成「对 AI 更友好」，先行拿到 80%–90% 的效果。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">2 年</div>
+                    <h3 class="point-title">研究者提效 10 倍</h3>
+                    <p class="point-desc">Charlie 与 Beren 都给出约两年。注意口径是「一个月周期的普通白领工作」，而不是极有创造力的研究者——后者要更久。编程领域其实早已超过 10 倍。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">3–4 / 5–10</div>
+                    <h3 class="point-title">近乎超级智能</h3>
+                    <p class="point-desc">在全部可电脑化的认知工作上碾压顶级人类专家：Beren 说 3 到 4 年，Charlie 说 5 到 10 年。分歧在于在线学习能多快解决，以及长尾领域会有多少算力被分配过去。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎯</div>
+                    <h3 class="takeaway-title">目标是最后的岗位</h3>
+                    <p class="takeaway-desc">AI 可以解任何你指定的实验，但「选哪个实验、要什么目标」必须靠品味。这场对话反复回到同一句话——对齐就是最后一份工作，而其中「指定正确目标」这一半短期内不会消失。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚖️</div>
+                    <h3 class="takeaway-title">累积与非平稳</h3>
+                    <p class="takeaway-desc">RSI 是累积型任务：发现即永久持有，能写进一个不到百万 token 的脚本。律所法务助理是非平稳任务：人物关系、隐性流程、信息去处全都在变。不幸的是 RSI 更容易，这决定了算力会往哪里倾斜。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🧪</div>
+                    <h3 class="takeaway-title">蒸馏是最强平权器</h3>
+                    <p class="takeaway-desc">对抗模型集中化的唯一长期力量是蒸馏，而关键不是权重而是提示分布。当路由器服务把真实用户提示卖出去，而各家买的又是同一批数据，最难的 RL 环境优势可能已被抹平。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🎲</div>
+                    <h3 class="takeaway-title">RL 的功劳被高估</h3>
+                    <p class="takeaway-desc">80% 的能力来自中期训练里的合成推理数据，RL 只负责最后的调参。它高效不是因为教得多，而是因为目标函数忽略了其它所有比特——信噪比被极度放大，几个比特足以砍掉一半假设空间。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📉</div>
+                    <h3 class="takeaway-title">数据红利将尽</h3>
+                    <p class="takeaway-desc">预训练的信号还在 Common Crawl 里，问题只是过滤噪声；但进入中期训练与后训练之后，信号在原始数据里根本不存在，再过滤也没用——Common Crawl 里不会藏着一个千禧年难题的证明。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🕰️</div>
+                    <h3 class="takeaway-title">时间线分歧本身是信息</h3>
+                    <p class="takeaway-desc">通用远程员工 1 到 3 年、研究者提效 10 倍约 2 年、近乎超级智能 3 到 4 年对 5 到 10 年。分歧集中在两件事：在线学习能多快解决，以及长尾领域有多少算力会被真正分配。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">延伸思考</h3>
+            <p class="footer-desc">
+                这场辩论最有价值的地方，是三位嘉宾都在同一个地方收了手：不是「模型够不够聪明」，而是「任务到底是什么形状」。累积型任务可以一行一行往上加，非平稳任务却要求把一整个随时变化的组织装进上下文——而后者在百年企业的日常运作里无处不在。所以真正的问题不是算力够不够，而是那个「带新数据从零重训」的循环要不要一直跑下去。Charlie 给出的答案很务实：可以长期做持续中期训练、回滚到检查点再喂新数据，但不可能无限期地做下去。Beren 的说法更直白——如果一直对同一个底座持续训练，它在某个点就会渐近，学不进新东西了。
+            </p>
+            <div class="footer-quote">
+                「很不幸，RSI 恰好比当律师助理更容易。」
+            </div>
+            <p class="footer-note">
+                还有一条更少被注意的暗线：整场对话里最悲观的技术判断，几乎都不是「模型做不到」，而是「激励不相容」。公司不会愿意让模型供应商从自己的全部部署中学习，因为那会削弱自己的商业优势，于是蜂巢思维被推成了「卡匣」这样的可插拔模块；前沿实验室不愿意把最强的 RL 环境和盘托出，因为那正是它们付钱买来的护城河。反倒是蒸馏这条最朴素的路——拿真实用户的提示分布、去对齐一个更强的老师模型——成了拉平差距的主引擎。而它对生态的代价已经显形：当所有人都在蒸同一个模型，开源权重模型不但写得一样，连怪癖都一样。
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

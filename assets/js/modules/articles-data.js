@@ -1,6 +1,39 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/michael-green-peter-thiel-spacex-inefficient-markets.html",
+    card_class: "card-finance",
+    category: "How I Invest Podcast · 深度访谈 · 被动投资 · 市场结构 · SpaceX",
+    type: "投资",
+    date: "2026-09-14",
+    title: "被动投资并不被动：1 美元创造 22 倍市值 | How I Invest",
+    excerpt:
+      "如果被动投资根本不被动，而是当今塑造市场最强的那股主动力量呢？前彼得·蒂尔宏观策略管理人迈克尔·格林给出的数字是：有效市场假说认为 1 美元流入只创造 1 美分市值，而 1992–2019 年的实测均值是 5 美元——缺乏弹性 500 倍；按当前被动/主动份额更新后，大市值股票接近 22 美元，英伟达这类最缺乏弹性的个股逼近 100 倍。这场 45 分钟访谈把这个机制完整拆开：从蒂尔那句「有哪件事你认为是真的、而所有人都认为是假的」开始，讲到 SpaceX 靠「先锋看跌期权」叙事与 3 倍流通盘实现 5 倍涨幅；杠杆 ETF 每日再平衡如何制造内生买盘（定投 3 倍杠杆的盈亏平衡点约需年化 150% 涨幅）；为什么被动与价值因子在数学上必然对撞（市值一个是分子、一个是分母）；SPAC 与「快速通道 IPO」为什么本质是指数套利（指数最快 5 天被迫买入，内部人至少 20 天不能卖）；订单流如何取代研究成为最有价值的信息（Citadel 买 Robinhood 订单流、Jane Street 抢 ETF 做市资格）。最后的结论让所有投资者都很难受：这是无法躲避的系统性风险，「坐扶梯上去，坐电梯下来」。",
+    tags: ["#MichaelGreen", "#HowIInvest", "#被动投资", "#低效市场", "#非弹性市场假说", "#SpaceX", "#杠杆ETF", "#指数套利", "#订单流", "#PeterThiel"],
+  },
+  {
+    url: "articles/ai-researchers-debate-how-close-we-are-to-recursive-self-improvement.html",
+    card_class: "card-ai",
+    category: "Dwarkesh Patel · 深度辩论 · 递归自我改进 · 强化学习 · 蒸馏 · 时间线预测",
+    type: "AI",
+    date: "2026-09-12",
+    title: "递归自我改进离我们还有多远 | Dwarkesh Patel",
+    excerpt:
+      "如果 2036 年世界依旧正常，最可能的技术原因是什么？Dwarkesh Patel 把这个问题交给了三位待在相对开放实验室里的研究者——Thinking Machines 的 John Schulman、Baseten 的 Charlie O'Neill 与 Zyphra 的 Beren Millidge。他们绕开「AGI 何时到来」的争吵，拆解真正卡住递归自我改进的工程细节：反对 RSI 的最强论证不是 AI 不够聪明，而是它可能永远只在被放进基准测试的东西上变强，那道持续的仿真到现实鸿沟挡住的不是能力而是泛化；模型供应商本该走向高度集中，唯一长期对抗这股力量的是蒸馏，而关键变量是提示分布而非权重；RL 的功劳被高估了——80% 的能力来自中期训练里的合成推理数据，横向泛化没有兑现，兑现的是「能持续更久」（每三个月翻一倍）；而不幸的是，做 RSI 恰好比在律所当法务助理更容易。结尾的快问快答里，同一个问题得到的答案从一年一直跨到十年。",
+    tags: ["#DwarkeshPatel", "#递归自我改进", "#JohnSchulman", "#BerenMillidge", "#强化学习", "#蒸馏", "#仿真到现实", "#持续学习", "#灾难性遗忘", "#时间线预测"],
+  },
+  {
+    url: "articles/ep-029-modular-data-centers-cut-build-time-to-12-months.html",
+    card_class: "card-ai",
+    category: "SemiAnalysis · 播客 · 模块化数据中心 · 预制化 · AI 基础设施 · 电力与劳动力",
+    type: "AI",
+    date: "2026-09-12",
+    title: "数据中心拼乐高：工期压到 12 个月 | SemiAnalysis",
+    excerpt:
+      "算力交易价格已从每兆瓦 1100 万至 1500 万美元涨到 4000 万，某些高密度配置甚至突破 1 亿——晚通电 12 个月，损失的就是 12 个月的 token 产出。正是这笔账让模块化建造从「降级方案」变成主流。但 SemiAnalysis 三位分析师给出了两个反直觉结论：模块化真正省下的成本只有约 8%，它的价值在劳动力、确定性和通电时间；而当所有人把施工搬进工厂后，瓶颈并没有消失，只是从「电工短缺」换成了「工厂工人短缺」。节目完整拆解了场地/外壳/系统三层分类法、被压到 3 个月的机电安装、翻倍的现场电工工资、Meta 帐篷方案、卡车侧翻与保险拒保、OEM 与 EPC 集成商两条供应路线，以及一个被严重低估的约束——第五级调试 3 至 8 个月，工厂测过上百次的东西到现场仍可能不工作。",
+    tags: ["#SemiAnalysis", "#模块化数据中心", "#预制化", "#通电时间", "#劳动力短缺", "#调试", "#EPC", "#Vertiv", "#ComfortSystems", "#AI基础设施"],
+  },
+  {
     url: "articles/a16z-ai-power-law-of-venture-capital.html",
     card_class: "card-finance",
     category: "a16z · 深度访谈 · AI 投资 · 风险投资 · 资产配置",
