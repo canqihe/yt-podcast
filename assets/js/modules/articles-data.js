@@ -1,6 +1,28 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/greg-brockman-says-agi-has-arrived.html",
+    card_class: "card-ai",
+    category: "a16z · 深度访谈 · AGI 时代 · AI 安全 · 网络安全 · 算力",
+    type: "AI",
+    date: "2026-09-15",
+    title: "通用人工智能已经到来，但防御窗口正在关闭 | a16z",
+    excerpt:
+      "如果 AGI 不是某个时间点，而是一条参差不齐的光谱——那 Astra 已经跨过了那条线。OpenAI 联合创始人兼总裁格雷格·布罗克曼在这场 49 分钟对话里给出了几个反常识判断：真正把技术挡在门外的是算力而不是能力（十年前他和 Ilya 算的账是 15 年，愿意砸数千亿美元则 10 年，而今天正落在其间）；当模型开始擅长网络攻击，安全就必须从「在边缘加过滤器」变成架构级约束；而在这种能力扩散到威胁行为者之前，防御方只剩一段正在关闭的窗口期。他还讲了三个极具体的证据：用 1 万个智能体求解纳维-斯托克斯方程并把它形式化进 Lean（AI 因此能写出可被机器验证的代码）；抽调 25% 生产工程师转做防守，构建「发现—分诊—修复—部署—验证」的「防御工厂」；以及让 Codex 用 15 分钟从他自己的个人网站里挖出 13 个漏洞、再用 45 分钟全部修完。围绕「防御者的窗口」，他还解释了为什么真正的稀缺品是前沿模型的访问权限（对应 10 亿美元一线防御者承诺）、为什么美国对 AI 的情绪全球最低（核心是叙事缺失，而非技术问题）、以及为什么 OpenAI 会取消 Sora——「你不会因为说『我想赢超级碗』就赢得超级碗。」",
+    tags: ["#GregBrockman", "#OpenAI", "#AGI", "#Astra", "#AI安全", "#网络安全", "#防御者窗口", "#计算机操作", "#NavierStokes", "#a16z"],
+  },
+  {
+    url: "articles/ep-030-long-live-the-short-king-why-4-hi-hbm-wins-memory.html",
+    card_class: "card-tech",
+    category: "SemiAnalysis · 播客 · HBM · 内存超周期 · AI 芯片 · 供应链",
+    type: "半导体",
+    date: "2026-09-15",
+    title: "短款之王万岁：4-hi HBM 为何胜出 | SemiAnalysis",
+    excerpt:
+      "英伟达去年在 GTC 预告 Rubin Ultra 单封装 1TB HBM；一年半后供应链给出的答案是 192GB，比今天量产的 288GB 还少——这是英伟达历史上第一次「下一代旗舰容量低于上一代」。而缩水的动因不是性能，而是供给：DRAM 晶圆几乎没有新增产能，把有限的 HBM 全做成 12-hi 就不够搭配已在台积电锁定的逻辑产能，切成 8-hi 甚至 4-hi，同样的供给能切出更多立方体。节目给出了这背后完整的算术：HBM 带宽由立方体与计算裸片之间的 2,048 根 IO 决定、4 层 DRAM 就能榨满，而供应商按容量收费，于是 4-hi 成了「每美元带宽」最优解；单层 99% 良率下，叠 4／8／12 层的复利良率分别是 96.1%／92.3%／88.6%，因此可收获立方体增加不止 2 倍，瓶颈随即转向逻辑晶圆、基板与电力。同时拆解了容量为何不再是刚需——Kimi K3 一份权重不到 GB300 NVL72 容量的 8%，scale-up 域从 NVL72 到 NVL576 再扩 8 倍，后训练与推理已经吃掉预训练；也给出了诚实的反方（3 倍于 K3 的模型下，12-hi 能多交付约 47% 的 token，但相对 8-hi 仍不划算）。最后一句谁都不爱听：内存短缺不会在这个十年内结束，2030 年之后才可能缓解。",
+    tags: ["#SemiAnalysis", "#HBM", "#RubinUltra", "#内存短缺", "#HBM4E", "#堆叠良率", "#带宽为王", "#KimiK3", "#scale-up", "#半导体供应链"],
+  },
+  {
     url: "articles/michael-green-peter-thiel-spacex-inefficient-markets.html",
     card_class: "card-finance",
     category: "How I Invest Podcast · 深度访谈 · 被动投资 · 市场结构 · SpaceX",

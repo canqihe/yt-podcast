@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>短款之王万岁：4-hi HBM 为何胜出 | SemiAnalysis</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+    <!-- 引用设计系统样式 -->
+    <link rel="stylesheet" href="../design-system/design-tokens.css">
+    <link rel="stylesheet" href="../design-system/article-styles.css">
+
+    <!-- 配色方案覆盖：紫黄 -->
+    <style>
+        :root {
+            --accent-primary: #a855f7;
+            --accent-secondary: #FFC107;
+            --accent-primary-rgb: 168, 85, 247;
+            --accent-secondary-rgb: 255, 193, 7;
+            --border: #2a2a2e;
+        }
+    </style>
+
+    <!-- Header 封面背景图 -->
+    <style>
+        .header::before {
+            background:
+                linear-gradient(to left, rgba(10, 10, 11, 0.3) 0%, rgba(10, 10, 11, 0.85) 40%, rgba(10, 10, 11, 0.98) 70%),
+                url('images/ep-030-long-live-the-short-king-why-4-hi-hbm-wins-memory-cover.jpg') no-repeat right center / cover;
+            opacity: 0.6;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top right, rgba(var(--accent-primary-rgb), 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(var(--accent-secondary-rgb), 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ========== Data Table ========== */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin: var(--spacing-xl) 0;
+        }
+
+        .data-table th {
+            background: rgba(var(--accent-primary-rgb), 0.12);
+            color: var(--accent-primary);
+            padding: var(--spacing-md) var(--spacing-lg);
+            text-align: left;
+            font-weight: var(--font-weight-semibold);
+            text-transform: uppercase;
+            font-size: var(--font-size-small);
+            letter-spacing: 1px;
+        }
+
+        .data-table td {
+            padding: 20px var(--spacing-lg);
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: var(--font-size-body);
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table td:first-child {
+            font-weight: var(--font-weight-bold);
+            color: var(--text-primary);
+        }
+
+        .data-table tbody tr:hover td {
+            background: rgba(var(--accent-primary-rgb), 0.04);
+        }
+
+        @media (max-width: 768px) {
+            .data-table th,
+            .data-table td {
+                padding: var(--spacing-sm) var(--spacing-md);
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="badge-wrapper">
+                    <span class="badge">SemiAnalysis · 播客 · HBM · 内存超周期 · AI 芯片 · 供应链</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-line-1">短款之王万岁</span>
+                    <span class="title-line-2">4-hi HBM 为何胜出</span>
+                </h1>
+                <p class="subtitle">
+                    英伟达去年在 GTC 预告 Rubin Ultra 单封装 1TB HBM；一年半后，供应链给出的答案是 192GB——比今天量产的 288GB 还少。这是英伟达历史上第一次"下一代旗舰的容量低于上一代"。而这次缩水的动因不是性能，而是供给：与其把有限的 HBM 堆成少数 12-hi 高塔，不如切成更多 4 至 8 层的矮立方体，让已经锁定的逻辑产能全部配齐出货。更反直觉的是那笔账——HBM 带宽由 2048 根 IO 决定，**4 层就足以榨满**，而供应商按容量收费；在推理时代，提速 100% 来自带宽，容量跨过门槛后只剩边际递减。节目最后给出一句谁都不爱听的判断：内存短缺不会在这个十年内结束。
+                </p>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">主持人</div>
+                        <div class="meta-value">Jordan Nanos</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">嘉宾</div>
+                        <div class="meta-value">Myron Xie</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">时长</div>
+                        <div class="meta-value">38:53</div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=2cmlk-YlgRk" class="cta-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    观看视频
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Core Points Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">核心要点</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">反向升级</h3>
+                    <p class="point-desc">Rubin Ultra 的 HBM 从原定 1TB 砍到 192GB，甚至低于今天量产的 288GB。这是英伟达历史上第一次"下一代旗舰容量低于上一代"——而原因是供给，不是性能。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">供给定尺寸</h3>
+                    <p class="point-desc">决定单卡容量的不是性能需求，而是晶圆供给。当 HBM 配不上已锁定的逻辑产能时，正确做法是让每个立方体更矮、切出更多立方体，而不是把少数立方体堆高。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">带宽为王</h3>
+                    <p class="point-desc">推理提速 100% 来自带宽，容量在越过"装下权重 + 足够 KV cache"的门槛后边际收益迅速递减。在 HBM 涨价周期里，为用不到的容量付费惩罚极重。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">04</div>
+                    <h3 class="point-title">四层即满</h3>
+                    <p class="point-desc">HBM 带宽由立方体与计算裸片之间的 2,048 根 IO 决定，4 层 DRAM 即能榨满；而供应商按容量收费。因此 4-hi 是"每美元带宽"最优解——前提是你确实只需要带宽。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">05</div>
+                    <h3 class="point-title">良率复利</h3>
+                    <p class="point-desc">每叠一层都有良率损失并复利放大（单层 99% 良率下，4 层约 96%、8 层约 92%、12 层约 89%）。加上供电难度更低，4-hi 让可收获的 HBM 立方体增加不止 2 倍。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">06</div>
+                    <h3 class="point-title">十年之困</h3>
+                    <p class="point-desc">洁净室、EUV 设备及其上游特殊供应链的物理约束，决定了内存产能无法按需上线。SemiAnalysis 的判断干脆利落：这轮内存短缺不会在本十年内（2030 前）缓解。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Topics Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">深度洞察</h2>
+
+            <!-- Topic 1 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">01</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">从 1TB 缩到 192GB：一次由供给决定的"反向升级"</h3>
+                        <span class="topic-timestamp">00:00 - 06:33</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        这次容量崩塌与性能无关，纯粹是供给约束下的资源再分配：与其把有限的 HBM 做成少数 12-hi 高堆叠，不如做成更多矮立方体，好让已经锁定的逻辑产能全部配齐并出货。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">趋势是怎么被顶断的</div>
+                        <p class="topic-detail-content">过去每一代 AI 芯片，单芯片 HBM 容量都在增加——一是加立方体数量，二是把堆叠做得更高。Hopper／Ampere 时代是 8-hi 铺开，Blackwell Ultra 升到 12-hi，容量比 8-hi 高出 50%。行业的推演顺理成章地指向 16-hi，配合 HBM4E。英伟达去年在 GTC 向外界做的预告也是这个方向：4 颗计算裸片 + 16 个 HBM4E 堆叠，每个堆叠 32Gb（4GB），做成 16-hi，得到 1TB。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">现实中的一张对照表</div>
+                        <p class="topic-detail-content">一年半之后，实际方案在四个维度同时下调——裸片数减半、代际回退、单裸片容量缩水、堆叠高度回落。</p>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>维度</th>
+                                <th>原定方案</th>
+                                <th>实际方案</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>计算裸片</td>
+                                <td>4 颗／封装</td>
+                                <td>2 颗／封装</td>
+                            </tr>
+                            <tr>
+                                <td>HBM 代际</td>
+                                <td>HBM4E</td>
+                                <td>HBM4（初期）</td>
+                            </tr>
+                            <tr>
+                                <td>单裸片容量</td>
+                                <td>4GB（32Gb）</td>
+                                <td>3GB（24Gb）</td>
+                            </tr>
+                            <tr>
+                                <td>堆叠高度</td>
+                                <td>16-hi</td>
+                                <td>8-hi</td>
+                            </tr>
+                            <tr>
+                                <td>单封装容量</td>
+                                <td>1,024GB</td>
+                                <td>192GB</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">唯一的答案：供给</div>
+                        <p class="topic-detail-content">192GB 甚至低于 Blackwell Ultra 与"原版 Rubin"的 288GB（两者都是 12-hi）。Myron 给出的原因只有一个词：供给。DRAM 和 NAND 都极度短缺，而 DRAM 几乎没有新增晶圆产能；与此同时加速器出货量在涨，HBM 需求持续走高。于是供应商与英伟达、谷歌、博通同时意识到一个不等式——<strong>能拿到的 HBM，配不上在台积电锁定的逻辑产能</strong>。把有限的 HBM 全做成 12-hi，就不够搭配所有逻辑晶圆出货；重新分配到 8-hi，同样的供给能切出更多立方体，等式才重新平衡。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">为什么性能上可以接受</div>
+                        <p class="topic-detail-content">HBM 容量对推理的作用是一条阈值曲线：需要足够容量装下模型权重、并支撑足够多用户的 KV cache，从而高效批处理。但一旦越过门槛，边际收益迅速递减。而从明年起 HBM 会贵得多——为"其实用不到"的容量付钱，惩罚变得非常重。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "The big reason it's really primarily motivated by supply." —— 最重要的原因就是供给。[00:03:48]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">02</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">容量 vs 带宽：模型没怎么变大，系统涨了 18 倍</h3>
+                        <span class="topic-timestamp">06:33 - 12:59</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        "模型变大→需要更多容量"这个假设已经失效。参数量增长远没有预期激进，而 scale-up 域的规模成倍扩张，导致单卡 HBM 容量压力大幅缓解——余量已经过剩，"是否必须塞满"不再是默认答案。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">Hopper 时代的刚需</div>
+                        <p class="topic-detail-content">一台 Hopper HGX 节点是 8 张 GPU、每张 80GB HBM，整机约 640GB。当时最好的开源模型 Llama 3.1 405B，FP8 量化后权重约 45GB——<strong>吃掉整机约 60% 的可用 HBM</strong>。这就是为什么 H200（HBM3E、更高裸片密度）当年价值巨大：它为"在单台 HGX 上服务 Llama"释放了大量余量。那时增加容量确实是刚需。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">今天的余量已经过剩</div>
+                        <p class="topic-detail-content">参数量确实涨了，但不激进。最大的开源模型 Kimi K3 是 2.8 万亿参数，约是 Llama 3.1 的 6 倍多；用 MXFP4 量化后容量需求再减半（一份权重副本约 1,561GB）。再看今天的最大系统 GB300 NVL72：72 张 GPU、每张 288GB，单机架约 21TB HBM。<strong>Kimi K3 的一份权重只占其可用 HBM 容量的不到 8%。</strong></p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">真正的变量是尺度</div>
+                        <p class="topic-detail-content">相比 H200 HGX，GB300 NVL72 的 scale-up 域大了 9 倍、单卡 HBM 翻倍，<strong>聚合容量约为 18 倍</strong>；而最大的开源模型规模只涨了约 7 倍。Rubin Ultra 还会把域扩展到 NVL576，<strong>又是 8 倍</strong>。所以把 12-hi 砍到 8-hi（单卡容量降三分之一），却被 8 倍的域规模扩张完全覆盖——域内聚合 HBM 容量依然庞大。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">决定性的一刀</div>
+                        <p class="topic-detail-content">Jordan 补了最关键的一刀：现在绝大多数人想要的是"<strong>让现有规模的模型跑得更快</strong>"——更快的 Kimi K3、更快的下一代版本。而<strong>在现有总线上堆容量，完全不解决"更快"这个问题</strong>。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "Speeding up tokens is all from bandwidth. The capacity doesn't really add anything." —— 提升 token 速度全部来自带宽，容量基本不贡献。[00:13:13]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">03</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">算力去向变了：后训练与推理吃掉预训练</h3>
+                        <span class="topic-timestamp">12:59 - 15:55</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        模型参数量之所以不再狂奔，是因为能力提升的主要杠杆已经从"放大规模"转向"释放推理"。后训练与推理在总算力中的占比迅速主导，而这两者都偏好带宽而非容量。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">能力的杠杆换了一根</div>
+                        <p class="topic-detail-content">要让模型更强，路径已经不只是把参数堆大，而是更多推理时计算、更大量的后训练与强化学习。这里有个容易被忽略的性质——<strong>后训练在内存行为上非常"像推理"</strong>，因此同样偏向带宽。结果是算力结构翻转：对推理敏感的算力（后训练 + 常规推理）迅速占据主导，而<strong>传统预训练</strong>——它才是真正需要大容量的那个环节——在前沿实验室总算力中的占比已经低得多。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">从数据中心设计就能看出来</div>
+                        <p class="topic-detail-content">Jordan 指出，判断一个站点是否用于预训练其实很直观：单栋建筑超过 10 万张 GPU，或由多栋建筑组成互联园区，其设计逻辑与"四个数据厅各 2,000 至 8,000 张 GPU、再全球互联"完全不同。而在算力受限的当下，实验室新增的边际数据中心<strong>并不投向预训练</strong>，而是投向研究、后训练、推理。换句话说，那个"20 万亿参数模型"的预训练假设，已经是两三年前的想象了。</p>
+                    </div>
+
+                    <div class="thought-block">
+                        <div class="thought-label">个人感受</div>
+                        这一段的杀伤力在于它把"容量派"和"带宽派"的争论从工程问题变成了算力账本问题。当后训练被证明"像推理一样吃带宽"，那么"为预训练准备的大容量"就成了一种对未来下注的保险——而在晶圆稀缺、价格上行的周期里，保险的保费恰好变得最贵。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">04</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">4-hi 的物理下限：4 层榨干全部带宽</h3>
+                        <span class="topic-timestamp">15:53 - 19:10</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        HBM 带宽由立方体与计算裸片之间的接口决定，与堆叠高度无关；4 层 DRAM 就足以把 2,048 根 IO 全部用满。由于供应商按容量收费，4-hi 是"每美元带宽"的最优解——只要容量够用，它几乎是白捡的。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">思想实验：极限在哪</div>
+                        <p class="topic-detail-content">Jordan 提出了一个漂亮的问题：我们能不能一路往下走到 1-hi、0-hi？Myron 的答案是<strong>4 层是底线</strong>。原因在于带宽参数的来源——HBM4／HBM4E 在立方体与 SoC 之间有 <strong>2,048 根 IO 数据线</strong>，这些信号沿堆叠向上分摊，每个立方体最多承载 512 根。所以需要 4 层才能把 2,048 根全部激活。低于 4 层，带宽拿不满；高于 4 层，带宽一分不多。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">定价机制让答案变得悬殊</div>
+                        <p class="topic-detail-content">供应商按容量（美元/GB）向客户收费，带宽却是一样的：4-hi 付出 4 层容量的钱拿到完整带宽，8-hi 为同样的立方体多付约 2 倍，12-hi 多付约 3 倍。也就是说，在"总内存位数受限、但封装数量不限"的约束下，边际上你不会想要更多容量，只会想要更多带宽——<strong>而 4-hi 提供的容量又刚好够用，于是它几乎是免费的午餐</strong>。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">用公开参数可以算得更细</div>
+                        <p class="topic-detail-content">HBM4E 单堆叠在 13Gbps × 2,048 pin 下约为 3,328GB/s；以 32Gb 核心裸片计，4-hi／8-hi／12-hi 每个立方体分别是 16GB／32GB／48GB，对应 Rubin Ultra 单 GPU（8 个立方体）的 128GB／256GB／384GB。而下限也就是 4-hi 那一档——再往下带宽就吃不满了。</p>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>堆叠高度</th>
+                                <th>每立方体容量</th>
+                                <th>单 GPU 容量</th>
+                                <th>是否拿满带宽</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>4-hi</td>
+                                <td>16GB</td>
+                                <td>128GB</td>
+                                <td>是（下限）</td>
+                            </tr>
+                            <tr>
+                                <td>8-hi</td>
+                                <td>32GB</td>
+                                <td>256GB</td>
+                                <td>是（容量翻倍，带宽不变）</td>
+                            </tr>
+                            <tr>
+                                <td>12-hi</td>
+                                <td>48GB</td>
+                                <td>384GB</td>
+                                <td>是（容量三倍，带宽不变）</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="quote-block">
+                        "You need at least four layers of DRAM to get the full bandwidth out of a cube." —— 你需要至少 4 层 DRAM 才能从一个立方体里拿到全部带宽。[00:16:52]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">05</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">良率复利：可收获的立方体为何不止翻倍</h3>
+                        <span class="topic-timestamp">19:07 - 24:40</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        堆叠越高，制造越难。每加一层都带来良率损失并复利放大，因此 4-hi 的良率显著优于 8-hi／12-hi——这就是为什么立方体数量能增加不止 2 倍。同时，瓶颈将从 HBM 转移到逻辑晶圆、基板与电力。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">其他厂商会不会跟进</div>
+                        <p class="topic-detail-content">Myron 的判断是<strong>会</strong>：英伟达面对的容量与供应链挑战，对所有厂商一样；很多客户的路线图已经被重置，转向更低堆叠高度而非 12-hi。逻辑很简单——<strong>能出货最多的加速器，比单卡容量最大化更重要</strong>，何况 HBM 一直贵、明年还会更贵。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">为什么不止 2 倍</div>
+                        <p class="topic-detail-content">文章里的公开判断是：可收获的 HBM 立方体相比 8-hi <strong>可能翻倍以上</strong>。原因在于<strong>良率是复利的</strong>——每往模块里叠一层裸片都有损失，并非 100% 良率。假设单层良率 99%：4 层约 96.1%，8 层约 92.3%，12 层约 88.6%。1% 的损失叠 8 次或 12 次，远高于只叠 4 次。此外还有工程因素：把电力送上 4 层堆叠，比送到 8 层、12 层容易得多。所以整体收益"不止 2 倍"。另一个被强调的事实是——<strong>4-hi 是制造历史更长、工序更少、循环更短的成熟产品</strong>，在短缺周期里这是决定性优势。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">瓶颈转移，去三个地方找</div>
+                        <p class="topic-detail-content">如果一切都转向 4-hi、立方体数量翻倍，瓶颈就不再是 HBM 晶圆，而会转向：<br>① <strong>先进逻辑晶圆</strong>——台积电能否提供足够晶圆与这么多 HBM 共同封装？逻辑产能需求可能翻倍；<br>② <strong>基板</strong>——当前最紧张的环节之一，要在基线之上翻倍用量是极大的挑战；<br>③ <strong>电力</strong>——节目多次强调的硬约束。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">被忽略的连带收益</div>
+                        <p class="topic-detail-content">常规 DRAM 同样极度紧张。由于 DRAM 晶圆被大量挪去生产 HBM，服务器端已在普遍"降配"（削减每插槽 DRAM）。所以如果放松 HBM 占用的晶圆、把产能让给服务器 DRAM，对整个行业都是好事——因为智能体式 AI（agentic AI）不只吃加速器，还需要大量 CPU 执行工具调用，而这些 CPU 往往<strong>因为没有足够 DRAM 而利用率低下</strong>。Myron 由此给出本期的核心框架：就像行业关注"每瓦 token 数""每美元 token 数"，因为瓦特和美元稀缺——<strong>HBM 晶圆同样是稀缺资源</strong>。要在总量上交付最多 token，4-hi 就是最优解。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "In terms of maximizing tokens per HBM wafer, 4-hi is how you best optimize for that." —— 就"每片 HBM 晶圆产出多少 token"而言，4-hi 是最优解。[00:27:30]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">06</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">内存扩产为何快不了：短缺不会在这个十年结束</h3>
+                        <span class="topic-timestamp">24:40 - 31:40</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        半导体制造的物理约束（洁净室、EUV 设备及其更上游的特殊供应链）决定了产能无法按需响应。这个内存短缺周期不会在本十年内（2030 年前）缓解。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">那个所有人都在问的矛盾</div>
+                        <p class="topic-detail-content">Jordan 抛出问题：一边是"全行业如果拿到更多 HBM 就能出货更多"，一边是 SK 海力士、三星、美光赚得盆满钵满却不多生产。为什么不能更快响应需求信号？Myron 的回答是<strong>交期</strong>——半导体制造有极长的前置时间，你不可能打个响指就增加晶圆产能。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">瓶颈的四级台阶</div>
+                        <p class="topic-detail-content">如果产线已经满载，约束按顺序是：<br>① <strong>洁净室</strong>——这大概是至今没有任何短期新增产能的头号原因；<br>② <strong>设备填装</strong>——建好空间后需要用设备填满，而设备本身也紧缺；<br>③ <strong>EUV 光刻机</strong>——至少需要 ASML 的 EUV 工具，而 ASML 一年只能造那么多台，因为它自己也有很长的供应链；<br>④ <strong>上游特殊供应商</strong>——例如制造极光滑反射镜这类高度专业化零件的厂商，同样需要时间扩产。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">给出的时间表</div>
+                        <p class="topic-detail-content">至于缓解时点，Myron 的回答很干脆：<strong>不在这个十年之内</strong>——也就是 2030 年之后。Jordan 接了一句"你在这里第一次听到"。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "I'd say the TL;DR is not within this decade." —— 简而言之：不会在这个十年之内。[00:31:38]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 7 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <span class="topic-number">07</span>
+                    <div class="topic-info">
+                        <h3 class="topic-title">反方观点、多 SKU 与部署时点</h3>
+                        <span class="topic-timestamp">31:38 - 38:45</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <div class="topic-section-title">核心观点</div>
+                    <p class="topic-core-point">
+                        4-hi 的逆向风险是模型规模若爆炸式增长，容量会重新变得值钱，且在高批处理场景下额外容量的收益更大。但多条证据表明参数量不会激进扩张。同时，"同芯多 SKU"会成为新常态。
+                    </p>
+
+                    <div class="topic-section-title">深度阐述</div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">诚实的反方：什么时候 4-hi 会不够</div>
+                        <p class="topic-detail-content">答案回到模型规模。如果模型大幅膨胀，经济性会重新偏向高堆叠，原因是<strong>批处理经济学</strong>：做批处理时，每个用户只需读一次权重；权重越大，额外容量带来的效率增益越大。节目里的量化结论是：对一个 3 倍于 Kimi K3 的模型建模，12-hi 相对 4-hi 能多交付约 47% 的 token，8-hi 多约 36%；在那个规模下，8-hi 在低于约 180 tokens/s/user 的服务水平下能追回自己的成本溢价。<strong>但即便在那种情景下，12-hi 相对 8-hi 在整条曲线上也不划算。</strong></p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">三条反驳证据</div>
+                        <p class="topic-detail-content">Myron 用来论证"容量爆炸"不会发生：<br>① <strong>参数规模不再是主要能力杠杆</strong>——更多强化学习、更多推理时计算已经取代了它；<br>② <strong>深度取代宽度</strong>——循环 Transformer（looped transformer）让输入多次穿过同一批层，增加计算深度而不增大模型体积，据称 GPT-6 Astra 已"基本确认"采用，外界猜测 Anthropic 最大的模型亦然；<br>③ <strong>谁在喊要容量</strong>——呼吁高容量堆叠最强烈的是各家实验室，而实验室最有资格判断模型往哪走；他们没看到参数量按路线图激进扩张，这本身就是信号。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">一个简洁的旁证</div>
+                        <p class="topic-detail-content">Jordan 补了一句：如果 Kimi K3 以 2.8 万亿参数就能逼近 OpenAI 与 Anthropic 的性能，那对后者将相当尴尬——而它们据说在 10 万亿量级。这反过来暗示，前沿模型的规模与 Kimi 相差不大。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">多 SKU 的未来</div>
+                        <p class="topic-detail-content">Jordan 回顾了历史上的"小改版"节奏：V100 从 16GB 到 32GB，A100 从 40GB 到 80GB，H100 从 80GB 起步、H200 实质是改版到 144GB。那么为什么不能直接做多个 SKU，比如有人买 4-hi、有人买同一颗基础逻辑裸片的 8-hi？Myron 的答案是"<strong>绝对可以，而且已经在发生</strong>"——Meta 长期有定制／半定制 SKU，内存配置与主流不同；例如 MI450 就有 Meta 定制版，使用 8-hi HBM 而非 12-hi。在供应链极度紧张的世界里，如果客户不需要某些资源，过度配置的代价会变得很高，SKU 进一步分档因此合理。</p>
+                    </div>
+                    <div class="topic-detail">
+                        <div class="topic-detail-label">一个容易误解的要点</div>
+                        <p class="topic-detail-content">节目最后 Jordan 强调：这些变化<strong>只发生在 Rubin Ultra 这一代</strong>。当前这一代的 288GB Rubin 没有任何人推动改动。要看到 4-hi／8-hi 的实质变化，要等到明年这个时候或 2028 年——"如果存在 R200，Rubin Ultra 就是 R300"，它是正在导入的这一代之后的下一版。</p>
+                    </div>
+
+                    <div class="quote-block">
+                        "For MI450 there's a custom Meta version that has 8-hi HBM instead of 12-hi." —— MI450 就有 Meta 定制版，用 8-hi HBM 而不是 12-hi。[00:36:57]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Key Numbers Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">关键数字</h2>
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">1TB → 192GB</div>
+                    <h3 class="point-title">反向升级</h3>
+                    <p class="point-desc">Rubin Ultra 单封装 HBM 从 GTC 预告的 1TB 一路下调到 192GB，缩水超过 80%。同期裸片数从 4 颗减到 2 颗、代际从 HBM4E 回退到 HBM4、堆叠从 16-hi 降到 8-hi。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">288GB</div>
+                    <h3 class="point-title">上一代反而更多</h3>
+                    <p class="point-desc">Blackwell Ultra 与"原版 Rubin"都基于 12-hi，单卡 288GB。192GB 意味着下一代旗舰的容量比它所取代的芯片还少三分之一——英伟达历史上第一次。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">2,048</div>
+                    <h3 class="point-title">决定带宽的 IO 数</h3>
+                    <p class="point-desc">HBM4／HBM4E 立方体与计算裸片之间的数据线数量。每个立方体最多承载 512 根，因此 4 层 DRAM 就能把 2,048 根全部激活——这就是 4-hi 成为物理下限的原因。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">≥2 倍</div>
+                    <h3 class="point-title">可收获的立方体</h3>
+                    <p class="point-desc">相比 8-hi，转向 4-hi 后同样 HBM 晶圆能产出的完工立方体数量增加不止一倍。驱动力是复利良率：单层 99% 良率下，4 层约 96.1%、8 层约 92.3%、12 层约 88.6%。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">8 倍</div>
+                    <h3 class="point-title">scale-up 域扩张</h3>
+                    <p class="point-desc">从 NVL72 到 Rubin Ultra 的 NVL576，单域规模再扩 8 倍。相比 H200 HGX，GB300 NVL72 的聚合 HBM 容量已是约 18 倍，而最大开源模型规模只涨了约 7 倍。</p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">2030+</div>
+                    <h3 class="point-title">短缺缓解时点</h3>
+                    <p class="point-desc">被问到内存短缺何时缓解，Myron 的回答是"不在这个十年之内"。洁净室、EUV 设备及其上游特殊供应商的交期，是产能无法按需上线的根本原因。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Takeaways Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">精华收获</h2>
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔻</div>
+                    <h3 class="takeaway-title">反向升级</h3>
+                    <p class="takeaway-desc">英伟达下一代旗舰 Rubin Ultra 单封装 HBM 从原定 1TB 砍到 192GB，甚至低于今天量产的 288GB。这是英伟达历史上第一次"下一代旗舰容量低于上一代"——而原因是供给，不是性能。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🏭</div>
+                    <h3 class="takeaway-title">供给定尺寸</h3>
+                    <p class="takeaway-desc">决定单卡容量的不是性能需求，而是晶圆供给。当 HBM 供给配不上已锁定的逻辑产能时，正确做法是让每个立方体更矮以切出更多立方体，而不是把少数立方体堆高。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⚡</div>
+                    <h3 class="takeaway-title">带宽为王</h3>
+                    <p class="takeaway-desc">推理提速 100% 来自带宽，容量在越过"装下权重 + 足够 KV cache"的门槛后边际收益迅速递减。在 HBM 涨价周期里，为用不到的容量付费惩罚极重。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">📐</div>
+                    <h3 class="takeaway-title">四层即满</h3>
+                    <p class="takeaway-desc">HBM 带宽由 2,048 根 IO 决定，4 层 DRAM 即能把带宽榨满；而供应商按容量收费。因此 4-hi 是"每美元带宽"最优解，是近乎白捡的选择——前提是你确实只需要带宽。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">🔬</div>
+                    <h3 class="takeaway-title">良率复利</h3>
+                    <p class="takeaway-desc">每叠一层都有良率损失并复利放大（单层 99% 良率下，4 层约 96%、8 层约 92%、12 层约 89%），加上供电难度更低，4-hi 让可收获的 HBM 立方体增加不止 2 倍——瓶颈随即转向逻辑晶圆、基板与电力。</p>
+                </div>
+
+                <div class="takeaway-card">
+                    <div class="takeaway-emoji">⏳</div>
+                    <h3 class="takeaway-title">十年之困</h3>
+                    <p class="takeaway-desc">洁净室、EUV 设备及其上游特殊供应链的物理约束，决定了内存产能无法按需上线。SemiAnalysis 的判断是：这轮内存短缺不会在本十年内（2030 前）缓解。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">延伸思考</h3>
+            <p class="footer-desc">
+                这期节目最锋利的地方，是它把"容量"从性能话题降级成了一个供给话题。过去十年，"更多 HBM"同时是能力承诺和营销话术；而当 HBM 晶圆成为比逻辑产能更紧的资源时，行业第一次被迫回答一个本该更早问的问题：这些容量到底有没有被用上？答案是没有——一份 Kimi K3 权重不到单机架容量的 8%，而 scale-up 域还在以每代数倍的速度放大。于是"堆更高"从默认动作变成了需要论证的选择。
+            </p>
+            <div class="footer-quote">
+                "真正重要的是带宽，而 HBM 会越来越贵。"
+            </div>
+            <p class="footer-note">
+                需要留一个准确性边界：192GB／8-hi 是 SemiAnalysis 的供应链调研结论，英伟达官方只确认了 Rubin 的 288GB HBM4／12-hi／22TB/s，Rubin Ultra 的最终规格尚未公开。但这期的价值不在于某个 SKU 的最终数字，而在于它给出的可复用判断框架——当一个资源变得稀缺且涨价，衡量它的单位就不该是"每个芯片有多少"，而该是"每片晶圆能换多少。"这套换算方式，从 HBM 一路可以推到电力、封装和土地。
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.point-card, .takeaway-card, .topic').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
