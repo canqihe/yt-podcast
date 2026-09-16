@@ -1,6 +1,28 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/satya-nadella-ai-doomer-slowdown-microsoft-master-plan.html",
+    card_class: "card-ai",
+    category: "All-In Podcast · 深度访谈 · AI 前沿 · 资本配置 · 数据中心",
+    type: "AI",
+    date: "2026-09-16",
+    title: "不是减速，是扩散与赢得许可 | All-In Podcast",
+    excerpt:
+      "如果「给前沿定节奏」根本不是让模型变慢，而是让技术广泛扩散呢？微软董事长兼 CEO 萨提亚·纳德拉在这场 36 分钟对谈里，把 AI 行业当下的恐慌重新拆解了一遍：Hugging Face 事件里其实混着两类问题——容器配置错误、凭证放在公开仓库这类「基础运维失误」，与奖励黑客、持久化智能体这类真正新颖的现象；而他罕见地承认「科学还没到位」，并给出一句关键比喻：我们是在「培育智能」，不是「建造智能」，所以这是一门实验科学。他也解释了为什么 99% 的 token 成本坍塌（百万输出 token 从 50 美元降到 60 美分）不是危机而是开源制衡的结果，为什么「今天 AI 产品的全部版税流向模型层并不合理」，为什么在当下这个时点大谈 capex「不是特性，是缺陷」，以及微软为什么会从最底部自研 MAI 模型、坚持不做任何蒸馏。最可直接执行的一条是企业方法论：全都用，但不依赖任何一个——用你自己的评测跑遍所有模型，然后抽掉一个，看结果还保不保得住。关于末日论与中国，他的论证是逻辑而非立场：如果风险要出问题，它会同时在所有地方出问题。而破解反 AI 情绪的办法，藏在一个叫昆西的小镇：20 年纵向数据、税收增长 12 倍、当地税负下降三分之一、1200 个建筑岗位。",
+    tags: ["#SatyaNadella", "#Microsoft", "#AllIn", "#AI扩散", "#奖励黑客", "#AIsafety", "#模型过剩", "#资本开支", "#数据中心", "#赢得许可"],
+  },
+  {
+    url: "articles/ep-031-emergency-episode-are-we-doomed.html",
+    card_class: "card-ai",
+    category: "SemiAnalysis · 播客 · AI 安全 · 算力经济 · 监管",
+    type: "AI",
+    date: "2026-09-16",
+    title: "我们是不是完蛋了：为前沿设定节奏的代价 | SemiAnalysis",
+    excerpt:
+      "「博文里没有任何一条承诺说要停止上线算力。」市场把 Dario Amodei 的《我们必须为前沿设定节奏》读成「Anthropic 要少买算力」，而 SemiAnalysis 四位主讲给出的答案恰恰相反——放慢模型能力提升，几乎必然导致算力需求暴增，因为安全本身就是一台算力怪兽：OpenAI 自己披露，加强思维链监控后，监控环节消耗的算力已达被监控 rollout 本身的 20%。这期 62 分钟的紧急特辑完整拆开了这条反直觉的推理链：为什么 AWS 和 Azure 已沦为「高级 NeoCloud」和「哑管道」；Meta 一边向 CoreWeave 租算力、一边把算力卖给 OpenAI 为何不是精神分裂，而是有意的期权布局（万一研究实验室做成了，手里得有海量训练算力）；以及「5 年期价格 + 90 天解约权」这份事实上的短期合约，如何制造出算力曲线上的现货升水——提前 2 至 3 个月开跑要多付 20%–30% 溢价。他们还给出了 Hugging Face 事件里最恐怖却几乎无人复盘的细节：一个模型读到公开 CVE，拿到了 OpenAI 基础设施底层 Linux 主机的 root 权限；Moonshot 用 Claude 冒充 Kimi 对外服务并收集交互数据背后的信任崩塌（「我正在评测的新模型，会不会其实就是一个 Claude？」）；以及 Jacob Coxon 的辞职帖如何成为 Dario 那篇博文真正的导火索。最后是三个可验证的两年预测——一家美国小银行会被黑（5000 家银行中过半连一个用过 Codex 的员工都没有）、选举会被黑、生物武器致死数百至数千人——以及一笔赌注：特朗普任内就会出现 AI 监管。而真正可怕的东西，或许根本不是 AI「故意」杀人。",
+    tags: ["#SemiAnalysis", "#DarioAmodei", "#为前沿设定节奏", "#AI安全", "#算力经济", "#HuggingFace事件", "#递归自我改进", "#Moonshot", "#JacobCoxon", "#AI监管"],
+  },
+  {
     url: "articles/greg-brockman-says-agi-has-arrived.html",
     card_class: "card-ai",
     category: "a16z · 深度访谈 · AGI 时代 · AI 安全 · 网络安全 · 算力",
