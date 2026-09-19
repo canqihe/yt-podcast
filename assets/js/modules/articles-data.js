@@ -1,6 +1,17 @@
 // ===== 文章数据 =====
 const articlesData = [
   {
+    url: "articles/ep-033-300-data-center-bans-3-projects-delayed-moratoriums-explained.html",
+    card_class: "card-tech",
+    category: "SemiAnalysis · 播客 · 数据中心 · 能源 · 政策监管",
+    type: "数据中心",
+    date: "2026-09-19",
+    title: "300 个暂停令，只有 3 个项目被延期 | SemiAnalysis",
+    excerpt:
+      "过去 18 个月，美国 300 多个城镇、城市和郡投票暂停数据中心，新闻头条铺天盖地，得州在地图上被涂成一片刺眼的红色。SemiAnalysis 数据中心·能源·工业团队做了一件几乎没人做的事：先建立一份包含 400 多份地方性文件的数据库，再把每一份逐一对应到美国 3500 条项目管线上——结果只有 3 个项目真正被延期，占受限边界内 20 吉瓦的 7.6%，因为约 80% 的生效限制背后根本没有产能。这 53 分钟拆开了这条完整的筛选链条：第一道空间筛选找出 77 个落在受限辖区内的 20 兆瓦以上园区，第二道逐一核查许可状态与法律覆盖范围后，74 个出局，幸存者是俄亥俄 AWS、宾州 North Point 与科罗拉多 CoreSite。Maya Barkin 给出了一个项目要被真正拖住的八个条件——法律覆盖地块、仍生效、时间线重叠、覆盖用途、项目仍需该审批、无法重新设计绕开、项目仍活跃、无豁免条款，而它们「并不常同时成立」。Jeremie Eliahou Ontiveros 从曼谷接入，解释了为什么暂停令反而让表后自供电方案胜出：得州审查只触及 ERCOT 并网排队项目，完全孤岛化的园区不在射程内，已锁定电力的开发商与天然气中游成为明确受益方。Reyk Knühtsen 讲了本期最戏剧性的案例——SpaceX 在 Brownsville 用 6 小时周六听证会把 444 英亩土地移出市辖区，几天后暂停令才落地，土地落入没有禁令的 Cameron 郡。节目还公布了自建选民调查的反常结论：有人对 AI 净正面、却对数据中心净负面，反对理由第一是电力、第二是水，与 AI 关联很弱，因此暂停令是廉价的政治货币；而社区福利方案（学校、道路、百万棵树、屋顶蜂巢）治不了根，因为反对的性质不是 NIMBY，而是 BANANA——附近任何地方都绝对什么都不准建。",
+    tags: ["#SemiAnalysis", "#数据中心", "#暂停令", "#表后供电", "#得州", "#AI能源", "#SpaceX撤区", "#BANANA", "#选民调查", "#政策监管"],
+  },
+  {
     url: "articles/noam-brown-agent-swarms-recursive-self-improvement.html",
     card_class: "card-ai",
     category: "Dwarkesh Patel · 深度访谈 · 多智能体 · 对齐 · 递归自我改进",
